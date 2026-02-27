@@ -1,0 +1,21 @@
+brand,slug,homepage_url,key_url,category,aha_relevance
+American Heart Association,american_heart_association,https://www.heart.org/,https://www.heart.org/en/get-involved/ways-to-give,nonprofit_health,Trust signals and action clarity for giving and health education
+American Cancer Society,american_cancer_society,https://www.cancer.org/,https://www.cancer.org/involved/donate.html,nonprofit_health,Proof-driven impact storytelling and donor trust
+American Red Cross,american_red_cross,https://www.redcrossblood.org/,https://www.redcrossblood.org/donate-blood.html,nonprofit_humanitarian,Urgency communication with strong donate pathways
+Mayo Clinic,mayo_clinic,https://www.mayoclinic.org/,https://www.mayoclinic.org/appointments,healthcare_provider,Clinical authority and confidence cues
+St. Jude Children's Research Hospital,st_jude,https://www.stjude.org/,https://www.stjude.org/donate,nonprofit_health,Emotional storytelling linked to high trust giving cues
+Make-A-Wish America,make_a_wish,https://wish.org/,https://wish.org/ways-to-help,nonprofit_mission,Optimistic storytelling with conversion focus
+ALS United,als_association,https://www.alsunited.org/,https://www.alsunited.org/take-action/,nonprofit_health,Closest live ALS nonprofit fallback because als.org blocks automated capture
+American Lung Association,american_lung_association,https://www.lung.org/,https://www.lung.org/get-involved/ways-to-give,nonprofit_health,Education and advocacy credibility with donations
+Centers for Disease Control and Prevention,cdc,https://www.cdc.gov/,https://www.cdc.gov/heart-disease/,public_health,High authority public health structure and trust
+Cleveland Clinic,cleveland_clinic,https://my.clevelandclinic.org/,https://my.clevelandclinic.org/appointments,healthcare_provider,Care navigation clarity and institutional trust
+Apple,apple,https://www.apple.com/,https://www.apple.com/privacy/,consumer_technology,Minimalist narrative control and trust framing
+Target,target,https://www.target.com/,https://www.target.com/circle,consumer_retail,Promotional clarity and loyalty utility patterns
+Disney,disney,https://thewaltdisneycompany.com/,https://thewaltdisneycompany.com/disney-plus/,consumer_entertainment,Story ecosystem cohesion and emotional branding
+Coca-Cola US,coca_cola_us,https://www.coca-cola.com/us/en,https://www.coca-cola.com/us/en/brands,consumer_cpg,Cultural brand consistency and campaign rhythm
+REI Co-op,rei,https://www.rei.com/,https://www.rei.com/membership/benefits,consumer_retail,Mission commerce blend and membership trust
+Amazon,amazon,https://www.amazon.com/,https://www.amazon.com/prime,consumer_marketplace,Utility-first trust mechanics at scale
+CVS Health,cvs,https://www.cvs.com/,https://www.cvs.com/minuteclinic,health_retail,Healthcare service utility and task-oriented trust
+Walmart,walmart,https://corporate.walmart.com/,https://corporate.walmart.com/purpose,consumer_retail,Value messaging with omnichannel utility
+Starbucks,starbucks,https://www.starbucks.com/,https://www.starbucks.com/rewards,consumer_food_beverage,Consistent lifestyle storytelling and loyalty framing
+McDonald's US,mcdonalds_us,https://www.mcdonalds.com/us/en-us.html,https://www.mcdonalds.com/us/en-us/download-app.html,consumer_food_beverage,App-led conversion and repeat campaign structure

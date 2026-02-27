@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organic Vessel Background - Shader</title>
+    <link rel="icon" href="data:," />
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = {
+        corePlugins: { preflight: false },
+        theme: {
+          extend: {
+            colors: {
+              chadbg: "#2a0b12",
+              chadfg: "#ffe9ee"
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="stage" aria-label="Organic vessel heartbeat background">
+      <canvas id="bg"></canvas>
+    </main>
+
+    <aside id="controls" class="controls" hidden>
+      <div class="controls__top">
+        <div class="controls__title-wrap">
+          <p class="controls__eyebrow">CHADCDN UX</p>
+          <h2 class="controls__title">Shader Controls</h2>
+          <p class="controls__hint">Press <kbd>H</kbd> to hide</p>
+        </div>
+        <button id="resetButton" class="ui-button ui-button--primary" type="button">Apply Defaults</button>
+      </div>
+      <section class="controls__defaults">
+        <div class="controls__section-head">
+          <h3>Core Defaults</h3>
+          <p>Baseline controls first</p>
+        </div>
+        <div id="defaultList" class="controls__default-list"></div>
+      </section>
+      <div class="controls__divider" role="presentation"></div>
+      <div class="controls__section-head">
+        <h3>Advanced Groups</h3>
+        <p>Fine tuning by system</p>
+      </div>
+      <div id="controlList" class="controls__list"></div>
+      <div class="controls__presets"></div>
+    </aside>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
