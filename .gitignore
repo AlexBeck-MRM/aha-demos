@@ -1,0 +1,10 @@
+.DS_Store
+.aha-server.pid
+
+node_modules/
+build/
+dist/
+output/
+reports/
+
+*.log
