@@ -3,7 +3,7 @@
 This folder contains the capture pack for 20 US brands.
 
 ## What is included
-- `screenshots/`: 40 full-page PNGs (`{slug}__home.png`, `{slug}__key.png`)
+- `screenshots/`: still-image exports and selected PNG references when available
 - `recordings/`: 40 MP4 clips (`{slug}__home.mp4`, `{slug}__key.mp4`)
 - `capture_manifest.csv`: inventory and status rows
 - `qc_report_final.csv`: final dimension/duration/content sanity scan
@@ -22,18 +22,19 @@ This folder contains the capture pack for 20 US brands.
 ## Run commands
 ```bash
 # Full capture pass
-node scripts/capture_brand_assets.mjs --timeout-ms 60000
+node scripts/brand/capture_brand_assets.mjs --timeout-ms 60000
 
 # Retry a single brand
-node scripts/capture_brand_assets.mjs --only amazon --timeout-ms 60000
+node scripts/brand/capture_brand_assets.mjs --only amazon --timeout-ms 60000
 
 # Re-trim a single file
-scripts/trim_videos.sh evidence/recordings/amazon__home.mp4 /tmp/amazon__home.retrim.mp4 0
+scripts/brand/trim_videos.sh evidence/recordings/amazon__home.mp4 /tmp/amazon__home.retrim.mp4 0
 ```
 
 ## Quick verification
 ```bash
-# 40 screenshots + 40 videos expected
+# Screenshot count depends on whether still-image exports have been ingested.
+# 40 videos are expected in the committed evidence set.
 find evidence/screenshots -name '*.png' | wc -l
 find evidence/recordings -name '*.mp4' | wc -l
 

@@ -1,0 +1,34 @@
+references:
+  - id: evidence-aha-home
+    path: evidence/recordings/american_heart_association__home.mp4
+    type: recording
+    authority: primary
+    tags:
+      - aha
+      - homepage
+      - current-state
+  - id: evidence-aha-key
+    path: evidence/recordings/american_heart_association__key.mp4
+    type: recording
+    authority: primary
+    tags:
+      - aha
+      - key-page
+      - current-state
+  - id: evidence-manifest
+    path: evidence/capture_manifest.csv
+    type: manifest
+    authority: primary
+    tags:
+      - inventory
+      - capture
+  - id: evidence-qc
+    path: evidence/qc_report_final.csv
+    type: qc-report
+    authority: primary
+    tags:
+      - quality-control
+      - capture
+notes:
+  screenshot_status: placeholder-directory-present-awaiting-ingested-stills
+  guidance: Add still-image selects here before expanding reference-driven image analysis.

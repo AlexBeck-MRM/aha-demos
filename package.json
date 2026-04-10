@@ -1,17 +1,32 @@
 {
   "name": "aha-research",
   "version": "1.0.0",
-  "description": "",
+  "description": "Retrieval-first design brain for the AHA website refresh",
   "main": "index.js",
   "scripts": {
-    "play": "node scripts/play.js",
-    "stop": "node scripts/stop.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf build dist output reports .aha-server.pid",
+    "verify:brain": "node scripts/docs/verify-design-brain.mjs",
+    "lint": "npm run verify:brain",
+    "play": "node scripts/dev/play.js",
+    "stop": "node scripts/dev/stop.js",
+    "test": "npm run verify:brain",
+    "ppt:extract:pilot": "node scripts/ppt/figma_extract_deck.mjs --file-key Mn0vZrL7nud32WjHcSVear --node-id 31:2757 --slides 31:4025,31:4018,31:4013,31:3994,31:3937,31:3933,31:3929,31:3925,31:3921,31:3902 --out build/figma",
+    "ppt:normalize:pilot": "node scripts/ppt/normalize_figma_to_ppt_ir.mjs --input build/figma/deck.json --out build/presentation-spec.json",
+    "ppt:build:pilot": "node scripts/ppt/generate_ppt_template.mjs --input build/presentation-spec.json --out dist/aha-master-template-pilot-01-10.pptx",
+    "ppt:patch:pilot": "node scripts/ppt/patch_pptx_ooxml.mjs --file dist/aha-master-template-pilot-01-10.pptx",
+    "ppt:render:pilot": "osascript scripts/ppt/export_ppt_preview.scpt dist/aha-master-template-pilot-01-10.pptx build/ppt-renders",
+    "ppt:qa:pilot": "node scripts/ppt/qa_ppt_parity.mjs --figma build/figma/screenshots --ppt build/ppt-renders --spec build/presentation-spec.json --pptx dist/aha-master-template-pilot-01-10.pptx --report reports/ppt-parity.md",
+    "ppt:pilot": "npm run ppt:extract:pilot && npm run ppt:normalize:pilot && npm run ppt:build:pilot && npm run ppt:patch:pilot && npm run ppt:render:pilot && npm run ppt:qa:pilot"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "playwright": "^1.58.2"
+    "fast-xml-parser": "^5.4.2",
+    "jszip": "^3.10.1",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.58.2",
+    "pngjs": "^7.0.0",
+    "pptxgenjs": "^4.0.1"
   }
 }

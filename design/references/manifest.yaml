@@ -1,0 +1,29 @@
+references:
+  - id: ref-001
+    title: AHA current-site home recording
+    category: photography-treatment
+    source: evidence/recordings/american_heart_association__home.mp4
+    route_bias: route-a
+    authority: primary
+    sidecar: design/references/captions/ref-001.yaml
+  - id: ref-002
+    title: AHA current-site key-page recording
+    category: nav-elements
+    source: evidence/recordings/american_heart_association__key.mp4
+    route_bias: route-b
+    authority: primary
+    sidecar: design/references/captions/ref-002.yaml
+  - id: ref-003
+    title: Slide system v1.6 spec
+    category: page-templates
+    source: slides/aha-slide-system-v1.6.md
+    route_bias: shared
+    authority: primary
+    sidecar: design/references/captions/ref-003.yaml
+  - id: ref-004
+    title: Design-to-code workflow draft
+    category: trust-cues
+    source: docs/aha-design-to-code-workflow-v1.md
+    route_bias: shared
+    authority: primary
+    sidecar: design/references/captions/ref-004.yaml

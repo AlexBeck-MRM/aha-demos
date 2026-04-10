@@ -1,0 +1,17 @@
+id: ref-004
+title: Design-to-code workflow draft
+category: trust-cues
+source: docs/aha-design-to-code-workflow-v1.md
+route_bias: shared
+why_it_matters: Connects aesthetic work to delivery, governance, and handoff expectations.
+borrow:
+  - traceable decision-making
+  - explicit readiness states
+  - operational documentation discipline
+avoid:
+  - treating visual direction as separate from delivery reality
+tags:
+  - workflow
+  - delivery
+  - governance
+  - handoff

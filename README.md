@@ -1,23 +1,49 @@
-# AHA Research
+# AHA Design Brain
 
-Working repo for AHA visual research, slide-system work, and brand-capture evidence.
+This repo is the working design brain for the American Heart Association website refresh.
+It is structured so Codex can act like a grounded design partner: source-aware, decision-aware, route-aware, and able to carry project memory forward instead of starting from scratch each session.
 
-## Folder map
+## Source priority
 
-- `slides/` current slide-system source files and specs. `v1.6` is the latest set.
-- `scripts/` automation for capture, slide token generation, Figma/PPT extraction, and QA.
-- `evidence/` retained research evidence and recordings.
-- `data/` source CSV inputs for capture/catalogue work.
-- `assets/` shared brand assets.
-- `css.html`, `shader.html`, `index.html`, `js/`, `styles.css` interactive visual experiment entry points.
+Codex should retrieve in this order:
+1. `knowledge/sources/`
+2. `knowledge/distilled/`
+3. `logs/decision-log.md`
+4. `logs/route-evolution.md`
+5. `design/ui-style-inventory/`
+6. `design/routes/`
+7. `prompts/`
 
-Generated folders are intentionally not committed:
+## Repository map
 
-- `build/`
-- `dist/`
-- `output/`
-- `reports/`
-- `node_modules/`
+### Core design-brain layers
+- `AGENTS.md` root operating contract for Codex.
+- `knowledge/` source intake, distilled summaries, and glossary.
+- `language/` voice, messaging, taxonomy, and microcopy patterns.
+- `design/` north star, principles, styleframes, routes, UI inventory, and reference manifest.
+- `prompts/` reusable Codex, image-generation, and evaluation prompts.
+- `logs/` decision memory, critique history, route evolution, session notes, and open questions.
+- `templates/` starter formats for future entries.
+
+### Legacy source archives retained for grounding
+- `docs/` workflow and handoff drafts.
+- `slides/` current and archived slide-system specs and assets.
+- `evidence/` brand capture recordings, manifests, and QC outputs.
+- `scripts/` automation grouped by `dev/`, `slides/`, `ppt/`, `brand/`, and `docs/`.
+- `assets/` logo assets and shared brand files.
+- `data/` source CSV inputs for capture work.
+
+### Experimental surfaces retained for reference
+- `css.html`, `shader.html`, `index.html`, `js/`, `styles.css`
+
+## Working loop
+
+Use the repo like this:
+1. Start from `knowledge/sources/` when facts or historical context matter.
+2. Update `knowledge/distilled/` once the source material is stable enough to summarize.
+3. Record decisions in `logs/decision-log.md` and route changes in `logs/route-evolution.md`.
+4. Capture UI direction in `design/ui-style-inventory/` and route-specific changes in `design/routes/`.
+5. Use `prompts/` when you need repeatable critique, comparison, or generation workflows.
 
 ## Common commands
 
@@ -27,10 +53,22 @@ Install dependencies:
 npm install
 ```
 
+Verify the design-brain structure:
+
+```bash
+npm run verify:brain
+```
+
+Run the repo test hook:
+
+```bash
+npm test
+```
+
 Clean generated output:
 
 ```bash
-rm -rf build dist output reports .aha-server.pid
+npm run clean
 ```
 
 Run the local visual preview launcher:
@@ -57,13 +95,13 @@ open "http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html"
 Rebuild token CSS:
 
 ```bash
-node scripts/build-slide-token-css.mjs slides/tokens-v1.6.json slides/deck-v1.6-tokens.css
+node scripts/slides/build-slide-token-css.mjs slides/tokens-v1.6.json slides/deck-v1.6-tokens.css
 ```
 
 Run slide QA:
 
 ```bash
-node scripts/qa-slides-v1.5.mjs http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html
+node scripts/slides/qa-slides.mjs http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html
 ```
 
 ## PPT pilot workflow
@@ -73,3 +111,9 @@ npm run ppt:pilot
 ```
 
 This writes generated artifacts into ignored folders under `build/`, `dist/`, and `reports/`.
+
+## Immediate next ingestion
+
+- Add official AHA brand-guideline source files to `knowledge/sources/brand-guidelines/`.
+- Add real discovery playback exports to `knowledge/sources/discovery-playback/`.
+- Turn the most relevant current-site and comparator captures into tagged reference entries under `design/references/`.
