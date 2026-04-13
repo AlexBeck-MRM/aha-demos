@@ -3,6 +3,8 @@ status: working
 owner: design-brain
 last_reviewed: 2026-04-10
 source_refs:
+  - knowledge/sources/discovery-playback/master-playback-notes.md
+  - knowledge/sources/discovery-playback/technology-playback-notes.md
   - knowledge/sources/current-site-audit/aha-current-site-observations.md
   - docs/aha-design-to-code-workflow-v1.md
 decision_refs:

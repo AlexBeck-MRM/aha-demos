@@ -30,3 +30,6 @@ Choose Route B when the system needs to prove precision, breadth, and navigation
 
 ## Current recommendation
 Keep both routes alive. The project still benefits from having one warmer expression and one cleaner expression while the shared system foundation continues to solidify.
+
+## Fast reference
+See `route-deltas.md` for the component-level differences that should stay explicit during iteration.

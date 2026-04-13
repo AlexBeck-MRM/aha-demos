@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'>
+  <rect width='1600' height='900' fill='#e6ebf3'/>
+  <rect x='140' y='140' width='1320' height='620' rx='20' fill='#cfd8e6'/>
+  <g stroke='#8d9bb2' stroke-width='6' fill='none'>
+    <circle cx='510' cy='380' r='120'/>
+    <path d='M510 500L350 620'/>
+    <path d='M650 320h250'/>
+    <path d='M650 360h220'/>
+    <path d='M980 500h240'/>
+    <path d='M980 540h190'/>
+  </g>
+  <g fill='#6f7f9b'>
+    <circle cx='350' cy='620' r='18'/>
+    <circle cx='900' cy='320' r='18'/>
+    <circle cx='1220' cy='500' r='18'/>
+  </g>
+</svg>

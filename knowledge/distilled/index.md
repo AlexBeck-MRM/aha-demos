@@ -4,6 +4,7 @@
 This folder holds the working summaries that Codex should use after checking the raw source layer.
 
 ## Authoritative file map
+- `canonical-brief.md`: fastest high-signal summary for routine retrieval.
 - `project-summary.md`: overall project frame and current direction.
 - `aha-today.md`: current-state read and baseline tensions.
 - `aha-narrative.md`: brand behavior and narrative stance.
@@ -13,3 +14,4 @@ This folder holds the working summaries that Codex should use after checking the
 
 ## Usage rule
 If a distilled file drifts from source material, update the source note or log first, then update the distilled summary.
+For routine work, read `canonical-brief.md` first and expand only when needed.

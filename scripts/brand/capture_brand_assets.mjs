@@ -24,12 +24,12 @@ const DEFAULTS = {
   screenshotsDir: 'evidence/screenshots',
   recordingsDir: 'evidence/recordings',
   rawRecordingsDir: 'evidence/recordings_raw',
-  trimScript: 'scripts/trim_videos.sh',
+  trimScript: 'scripts/brand/trim_videos.sh',
   timeoutMs: 45000,
 };
 
 function printUsage() {
-  console.log(`Usage: node scripts/capture_brand_assets.mjs [options]\n
+  console.log(`Usage: node scripts/brand/capture_brand_assets.mjs [options]\n
 Options:
   --targets <path>        Path to capture targets CSV (default: ${DEFAULTS.targets})
   --manifest <path>       Path to output manifest CSV (default: ${DEFAULTS.manifest})

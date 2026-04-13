@@ -5,6 +5,8 @@ sources:
     canonical_files:
       - knowledge/sources/discovery-playback/index.md
       - knowledge/sources/discovery-playback/canonical-sources.md
+      - knowledge/sources/discovery-playback/master-playback-notes.md
+      - knowledge/sources/discovery-playback/technology-playback-notes.md
       - docs/aha-design-to-code-workflow-v1.md
       - slides/aha-slide-system-v1.6.md
   - id: brand-guidelines
@@ -13,6 +15,7 @@ sources:
     canonical_files:
       - knowledge/sources/brand-guidelines/index.md
       - knowledge/sources/brand-guidelines/canonical-sources.md
+      - knowledge/sources/brand-guidelines/ingest-status.md
       - assets/aha-logo-red.png
       - assets/aha-logo-white.png
       - slides/tokens-v1.6.json
@@ -25,6 +28,15 @@ sources:
       - knowledge/sources/current-site-audit/comparative-notes/health-and-brand-comparators.md
       - evidence/README.md
       - evidence/capture_manifest.csv
+  - id: figma-design-workbench
+    path: knowledge/sources/figma-design-workbench
+    status: working
+    canonical_files:
+      - knowledge/sources/figma-design-workbench/README.md
+      - knowledge/sources/figma-design-workbench/index.md
+      - knowledge/sources/figma-design-workbench/canonical-sources.md
+      - knowledge/sources/figma-design-workbench/board-audit.md
+      - design/figma/workbench-section-map.yaml
   - id: stakeholder-notes
     path: knowledge/sources/stakeholder-notes
     status: working

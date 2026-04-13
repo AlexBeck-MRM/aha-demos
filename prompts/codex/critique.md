@@ -4,6 +4,7 @@
 Critique a proposed direction using the repo's current source hierarchy and prior decisions.
 
 ## Required input blocks
+- `Canonical brief read first`
 - `Question`
 - `Relevant sources`
 - `Current decision state`

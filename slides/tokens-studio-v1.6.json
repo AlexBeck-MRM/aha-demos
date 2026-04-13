@@ -1,0 +1,514 @@
+{
+  "global": {
+    "sizing": {
+      "slide_w": {
+        "value": "1920",
+        "type": "sizing"
+      },
+      "slide_h": {
+        "value": "1080",
+        "type": "sizing"
+      },
+      "content_w": {
+        "value": "1840",
+        "type": "sizing"
+      },
+      "content_y": {
+        "value": "112",
+        "type": "sizing"
+      },
+      "content_h": {
+        "value": "872",
+        "type": "sizing"
+      },
+      "footer_h": {
+        "value": "64",
+        "type": "sizing"
+      },
+      "footer_y": {
+        "value": "1016",
+        "type": "sizing"
+      },
+      "header_y": {
+        "value": "28",
+        "type": "sizing"
+      },
+      "header_h": {
+        "value": "56",
+        "type": "sizing"
+      },
+      "h_visual_lg": {
+        "value": "610",
+        "type": "sizing"
+      },
+      "h_visual_md": {
+        "value": "420",
+        "type": "sizing"
+      },
+      "h_visual_sm": {
+        "value": "260",
+        "type": "sizing"
+      },
+      "h_chart_shell": {
+        "value": "620",
+        "type": "sizing"
+      },
+      "h_stage_min": {
+        "value": "230",
+        "type": "sizing"
+      },
+      "h_flow_mini": {
+        "value": "96",
+        "type": "sizing"
+      },
+      "h_people_grid": {
+        "value": "760",
+        "type": "sizing"
+      },
+      "h_image_hero": {
+        "value": "740",
+        "type": "sizing"
+      },
+      "h_image_duo": {
+        "value": "760",
+        "type": "sizing"
+      },
+      "h_diagnostic_grid": {
+        "value": "760",
+        "type": "sizing"
+      },
+      "footer_deck_right": {
+        "value": "140",
+        "type": "sizing"
+      },
+      "chart_caption_row": {
+        "value": "46",
+        "type": "sizing"
+      },
+      "icon_label_col": {
+        "value": "28",
+        "type": "sizing"
+      },
+      "table_comp_row_h": {
+        "value": "88",
+        "type": "sizing"
+      },
+      "table_work_row_h": {
+        "value": "108",
+        "type": "sizing"
+      },
+      "table_score_row_h": {
+        "value": "72",
+        "type": "sizing"
+      },
+      "canvas_col_main": {
+        "value": "1271",
+        "type": "sizing"
+      },
+      "canvas_col_side": {
+        "value": "549",
+        "type": "sizing"
+      },
+      "matrix_col_axis": {
+        "value": "110",
+        "type": "sizing"
+      },
+      "matrix_col_main": {
+        "value": "387",
+        "type": "sizing"
+      },
+      "matrix_row_head": {
+        "value": "56",
+        "type": "sizing"
+      },
+      "matrix_row_main": {
+        "value": "244",
+        "type": "sizing"
+      },
+      "matrix_height": {
+        "value": "788",
+        "type": "sizing"
+      },
+      "sidebar_row_1": {
+        "value": "120",
+        "type": "sizing"
+      },
+      "sidebar_row_2": {
+        "value": "96",
+        "type": "sizing"
+      },
+      "sidebar_row_4": {
+        "value": "88",
+        "type": "sizing"
+      }
+    },
+    "misc": {
+      "margin_x": {
+        "value": "40px",
+        "type": "other"
+      },
+      "deck_gap": {
+        "value": "64px",
+        "type": "other"
+      },
+      "display_gap_128": {
+        "value": "132px",
+        "type": "other"
+      },
+      "display_gap_112": {
+        "value": "116px",
+        "type": "other"
+      },
+      "display_gap_96": {
+        "value": "102px",
+        "type": "other"
+      },
+      "section_gap_48": {
+        "value": "54px",
+        "type": "other"
+      },
+      "section_gap_36": {
+        "value": "42px",
+        "type": "other"
+      },
+      "icon_sm": {
+        "value": "24px",
+        "type": "other"
+      },
+      "icon_lg": {
+        "value": "68px",
+        "type": "other"
+      },
+      "milestone_min_h": {
+        "value": "154px",
+        "type": "other"
+      },
+      "table_head_h": {
+        "value": "64px",
+        "type": "other"
+      },
+      "badge_size": {
+        "value": "38px",
+        "type": "other"
+      },
+      "quote_mark_top": {
+        "value": "6px",
+        "type": "other"
+      },
+      "quote_mark_size": {
+        "value": "40px",
+        "type": "other"
+      }
+    },
+    "radii": {
+      "radius_slide": {
+        "value": "10",
+        "type": "borderRadius"
+      },
+      "radius_md": {
+        "value": "10",
+        "type": "borderRadius"
+      },
+      "radius_sm": {
+        "value": "8",
+        "type": "borderRadius"
+      },
+      "radius_lg": {
+        "value": "12",
+        "type": "borderRadius"
+      },
+      "radius_round": {
+        "value": "999",
+        "type": "borderRadius"
+      }
+    },
+    "color": {
+      "canvas_bg": {
+        "value": "#2f3136",
+        "type": "color"
+      },
+      "black": {
+        "value": "#000000",
+        "type": "color"
+      },
+      "subline": {
+        "value": "#444444",
+        "type": "color"
+      },
+      "white": {
+        "value": "#ffffff",
+        "type": "color"
+      },
+      "red": {
+        "value": "#d3031f",
+        "type": "color"
+      },
+      "line": {
+        "value": "#d6d6d6",
+        "type": "color"
+      },
+      "soft": {
+        "value": "#f5f5f7",
+        "type": "color"
+      },
+      "soft_2": {
+        "value": "#ececf1",
+        "type": "color"
+      },
+      "chip_ok": {
+        "value": "#f5f5f7",
+        "type": "color"
+      },
+      "chip_warn": {
+        "value": "#ececf1",
+        "type": "color"
+      },
+      "chip_risk": {
+        "value": "#fbe5e8",
+        "type": "color"
+      }
+    },
+    "effects": {
+      "shadow_slide": {
+        "value": "0 20px 45px rgba(0, 0, 0, 0.22)",
+        "type": "boxShadow"
+      },
+      "table_border": {
+        "value": "1px",
+        "type": "borderWidth"
+      }
+    },
+    "spacing": {
+      "space_0": {
+        "value": "0",
+        "type": "spacing"
+      },
+      "space_2": {
+        "value": "8",
+        "type": "spacing"
+      },
+      "space_3": {
+        "value": "12",
+        "type": "spacing"
+      },
+      "space_4": {
+        "value": "16",
+        "type": "spacing"
+      },
+      "space_5": {
+        "value": "20",
+        "type": "spacing"
+      },
+      "space_6": {
+        "value": "24",
+        "type": "spacing"
+      },
+      "space_7": {
+        "value": "28",
+        "type": "spacing"
+      },
+      "space_8": {
+        "value": "32",
+        "type": "spacing"
+      },
+      "space_9": {
+        "value": "40",
+        "type": "spacing"
+      },
+      "space_10": {
+        "value": "48",
+        "type": "spacing"
+      },
+      "space_11": {
+        "value": "56",
+        "type": "spacing"
+      },
+      "space_12": {
+        "value": "64",
+        "type": "spacing"
+      },
+      "space_13": {
+        "value": "72",
+        "type": "spacing"
+      },
+      "space_14": {
+        "value": "80",
+        "type": "spacing"
+      },
+      "space_15": {
+        "value": "96",
+        "type": "spacing"
+      },
+      "space_16": {
+        "value": "112",
+        "type": "spacing"
+      },
+      "space_17": {
+        "value": "128",
+        "type": "spacing"
+      },
+      "gap_stack": {
+        "value": "16",
+        "type": "spacing"
+      },
+      "gap_stack_tight": {
+        "value": "12",
+        "type": "spacing"
+      },
+      "gap_grid_2": {
+        "value": "24",
+        "type": "spacing"
+      },
+      "gap_grid_2_wide": {
+        "value": "32",
+        "type": "spacing"
+      },
+      "gap_grid_4": {
+        "value": "14",
+        "type": "spacing"
+      },
+      "space_1": {
+        "value": "6",
+        "type": "spacing"
+      },
+      "space_2_5": {
+        "value": "10",
+        "type": "spacing"
+      },
+      "list_indent": {
+        "value": "26",
+        "type": "spacing"
+      },
+      "table_cell_pad": {
+        "value": "12",
+        "type": "spacing"
+      },
+      "principles_offset": {
+        "value": "124",
+        "type": "spacing"
+      },
+      "flow_inset": {
+        "value": "14",
+        "type": "spacing"
+      },
+      "panel_pad_y": {
+        "value": "18",
+        "type": "spacing"
+      }
+    },
+    "fontSize": {
+      "display": {
+        "value": "92",
+        "type": "fontSizes"
+      },
+      "subtitle": {
+        "value": "64",
+        "type": "fontSizes"
+      },
+      "section": {
+        "value": "50",
+        "type": "fontSizes"
+      },
+      "card": {
+        "value": "30",
+        "type": "fontSizes"
+      },
+      "body": {
+        "value": "20",
+        "type": "fontSizes"
+      },
+      "body_lg": {
+        "value": "34",
+        "type": "fontSizes"
+      },
+      "body_xl": {
+        "value": "40",
+        "type": "fontSizes"
+      },
+      "caption": {
+        "value": "20",
+        "type": "fontSizes"
+      },
+      "header": {
+        "value": "22",
+        "type": "fontSizes"
+      },
+      "footer": {
+        "value": "16",
+        "type": "fontSizes"
+      },
+      "stat": {
+        "value": "178",
+        "type": "fontSizes"
+      },
+      "typo_line": {
+        "value": "60",
+        "type": "fontSizes"
+      },
+      "typo_sub": {
+        "value": "38",
+        "type": "fontSizes"
+      },
+      "small": {
+        "value": "18",
+        "type": "fontSizes"
+      },
+      "logo": {
+        "value": "34",
+        "type": "fontSizes"
+      },
+      "cell_sub": {
+        "value": "16",
+        "type": "fontSizes"
+      },
+      "quote": {
+        "value": "26",
+        "type": "fontSizes"
+      },
+      "pillar_title": {
+        "value": "36",
+        "type": "fontSizes"
+      }
+    },
+    "lineHeight": {
+      "display": {
+        "value": "0.94",
+        "type": "lineHeights"
+      },
+      "subtitle": {
+        "value": "0.96",
+        "type": "lineHeights"
+      },
+      "section": {
+        "value": "1.1",
+        "type": "lineHeights"
+      },
+      "card": {
+        "value": "1.04",
+        "type": "lineHeights"
+      },
+      "body": {
+        "value": "1.2",
+        "type": "lineHeights"
+      },
+      "body_lg": {
+        "value": "1.08",
+        "type": "lineHeights"
+      },
+      "tight": {
+        "value": "1",
+        "type": "lineHeights"
+      }
+    },
+    "fontWeight": {
+      "regular": {
+        "value": "400",
+        "type": "fontWeights"
+      },
+      "semibold": {
+        "value": "600",
+        "type": "fontWeights"
+      }
+    }
+  }
+}

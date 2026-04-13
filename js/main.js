@@ -138,6 +138,10 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function fract(value) {
+  return value - Math.floor(value);
+}
+
 function parseHexColor(hex) {
   if (typeof hex !== "string") {
     return null;
@@ -338,6 +342,7 @@ export function createVesselBackground(canvas, options = {}) {
   let startTime = performance.now();
   let internalScale = state.quality === "high" ? 1.0 : state.quality === "low" ? 0.68 : 0.78;
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const stage = canvas.parentElement instanceof HTMLElement ? canvas.parentElement : null;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -368,6 +373,32 @@ export function createVesselBackground(canvas, options = {}) {
     paletteDirty = false;
   }
 
+  function syncStageScale(timeSeconds) {
+    if (!stage) {
+      return;
+    }
+    const flowT = timeSeconds * (0.3 + 1.15 * state.flowSpeed) + state.seed * 0.73;
+    const heartHz = 1.2;
+    const beatPhase = fract(timeSeconds * heartHz);
+    const beatA = (beatPhase - 0.06) / 0.024;
+    const beatB = (beatPhase - 0.28) / 0.045;
+    const beat = Math.exp(-(beatA * beatA)) + 0.56 * Math.exp(-(beatB * beatB));
+    const beatTail = Math.exp(-Math.max(0, beatPhase - 0.31) * 7.8) * 0.08;
+    const reboundT = Math.max(0, beatPhase - 0.11);
+    const rebound = Math.sin(reboundT * 31.0) * Math.exp(-reboundT * 18.0);
+    const breath = 0.5 + 0.5 * Math.sin(flowT * 0.09 + 0.8 * Math.sin(flowT * 0.04 + state.seed * 3.0));
+    const beatOrganic = 0.96 + 0.04 * Math.sin(flowT * 0.21 + state.seed * 2.3);
+
+    // Gate pulse energy so the wrapper cleanly settles back to rest each cycle.
+    const tailRamp = clamp((beatPhase - 0.44) / 0.26, 0, 1);
+    const restGate = 1 - tailRamp * tailRamp * (3 - 2 * tailRamp);
+    const pulseCore = Math.max(0, beat + beatTail - 0.035) * restGate;
+    const beatEnergy = clamp(pulseCore * (0.92 + 0.08 * breath) * beatOrganic, 0, 1.3);
+    const bounce = Math.max(0, rebound) * restGate;
+    const scale = 1 + beatEnergy * 0.0054 + bounce * 0.0016;
+    stage.style.setProperty("--stage-pulse-scale", scale.toFixed(5));
+  }
+
   function frame(now) {
     if (disposed) {
       return;
@@ -377,6 +408,7 @@ export function createVesselBackground(canvas, options = {}) {
     const quality = chooseQuality();
     const elapsedSeconds = (now - startTime) / 1000;
     const timeSeconds = elapsedSeconds * state.timeScale;
+    syncStageScale(timeSeconds);
 
     gl.useProgram(program);
     gl.bindVertexArray(vao);
@@ -448,6 +480,9 @@ export function createVesselBackground(canvas, options = {}) {
     gl.deleteBuffer(positionBuffer);
     gl.deleteVertexArray(vao);
     gl.deleteProgram(program);
+    if (stage) {
+      stage.style.setProperty("--stage-pulse-scale", "1");
+    }
   }
 
   window.addEventListener("resize", resize);

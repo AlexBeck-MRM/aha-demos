@@ -3,6 +3,8 @@ status: working
 owner: design-brain
 last_reviewed: 2026-04-10
 source_refs:
+  - knowledge/sources/discovery-playback/master-playback-notes.md
+  - knowledge/sources/discovery-playback/technology-playback-notes.md
   - knowledge/sources/discovery-playback/index.md
   - knowledge/sources/current-site-audit/aha-current-site-observations.md
   - docs/aha-design-to-code-workflow-v1.md
@@ -13,6 +15,8 @@ decision_refs:
 ---
 
 # Project Summary
+
+See `canonical-brief.md` for the fast-path version of this summary.
 
 The American Heart Association website refresh is aiming to redefine AHA's digital presence as a modern, emotionally resonant, highly usable brand ecosystem. The goal is not just a prettier site, but a clearer and more ownable digital expression of trust, guidance, utility, and action.
 

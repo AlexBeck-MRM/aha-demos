@@ -1,0 +1,294 @@
+{
+  "version": "1.6",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "ratio": "16:9"
+  },
+  "shell": {
+    "safeMarginX": 40,
+    "contentFrame": {
+      "x": 40,
+      "y": 112,
+      "width": 1840,
+      "height": 872
+    },
+    "footer": {
+      "x": 0,
+      "y": 1016,
+      "width": 1920,
+      "height": 64,
+      "logoX": 40,
+      "deckNameRightInset": 140,
+      "pageNumRightInset": 40
+    },
+    "header": {
+      "type": "minimal-left-title",
+      "hideOn": [
+        "OP-01"
+      ],
+      "headerDivider": false,
+      "headerRightMeta": false
+    }
+  },
+  "placeholders": [
+    "ph_header_title",
+    "ph_slide_title",
+    "ph_slide_subtitle",
+    "ph_body_main",
+    "ph_body_secondary",
+    "ph_visual_1",
+    "ph_data_1",
+    "ph_table_1",
+    "ph_footer_deckname",
+    "ph_footer_pagenum"
+  ],
+  "typography": {
+    "fontFamily": "MW Sans",
+    "tokens": {
+      "display": "92/0.94/600",
+      "section": "50/1.1/600",
+      "card": "30/1.04/600",
+      "body": "20/1.2/400",
+      "bodyLarge": "34/1.08/400",
+      "bodyXL": "40/1.08/400",
+      "footer": "16/1.2/400"
+    }
+  },
+  "colors": {
+    "headingPrimary": "#000000",
+    "headingOnRed": "#FFFFFF",
+    "bodySecondary": "#444444",
+    "accentRed": "#D3031F",
+    "iconPrimary": "#000000",
+    "border": "#D6D6D6",
+    "softFill": "#F5F5F7",
+    "softFillAlt": "#ECECF1"
+  },
+  "layouts": [
+    {
+      "id": "OP-01",
+      "name": "Cover",
+      "group": "Cover"
+    },
+    {
+      "id": "OP-02",
+      "name": "Agenda",
+      "group": "Agenda"
+    },
+    {
+      "id": "OP-03",
+      "name": "Timeline",
+      "group": "Timeline"
+    },
+    {
+      "id": "TL-02",
+      "name": "Timeline - Program Roadmap Grid",
+      "group": "Timeline"
+    },
+    {
+      "id": "TN-01",
+      "name": "Text + Narrative - Big Title Statement",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "TN-02",
+      "name": "Text + Narrative - Single Narrative",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "TN-03",
+      "name": "Text + Narrative - Split Narrative",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "TN-04",
+      "name": "Text + Narrative - Narrative + Visual",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "DA-01",
+      "name": "Data - Big Number + Context",
+      "group": "Data"
+    },
+    {
+      "id": "DA-02",
+      "name": "Data - Chart + Commentary",
+      "group": "Data"
+    },
+    {
+      "id": "TB-01",
+      "name": "Tabular - Comparison Table",
+      "group": "Tabular"
+    },
+    {
+      "id": "TB-02",
+      "name": "Tabular - Matrix / Workplan Grid",
+      "group": "Tabular"
+    },
+    {
+      "id": "TB-03",
+      "name": "Tabular - Scorecard / Heatmap Grid",
+      "group": "Tabular"
+    },
+    {
+      "id": "FI-01",
+      "name": "Findings A - Evidence Stack",
+      "group": "Findings A"
+    },
+    {
+      "id": "FI-02",
+      "name": "Findings A - Synthesis",
+      "group": "Findings A"
+    },
+    {
+      "id": "FI-03",
+      "name": "Findings B - Mixed Media Findings",
+      "group": "Findings B"
+    },
+    {
+      "id": "FI-04",
+      "name": "Findings B - Diagnostic Board",
+      "group": "Findings B"
+    },
+    {
+      "id": "PR-01",
+      "name": "Principles - Grid",
+      "group": "Principles"
+    },
+    {
+      "id": "PR-02",
+      "name": "Principles - Rationale Cards",
+      "group": "Principles"
+    },
+    {
+      "id": "PR-03",
+      "name": "Principles - Annotated Screens with Icons",
+      "group": "Principles"
+    },
+    {
+      "id": "VX-01",
+      "name": "Annotation - Annotated Visual",
+      "group": "Annotation"
+    },
+    {
+      "id": "AN-02",
+      "name": "Annotation - Context with Callout Lines",
+      "group": "Annotation"
+    },
+    {
+      "id": "VX-02",
+      "name": "Flows - End-to-End Journey",
+      "group": "Flows"
+    },
+    {
+      "id": "LI-01",
+      "name": "Lists - Five-Column Icon Pillars",
+      "group": "Lists"
+    },
+    {
+      "id": "PE-01",
+      "name": "People - Roles Grid",
+      "group": "People"
+    },
+    {
+      "id": "CA-01",
+      "name": "Canvas - Strategic Canvas",
+      "group": "Canvas"
+    },
+    {
+      "id": "CA-02",
+      "name": "Canvas - Detailed Technology Canvas",
+      "group": "Canvas"
+    },
+    {
+      "id": "CL-01",
+      "name": "Closer",
+      "group": "Closer"
+    },
+    {
+      "id": "CL-02",
+      "name": "Next steps",
+      "group": "Next steps"
+    },
+    {
+      "id": "TY-01",
+      "name": "Text + Narrative - Typographic Statement",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "TY-02",
+      "name": "Text + Narrative - Quote Stack",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "TY-03",
+      "name": "Text + Narrative - Three-Line Manifesto",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "TY-04",
+      "name": "Text + Narrative - Metric Narrative",
+      "group": "Text + Narrative"
+    },
+    {
+      "id": "IM-01",
+      "name": "Design prez - Single Large Image",
+      "group": "Design prez"
+    },
+    {
+      "id": "IM-02",
+      "name": "Design prez - Two Large Images",
+      "group": "Design prez"
+    },
+    {
+      "id": "IM-03",
+      "name": "Design prez - Three Image Columns",
+      "group": "Design prez"
+    },
+    {
+      "id": "RD-01",
+      "name": "Covers - Red Section Divider",
+      "group": "Covers"
+    },
+    {
+      "id": "RD-02",
+      "name": "Covers - Red Typographic Quote",
+      "group": "Covers"
+    },
+    {
+      "id": "RD-03",
+      "name": "Covers - Red Metric Hero",
+      "group": "Covers"
+    }
+  ],
+  "delivery": {
+    "status": "complete",
+    "layoutCount": 39,
+    "allBaseLayoutsImplemented": true
+  },
+  "tabularApi": {
+    "tableType": [
+      "comparison",
+      "matrix",
+      "scorecard"
+    ],
+    "colSpec": "string[]",
+    "rowCount": "number",
+    "headerEnabled": "boolean",
+    "denseMode": "boolean"
+  },
+  "tokenization": {
+    "enabled": true,
+    "cssTokenSource": "slides/tokens-v1.6.json",
+    "cssTokenOutput": "slides/deck-v1.6-tokens.css",
+    "tokensStudioImport": "slides/tokens-studio-v1.6.json",
+    "hardcodedInlineStyles": false,
+    "hardcodedCssValues": false
+  },
+  "contentStrategy": {
+    "sourceNode": "https://www.figma.com/design/Mn0vZrL7nud32WjHcSVear/Untitled?node-id=0-1846",
+    "goal": "Use realistic AHA/roadmap copy by slide archetype, preserving layout clarity and PPTX readability.",
+    "fallbackRule": "If source copy overflows a layout, preserve structure and adjust copy length while maintaining meaning."
+  }
+}

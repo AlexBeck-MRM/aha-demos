@@ -14,15 +14,27 @@ Work in three complementary modes:
 ## Source-of-truth order
 When answering or creating project artifacts, prioritize sources in this order:
 1. `knowledge/sources/`
-2. `knowledge/distilled/`
-3. `logs/decision-log.md`
-4. `logs/route-evolution.md`
-5. `design/ui-style-inventory/`
-6. `design/routes/`
-7. `prompts/`
+2. `knowledge/distilled/canonical-brief.md`
+3. `knowledge/distilled/`
+4. `logs/decision-log.md`
+5. `logs/route-evolution.md`
+6. `design/ui-style-inventory/`
+7. `design/routes/`
+8. `prompts/`
+
+## Fast retrieval path
+Default to the smallest sufficient context set:
+1. `knowledge/sources/index.yaml`
+2. `knowledge/distilled/canonical-brief.md`
+3. one relevant source note
+4. one relevant inventory or route file
+
+Only expand beyond that when the task truly requires more evidence.
+If the task references the Figma design workbench, read `knowledge/sources/figma-design-workbench/index.md` and `design/figma/workbench-section-map.yaml` before opening broader board metadata or inventory files.
 
 Do not invent AHA facts when the source files are silent.
 If source material is ambiguous, state the ambiguity and propose options.
+If a cited source could not actually be ingested, say so directly instead of implying it was read.
 
 ## Project objective
 Help create a future-facing AHA website that feels:
@@ -66,6 +78,7 @@ When a decision is made, propose or apply updates for:
 - `logs/decision-log.md`
 - `logs/route-evolution.md`
 - the relevant file in `design/ui-style-inventory/` or `design/routes/`
+- the matching Figma workbench header text when a board-linked inventory section is being updated
 
 ## Prompting rules
 When writing prompts:

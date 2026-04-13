@@ -14,3 +14,4 @@
 
 ## Gap
 An official published brand-guideline document has not yet been ingested.
+See `ingest-status.md` for the current file-read blocker.

@@ -9,3 +9,6 @@ Working-source only. This folder is grounded in repo-native assets and slide-sys
 - photography guidance
 - illustration guidance
 - accessibility and legal brand constraints
+
+## Current blocker
+The user-provided `AHABrandGuidelines.pdf` path is known, but the file has not been ingestible from its cloud-backed location yet.

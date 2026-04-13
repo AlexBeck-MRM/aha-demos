@@ -58,18 +58,19 @@ body {
 }
 
 .stage {
-  --stage-radius: clamp(56px, 9vh, 140px);
+  --stage-radius: clamp(28px, 6vmin, 64px);
+  --stage-pulse-scale: 1;
   position: fixed;
-  inset: 5vh;
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  height: 50vh;
   border-radius: var(--stage-radius);
   overflow: hidden;
   background: #bf0e2f;
-}
-
-@supports (corner-shape: superellipse(0.7)) {
-  .stage {
-    corner-shape: superellipse(0.7);
-  }
+  transform-origin: 50% 50%;
+  transform: translate3d(-50%, -50%, 0) scale(var(--stage-pulse-scale));
+  will-change: transform;
 }
 
 #bg {

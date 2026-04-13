@@ -116,13 +116,13 @@ async function main() {
   }
 
   const base = `http://localhost:${PORT}`;
-  const urls = [base, `${base}/css.html`, `${base}/shader.html`];
+  const urls = [`${base}/shader.html`];
   if (!noOpen) {
     try {
       openUrls(urls);
-      console.log("Opened chooser + both visualisers.");
+      console.log("Opened shader visualiser.");
     } catch {
-      console.log("Could not auto-open browser in this environment. Open these URLs manually:");
+      console.log("Could not auto-open browser in this environment. Open this URL manually:");
       console.log(urls.join("\n"));
     }
   } else {

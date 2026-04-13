@@ -3,6 +3,7 @@ status: working
 owner: design-brain
 last_reviewed: 2026-04-10
 source_refs:
+  - knowledge/sources/discovery-playback/master-playback-notes.md
   - knowledge/sources/discovery-playback/index.md
   - knowledge/sources/brand-guidelines/canonical-sources.md
 decision_refs:

@@ -102,13 +102,30 @@ void main() {
   vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
 
   float flowT = u_time * (0.3 + 1.15 * u_flow_speed) + u_seed * 0.73;
-  vec2 q = p;
+  float heartHz = 1.2;
+  float beatPhase = fract(u_time * heartHz);
+  float beatA = (beatPhase - 0.06) / 0.024;
+  float beatB = (beatPhase - 0.28) / 0.045;
+  float beat = exp(-beatA * beatA) + 0.56 * exp(-beatB * beatB);
+  float beatTail = exp(-max(0.0, beatPhase - 0.31) * 7.8) * 0.08;
+  float reboundT = max(0.0, beatPhase - 0.11);
+  float rebound = sin(reboundT * 31.0) * exp(-reboundT * 18.0);
+  float breath = 0.5 + 0.5 * sin(flowT * 0.09 + 0.8 * sin(flowT * 0.04 + u_seed * 3.0));
+  float beatOrganic = 0.96 + 0.04 * sin(flowT * 0.21 + u_seed * 2.3);
+  float tailRamp = clamp((beatPhase - 0.44) / 0.26, 0.0, 1.0);
+  float restGate = 1.0 - tailRamp * tailRamp * (3.0 - 2.0 * tailRamp);
+  float pulseCore = max(0.0, beat + beatTail - 0.035) * restGate;
+  float beatEnergy = clamp(pulseCore * (0.92 + 0.08 * breath) * beatOrganic, 0.0, 1.3);
+  float bounce = max(0.0, rebound) * restGate;
+  float beatStretchX = 1.0 + 0.011 * beatEnergy - 0.002 * bounce;
+  float beatStretchY = 1.0 + 0.039 * beatEnergy + 0.008 * bounce;
+  vec2 q = vec2(p.x / beatStretchX, p.y / beatStretchY);
 
   vec2 advection = vec2(
     fbm(q * 0.62 + vec2(flowT * 0.1, -flowT * 0.07), u_octaves),
     fbm(q * 0.62 + vec2(-flowT * 0.08, flowT * 0.09) + 7.2, u_octaves)
   ) - 0.5;
-  q += advection * (0.08 + 0.24 * u_warp);
+  q += advection * (0.08 + 0.24 * u_warp) * (1.0 + 0.08 * beatEnergy);
 
   vec2 c1 = vec2(-0.82 + 0.24 * sin(flowT * 0.23 + 0.4), -0.48 + 0.2 * cos(flowT * 0.19 + 0.1));
   vec2 c2 = vec2(-0.18 + 0.3 * sin(flowT * 0.17 + 1.6), 0.46 + 0.18 * cos(flowT * 0.14 + 1.0));
@@ -136,12 +153,14 @@ void main() {
 
   vec2 centerQ = q * vec2(1.0, 0.85);
   float centerMask = 1.0 - smoothstep(0.18, 0.9, length(centerQ));
+  float beatCenter = beatEnergy * centerMask;
+  field += beatCenter * (0.02 + 0.02 * u_oxygen_glow);
 
   float seepNoiseA = valueNoise(q * 2.1 + vec2(flowT * 0.05, -flowT * 0.04) + u_seed * 2.7);
   float seepNoiseB = valueNoise(q * 3.1 + vec2(-flowT * 0.04, flowT * 0.06) + 13.2 + u_seed * 1.9);
   float seepField = mix(seepNoiseA, seepNoiseB, 0.45);
   float seepVeinMask = smoothstep(0.42, 0.86, seepField);
-  float seepMask = clamp((0.24 + 0.76 * centerMask) * mix(0.54, 1.0, seepVeinMask), 0.0, 1.0);
+  float seepMask = clamp((0.24 + 0.76 * centerMask) * mix(0.54, 1.0, seepVeinMask) * (1.0 + 0.14 * beatCenter), 0.0, 1.0);
   field += seepMask * (0.003 + 0.005 * u_oxygen_glow);
   field = clamp(field, 0.0, 1.0);
 
@@ -176,11 +195,15 @@ void main() {
   float glowMask = smoothstep(0.48, 1.0, smoothField);
   color = mix(color, u_palette[3], glowMask * (0.14 + 0.34 * u_mood_blend));
   color += u_palette[4] * glowMask * (0.08 + 0.22 * u_oxygen_glow);
+  color = mix(color, mix(u_palette[2], u_palette[4], 0.62), beatCenter * (0.04 + 0.08 * u_oxygen_glow));
+  color += u_palette[4] * beatCenter * (0.03 + 0.05 * u_oxygen_glow);
   color = mix(color, paletteRamp(clamp(shaped + 0.04 * seepMask, 0.0, 1.0)), seepMask * 0.18);
 
   float luma = dot(color, vec3(0.299, 0.587, 0.114));
-  float dynamicSaturation = clamp(u_saturation + seepMask * 0.08 * u_oxygen_glow, 0.4, 2.8);
+  float beatVivid = beatCenter * (0.12 + 0.1 * u_vibrance);
+  float dynamicSaturation = clamp(u_saturation + seepMask * 0.08 * u_oxygen_glow + beatCenter * 0.12, 0.4, 2.8);
   color = mix(vec3(luma), color, dynamicSaturation);
+  color += (color - vec3(luma)) * beatVivid;
 
   float maxC = max(color.r, max(color.g, color.b));
   float minC = min(color.r, min(color.g, color.b));
@@ -191,6 +214,7 @@ void main() {
   color *= u_brightness;
 
   float exposureLift = seepMask * 0.006 * u_oxygen_glow * (0.72 + 0.28 * centerMask);
+  exposureLift += beatCenter * (0.003 + 0.006 * u_oxygen_glow);
   color *= 1.0 + exposureLift;
   color = max(color, 0.0);
   color = color / (vec3(1.0) + color * 0.35);
@@ -205,7 +229,7 @@ void main() {
     h += 1.0;
   }
   hsv.x = h;
-  hsv.y = clamp(hsv.y, 0.56, 1.0);
+  hsv.y = clamp(hsv.y + beatCenter * 0.06, 0.56, 1.0);
   hsv.z = clamp(hsv.z, 0.0, 0.985);
   color = hsv2rgb(hsv);
 

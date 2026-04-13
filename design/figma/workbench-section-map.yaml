@@ -1,0 +1,749 @@
+file:
+  id: aha-design-workbench
+  url: "https://www.figma.com/design/3qEMU5hYtAJ3S7vWGijJhQ/AHA---Design-Workbench?node-id=2138-29519&p=f&m=dev"
+  file_key: "3qEMU5hYtAJ3S7vWGijJhQ"
+  primary_canvas:
+    name: "4. Styleframe work"
+    node_id: "2138:29519"
+  header_symbol:
+    name: "header"
+    node_id: "2126:23"
+    editable_descendant_ids:
+      title: "2126:6"
+      direction: "2126:17"
+      reasoning: "2126:15"
+
+groups:
+  foundations:
+    heading_node: "2138:29521"
+    heading_name: "1. Foundations"
+    section_ids:
+      - mega-menu
+      - nav-elements
+      - colour-scheme
+      - icons
+      - depth
+      - gradients
+      - headlines
+      - text-hierarchy
+      - text-formatting
+      - grid
+      - image-types
+      - image-cropping
+      - ai
+  navigation-and-discovery:
+    heading_node: "2138:29781"
+    heading_name: "2. Navigation & Discovery"
+    section_ids:
+      - search
+      - tabs
+      - dials
+      - links-and-guidance
+      - carousels
+  content-and-storytelling:
+    heading_node: "2138:29712"
+    heading_name: "3. Content & Storytelling"
+    section_ids:
+      - illustration-use
+      - photography-treatment
+      - video
+      - trust-cues
+      - first-load
+      - page-templates
+      - content
+      - cards
+  interaction-and-conversion:
+    heading_node: "2138:29713"
+    heading_name: "4. Interaction & Conversion"
+    section_ids:
+      - buttons
+      - interaction
+      - motion-reveals
+      - forms
+      - accessibility
+  styleframe-structure:
+    heading_node: "2166:635"
+    heading_name: "Structure"
+    section_ids:
+      - structure
+
+sections:
+  - id: mega-menu
+    board_name: "Mega Menu"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/mega-menu.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29522"
+      read_section_node: "2138:29522"
+      header_instance_node: "2138:29523"
+      editable_text_paths:
+        title: "2138:29523/2126:6"
+        direction: "2138:29523/2126:17"
+        reasoning: "2138:29523/2126:15"
+      example_nodes:
+        - "2138:29524"
+        - "2138:29526"
+        - "2166:633"
+    notes:
+      - "Frame `2166:633` contains three nested mega-menu captures."
+
+  - id: nav-elements
+    board_name: "Nav Elements"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/nav-elements.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29531"
+      read_section_node: "2138:29531"
+      header_instance_node: "2138:29533"
+      editable_text_paths:
+        title: "2138:29533/2126:6"
+        direction: "2138:29533/2126:17"
+        reasoning: "2138:29533/2126:15"
+      example_nodes:
+        - "2138:29532"
+        - "2138:29534"
+        - "2138:29535"
+        - "2138:29536"
+        - "2138:29650"
+        - "2138:29651"
+      notable_nodes:
+        - id: "2138:29584"
+          type: shape-with-text
+          name: "Shape with text"
+        - id: "2138:29585"
+          type: shape-with-text
+          name: "Shape with text"
+        - id: "2138:29586"
+          type: shape-with-text
+          name: "Shape with text"
+        - id: "2138:29652"
+          type: text
+          name: "Route 2"
+        - id: "2138:29653"
+          type: text
+          name: "Route 1"
+    notes:
+      - "This section contains dense vector markup and route callouts. Read the section node directly when inspecting annotations or scribbles."
+
+  - id: buttons
+    board_name: "Buttons"
+    group: interaction-and-conversion
+    brain_files:
+      - "design/ui-style-inventory/buttons.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29654"
+      read_section_node: "2138:29654"
+      header_instance_node: "2138:29656"
+      editable_text_paths:
+        title: "2138:29656/2126:6"
+        direction: "2138:29656/2126:17"
+        reasoning: "2138:29656/2126:15"
+      example_nodes:
+        - "2138:29655"
+        - "2138:29657"
+        - "2138:29658"
+        - "2138:29659"
+        - "2138:29660"
+        - "2138:29663"
+        - "2138:29664"
+      notable_nodes:
+        - id: "2138:29661"
+          type: vector
+          name: "Vector 123"
+        - id: "2138:29662"
+          type: vector
+          name: "Vector 124"
+
+  - id: links-and-guidance
+    board_name: "Links and Guidance"
+    group: navigation-and-discovery
+    brain_files:
+      - "design/ui-style-inventory/links-and-guidance.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29665"
+      read_section_node: "2138:29665"
+      header_instance_node: "2138:29666"
+      editable_text_paths:
+        title: "2138:29666/2126:6"
+        direction: "2138:29666/2126:17"
+        reasoning: "2138:29666/2126:15"
+      example_nodes:
+        - "2138:29667"
+        - "2138:29668"
+        - "2138:29669"
+        - "2138:29670"
+        - "2138:29671"
+        - "2138:29672"
+        - "2138:29673"
+
+  - id: gradients
+    board_name: "Gradients"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/gradients.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29674"
+      read_section_node: "2138:29674"
+      header_instance_node: "2138:29675"
+      editable_text_paths:
+        title: "2138:29675/2126:6"
+        direction: "2138:29675/2126:17"
+        reasoning: "2138:29675/2126:15"
+      example_nodes:
+        - "2138:29676"
+        - "2138:29677"
+
+  - id: colour-scheme
+    board_name: "Colour Scheme"
+    aliases:
+      - "Color Scheme"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/color-scheme.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29678"
+      read_section_node: "2138:29678"
+      header_instance_node: "2138:29679"
+      editable_text_paths:
+        title: "2138:29679/2126:6"
+        direction: "2138:29679/2126:17"
+        reasoning: "2138:29679/2126:15"
+      example_nodes:
+        - "2138:29680"
+        - "2138:29681"
+        - "2138:29682"
+        - "2138:29683"
+        - "2138:29687"
+        - "2138:29688"
+      notable_nodes:
+        - id: "2166:637"
+          type: text
+          name: "Warmer"
+        - id: "2166:639"
+          type: text
+          name: "Colder"
+        - id: "2166:2526"
+          type: text
+          name: "Aim"
+        - id: "2166:641"
+          type: text
+          name: "⭐️️"
+    notes:
+      - "The board spelling is `Colour Scheme`, but the canonical brain file stays `color-scheme.md`."
+
+  - id: carousels
+    board_name: "Carousels"
+    group: navigation-and-discovery
+    brain_files:
+      - "design/ui-style-inventory/carousels.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29689"
+      read_section_node: "2138:29689"
+      header_instance_node: "2138:29690"
+      editable_text_paths:
+        title: "2138:29690/2126:6"
+        direction: "2138:29690/2126:17"
+        reasoning: "2138:29690/2126:15"
+      example_nodes: []
+
+  - id: icons
+    board_name: "Icons"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/icons.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29691"
+      read_section_node: "2138:29691"
+      header_instance_node: "2138:29692"
+      editable_text_paths:
+        title: "2138:29692/2126:6"
+        direction: "2138:29692/2126:17"
+        reasoning: "2138:29692/2126:15"
+      example_nodes:
+        - "2138:29693"
+        - "2138:29694"
+        - "2138:29695"
+        - "2138:29696"
+
+  - id: grid
+    board_name: "Grid"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/grid.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29701"
+      read_section_node: "2138:29701"
+      header_instance_node: "2138:29702"
+      editable_text_paths:
+        title: "2138:29702/2126:6"
+        direction: "2138:29702/2126:17"
+        reasoning: "2138:29702/2126:15"
+      example_nodes: []
+
+  - id: depth
+    board_name: "Depth"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/depth.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29703"
+      read_section_node: "2138:29703"
+      header_instance_node: "2138:29710"
+      editable_text_paths:
+        title: "2138:29710/2126:6"
+        direction: "2138:29710/2126:17"
+        reasoning: "2138:29710/2126:15"
+      example_nodes:
+        - "2138:29704"
+        - "2138:29705"
+        - "2138:29706"
+        - "2138:29707"
+        - "2138:29708"
+        - "2138:29709"
+      notable_nodes:
+        - id: "2138:29711"
+          type: text
+          name: "To think about: What do we use depth for?"
+
+  - id: interaction
+    board_name: "Interaction"
+    group: interaction-and-conversion
+    brain_files:
+      - "design/ui-style-inventory/interaction.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29714"
+      read_section_node: "2138:29714"
+      header_instance_node: "2138:29715"
+      editable_text_paths:
+        title: "2138:29715/2126:6"
+        direction: "2138:29715/2126:17"
+        reasoning: "2138:29715/2126:15"
+      example_nodes:
+        - "2138:29716"
+
+  - id: page-templates
+    board_name: "Page templates"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/page-templates.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29717"
+      read_section_node: "2138:29717"
+      header_instance_node: "2138:29718"
+      editable_text_paths:
+        title: "2138:29718/2126:6"
+        direction: "2138:29718/2126:17"
+        reasoning: "2138:29718/2126:15"
+      example_nodes: []
+
+  - id: content
+    board_name: "Content"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/content.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29719"
+      read_section_node: "2138:29719"
+      header_instance_node: "2138:29720"
+      editable_text_paths:
+        title: "2138:29720/2126:6"
+        direction: "2138:29720/2126:17"
+        reasoning: "2138:29720/2126:15"
+      example_nodes: []
+
+  - id: motion-reveals
+    board_name: "Motion Reveals"
+    group: interaction-and-conversion
+    brain_files:
+      - "design/ui-style-inventory/motion-reveals.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29721"
+      read_section_node: "2138:29721"
+      header_instance_node: "2138:29722"
+      editable_text_paths:
+        title: "2138:29722/2126:6"
+        direction: "2138:29722/2126:17"
+        reasoning: "2138:29722/2126:15"
+      example_nodes: []
+
+  - id: forms
+    board_name: "Forms"
+    group: interaction-and-conversion
+    brain_files:
+      - "design/ui-style-inventory/forms.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29723"
+      read_section_node: "2138:29723"
+      header_instance_node: "2138:29724"
+      editable_text_paths:
+        title: "2138:29724/2126:6"
+        direction: "2138:29724/2126:17"
+        reasoning: "2138:29724/2126:15"
+      example_nodes: []
+
+  - id: trust-cues
+    board_name: "Trust cues"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/trust-cues.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29725"
+      read_section_node: "2138:29725"
+      header_instance_node: "2138:29726"
+      editable_text_paths:
+        title: "2138:29726/2126:6"
+        direction: "2138:29726/2126:17"
+        reasoning: "2138:29726/2126:15"
+      example_nodes: []
+
+  - id: accessibility
+    board_name: "Accessibility"
+    group: interaction-and-conversion
+    brain_files:
+      - "design/ui-style-inventory/accessibility.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29727"
+      read_section_node: "2138:29727"
+      header_instance_node: "2138:29728"
+      editable_text_paths:
+        title: "2138:29728/2126:6"
+        direction: "2138:29728/2126:17"
+        reasoning: "2138:29728/2126:15"
+      example_nodes: []
+
+  - id: ai
+    board_name: "AI"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/ai.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29729"
+      read_section_node: "2138:29729"
+      header_instance_node: "2138:29730"
+      editable_text_paths:
+        title: "2138:29730/2126:6"
+        direction: "2138:29730/2126:17"
+        reasoning: "2138:29730/2126:15"
+      example_nodes:
+        - "2138:29731"
+    notes:
+      - "Keep this section provisional until the pattern is clearer and better populated."
+
+  - id: illustration-use
+    board_name: "Illustration use"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/illustration-use.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29732"
+      read_section_node: "2138:29732"
+      header_instance_node: "2138:29741"
+      editable_text_paths:
+        title: "2138:29741/2126:6"
+        direction: "2138:29741/2126:17"
+        reasoning: "2138:29741/2126:15"
+      example_nodes:
+        - "2138:29733"
+        - "2138:29734"
+        - "2138:29735"
+        - "2138:29736"
+        - "2138:29737"
+        - "2138:29738"
+        - "2138:29739"
+        - "2138:29740"
+        - "2138:29742"
+
+  - id: tabs
+    board_name: "Tabs"
+    group: navigation-and-discovery
+    brain_files:
+      - "design/ui-style-inventory/tabs.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29743"
+      read_section_node: "2138:29743"
+      header_instance_node: "2138:29751"
+      editable_text_paths:
+        title: "2138:29751/2126:6"
+        direction: "2138:29751/2126:17"
+        reasoning: "2138:29751/2126:15"
+      example_nodes:
+        - "2138:29744"
+        - "2138:29745"
+        - "2138:29746"
+        - "2138:29747"
+        - "2138:29748"
+        - "2138:29749"
+        - "2138:29750"
+        - "2138:29752"
+        - "2138:29753"
+
+  - id: photography-treatment
+    board_name: "Photography treatment"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/photography-treatment.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29754"
+      read_section_node: "2138:29754"
+      header_instance_node: "2138:29767"
+      editable_text_paths:
+        title: "2138:29767/2126:6"
+        direction: "2138:29767/2126:17"
+        reasoning: "2138:29767/2126:15"
+      example_nodes:
+        - "2138:29755"
+        - "2138:29756"
+        - "2138:29757"
+        - "2138:29758"
+        - "2138:29759"
+        - "2138:29760"
+        - "2138:29761"
+        - "2138:29762"
+        - "2138:29763"
+        - "2138:29764"
+        - "2138:29765"
+        - "2138:29766"
+
+  - id: search
+    board_name: "Search"
+    group: navigation-and-discovery
+    brain_files:
+      - "design/ui-style-inventory/search.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29768"
+      read_section_node: "2138:29768"
+      header_instance_node: "2138:29770"
+      editable_text_paths:
+        title: "2138:29770/2126:6"
+        direction: "2138:29770/2126:17"
+        reasoning: "2138:29770/2126:15"
+      example_nodes:
+        - "2138:29769"
+
+  - id: headlines
+    board_name: "Headlines"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/headlines.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29771"
+      read_section_node: "2138:29771"
+      header_instance_node: "2138:29774"
+      editable_text_paths:
+        title: "2138:29774/2126:6"
+        direction: "2138:29774/2126:17"
+        reasoning: "2138:29774/2126:15"
+      example_nodes:
+        - "2138:29772"
+        - "2138:29773"
+        - "2138:29777"
+        - "2138:29778"
+      notable_nodes:
+        - id: "2138:29775"
+          type: vector
+          name: "Vector 118"
+        - id: "2138:29776"
+          type: vector
+          name: "Vector 119"
+
+  - id: text-hierarchy
+    board_name: "Text hierarchy"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/text-hierarchy.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29779"
+      read_section_node: "2138:29779"
+      header_instance_node: "2138:29780"
+      editable_text_paths:
+        title: "2138:29780/2126:6"
+        direction: "2138:29780/2126:17"
+        reasoning: "2138:29780/2126:15"
+      example_nodes: []
+
+  - id: text-formatting
+    board_name: "Text Formatting"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/text-formatting.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29782"
+      read_section_node: "2138:29782"
+      header_instance_node: "2138:29784"
+      editable_text_paths:
+        title: "2138:29784/2126:6"
+        direction: "2138:29784/2126:17"
+        reasoning: "2138:29784/2126:15"
+      example_nodes:
+        - "2138:29783"
+
+  - id: dials
+    board_name: "Dials"
+    group: navigation-and-discovery
+    brain_files:
+      - "design/ui-style-inventory/dials.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29785"
+      read_section_node: "2138:29785"
+      header_instance_node: "2138:29787"
+      editable_text_paths:
+        title: "2138:29787/2126:6"
+        direction: "2138:29787/2126:17"
+        reasoning: "2138:29787/2126:15"
+      example_nodes:
+        - "2138:29786"
+
+  - id: video
+    board_name: "Video"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/video.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29788"
+      read_section_node: "2138:29788"
+      header_instance_node: "2138:29789"
+      editable_text_paths:
+        title: "2138:29789/2126:6"
+        direction: "2138:29789/2126:17"
+        reasoning: "2138:29789/2126:15"
+      example_nodes:
+        - "2138:29790"
+
+  - id: cards
+    board_name: "Cards"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/cards.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29791"
+      read_section_node: "2138:29791"
+      header_instance_node: "2138:29794"
+      editable_text_paths:
+        title: "2138:29794/2126:6"
+        direction: "2138:29794/2126:17"
+        reasoning: "2138:29794/2126:15"
+      example_nodes:
+        - "2138:29792"
+        - "2138:29793"
+
+  - id: image-types
+    board_name: "Image types"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/image-types.md"
+    content_status: populated
+    figma:
+      section_node: "2138:29795"
+      read_section_node: "2138:29795"
+      header_instance_node: "2138:29796"
+      editable_text_paths:
+        title: "2138:29796/2126:6"
+        direction: "2138:29796/2126:17"
+        reasoning: "2138:29796/2126:15"
+      example_nodes:
+        - "2138:29800"
+        - "2138:29801"
+        - "2138:29802"
+        - "2138:29803"
+        - "2138:29804"
+        - "2138:29805"
+        - "2138:29806"
+      notable_nodes:
+        - id: "2138:29797"
+          type: vector
+          name: "Vector 120"
+        - id: "2138:29798"
+          type: vector
+          name: "Vector 121"
+        - id: "2138:29799"
+          type: vector
+          name: "Vector 122"
+    notes:
+      - "Use this section for image-role taxonomy. Do not let it absorb treatment rules that belong in photography, illustration, or cropping."
+
+  - id: first-load
+    board_name: "First load"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/first-load.md"
+    content_status: sparse
+    figma:
+      section_node: "2138:29807"
+      read_section_node: "2138:29807"
+      header_instance_node: "2138:29809"
+      editable_text_paths:
+        title: "2138:29809/2126:6"
+        direction: "2138:29809/2126:17"
+        reasoning: "2138:29809/2126:15"
+      example_nodes:
+        - "2138:29808"
+
+  - id: image-cropping
+    board_name: "Image cropping"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/image-cropping.md"
+    content_status: empty
+    figma:
+      section_node: "2138:29810"
+      read_section_node: "2138:29810"
+      header_instance_node: "2138:29811"
+      editable_text_paths:
+        title: "2138:29811/2126:6"
+        direction: "2138:29811/2126:17"
+        reasoning: "2138:29811/2126:15"
+      example_nodes: []
+
+  - id: structure
+    board_name: "Structure"
+    group: styleframe-structure
+    brain_files:
+      - "design/styleframes/01-brand-presence.md"
+      - "design/styleframes/02-website-ecosystem.md"
+      - "design/routes/route-comparison.md"
+    content_status: populated
+    figma:
+      section_node: "2166:635"
+      read_section_node: "2166:635"
+      text_nodes:
+        styleframe_01_purpose: "2138:29697"
+        styleframe_02_purpose: "2138:29698"
+        ui_styleframe_label: "2138:29699"
+        comparison_summary: "2138:29813"
+        brand_first_system_second: "2138:29818"
+      example_nodes:
+        - "2138:29700"
+        - "2138:29812"
+    notes:
+      - "This section does not use the reusable header instance."
+      - "Treat it as the board-level bridge between styleframe framing and the UI inventory."

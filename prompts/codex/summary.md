@@ -4,6 +4,7 @@
 Summarize the current project state without losing decision continuity.
 
 ## Required output sections
+- Read `knowledge/distilled/canonical-brief.md` first
 - Sources reviewed with exact file paths
 - Decision IDs consulted
 - Current direction
