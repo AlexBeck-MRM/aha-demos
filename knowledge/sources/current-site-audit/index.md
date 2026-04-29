@@ -8,6 +8,9 @@
 - `evidence/recordings/american_heart_association__key.mp4`
 - `data/brand_capture_targets.csv`
 
+## Working notes
+- `knowledge/sources/current-site-audit/healthy-living-guide-system-high-fidelity-2026-04-28.md`
+
 ## Working use
 This is the source layer for current-state observations, comparator reads, and ecosystem-pattern analysis.
 

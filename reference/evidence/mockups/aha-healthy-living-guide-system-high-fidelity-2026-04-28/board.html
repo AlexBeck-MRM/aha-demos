@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHA Healthy Living Guide System</title>
+  <style>
+    :root {
+      --red: #c8102e;
+      --red-dark: #9f0f25;
+      --ink: #191f29;
+      --muted: #657180;
+      --line: #d9dee5;
+      --soft-line: #e9edf2;
+      --paper: #ffffff;
+      --wash: #f7f3ed;
+      --cream: #fff8ef;
+      --blush: #fff2f4;
+      --blue: #245d7a;
+      --green: #3f7356;
+      --yellow: #f6c665;
+      --shadow: 0 28px 70px rgba(30, 31, 35, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .board {
+      width: 3200px;
+      min-height: 2300px;
+      padding: 70px;
+      background:
+        linear-gradient(90deg, rgba(200, 16, 46, 0.03) 0 1px, transparent 1px 160px),
+        linear-gradient(180deg, rgba(200, 16, 46, 0.03) 0 1px, transparent 1px 160px),
+        var(--wash);
+    }
+
+    .board-header {
+      display: grid;
+      grid-template-columns: 1fr 1080px;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      margin-bottom: 12px;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 62px;
+      line-height: 1.02;
+    }
+
+    .board-note {
+      color: var(--muted);
+      font-size: 27px;
+      line-height: 1.34;
+    }
+
+    .system-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 34px;
+    }
+
+    .system-step {
+      padding: 22px 24px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 18px 45px rgba(40, 37, 34, 0.07);
+    }
+
+    .system-step strong {
+      display: block;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .system-step span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.28;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+    }
+
+    .panel {
+      background: var(--paper);
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel.super {
+      grid-column: 1 / -1;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 30px;
+      border-bottom: 2px solid var(--soft-line);
+      background: #fff;
+    }
+
+    .panel-header h2 {
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .badge {
+      padding: 10px 16px;
+      color: #fff;
+      background: #3f4653;
+      border-radius: 5px;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .browser {
+      padding: 26px;
+      background: #fff;
+    }
+
+    .site-nav {
+      display: grid;
+      grid-template-columns: 170px 1fr auto auto;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      width: 145px;
+      height: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .search {
+      width: 250px;
+      padding: 12px 18px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 800;
+      background: #f8f9fb;
+    }
+
+    .donate {
+      padding: 13px 22px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--red);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .super-page {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      min-height: 710px;
+      padding: 36px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(246, 198, 101, 0.45), transparent 260px),
+        linear-gradient(135deg, #fff 0%, #fff 48%, #fff5f5 100%);
+      border: 2px solid var(--soft-line);
+    }
+
+    .super-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .hero-kicker {
+      color: var(--red);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .super-page h3 {
+      max-width: 680px;
+      font-size: 58px;
+      line-height: 1.02;
+    }
+
+    .super-page p {
+      max-width: 650px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 23px;
+      line-height: 1.34;
+    }
+
+    .hero-art {
+      min-height: 248px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 18% 24%, #f6c665 0 54px, transparent 55px),
+        radial-gradient(circle at 78% 32%, #f4a7b2 0 42px, transparent 43px),
+        radial-gradient(circle at 65% 78%, #77a87a 0 58px, transparent 59px),
+        linear-gradient(135deg, #fff1df 0%, #f7fbf8 100%);
+      border: 2px solid #f0dfcf;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      left: 70px;
+      bottom: 34px;
+      width: 430px;
+      height: 84px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow:
+        70px -45px 0 rgba(255, 255, 255, 0.72),
+        230px -10px 0 rgba(255, 255, 255, 0.62);
+    }
+
+    .finder {
+      padding: 24px;
+      border-radius: 8px;
+      background: #fff;
+      border: 2px solid var(--line);
+      box-shadow: 0 18px 45px rgba(37, 39, 43, 0.08);
+    }
+
+    .finder h4,
+    .guide-map h4,
+    .resource-rail h4 {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .choice {
+      min-height: 74px;
+      padding: 14px;
+      border: 2px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.18;
+    }
+
+    .choice.active {
+      border-color: var(--red);
+      background: var(--blush);
+      color: var(--red-dark);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: #f1f8fb;
+      border: 2px solid #c8dbe4;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .recommendation {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--red);
+    }
+
+    .recommendation strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1.1;
+    }
+
+    .recommendation span {
+      display: block;
+      margin-top: 6px;
+      font-size: 16px;
+      line-height: 1.28;
+      opacity: 0.88;
+    }
+
+    .cta {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--red);
+      font-size: 15px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .guide-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .guide-card {
+      min-height: 142px;
+      padding: 17px;
+      border-radius: 8px;
+      border: 2px solid var(--line);
+      background: #fff;
+    }
+
+    .guide-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 21px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .guide-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .guide-page {
+      min-height: 920px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 26px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 8px;
+      border: 2px solid var(--soft-line);
+    }
+
+    .course-nav {
+      padding: 22px;
+      border-right: 2px solid var(--soft-line);
+    }
+
+    .course-nav h3 {
+      font-size: 26px;
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .chapter-link {
+      padding: 13px 0;
+      border-bottom: 2px solid var(--soft-line);
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.16;
+    }
+
+    .chapter-link.active {
+      color: var(--red);
+    }
+
+    .guide-main {
+      min-width: 0;
+    }
+
+    .guide-hero {
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      gap: 24px;
+      padding: 26px;
+      border-radius: 8px;
+      background: var(--cream);
+      border: 2px solid #f1dfc8;
+      margin-bottom: 18px;
+    }
+
+    .guide-hero h3 {
+      font-size: 42px;
+      line-height: 1.05;
+    }
+
+    .guide-hero p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.34;
+    }
+
+    .plate-art {
+      border-radius: 8px;
+      min-height: 180px;
+      background:
+        radial-gradient(circle at 46% 52%, #fff 0 70px, #f0eee6 72px 74px, transparent 75px),
+        radial-gradient(circle at 42% 48%, #77a87a 0 24px, transparent 25px),
+        radial-gradient(circle at 56% 44%, #e2555f 0 21px, transparent 22px),
+        radial-gradient(circle at 52% 62%, #f6c665 0 20px, transparent 21px),
+        radial-gradient(circle at 37% 59%, #315f7d 0 14px, transparent 15px),
+        linear-gradient(135deg, #fff 0%, #f7fbf8 100%);
+      border: 2px solid #eadfcb;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .trust {
+      padding: 13px 14px;
+      color: var(--red-dark);
+      background: var(--blush);
+      border: 2px solid #f1cbd1;
+      border-radius: 7px;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .chapter-card {
+      min-height: 132px;
+      padding: 18px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .chapter-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.14;
+      margin-bottom: 8px;
+    }
+
+    .chapter-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .linked-resources {
+      padding: 20px;
+      border-radius: 8px;
+      background: #f8fafb;
+      border: 2px solid var(--soft-line);
+    }
+
+    .linked-resources h4 {
+      margin: 0 0 13px;
+      font-size: 23px;
+      line-height: 1.15;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .resource-card {
+      min-height: 96px;
+      padding: 14px;
+      border: 2px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.22;
+    }
+
+    .resource-card b {
+      display: block;
+      color: var(--blue);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .article-page {
+      min-height: 920px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 26px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 8px;
+      border: 2px solid var(--soft-line);
+    }
+
+    .article-main {
+      min-width: 0;
+    }
+
+    .article-hero {
+      padding: 28px;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(36, 93, 122, 0.08), rgba(200, 16, 46, 0.06)),
+        #fff;
+      border: 2px solid var(--line);
+      margin-bottom: 18px;
+    }
+
+    .article-hero h3 {
+      max-width: 820px;
+      font-size: 46px;
+      line-height: 1.05;
+    }
+
+    .article-hero p {
+      max-width: 820px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.34;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .article-body {
+      padding: 24px;
+      border-radius: 8px;
+      border: 2px solid var(--soft-line);
+      background: #fff;
+    }
+
+    .body-line {
+      height: 13px;
+      margin: 14px 0;
+      background: #e0e5eb;
+      border-radius: 999px;
+    }
+
+    .body-line:nth-child(3n) {
+      width: 72%;
+    }
+
+    .body-line:nth-child(4n) {
+      width: 88%;
+    }
+
+    .resource-rail {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .context-card {
+      padding: 18px;
+      border-radius: 8px;
+      border: 2px solid var(--line);
+      background: #fff;
+    }
+
+    .context-card.guide-back {
+      border-color: var(--red);
+      background: var(--blush);
+    }
+
+    .context-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.18;
+    }
+
+    .context-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.34;
+    }
+
+    .footer-note strong {
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <main id="hf-board" class="board" aria-label="Healthy Living guide system high fidelity overview">
+    <header class="board-header">
+      <div>
+        <div class="eyebrow">Healthy Living Guide System</div>
+        <h1>Directional hub, evergreen guides, linked resources</h1>
+      </div>
+      <p class="board-note">
+        This removes the intermediate pillar hub. The Super Hub routes people into the right guide. Each guide behaves like a structured course or handbook. Articles, tools, recipes, videos, and infographics support specific chapters.
+      </p>
+    </header>
+
+    <section class="system-strip" aria-label="System model">
+      <div class="system-step">
+        <strong>1. Super Hub</strong>
+        <span>Helps people choose the right guide through intent and health-goal routing.</span>
+      </div>
+      <div class="system-step">
+        <strong>2. Evergreen Guide</strong>
+        <span>The main learning destination. Structured like a course, book, or handbook.</span>
+      </div>
+      <div class="system-step">
+        <strong>3. Linked Support</strong>
+        <span>Articles, recipes, tools, videos, and infographics sit inside guide chapters.</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel super">
+        <header class="panel-header">
+          <h2>Layer 1: Super Hub as directional router</h2>
+          <span class="badge">/healthy-living</span>
+        </header>
+        <div class="browser">
+          <nav class="site-nav" aria-label="AHA sample navigation">
+            <img class="logo" src="../../../assets/aha-logo-red.png" alt="American Heart Association">
+            <div class="nav-links">
+              <span>Healthy Living</span>
+              <span>Health Topics</span>
+              <span>Get Involved</span>
+              <span>Ways to Give</span>
+            </div>
+            <div class="search">Search heart.org</div>
+            <div class="donate">Donate</div>
+          </nav>
+          <div class="super-page">
+            <div class="super-copy">
+              <div>
+                <div class="hero-kicker">Healthy Living</div>
+                <h3>Find the guide that fits what you are trying to change.</h3>
+                <p>Start with a daily habit, a health goal, or a condition you are trying to support. AHA guides connect the basics, practical steps, and useful resources in one place.</p>
+              </div>
+              <div class="hero-art" aria-hidden="true"></div>
+            </div>
+            <div>
+              <section class="finder" aria-label="Find your guide">
+                <h4>Find your healthy living guide</h4>
+                <div class="choice-grid">
+                  <div class="choice active">I want to eat better</div>
+                  <div class="choice">I want to move more</div>
+                  <div class="choice">I want to sleep better</div>
+                  <div class="choice">I want to manage stress</div>
+                  <div class="choice">I want to quit tobacco or vaping</div>
+                  <div class="choice">I want to manage weight</div>
+                </div>
+                <div class="filter-row">
+                  <span class="chip">Lower blood pressure</span>
+                  <span class="chip">Cook for my family</span>
+                  <span class="chip">Start small</span>
+                  <span class="chip">Have more energy</span>
+                </div>
+                <div class="recommendation">
+                  <div>
+                    <strong>Start with the Healthy Eating Guide</strong>
+                    <span>Begin with heart-healthy patterns, then move into labels, cooking, sodium, sugar, and recipes.</span>
+                  </div>
+                  <div class="cta">Open guide</div>
+                </div>
+              </section>
+              <div class="section-title" style="margin:22px 0 12px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.07em;">Browse all guides</div>
+              <div class="guide-cards">
+                <div class="guide-card"><strong>Healthy Eating</strong><span>Eat Smart, Nutrition Basics, Cooking Skills, Healthy Food Facts</span></div>
+                <div class="guide-card"><strong>Exercise and Fitness</strong><span>Fitness Basics, Getting Active, Walking, Staying Motivated</span></div>
+                <div class="guide-card"><strong>Sleep</strong><span>Sleep 101, bedtime routine, tech tweaks, sleep and heart health</span></div>
+                <div class="guide-card"><strong>Mental Wellbeing</strong><span>Stress, gratitude, mindfulness, food and mood, support</span></div>
+                <div class="guide-card"><strong>Quit Smoking and Vaping</strong><span>Quit plan, cravings, vaping, staying tobacco-free</span></div>
+                <div class="guide-card"><strong>Weight Management</strong><span>Healthy weight, substitutions, habits, family support</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <header class="panel-header">
+          <h2>Layer 2: Evergreen guide as course</h2>
+          <span class="badge">Healthy Eating Guide</span>
+        </header>
+        <div class="browser">
+          <div class="guide-page">
+            <aside class="course-nav">
+              <h3>Healthy Eating Guide</h3>
+              <div class="chapter-link active">1. Start with a heart-healthy pattern</div>
+              <div class="chapter-link">2. Build your plate</div>
+              <div class="chapter-link">3. Read labels and choose foods</div>
+              <div class="chapter-link">4. Cook, plan, and shop</div>
+              <div class="chapter-link">5. Adjust sodium, sugar, fats, and alcohol</div>
+              <div class="chapter-link">6. Make it stick</div>
+              <div class="chapter-link">Tools, recipes, and sources</div>
+            </aside>
+            <div class="guide-main">
+              <section class="guide-hero">
+                <div>
+                  <div class="hero-kicker">Evergreen guide</div>
+                  <h3>Healthy Eating Guide</h3>
+                  <p>A structured AHA guide to eating patterns, labels, cooking, sodium, sugar, recipes, and habits you can keep.</p>
+                </div>
+                <div class="plate-art" aria-hidden="true"></div>
+              </section>
+              <div class="trust-row">
+                <div class="trust">Reviewed by AHA</div>
+                <div class="trust">Part of Healthy Living</div>
+                <div class="trust">Updated as guidance changes</div>
+              </div>
+              <div class="chapter-grid">
+                <div class="chapter-card"><strong>Chapter 1: Start with a heart-healthy pattern</strong><span>Use AHA diet and lifestyle recommendations as the foundation.</span></div>
+                <div class="chapter-card"><strong>Chapter 2: Build your plate</strong><span>Understand food groups, portions, color, balance, and everyday choices.</span></div>
+                <div class="chapter-card"><strong>Chapter 3: Read labels and choose foods</strong><span>Connect Nutrition Facts labels, Heart-Check Foods, sodium, sugar, and claims.</span></div>
+                <div class="chapter-card"><strong>Chapter 4: Cook, plan, and shop</strong><span>Use Cooking Skills, meal planning, shopping, storing, and simple swaps.</span></div>
+                <div class="chapter-card"><strong>Chapter 5: Adjust sodium, sugar, fats, and alcohol</strong><span>Make focused changes without turning eating into a rulebook.</span></div>
+                <div class="chapter-card"><strong>Chapter 6: Make it stick</strong><span>Use habits, recipes, family routines, and small starts to keep going.</span></div>
+              </div>
+              <section class="linked-resources">
+                <h4>Linked from Chapter 3: Read labels and choose foods</h4>
+                <div class="resource-grid">
+                  <div class="resource-card"><b>Article</b>Are Ultraprocessed Foods Good or Bad?</div>
+                  <div class="resource-card"><b>Infographic</b>Making the Most of the Nutrition Facts Label</div>
+                  <div class="resource-card"><b>Tool</b>Heart-Check Foods</div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <header class="panel-header">
+          <h2>Layer 3: Supporting article or resource</h2>
+          <span class="badge">Linked support</span>
+        </header>
+        <div class="browser">
+          <div class="article-page">
+            <main class="article-main">
+              <section class="article-hero">
+                <div class="hero-kicker">Article</div>
+                <h3>Are Ultraprocessed Foods Good or Bad?</h3>
+                <p>This article keeps its editorial shape, but it is clearly attached to a guide chapter instead of becoming a standalone hub.</p>
+              </section>
+              <div class="meta-row">
+                <span class="chip">Healthy Eating Guide</span>
+                <span class="chip">Chapter 3</span>
+                <span class="chip">Article</span>
+                <span class="chip">Reviewed</span>
+              </div>
+              <article class="article-body">
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+                <div class="body-line"></div>
+              </article>
+            </main>
+            <aside class="resource-rail">
+              <div class="context-card guide-back">
+                <strong>Back to the Healthy Eating Guide</strong>
+                <span>Chapter 3: Read labels and choose foods</span>
+              </div>
+              <div class="context-card">
+                <strong>Useful next step</strong>
+                <span>Making the Most of the Nutrition Facts Label Infographic</span>
+              </div>
+              <div class="context-card">
+                <strong>Related tool</strong>
+                <span>Heart-Check Foods</span>
+              </div>
+              <div class="context-card">
+                <strong>Can be promoted</strong>
+                <span>Eligible for the Super Hub if this is timely or high-interest.</span>
+              </div>
+              <div class="context-card">
+                <strong>Not canonical alone</strong>
+                <span>The guide remains the evergreen learning structure.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer-note">
+      <p><strong>Super Hub:</strong> route by intent and goal, then show all guides for browsing.</p>
+      <p><strong>Guide:</strong> structure evergreen learning like a course with chapters and linked support.</p>
+      <p><strong>Support:</strong> keep articles and resources specific, contextual, and connected back to the guide.</p>
+    </footer>
+  </main>
+</body>
+</html>

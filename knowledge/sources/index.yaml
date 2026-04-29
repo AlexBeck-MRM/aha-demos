@@ -25,6 +25,7 @@ sources:
     canonical_files:
       - knowledge/sources/current-site-audit/index.md
       - knowledge/sources/current-site-audit/aha-current-site-observations.md
+      - knowledge/sources/current-site-audit/healthy-living-guide-system-high-fidelity-2026-04-28.md
       - knowledge/sources/current-site-audit/comparative-notes/health-and-brand-comparators.md
       - evidence/README.md
       - evidence/capture_manifest.csv
