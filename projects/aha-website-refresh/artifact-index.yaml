@@ -1,0 +1,316 @@
+project_id: aha-website-refresh
+status: active
+updated: 2026-05-07
+purpose: Fast lookup for current artifacts, source notes, previews, and cleanup status.
+
+lookup_rule:
+  - read this file before broad searching for prototypes, boards, presentations, route docs, or evidence
+  - use primary_entry first
+  - use source_notes for rationale and evidence
+  - use supporting_files for renders, previews, and implementation details
+  - treat cleanup_tag as a placement note, not permission to delete
+
+cleanup_tags:
+  current: Active working artifact. Keep easy to find.
+  supporting: Still useful as source, evidence, or context.
+  superseded: Older artifact kept for traceability. Do not use as current.
+  out_of_place: Useful artifact in the wrong folder or naming pattern.
+  generated: Rebuildable output. Keep only if it is the reviewed artifact.
+  local_scratch: Local-only or ignored scratch. Remove or promote after review.
+  completed: Cleanup action has been handled.
+  review_for_removal: Candidate for deletion after owner confirms no active use.
+  review_for_relocation: Candidate for move to a durable folder after references are updated.
+
+artifacts:
+  - id: hbp-condition-guide-prototype
+    title: High Blood Pressure condition guide prototype
+    topic: high-blood-pressure
+    type: html-prototype
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in reference/evidence/prototypes as the current HBP prototype
+    primary_entry: reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/index.html
+    source_notes:
+      - knowledge/sources/current-site-audit/high-blood-pressure-condition-guide-final-2026-05-07.md
+      - knowledge/sources/current-site-audit/health-condition-authority-structure-2026-04-27.md
+      - knowledge/sources/current-site-audit/high-blood-pressure-authority-page-proposal-2026-04-20.md
+      - knowledge/sources/current-site-audit/high-blood-pressure-topic-network-2026-04-20.md
+    supporting_files:
+      - reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/styles.css
+      - reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/script.js
+      - reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/high-blood-pressure-condition-guide-content.md
+      - reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/medicines-that-can-affect-blood-pressure.html
+      - reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/assets/
+    notes:
+      - Relocated from UUID output folder on 2026-05-07.
+      - Current working prototype for the HBP condition guide.
+      - Intermediate preview images, Figma capture exports, redirect stubs, and unused icons were removed after the final page model was accepted.
+
+  - id: condition-guide-navigation-boards
+    title: Condition guide navigation boards
+    topic: health-condition-navigation
+    type: image-board-set
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in reference/evidence/mockups as the current companion board set
+    primary_entry: reference/evidence/mockups/aha-condition-guide-navigation-boards-2026-05-07/navigation-approaches-rationale.md
+    supporting_files:
+      - reference/evidence/mockups/aha-condition-guide-navigation-boards-2026-05-07/board-01-parent-desktop-navigation.png
+      - reference/evidence/mockups/aha-condition-guide-navigation-boards-2026-05-07/board-02-detail-desktop-navigation.png
+      - reference/evidence/mockups/aha-condition-guide-navigation-boards-2026-05-07/board-03-parent-mobile-navigation.png
+      - reference/evidence/mockups/aha-condition-guide-navigation-boards-2026-05-07/board-04-detail-mobile-navigation.png
+    notes:
+      - Useful companion artifact for the HBP prototype.
+      - Relocated from UUID output folder on 2026-05-07.
+
+  - id: condition-guide-six-section-narrative
+    title: Condition guide six-section narrative
+    topic: health-condition-structure
+    type: html-presentation
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep in reference/slides while the condition guide narrative remains useful
+    primary_entry: reference/slides/condition-guide-six-section-narrative/condition-guide-six-section-narrative.html
+    preview_files:
+      - reference/slides/condition-guide-six-section-narrative/preview/
+    notes:
+      - Related to the condition guide story.
+      - Relocated from UUID output folder on 2026-05-07.
+
+  - id: condition-authority-structure-2026-04-27
+    title: Health condition authority structure
+    topic: health-condition-structure
+    type: source-note-and-mockup-board
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as source-backed evidence for the condition page model
+    primary_entry: knowledge/sources/current-site-audit/health-condition-authority-structure-2026-04-27.md
+    supporting_files:
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/board.html
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/render.mjs
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/condition-authority-ia-sitemap.png
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/condition-authority-desktop-states.png
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/condition-authority-mobile-states.png
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/condition-authority-subpage-navigation.png
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/high-blood-pressure-page-content.md
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/high-blood-pressure-page-mid-density-mockup.html
+      - reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/high-blood-pressure-page-mid-density-mockup.jpg
+    notes:
+      - Earlier six-chapter model and mid-density mockup.
+      - Not the current May prototype, but still important source context.
+
+  - id: hbp-authority-page-early-concept
+    title: High Blood Pressure authority page early concept
+    topic: high-blood-pressure
+    type: early-wireframe-and-concept
+    status: superseded
+    cleanup_tag: superseded
+    recommended_action: keep only while the April 20 source note cites it; otherwise archive or remove after review
+    primary_entry: knowledge/sources/current-site-audit/high-blood-pressure-authority-page-proposal-2026-04-20.md
+    supporting_files:
+      - reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/authority-page-wireframe.svg
+      - reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/authority-page-wireframe-preview.png
+      - reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/authority-page-wireframe-v2.svg
+      - reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/authority-page-wireframe-v2-preview.png
+      - reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/authority-page-concept-generated.png
+      - reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/authority-page-concept-v2-generated.png
+    notes:
+      - Superseded by the April 27 structure work and the May condition guide prototype.
+
+  - id: hbp-topic-network-2026-04-20
+    title: High Blood Pressure topic network
+    topic: high-blood-pressure
+    type: crawl-map-and-screenshots
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep summaries and manifests; review screenshot volume if repo size becomes a problem
+    primary_entry: knowledge/sources/current-site-audit/high-blood-pressure-topic-network-2026-04-20.md
+    supporting_files:
+      - reference/evidence/mockups/aha-high-blood-pressure-topic-network-2026-04-20/second-hop-network-summary.json
+      - reference/evidence/mockups/aha-high-blood-pressure-topic-network-2026-04-20/second-hop-new-nodes.csv
+      - reference/evidence/mockups/aha-high-blood-pressure-topic-network-2026-04-20/second-hop-network-figjam.mmd
+      - reference/evidence/mockups/aha-high-blood-pressure-topic-network-2026-04-20/second-hop-network-figjam.svg
+      - reference/evidence/mockups/aha-high-blood-pressure-topic-network-2026-04-20/second-hop-network-figjam.png
+      - reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/
+
+  - id: healthy-eating-topic-network-2026-04-29
+    title: Healthy Eating topic network
+    topic: healthy-eating
+    type: crawl-map-and-screenshots
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as comparison evidence for guide-family structure
+    primary_entry: knowledge/sources/current-site-audit/healthy-eating-topic-network-2026-04-29.md
+    supporting_files:
+      - reference/evidence/mockups/aha-healthy-eating-topic-network-2026-04-29/
+      - reference/evidence/screenshots/aha-healthy-eating-topic-network-2026-04-29/
+
+  - id: healthy-living-guide-system-high-fidelity
+    title: Healthy Living guide system high-fidelity board
+    topic: healthy-living
+    type: board-render
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as comparison artifact for guide page design
+    primary_entry: knowledge/sources/current-site-audit/healthy-living-guide-system-high-fidelity-2026-04-28.md
+    supporting_files:
+      - reference/evidence/mockups/aha-healthy-living-guide-system-high-fidelity-2026-04-28/board.html
+      - reference/evidence/mockups/aha-healthy-living-guide-system-high-fidelity-2026-04-28/render.mjs
+      - reference/evidence/mockups/aha-healthy-living-guide-system-high-fidelity-2026-04-28/healthy-living-guide-system-high-fidelity.png
+
+  - id: healthy-living-navigation-boards
+    title: Healthy Living navigation boards
+    topic: healthy-living-navigation
+    type: board-render-set
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep until navigation model is decided
+    primary_entry: knowledge/sources/current-site-audit/healthy-living-navigation-approaches-2026-04-30.md
+    supporting_files:
+      - knowledge/sources/current-site-audit/healthy-living-nav-a-b-vertical-2026-04-30.md
+      - reference/evidence/mockups/aha-healthy-living-navigation-approaches-2026-04-30/
+      - reference/evidence/mockups/aha-healthy-living-nav-a-b-vertical-2026-04-30/
+
+  - id: healthy-living-detailed-page-structure
+    title: Healthy Living detailed page structure
+    topic: healthy-living
+    type: source-note-and-board-render
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as condition-guide comparator
+    primary_entry: knowledge/sources/current-site-audit/healthy-living-detailed-page-structure-2026-04-30.md
+    supporting_files:
+      - reference/evidence/mockups/aha-healthy-living-detailed-page-structure-2026-04-30/
+
+  - id: healthy-living-adaptive-super-hub-boards
+    title: Healthy Living adaptive Super Hub boards
+    topic: healthy-living
+    type: source-note-and-board-set
+    status: current
+    cleanup_tag: current
+    recommended_action: keep as the current adaptive Healthy Living hub ideation set
+    primary_entry: knowledge/sources/current-site-audit/healthy-living-adaptive-super-hub-2026-05-07.md
+    supporting_files:
+      - design/routes/healthy-living-adaptive-super-hub-wireframes.md
+      - reference/evidence/mockups/aha-healthy-living-adaptive-super-hub-2026-05-07/healthy-living-adaptive-super-hub-default-variants.png
+      - reference/evidence/mockups/aha-healthy-living-adaptive-super-hub-2026-05-07/healthy-living-adaptive-super-hub-eat-better-configured-variants.png
+    notes:
+      - Documents the split between fixed Conditions hubs and adaptive Healthy Living hubs.
+      - Captures the three-variant comparison and the configured `Eat better` board.
+
+  - id: homepage-route-wireframes
+    title: Homepage route wireframes
+    topic: homepage
+    type: route-docs-and-figma-wireframes
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in design/routes and use Figma nodes from session log for live board review
+    primary_entry: design/routes/homepage-route-wireframes.md
+    supporting_files:
+      - design/routes/homepage-structure.md
+      - design/routes/homepage-annotated-wireframe-v2.md
+      - design/routes/homepage-route-b-adaptive-tapestry-wireframe.md
+      - design/ui-style-inventory/wireframe-style.md
+      - logs/route-evolution.md
+    notes:
+      - Figma nodes are logged in projects/aha-website-refresh/session-log.md on 2026-05-01.
+
+  - id: route-system
+    title: Route A and Route B system
+    topic: routes
+    type: route-docs
+    status: current
+    cleanup_tag: current
+    recommended_action: keep as current route memory
+    primary_entry: design/routes/route-comparison.md
+    supporting_files:
+      - design/routes/route-a.md
+      - design/routes/route-b.md
+      - design/routes/route-deltas.md
+      - logs/route-evolution.md
+
+  - id: ui-style-inventory
+    title: UI style inventory
+    topic: design-system
+    type: board-linked-markdown-cache
+    status: current
+    cleanup_tag: current
+    recommended_action: keep synced with live Figma sections through design/figma/workbench-section-map.yaml
+    primary_entry: design/ui-style-inventory/README.md
+    supporting_files:
+      - design/ui-style-inventory/
+      - design/figma/workbench-section-map.yaml
+
+  - id: figma-design-workbench
+    title: Figma design workbench
+    topic: figma
+    type: board-source-map
+    status: current
+    cleanup_tag: current
+    recommended_action: keep as required source for board-linked topics
+    primary_entry: knowledge/sources/figma-design-workbench/index.md
+    supporting_files:
+      - knowledge/sources/figma-design-workbench/board-audit.md
+      - knowledge/sources/figma-design-workbench/canonical-sources.md
+      - design/figma/workbench-section-map.yaml
+
+  - id: slide-system-v1-6
+    title: Slide system v1.6
+    topic: presentations
+    type: slide-system
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in reference/slides as the current deliverable set
+    primary_entry: reference/slides/aha-slide-system-v1.6.md
+    supporting_files:
+      - reference/slides/deck-v1.6-all-layouts.html
+      - reference/slides/deck-v1.6-all-layouts.css
+      - reference/slides/deck-v1.6-tokens.css
+      - reference/slides/tokens-v1.6.json
+      - reference/slides/tokens-studio-v1.6.json
+
+  - id: brand-and-competitor-evidence
+    title: Brand and competitor evidence
+    topic: brand-and-comparators
+    type: source-notes-data-and-screenshots
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep source notes and data; review raw screenshots and logos for volume after references are settled
+    primary_entry: knowledge/sources/current-site-audit/comparative-notes/health-and-brand-comparators.md
+    supporting_files:
+      - knowledge/sources/current-site-audit/comparative-notes/
+      - reference/data/
+      - reference/evidence/screenshots/aha-space-competitors-us-2026-04/
+      - reference/evidence/screenshots/aha-space-competitors-global-2026-04/
+      - reference/evidence/logos/
+
+  - id: visualiser-experiments
+    title: Visualiser experiments
+    topic: experiments
+    type: local-experiment
+    status: supporting
+    cleanup_tag: review_for_removal
+    recommended_action: remove if no current design doc references the learning; promote only the durable design principle if useful
+    primary_entry: experiments/visualisers/index.html
+    supporting_files:
+      - experiments/visualisers/
+
+  - id: local-generated-output
+    title: Local generated output and scratch
+    topic: housekeeping
+    type: generated-and-scratch-folders
+    status: completed
+    cleanup_tag: completed
+    recommended_action: keep no source-of-truth material only in ignored folders
+    primary_entry: .gitignore
+    supporting_files:
+      - .artifacts/
+      - tmp/
+    removed_files:
+      - .playwright-cli/
+      - .playwright-mcp/
+      - .tmp/
+      - output/
+    notes:
+      - Explicit remove targets deleted on 2026-05-07.
+      - Defer targets remain in place where they may still contain useful review material.

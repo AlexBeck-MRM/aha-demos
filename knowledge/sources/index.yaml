@@ -7,8 +7,8 @@ sources:
       - knowledge/sources/discovery-playback/canonical-sources.md
       - knowledge/sources/discovery-playback/master-playback-notes.md
       - knowledge/sources/discovery-playback/technology-playback-notes.md
-      - docs/aha-design-to-code-workflow-v1.md
-      - slides/aha-slide-system-v1.6.md
+      - reference/docs/aha-design-to-code-workflow-v1.md
+      - reference/slides/aha-slide-system-v1.6.md
   - id: brand-guidelines
     path: knowledge/sources/brand-guidelines
     status: provisional
@@ -16,19 +16,47 @@ sources:
       - knowledge/sources/brand-guidelines/index.md
       - knowledge/sources/brand-guidelines/canonical-sources.md
       - knowledge/sources/brand-guidelines/ingest-status.md
-      - assets/aha-logo-red.png
-      - assets/aha-logo-white.png
-      - slides/tokens-v1.6.json
+      - reference/assets/aha-logo-red.png
+      - reference/assets/aha-logo-white.png
+      - reference/slides/tokens-v1.6.json
+  - id: aha-brand-history
+    path: knowledge/sources/aha-brand-history
+    status: working
+    canonical_files:
+      - knowledge/sources/aha-brand-history/README.md
+      - knowledge/sources/aha-brand-history/index.md
+      - knowledge/sources/aha-brand-history/canonical-sources.md
+      - knowledge/sources/aha-brand-history/brand-history-report.md
+      - knowledge/sources/aha-brand-history/visual-timeline.md
+      - knowledge/sources/aha-brand-history/images/aha-incorporation-seal-1924.jpg
+      - knowledge/sources/aha-brand-history/images/aha-original-logo.jpg
+      - knowledge/sources/aha-brand-history/images/aha-current-logo-red.png
+      - knowledge/sources/aha-brand-history/images/go-red-for-women-logo.png
+      - knowledge/sources/aha-brand-history/images/life-is-why-logo.png
+      - reference/evidence/screenshots/aha-brand-history/1997-first-recorded-homepage.png
+      - reference/evidence/screenshots/aha-brand-history/2000-homepage.png
+      - reference/evidence/screenshots/aha-brand-history/2001-homepage.png
+      - reference/evidence/screenshots/aha-brand-history/2005-homepage.png
+      - reference/evidence/screenshots/aha-brand-history/2008-homepage.png
+      - reference/evidence/screenshots/aha-brand-history/2010-homepage.png
+      - reference/evidence/screenshots/aha-brand-history/2014-homepage-wayback.png
+      - reference/evidence/screenshots/aha-brand-history/2018-homepage-wayback-closed.png
   - id: current-site-audit
     path: knowledge/sources/current-site-audit
     status: working
     canonical_files:
       - knowledge/sources/current-site-audit/index.md
       - knowledge/sources/current-site-audit/aha-current-site-observations.md
+      - knowledge/sources/current-site-audit/health-condition-authority-structure-2026-04-27.md
+      - knowledge/sources/current-site-audit/high-blood-pressure-condition-guide-final-2026-05-07.md
+      - knowledge/sources/current-site-audit/healthy-eating-topic-network-2026-04-29.md
+      - knowledge/sources/current-site-audit/healthy-living-detailed-page-structure-2026-04-30.md
+      - knowledge/sources/current-site-audit/healthy-living-nav-a-b-vertical-2026-04-30.md
+      - knowledge/sources/current-site-audit/healthy-living-navigation-approaches-2026-04-30.md
       - knowledge/sources/current-site-audit/healthy-living-guide-system-high-fidelity-2026-04-28.md
       - knowledge/sources/current-site-audit/comparative-notes/health-and-brand-comparators.md
-      - evidence/README.md
-      - evidence/capture_manifest.csv
+      - reference/evidence/README.md
+      - reference/evidence/capture_manifest.csv
   - id: figma-design-workbench
     path: knowledge/sources/figma-design-workbench
     status: working
@@ -43,3 +71,12 @@ sources:
     status: working
     canonical_files:
       - knowledge/sources/stakeholder-notes/index.md
+  - id: experience-insights-mergers
+    path: knowledge/sources/experience-insights-mergers
+    status: working
+    canonical_files:
+      - knowledge/sources/experience-insights-mergers/README.md
+      - knowledge/sources/experience-insights-mergers/index.md
+      - knowledge/sources/experience-insights-mergers/canonical-sources.md
+      - knowledge/sources/experience-insights-mergers/document-location-map.yaml
+      - knowledge/sources/experience-insights-mergers/hypotheses-and-conclusions.md
