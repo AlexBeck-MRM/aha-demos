@@ -25,3 +25,18 @@ Given a section header instance id, the editable paths are:
 
 ## Retrieval rule
 If a user references a board section by name, open the matching entry in `design/figma/workbench-section-map.yaml` before reading broader board metadata.
+
+## Sync rule
+For any board-linked inventory topic:
+1. read the live Figma section first
+2. compare the result to the Markdown file metadata
+3. update the Markdown file if `sync_status` is not current
+4. only then use the Markdown file as a compact cached summary
+
+Markdown is a synced cache for these topics, not the source of truth.
+
+## Connector rule
+Use the native remote Figma MCP connector as the canonical path for workbench reads and writes.
+In this repo, the expected account is `alexander.beck@mrm.com`.
+Account switching should happen through the work browser profile plus direct `codex mcp logout figma` / `codex mcp login figma` commands, not through wrapper scripts or local bridge tooling.
+Treat any other bound account as not ready for live workbench edits.

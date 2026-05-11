@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-04-29T09:13:50.943Z",
+  "startUrl": "https://www.heart.org/en/healthy-living/healthy-eating",
+  "capturedCount": 221,
+  "healthyEatingCount": 218,
+  "recipeCount": 3,
+  "errorCount": 0,
+  "includedLinkCount": 344,
+  "excludedCount": 806,
+  "bucketSummary": {
+    "healthy-eating-root": 1,
+    "add-color": 18,
+    "cooking-skills": 56,
+    "eat-smart": 126,
+    "healthy-food-facts": 1,
+    "heart-check-foods": 3,
+    "losing-weight": 10,
+    "recipes-sample": 3,
+    "other-healthy-eating": 3
+  }
+}

@@ -1,0 +1,37 @@
+# Healthy Living Topic Grid: Route 2 Illustration Prompt
+
+## Use
+Use this prompt to generate a single raster reference board for the six Healthy Living guide topics. The prompt is intentionally self-contained and should not require additional source files.
+
+## Prompt
+Create a single raster image reference board for a health nonprofit illustration system.
+
+Canvas:
+1536x1024 horizontal image. Clean 3x2 grid with six equal-size cells, subtle gutters, and a pure white background. Keep the cell backgrounds white, not beige, cream, grey, or gradient. No labels, captions, headings, numbers, logos, UI, watermark, or visible text.
+
+Style:
+Simple flat editorial illustration with vector-like cleanliness, but output as a polished raster image. No outlines or stroked linework. Build each tile from one main icon-like subject, one or two soft pale support shapes, and one controlled red focal object. The style should feel adult, modern, calm, useful, warm, and very easy to read at small sizes. Make the compositions more interesting through gentle layering, diagonal placement, varied scale, and object relationships, not through added complexity.
+
+Do not use people or faces. These are simple icon-inspired topic illustrations, closer to soft symbolic spots than complex scenes.
+
+Palette:
+Use pure white #ffffff for the board and cell backgrounds. Use this cleaner core illustration palette: off-white #f4f3f3, soft white #f5f4f2, cool bone #eeece9, light stone grey #e1e0dc, taupe grey #7d7971, charcoal #3d3c3a, AHA red #e6001b, deep red #bf0000. Warm stone #ddd8d2 is allowed only as a small support tone. Secondary pastel tints may appear only when tied to the subject: water or air #edf2f3, nature #e7f0eb, soft red support #f6e8e9, and rare food/oat warmth #f5ebdd.
+
+Grid content:
+Top left: Healthy Eating. Show a simple red apple or red bowl with one pale plate or produce shape.
+
+Top middle: Quit Smoking and Vaping. Show one simplified vape or cigarette with a softer quit cue: a small red check, gentle red diagonal mark, or quiet no-symbol. Avoid a large aggressive prohibition circle dominating the tile.
+
+Top right: Exercise and Fitness. Show a simple sneaker or walking path with one red accent.
+
+Bottom left: Mental Wellbeing. Show a simple red heart, calm ring, or stacked-stone shape with pale support forms.
+
+Bottom middle: Sleep. Use the reference logic: a red pillow or blanket, a pale crescent moon, and one soft bed/support shape. Give the bed more softness and dimension through two or three layered blanket shapes, a rounded pillow form, and a subtle support shadow. Keep it simple, but not flat.
+
+Bottom right: Weight Management. Show a simple scale, progress curve, or balanced plate with one red marker or check.
+
+Composition rules:
+Each tile should be distinct at a glance but clearly from the same family. Use 1-2 main objects per tile, one soft organic support shape, shallow depth, and generous empty space. Keep every object fully visible inside its tile; do not crop objects at the cell edges. Keep the drawings simpler than a scene and more expressive than a plain icon. Forms should be chunky enough to scale down to small cards or icons.
+
+Avoid:
+People, faces, full character scenes, cropped objects, beige or brown background wash, gradient background, aggressive warning-symbol energy, oversized prohibition marks, multiple props per tile, SVG output, thin line icons, black strokes, outlines, glossy gradients, realistic rendering, stock wellness cliches, saturated green wellness palette, blue healthcare palette, clutter, tiny decorative details, text, labels, UI screenshots, medical claims, mascots, childish proportions.

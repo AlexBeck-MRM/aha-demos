@@ -1,0 +1,108 @@
+flowchart LR
+  A["What is High Blood Pressure?<br/>start page"]
+  T["Two-hop reach<br/>196 unique HTML pages"]
+  A --> T
+
+  subgraph F1["First-hop branches from the start page"]
+    H["High BP topic hub<br/>1 page"]
+    O["Overview / facts branch<br/>6 pages"]
+    R["Understand readings<br/>3 pages"]
+    K["Risk factors<br/>4 pages"]
+    TH["Health threats<br/>7 pages"]
+    M["Manage high BP<br/>12 pages"]
+    U["Tools and resources<br/>2 pages"]
+    X["Adjacent inline detours<br/>5 pages"]
+  end
+
+  A --> H
+  A --> O
+  A --> R
+  A --> K
+  A --> TH
+  A --> M
+  A --> U
+  A --> X
+
+  L["Recurring destination<br/>Blood Pressure Health Lesson<br/>35 inbound links in the two-hop crawl"]
+  H --> L
+  O --> L
+  R --> L
+  K --> L
+  TH --> L
+  M --> L
+  U --> L
+
+  subgraph F2["Second-hop expansions discovered inside those linked pages (155 new pages)"]
+    O2["Overview-linked expansions<br/>10 new pages"]
+    R2["Readings-linked expansions<br/>2 new pages"]
+    K2["Risk-linked expansions<br/>9 new pages"]
+    TH2["Threat-linked expansions<br/>12 new pages"]
+    M2["Management-linked expansions<br/>11 new pages"]
+    U2["Tools-linked expansions<br/>4 new pages"]
+    X2["Adjacent-detour expansions<br/>134 new pages"]
+  end
+
+  O --> O2
+  R --> R2
+  K --> K2
+  TH --> TH2
+  M --> M2
+  U --> U2
+  X --> X2
+
+  subgraph D2["Dominant destination families across the second-hop crawl"]
+    FIT["Fitness family<br/>45 pages overall"]
+    EAT["Healthy eating family<br/>15 pages overall"]
+    HA["Heart attack family<br/>40 pages overall"]
+    STR["Stroke family<br/>21 pages overall"]
+    CHOL["Cholesterol / artery family<br/>22 pages overall"]
+    MIX["Smaller but notable families<br/>heart failure / sleep / women / kidney / professional"]
+  end
+
+  M2 --> FIT
+  M2 --> EAT
+  M2 --> MIX
+  TH2 --> HA
+  TH2 --> STR
+  TH2 --> CHOL
+  O2 --> MIX
+  K2 --> MIX
+  U2 --> MIX
+  X2 --> HA
+  X2 --> STR
+  X2 --> CHOL
+  X2 --> FIT
+  X2 --> EAT
+
+  FIT --> FIT1["Target Heart Rates"]
+  FIT --> FIT2["Exercise success tips"]
+  FIT --> FIT3["More active at work"]
+  FIT --> FIT4["Stay active in cold weather"]
+
+  EAT --> EAT1["Sodium Sources"]
+  EAT --> EAT2["How much sodium per day"]
+  EAT --> EAT3["Food label guidance"]
+  EAT --> EAT4["Alcohol and heart health"]
+
+  HA --> HA1["Angina"]
+  HA --> HA2["Acute coronary syndrome"]
+  HA --> HA3["Diagnosing a heart attack"]
+  HA --> HA4["Treatment of a heart attack"]
+  HA --> HA5["Recovery FAQs"]
+
+  STR --> STR1["About Stroke"]
+  STR --> STR2["TIA"]
+  STR --> STR3["Ischemic stroke"]
+  STR --> STR4["Hemorrhagic stroke"]
+  STR --> STR5["Stroke symptoms"]
+
+  CHOL --> CHOL1["About Cholesterol"]
+  CHOL --> CHOL2["What cholesterol levels mean"]
+  CHOL --> CHOL3["HDL / LDL / triglycerides"]
+  CHOL --> CHOL4["High cholesterol treatment"]
+
+  MIX --> MIX1["What is heart failure?"]
+  MIX --> MIX2["Sleep apnea and heart disease / stroke"]
+  MIX --> MIX3["High blood pressure and women"]
+  MIX --> MIX4["OTC medications and high blood pressure"]
+  MIX --> MIX5["2025 high blood pressure guideline"]

@@ -1,0 +1,6 @@
+slug,source_kind,source_file,x1,y1,x2,y2,trim_mode
+american_red_cross,screenshot_crop,reference/evidence/screenshots/aha-space-competitors-global-2026-04/american_red_cross.png,34,38,168,99,white
+alzheimers_association,file,reference/evidence/logos/aha-space-competitors-global-2026-04/raw/alzheimers_association.png,0,0,0,0,key
+st_jude,screenshot_crop,reference/evidence/screenshots/aha-space-competitors-global-2026-04/st_jude.png,0,0,360,92,white
+mayo_clinic,file,reference/evidence/logos/aha-space-competitors-global-2026-04/raw/mayo_clinic.png,0,0,0,0,key
+heart_foundation_nz,screenshot_crop,reference/evidence/screenshots/aha-space-competitors-global-2026-04/heart_foundation_nz.png,82,22,286,152,white

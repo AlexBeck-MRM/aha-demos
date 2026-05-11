@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHA Healthy Living Detailed Page Structure</title>
+  <style>
+    :root {
+      --red: #c8102e;
+      --ink: #171d28;
+      --muted: #66717f;
+      --line: #d7dde5;
+      --soft: #f3f5f8;
+      --wash: #f7f3ed;
+      --paper: #fff;
+      --charcoal: #3f4653;
+      --green: #2f6b50;
+      --blue: #245d7a;
+      --gold: #f2c14e;
+      --blush: #fff2f4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .board {
+      width: 3500px;
+      padding: 72px;
+      background:
+        linear-gradient(90deg, rgba(23, 29, 40, 0.035) 0 1px, transparent 1px 160px),
+        linear-gradient(180deg, rgba(23, 29, 40, 0.035) 0 1px, transparent 1px 160px),
+        var(--wash);
+    }
+
+    h1, h2, h3, h4, p { margin: 0; letter-spacing: 0; }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 1100px;
+      gap: 90px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      margin-bottom: 14px;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 1850px;
+      font-size: 63px;
+      line-height: 1.03;
+    }
+
+    .header p {
+      color: var(--muted);
+      font-size: 26px;
+      line-height: 1.34;
+    }
+
+    .principle {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+      padding: 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.82);
+    }
+
+    .principle div {
+      min-height: 88px;
+      padding: 16px;
+      border: 2px solid #e2e7ee;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .principle strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .principle span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .panel {
+      min-height: 780px;
+      padding: 28px;
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 28px 80px rgba(28,31,38,.08);
+    }
+
+    .panel-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .panel h2 {
+      font-size: 31px;
+      line-height: 1.08;
+    }
+
+    .panel-head p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.28;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--charcoal);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .screen {
+      overflow: hidden;
+      min-height: 610px;
+      border: 2px solid #cfd6df;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .screen-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 2px solid #e6eaf0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .mini-nav {
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 14px;
+      border-bottom: 2px solid #edf0f4;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--red);
+    }
+
+    .nav-lines span {
+      display: block;
+      height: 9px;
+      border-radius: 999px;
+      background: #d6dce4;
+    }
+
+    .nav-lines span:first-child { width: 140px; margin-bottom: 8px; background: #aeb7c3; }
+    .nav-lines span:last-child { width: 220px; }
+
+    .pill {
+      height: 28px;
+      width: 78px;
+      border-radius: 999px;
+      background: var(--red);
+    }
+
+    .content { padding: 18px; }
+
+    .hero {
+      padding: 18px;
+      border-radius: 8px;
+      background: #fbf4f1;
+      border: 2px solid #f0e2dc;
+    }
+
+    .kicker {
+      margin-bottom: 10px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .hero h3 {
+      font-size: 30px;
+      line-height: 1.05;
+      max-width: 430px;
+    }
+
+    .hero p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.32;
+      max-width: 520px;
+    }
+
+    .find {
+      margin-top: 14px;
+      padding: 13px;
+      border: 2px solid #dfe4ea;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .find strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 2px solid #d6dce4;
+      background: #fff;
+      color: #3d4653;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chip.active {
+      color: #fff;
+      border-color: var(--red);
+      background: var(--red);
+    }
+
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chapter {
+      min-height: 98px;
+      padding: 12px;
+      border: 2px solid #dfe4ea;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .chapter b {
+      display: inline-flex;
+      min-width: 31px;
+      height: 24px;
+      align-items: center;
+      justify-content: center;
+      margin-right: 7px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--charcoal);
+      font-size: 12px;
+    }
+
+    .chapter h4 {
+      display: inline;
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .chapter p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .chapter .links {
+      margin-top: 8px;
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .rail-layout {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .rail {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f4f6f8;
+    }
+
+    .rail div {
+      padding: 8px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .rail div.active {
+      color: #fff;
+      background: var(--red);
+    }
+
+    .section-block {
+      padding: 14px;
+      border: 2px solid #dfe4ea;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .section-block h3 {
+      font-size: 24px;
+      line-height: 1.08;
+    }
+
+    .section-block p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.32;
+    }
+
+    .takeaways {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .takeaways span {
+      padding: 8px 10px;
+      border-radius: 7px;
+      background: #f3f6f9;
+      color: #3d4653;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .resource-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .resource {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 2px solid #dfe4ea;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .type {
+      padding: 6px 7px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--blue);
+      font-size: 10px;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .type.tool { background: var(--green); }
+    .type.recipe { background: var(--red); }
+    .type.info { background: var(--charcoal); }
+
+    .resource strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.15;
+    }
+
+    .resource span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .breadcrumb {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .article h3 {
+      font-size: 29px;
+      line-height: 1.08;
+      max-width: 500px;
+    }
+
+    .article p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.32;
+    }
+
+    .context-box {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #f0ccd2;
+      background: var(--blush);
+    }
+
+    .context-box strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .context-box span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .library {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .library-card {
+      min-height: 76px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #dfe4ea;
+      background: #fff;
+    }
+
+    .library-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.15;
+    }
+
+    .library-card span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.22;
+    }
+
+    .route-card {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 11px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #dfe4ea;
+      background: #fff;
+      margin-top: 10px;
+    }
+
+    .route-card .num {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--red);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .route-card strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .route-card span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.22;
+    }
+
+    .caption {
+      margin-top: 16px;
+      padding-top: 13px;
+      border-top: 2px solid #eef1f5;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .caption strong { color: var(--ink); }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <main id="detail-board" class="board">
+    <section class="header">
+      <div>
+        <div class="eyebrow">Healthy Living page system</div>
+        <h1>How guide pages, chapters, and supporting pages should show up</h1>
+      </div>
+      <p>The topic page should give people a clear overview of the whole guide and a fast way to jump to the right information. Supporting pages stay findable, but they no longer define the primary structure.</p>
+    </section>
+
+    <section class="principle">
+      <div><strong>Canonical chapters</strong><span>The guide is the topic home. It should read like a handbook, not a campaign archive.</span></div>
+      <div><strong>Fast find</strong><span>People can jump by goal, symptom, barrier, chapter, or content type without reading linearly.</span></div>
+      <div><strong>Curated support</strong><span>Articles, recipes, tools, and infographics appear inside the chapter where they help.</span></div>
+      <div><strong>Clear recovery</strong><span>Subpages always show the guide and chapter they belong to, plus a route back.</span></div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>1. Topic Guide Overview</h2>
+            <p>Shows the full chapter map and quick routes before the content deepens.</p>
+          </div>
+          <span class="tag">Guide home</span>
+        </div>
+        <div class="screen">
+          <div class="screen-label"><span>Healthy Eating Guide</span><span>Topic home</span></div>
+          <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+          <div class="content">
+            <div class="hero">
+              <div class="kicker">Healthy Living Guide</div>
+              <h3>Healthy eating, explained from the first step to everyday practice.</h3>
+              <p>Start with the basics, build a plate, choose foods with confidence, then use recipes and tools to make it work.</p>
+            </div>
+            <div class="find">
+              <strong>Find the right starting point</strong>
+              <div class="chips">
+                <span class="chip active">I want to eat better</span>
+                <span class="chip">Lower blood pressure</span>
+                <span class="chip">Plan meals</span>
+                <span class="chip">Read food labels</span>
+                <span class="chip">Find recipes</span>
+              </div>
+            </div>
+            <div class="chapter-grid">
+              <div class="chapter"><b>01</b><h4>Start Here</h4><p>What heart-healthy eating means.</p><div class="links">3 key reads</div></div>
+              <div class="chapter"><b>02</b><h4>Eating Basics</h4><p>Food groups, portions, protein, grains.</p><div class="links">8 resources</div></div>
+              <div class="chapter"><b>03</b><h4>Build Your Plate</h4><p>Fruit, vegetables, balance, servings.</p><div class="links">Add Color content</div></div>
+              <div class="chapter"><b>04</b><h4>Choose Foods</h4><p>Labels, packaged foods, Heart-Check.</p><div class="links">Labels + tools</div></div>
+              <div class="chapter"><b>05</b><h4>Plan & Cook</h4><p>Shopping, meal planning, cooking skills.</p><div class="links">Recipes + skills</div></div>
+              <div class="chapter"><b>06</b><h4>Key Nutrients</h4><p>Sodium, sugar, fats, fiber, alcohol.</p><div class="links">High-impact levers</div></div>
+            </div>
+          </div>
+        </div>
+        <p class="caption"><strong>Use this as the topic front door.</strong> It gives a complete overview, but also lets people route themselves quickly by need.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>2. Chapter Section</h2>
+            <p>The chapter contains the evergreen answer first, then the relevant support pages.</p>
+          </div>
+          <span class="tag">Chapter</span>
+        </div>
+        <div class="screen">
+          <div class="screen-label"><span>Healthy Eating Guide</span><span>Chapter 05</span></div>
+          <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+          <div class="content">
+            <div class="rail-layout">
+              <div class="rail">
+                <div>01 Start</div><div>02 Basics</div><div>03 Plate</div><div>04 Choose</div><div class="active">05 Plan & Cook</div><div>06 Nutrients</div><div>07 Real Life</div><div>08 Support</div>
+              </div>
+              <div>
+                <div class="section-block">
+                  <h3>05 Plan & Cook</h3>
+                  <p>Learn how to turn heart-healthy eating into meals: plan the week, shop with a list, prep ingredients, cook simply, and store food safely.</p>
+                  <div class="takeaways">
+                    <span>Start with 2 or 3 repeatable meals.</span>
+                    <span>Use substitutions before cutting out every favorite food.</span>
+                    <span>Keep pantry basics visible and easy to reach.</span>
+                  </div>
+                </div>
+                <div class="resource-list">
+                  <div class="resource"><span class="type">Article</span><div><strong>Meal Planning: Benefits and How-To's of Family Dinners</strong><span>Supporting article in this chapter</span></div></div>
+                  <div class="resource"><span class="type recipe">Recipe</span><div><strong>Heart-Healthy Recipes</strong><span>Recipe library, filtered to this chapter</span></div></div>
+                  <div class="resource"><span class="type info">Info</span><div><strong>Pantry Basics for Heart-Healthy Meals</strong><span>Infographic surfaced contextually</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="caption"><strong>Use chapters for the durable learning path.</strong> Current articles can be merged into chapter copy when they are basic evergreen advice.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>3. Supporting Article</h2>
+            <p>Articles keep their own format but inherit guide context and recovery paths.</p>
+          </div>
+          <span class="tag">Subpage</span>
+        </div>
+        <div class="screen">
+          <div class="screen-label"><span>Sleep</span><span>Supporting page</span></div>
+          <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+          <div class="content article">
+            <div class="breadcrumb">Sleep Guide / Chapter 05 Practice Daily</div>
+            <h3>How to Sleep Better with Tech Tweaks</h3>
+            <p>Article content stays focused and readable. It does not need to carry the whole topic tree.</p>
+            <div class="context-box">
+              <strong>Part of Chapter 05: Practice Daily</strong>
+              <span>Back to Sleep Guide / Next: Build a bedtime routine</span>
+            </div>
+            <div class="resource-list">
+              <div class="resource"><span class="type">Article</span><div><strong>How to Sleep Better With a Bedtime Routine</strong><span>More in this chapter</span></div></div>
+              <div class="resource"><span class="type info">Info</span><div><strong>3 Tips for Better Sleep</strong><span>Quick visual support</span></div></div>
+              <div class="resource"><span class="type tool">Guide</span><div><strong>Sleep Guide</strong><span>Return to canonical topic home</span></div></div>
+            </div>
+          </div>
+        </div>
+        <p class="caption"><strong>Use this for articles, infographics, and explainers.</strong> The subpage is findable through the chapter, search, and related links, but not listed as primary nav.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>4. Resource Library</h2>
+            <p>A secondary layer for recipes, tools, infographics, and downloadable support.</p>
+          </div>
+          <span class="tag">Support</span>
+        </div>
+        <div class="screen">
+          <div class="screen-label"><span>Healthy Eating Guide</span><span>Tools & Recipes</span></div>
+          <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+          <div class="content">
+            <div class="hero">
+              <div class="kicker">Tools & Support</div>
+              <h3>Recipes, cookbooks, infographics, and programs.</h3>
+              <p>This page collects support assets without turning them into the guide's main structure.</p>
+            </div>
+            <div class="find">
+              <strong>Filter support content</strong>
+              <div class="chips">
+                <span class="chip active">All</span><span class="chip">Recipes</span><span class="chip">Infographics</span><span class="chip">Spanish</span><span class="chip">Plan & Cook</span><span class="chip">Sodium</span>
+              </div>
+            </div>
+            <div class="library">
+              <div class="library-card"><strong>Heart-Healthy Recipes</strong><span>Recipe library / filter by need</span></div>
+              <div class="library-card"><strong>American Heart Association Cookbooks</strong><span>Cookbook collection</span></div>
+              <div class="library-card"><strong>Healthy For Good: Spanish Infographics</strong><span>Translated support assets</span></div>
+              <div class="library-card"><strong>Together Tuesdays</strong><span>Program surfaced as support</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="caption"><strong>Use this as a utility layer.</strong> It helps people browse support material, but it should sit after the guide, not replace it.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>5. Quick Find Routes</h2>
+            <p>For users who arrive with a goal rather than a chapter in mind.</p>
+          </div>
+          <span class="tag">Findability</span>
+        </div>
+        <div class="screen">
+          <div class="screen-label"><span>Healthy Living</span><span>Quick find module</span></div>
+          <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+          <div class="content">
+            <div class="hero">
+              <div class="kicker">Find your next step</div>
+              <h3>What are you trying to do?</h3>
+              <p>The same guide can be entered through goals, common questions, and barriers.</p>
+            </div>
+            <div class="find">
+              <strong>Popular routes</strong>
+              <div class="chips">
+                <span class="chip active">Eat better</span><span class="chip">Sleep better</span><span class="chip">Quit vaping</span><span class="chip">Lower cholesterol</span><span class="chip">Cook for family</span>
+              </div>
+            </div>
+            <div class="route-card"><span class="num">01</span><div><strong>Start in Healthy Eating: Choose Foods</strong><span>Food labels, packaged choices, Heart-Check, ultraprocessed foods.</span></div></div>
+            <div class="route-card"><span class="num">02</span><div><strong>Then use Plan & Cook</strong><span>Meal planning, shopping, recipes, pantry basics.</span></div></div>
+            <div class="route-card"><span class="num">03</span><div><strong>Related: Cholesterol</strong><span>Clinical authority page for risk, testing, and treatment context.</span></div></div>
+          </div>
+        </div>
+        <p class="caption"><strong>Use quick find near the top of guide pages.</strong> It supports non-linear users without weakening the numbered chapter model.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>6. Connected Health Links</h2>
+            <p>Healthy Living guides should connect to conditions without absorbing them.</p>
+          </div>
+          <span class="tag">Cross-linking</span>
+        </div>
+        <div class="screen">
+          <div class="screen-label"><span>Quit Tobacco Guide</span><span>Connect Health</span></div>
+          <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+          <div class="content">
+            <div class="rail-layout">
+              <div class="rail">
+                <div>01 Start</div><div>02 Basics</div><div>03 What Matters</div><div>04 Plan</div><div>05 Practice</div><div>06 Problems</div><div class="active">07 Connect Health</div><div>08 Support</div>
+              </div>
+              <div>
+                <div class="section-block">
+                  <h3>07 Connect Health</h3>
+                  <p>Show how quitting relates to heart attack, stroke, blood pressure, vascular health, and prevention. Keep those clinical topics in their own authority pages.</p>
+                </div>
+                <div class="resource-list">
+                  <div class="resource"><span class="type tool">Guide</span><div><strong>Smoking and Stroke Risk</strong><span>Condition authority route</span></div></div>
+                  <div class="resource"><span class="type tool">Guide</span><div><strong>Blood Pressure</strong><span>Related focus area</span></div></div>
+                  <div class="resource"><span class="type">Article</span><div><strong>How Smoking and Nicotine Damage Your Body</strong><span>Can be merged into this guide chapter</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="caption"><strong>Use this to control scope.</strong> Healthy Living supports condition topics, but it should not become the canonical home for clinical guidance.</p>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>Recommended system: guide overview + chapter sections + contextual support pages + filtered support library.</span>
+      <span>American Heart Association</span>
+    </footer>
+  </main>
+</body>
+</html>

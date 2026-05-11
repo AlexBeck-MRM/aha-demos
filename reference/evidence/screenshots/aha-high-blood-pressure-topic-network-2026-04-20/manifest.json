@@ -1,0 +1,1239 @@
+{
+  "generated_at": "2026-04-20T10:06:29.170Z",
+  "start_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+  "capture_width_px": 1280,
+  "total_candidates": 52,
+  "included_pages": 41,
+  "excluded_items": 11,
+  "captures": [
+    {
+      "order": 1,
+      "source_types": [
+        "inline"
+      ],
+      "link_texts": [
+        "atherosclerosis"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/cholesterol/about-cholesterol/atherosclerosis",
+      "final_url": "https://www.heart.org/en/health-topics/cholesterol/about-cholesterol/atherosclerosis",
+      "title": "What is Atherosclerosis? | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/01__heart-org-en-health-topics-cholesterol-about-cholesterol-atherosclerosis.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 2,
+      "source_types": [
+        "inline"
+      ],
+      "link_texts": [
+        "heart attack"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks",
+      "final_url": "https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks",
+      "title": "What is a Heart Attack? | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/02__heart-org-en-health-topics-heart-attack-about-heart-attacks.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 3,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "High Blood Pressure"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure",
+      "title": "High Blood Pressure  | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/03__heart-org-en-health-topics-high-blood-pressure.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 4,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "How to Manage High Blood Pressure",
+        "Make lifestyle changes to lower your blood pressure.",
+        "Healthy lifestyle choices"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure",
+      "title": "How to Manage High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/04__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 5,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Getting Active"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/getting-active-to-control-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/getting-active-to-control-high-blood-pressure",
+      "title": "Getting Active to Control High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/05__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-getting-active-to-cont.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 6,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Potassium Benefits"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/how-potassium-can-help-control-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/how-potassium-can-help-control-high-blood-pressure",
+      "title": "How Potassium Can Help Prevent or Treat High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/06__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-how-potassium-can-help.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 7,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Limiting or Avoiding Alcohol"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/limiting-alcohol-to-manage-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/limiting-alcohol-to-manage-high-blood-pressure",
+      "title": "Limiting or Avoiding Alcohol to Manage High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/07__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-limiting-alcohol-to-ma.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 8,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Healthy Diet"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-blood-pressure-with-a-heart-healthy-diet",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-blood-pressure-with-a-heart-healthy-diet",
+      "title": "Managing Blood Pressure with a Heart-Healthy Diet | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/08__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-managing-blood-pressur.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 9,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Managing Medications"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-high-blood-pressure-medications",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-high-blood-pressure-medications",
+      "title": "Managing High Blood Pressure Medications | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/09__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-managing-high-blood-pr.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 10,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Managing Stress"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-stress-to-control-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-stress-to-control-high-blood-pressure",
+      "title": "Managing Stress to Control High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/10__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-managing-stress-to-con.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 11,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Managing Weight"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-weight-to-control-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-weight-to-control-high-blood-pressure",
+      "title": "Managing Weight to Control High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/11__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-managing-weight-to-con.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 12,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Shaking the Salt Habit"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/shaking-the-salt-habit-to-lower-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/shaking-the-salt-habit-to-lower-high-blood-pressure",
+      "title": "Shaking the Salt Habit to Lower High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/12__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-shaking-the-salt-habit.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 13,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Smoking"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/smoking-high-blood-pressure-and-your-health",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/smoking-high-blood-pressure-and-your-health",
+      "title": "Smoking and High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/13__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-smoking-high-blood-pre.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 14,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "Types of Medications",
+        "Learn about blood pressure-lowering medications."
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/types-of-blood-pressure-medications",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/types-of-blood-pressure-medications",
+      "title": "Types of Blood Pressure Medications | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/14__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-types-of-blood-pressur.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 15,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "Your Health Care Team",
+        "Work with your health care team to manage your blood pressure."
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/your-health-care-team",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/your-health-care-team",
+      "title": "Your Health Care Team | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/15__heart-org-en-health-topics-high-blood-pressure-changes-you-can-make-to-manage-high-blood-pressure-your-health-care-team.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 16,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Find High BP Tools and Resources"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources",
+      "title": "Find High Blood Pressure Tools and Resources | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/16__heart-org-en-health-topics-high-blood-pressure-find-high-blood-pressure-tools-resources.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 17,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Blood Pressure Health Lesson"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources/high-blood-pressure-health-lesson",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources/high-blood-pressure-health-lesson?Page=1",
+      "title": "Do It Yourself Health Lesson: Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/17__heart-org-en-health-topics-high-blood-pressure-find-high-blood-pressure-tools-resources-high-blood-pressure-health-lesso.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 18,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "Health Threats from High BP",
+        "health threats"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure",
+      "title": "Health Threats from High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/18__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 19,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "High BP and Your Kidneys"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/high-blood-pressure-and-your-kidneys",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/high-blood-pressure-and-your-kidneys",
+      "title": "High Blood Pressure and Your Kidneys | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/19__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure-high-blood-pressure-and-your-kidn.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 20,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "How High BP Can Affect Your Sex Life"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-affect-your-sex-life",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-affect-your-sex-life",
+      "title": "How High Blood Pressure Can Affect Your Sex Life | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/20__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure-how-high-blood-pressure-can-affec.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 21,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "How High BP Can Lead to a Heart Attack",
+        "heart attack"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-a-heart-attack",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-a-heart-attack",
+      "title": "How High Blood Pressure Can Lead to a Heart Attack | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/21__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure-how-high-blood-pressure-can-lead-.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 22,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "How High BP Can Lead to Heart Failure"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-heart-failure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-heart-failure",
+      "title": "How High Blood Pressure Can Lead to Heart Failure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/22__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure-how-high-blood-pressure-can-lead-.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 23,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "How High BP Can Lead to Stroke",
+        "stroke"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-stroke",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-stroke",
+      "title": "How High Blood Pressure Can Lead to Stroke | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/23__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure-how-high-blood-pressure-can-lead-.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 24,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "How High BP Can Lead to Vision Loss"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-vision-loss",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-vision-loss",
+      "title": "How High Blood Pressure Can Lead to Vision Loss | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/24__heart-org-en-health-topics-high-blood-pressure-health-threats-from-high-blood-pressure-how-high-blood-pressure-can-lead-.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 25,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "Know Your Risk Factors",
+        "raise your risk"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure",
+      "title": "Know Your Risk Factors for High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/25__heart-org-en-health-topics-high-blood-pressure-know-your-risk-factors-for-high-blood-pressure.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 26,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "High Blood Pressure Among Black Adults"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-among-black-adults",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-among-black-adults",
+      "title": "High Blood Pressure Among Black Adults | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/26__heart-org-en-health-topics-high-blood-pressure-know-your-risk-factors-for-high-blood-pressure-high-blood-pressure-among-.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 27,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "High Blood Pressure in Children and Teens"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-in-children",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-in-children",
+      "title": "High Blood Pressure in Children and Teens | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/27__heart-org-en-health-topics-high-blood-pressure-know-your-risk-factors-for-high-blood-pressure-high-blood-pressure-in-chi.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 28,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "Symptoms of High Blood Pressure",
+        "symptoms"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/what-are-the-symptoms-of-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/what-are-the-symptoms-of-high-blood-pressure",
+      "title": "What are the Signs and Symptoms of High Blood Pressure? | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/28__heart-org-en-health-topics-high-blood-pressure-know-your-risk-factors-for-high-blood-pressure-what-are-the-symptoms-of-h.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 29,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "What is High Blood Pressure?"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "title": "What is High Blood Pressure? | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/29__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 30,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "All About Heart Rate"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse",
+      "title": "All About Heart Rate | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/30__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure-all-about-heart-rate-pulse.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 31,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Common High BP Myths"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/common-high-blood-pressure-myths",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/common-high-blood-pressure-myths",
+      "title": "Common High Blood Pressure Myths | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/31__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure-common-high-blood-pressure-myths.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 32,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "High BP Top 10"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/high-bp-top-10",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/high-bp-top-10",
+      "title": "Top 10 Things to Know About the AHA/ACC High Blood Pressure Guideline | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/32__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure-high-bp-top-10.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 33,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Low Blood Pressure"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/low-blood-pressure-when-blood-pressure-is-too-low",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/low-blood-pressure-when-blood-pressure-is-too-low",
+      "title": "Low Blood Pressure - When Blood Pressure Is Too Low | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/33__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure-low-blood-pressure-when-blood-pressur.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 34,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Pulmonary Hypertension"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/pulmonary-hypertension-high-blood-pressure-in-the-heart-to-lung-system",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/pulmonary-hypertension-high-blood-pressure-in-the-heart-to-lung-system",
+      "title": "Pulmonary Hypertension – High Blood Pressure in the Heart-to-Lung System | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/34__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure-pulmonary-hypertension-high-blood-pre.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 35,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Resistant Hypertension"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/resistant-hypertension--high-blood-pressure-thats-hard-to-treat",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/resistant-hypertension--high-blood-pressure-thats-hard-to-treat",
+      "title": "High Blood Pressure That's Hard to Treat | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/35__heart-org-en-health-topics-high-blood-pressure-the-facts-about-high-blood-pressure-resistant-hypertension-high-blood-pre.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 36,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "Understanding Blood Pressure Readings",
+        "your blood pressure numbers and what they mean",
+        "blood pressure reading"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings",
+      "title": "Understanding Blood Pressure Readings | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/36__heart-org-en-health-topics-high-blood-pressure-understanding-blood-pressure-readings.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 37,
+      "source_types": [
+        "sidebar"
+      ],
+      "link_texts": [
+        "Home Blood Pressure Monitoring"
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home",
+      "title": "Home Blood Pressure Monitoring | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/37__heart-org-en-health-topics-high-blood-pressure-understanding-blood-pressure-readings-monitoring-your-blood-pressure-at-h.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 38,
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "link_texts": [
+        "When To Call 911",
+        "HYPERTENSIVE EMERGENCY",
+        "Learn about hypertensive emergency."
+      ],
+      "input_url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/when-to-call-911-for-high-blood-pressure",
+      "final_url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/when-to-call-911-for-high-blood-pressure",
+      "title": "When To Call 911 About High Blood Pressure | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/38__heart-org-en-health-topics-high-blood-pressure-understanding-blood-pressure-readings-when-to-call-911-for-high-blood-pre.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 39,
+      "source_types": [
+        "inline"
+      ],
+      "link_texts": [
+        "Get regular physical activity."
+      ],
+      "input_url": "https://www.heart.org/en/healthy-living/fitness/getting-active",
+      "final_url": "https://www.heart.org/en/healthy-living/fitness/getting-active",
+      "title": "Getting Active | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/39__heart-org-en-healthy-living-fitness-getting-active.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 40,
+      "source_types": [
+        "inline"
+      ],
+      "link_texts": [
+        "Follow a heart-healthy eating plan."
+      ],
+      "input_url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart",
+      "final_url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart",
+      "title": "Eat Smart | American Heart Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/40__heart-org-en-healthy-living-healthy-eating-eat-smart.png",
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "order": 41,
+      "source_types": [
+        "inline"
+      ],
+      "link_texts": [
+        "stroke"
+      ],
+      "input_url": "https://www.stroke.org/en/about-stroke/types-of-stroke",
+      "final_url": "https://www.stroke.org/en/about-stroke/types-of-stroke",
+      "title": "Types of Stroke and Treatment | American Stroke Association",
+      "screenshot_file": "reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/41__stroke-org-en-about-stroke-types-of-stroke.png",
+      "status": "ok",
+      "error": ""
+    }
+  ],
+  "inventory": [
+    {
+      "url": "http://watchlearnlive.heart.org/CVML_Player.php?moduleSelect=athero",
+      "texts": [
+        "See how atherosclerosis takes place"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "http://watchlearnlive.heart.org/CVML_Player.php?moduleSelect=highbp",
+      "texts": [
+        "See how high blood pressure can damage your arteries and heart"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "http://watchlearnlive.heart.org/CVML_Player.php?moduleSelect=hrtflr",
+      "texts": [
+        "See how your heart can become enlarged"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://www.facebook.com/sharer/sharer.php?u=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "texts": [],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://www.heart.org/-/media/Files/Health-Topics/Answers-by-Heart/Answers-by-Heart-SPANISH/What-Is-HighBloodPressure_Span.pdf",
+      "texts": [
+        "Spanish (PDF)"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://www.heart.org/-/media/Files/Health-Topics/Answers-by-Heart/What-Is-High-Blood-Pressure.pdf",
+      "texts": [
+        "English (PDF)"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://www.heart.org/-/media/Files/Health-Topics/High-Blood-Pressure/Consequences-of-High-Blood-Pressure-infographic.pdf",
+      "texts": [
+        "See an infographic of the consequences of high blood pressure. (PDF)"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/cholesterol/about-cholesterol/atherosclerosis",
+      "texts": [
+        "atherosclerosis"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks",
+      "texts": [
+        "heart attack"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure",
+      "texts": [
+        "High Blood Pressure"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure",
+      "texts": [
+        "How to Manage High Blood Pressure",
+        "Make lifestyle changes to lower your blood pressure.",
+        "Healthy lifestyle choices"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/getting-active-to-control-high-blood-pressure",
+      "texts": [
+        "Getting Active"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/how-potassium-can-help-control-high-blood-pressure",
+      "texts": [
+        "Potassium Benefits"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/limiting-alcohol-to-manage-high-blood-pressure",
+      "texts": [
+        "Limiting or Avoiding Alcohol"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-blood-pressure-with-a-heart-healthy-diet",
+      "texts": [
+        "Healthy Diet"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-high-blood-pressure-medications",
+      "texts": [
+        "Managing Medications"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-stress-to-control-high-blood-pressure",
+      "texts": [
+        "Managing Stress"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-weight-to-control-high-blood-pressure",
+      "texts": [
+        "Managing Weight"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/shaking-the-salt-habit-to-lower-high-blood-pressure",
+      "texts": [
+        "Shaking the Salt Habit"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/smoking-high-blood-pressure-and-your-health",
+      "texts": [
+        "Smoking"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/types-of-blood-pressure-medications",
+      "texts": [
+        "Types of Medications",
+        "Learn about blood pressure-lowering medications."
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/your-health-care-team",
+      "texts": [
+        "Your Health Care Team",
+        "Work with your health care team to manage your blood pressure."
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources",
+      "texts": [
+        "Find High BP Tools and Resources"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources/high-blood-pressure-health-lesson",
+      "texts": [
+        "Blood Pressure Health Lesson"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure",
+      "texts": [
+        "Health Threats from High BP",
+        "health threats"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/high-blood-pressure-and-your-kidneys",
+      "texts": [
+        "High BP and Your Kidneys"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-affect-your-sex-life",
+      "texts": [
+        "How High BP Can Affect Your Sex Life"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-a-heart-attack",
+      "texts": [
+        "How High BP Can Lead to a Heart Attack",
+        "heart attack"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-heart-failure",
+      "texts": [
+        "How High BP Can Lead to Heart Failure"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-stroke",
+      "texts": [
+        "How High BP Can Lead to Stroke",
+        "stroke"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-vision-loss",
+      "texts": [
+        "How High BP Can Lead to Vision Loss"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure",
+      "texts": [
+        "Know Your Risk Factors",
+        "raise your risk"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-among-black-adults",
+      "texts": [
+        "High Blood Pressure Among Black Adults"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-in-children",
+      "texts": [
+        "High Blood Pressure in Children and Teens"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/what-are-the-symptoms-of-high-blood-pressure",
+      "texts": [
+        "Symptoms of High Blood Pressure",
+        "symptoms"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "texts": [
+        "What is High Blood Pressure?"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse",
+      "texts": [
+        "All About Heart Rate"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/common-high-blood-pressure-myths",
+      "texts": [
+        "Common High BP Myths"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/high-bp-top-10",
+      "texts": [
+        "High BP Top 10"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/low-blood-pressure-when-blood-pressure-is-too-low",
+      "texts": [
+        "Low Blood Pressure"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/pulmonary-hypertension-high-blood-pressure-in-the-heart-to-lung-system",
+      "texts": [
+        "Pulmonary Hypertension"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/resistant-hypertension--high-blood-pressure-thats-hard-to-treat",
+      "texts": [
+        "Resistant Hypertension"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings",
+      "texts": [
+        "Understanding Blood Pressure Readings",
+        "your blood pressure numbers and what they mean",
+        "blood pressure reading"
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home",
+      "texts": [
+        "Home Blood Pressure Monitoring"
+      ],
+      "source_types": [
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/when-to-call-911-for-high-blood-pressure",
+      "texts": [
+        "When To Call 911",
+        "HYPERTENSIVE EMERGENCY",
+        "Learn about hypertensive emergency."
+      ],
+      "source_types": [
+        "inline",
+        "sidebar"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/healthy-living/fitness/getting-active",
+      "texts": [
+        "Get regular physical activity."
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart",
+      "texts": [
+        "Follow a heart-healthy eating plan."
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://www.linkedin.com/shareArticle?url=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "texts": [],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://www.stroke.org/en/about-stroke/types-of-stroke",
+      "texts": [
+        "stroke"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": true,
+      "exclude_reason": ""
+    },
+    {
+      "url": "https://x.com/intent/post?url=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "texts": [],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "https://youtu.be/KksigKoLxnU?si=BpZTDiVEqYI4VDMN",
+      "texts": [
+        "Is there a difference between hypertension and high blood pressure?"
+      ],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    },
+    {
+      "url": "mailto:?subject=What%20is%20High%C2%A0Blood%20Pressure%3F&body=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure",
+      "texts": [],
+      "source_types": [
+        "inline"
+      ],
+      "include": false,
+      "exclude_reason": "non-html-or-non-page-resource"
+    }
+  ]
+}

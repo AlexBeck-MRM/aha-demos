@@ -198,8 +198,8 @@ function addValidationPlaceholders(slide, spec, validation, layout) {
 
 async function main() {
   const args = parseArgs(process.argv);
-  const inputPath = path.resolve(args.input || 'build/presentation-spec.json');
-  const outputPath = path.resolve(args.out || 'dist/aha-master-template-pilot-01-10.pptx');
+  const inputPath = path.resolve(args.input || '.artifacts/build/presentation-spec.json');
+  const outputPath = path.resolve(args.out || '.artifacts/dist/aha-master-template-pilot-01-10.pptx');
   const spec = JSON.parse(await fs.readFile(inputPath, 'utf8'));
   const assetsRoot = path.join(path.dirname(inputPath), 'figma');
   const pptx = new PptxGenJS();

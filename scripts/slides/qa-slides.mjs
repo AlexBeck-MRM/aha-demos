@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const url = process.argv[2] || 'http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html';
+const url = process.argv[2] || 'http://127.0.0.1:4173/reference/slides/deck-v1.6-all-layouts.html';
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1960, height: 1200 } });

@@ -228,7 +228,7 @@ def build_doc(source_path: Path, output_path: Path):
 
 if __name__ == "__main__":
     repo = Path(__file__).resolve().parents[2]
-    source = repo / "docs" / "aha-design-to-code-workflow-v1.md"
-    output = repo / "docs" / "AHA Design to Code Workflow.docx"
+    source = repo / "reference" / "docs" / "aha-design-to-code-workflow-v1.md"
+    output = repo / ".artifacts" / "build" / "docs" / "AHA Design to Code Workflow.docx"
     build_doc(source, output)
     print(output)

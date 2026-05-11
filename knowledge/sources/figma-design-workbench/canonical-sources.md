@@ -6,7 +6,8 @@ Working-source. This board is the live visual workbench for the UI style invento
 ## Access method
 - Figma file key: `3qEMU5hYtAJ3S7vWGijJhQ`
 - Primary canvas node: `2138:29519`
-- Read via the Figma desktop MCP server tied to the currently signed-in desktop Figma account.
+- Read and write through the native remote Figma MCP connector.
+- Switch accounts by opening the correct browser profile first, then running direct native `codex mcp logout figma` / `codex mcp login figma` commands.
 
 ## Operational bridge
 - `design/figma/workbench-section-map.yaml` for section-to-brain correspondence

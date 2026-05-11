@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-04-20T11:10:23.220Z",
+  "firstHopCount": 41,
+  "secondHopNewCount": 155,
+  "totalWithinTwoHops": 196,
+  "groupSummary": {
+    "adjacent": 134,
+    "root": 1,
+    "manage": 11,
+    "tools": 4,
+    "threats": 12,
+    "risk": 9,
+    "overview": 10,
+    "readings": 2
+  },
+  "highestRepeatedSecondHopDestinations": [
+    {
+      "url": "https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources/high-blood-pressure-health-lesson",
+      "inbound_count": 35,
+      "bucket": "high-blood-pressure"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/angina-chest-pain",
+      "inbound_count": 4,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-failure/what-is-heart-failure",
+      "inbound_count": 4,
+      "bucket": "heart-failure"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/cholesterol/hdl-good-ldl-bad-cholesterol-and-triglycerides",
+      "inbound_count": 3,
+      "bucket": "cholesterol"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks/acute-coronary-syndrome",
+      "inbound_count": 3,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/angina-chest-pain/unstable-angina",
+      "inbound_count": 3,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/sleep-disorders/sleep-apnea-and-heart-disease-stroke",
+      "inbound_count": 3,
+      "bucket": "sleep"
+    },
+    {
+      "url": "https://www.heart.org/en/healthy-living/fitness/fitness-basics/target-heart-rates",
+      "inbound_count": 3,
+      "bucket": "fitness"
+    },
+    {
+      "url": "https://www.stroke.org/en/about-stroke",
+      "inbound_count": 3,
+      "bucket": "stroke"
+    },
+    {
+      "url": "https://www.stroke.org/en/about-stroke/types-of-stroke/tia-transient-ischemic-attack",
+      "inbound_count": 3,
+      "bucket": "stroke"
+    },
+    {
+      "url": "https://www.goredforwomen.org/en/know-your-risk/high-blood-pressure-and-women",
+      "inbound_count": 2,
+      "bucket": "go-red-for-women"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/cholesterol",
+      "inbound_count": 2,
+      "bucket": "cholesterol"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/cholesterol/about-cholesterol",
+      "inbound_count": 2,
+      "bucket": "cholesterol"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/cholesterol/about-cholesterol/what-your-cholesterol-levels-mean",
+      "inbound_count": 2,
+      "bucket": "cholesterol"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/cholesterol/prevention-and-treatment-of-high-cholesterol-hyperlipidemia",
+      "inbound_count": 2,
+      "bucket": "cholesterol"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks/coronary-artery-dissection-not-just-a-heart-attack",
+      "inbound_count": 2,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks/heart-attack-or-sudden-cardiac-arrest-how-are-they-different",
+      "inbound_count": 2,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/angina-chest-pain/angina-pectoris-stable-angina",
+      "inbound_count": 2,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/diagnosing-a-heart-attack",
+      "inbound_count": 2,
+      "bucket": "heart-attack"
+    },
+    {
+      "url": "https://www.heart.org/en/health-topics/heart-attack/diagnosing-a-heart-attack/cardiac-catheterization",
+      "inbound_count": 2,
+      "bucket": "heart-attack"
+    }
+  ]
+}

@@ -146,7 +146,7 @@ function detectImageRoot(rows) {
       return screenshotPath.slice(0, markerIndex);
     }
   }
-  return "output/playwright/brand-landscape-images";
+  return ".artifacts/output/playwright/brand-landscape-images";
 }
 
 async function readCatalogue() {
@@ -213,7 +213,7 @@ async function readCatalogue() {
       ...row,
       websiteUrl,
       screenshotPath,
-      videoPath: toPosix(path.join("output/playwright/brand-landscape-videos", row.category, `${slugify(row.brand)}.mp4`))
+      videoPath: toPosix(path.join(".artifacts/output/playwright/brand-landscape-videos", row.category, `${slugify(row.brand)}.mp4`))
     };
   });
 

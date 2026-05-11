@@ -2,10 +2,16 @@
 
 ## Date
 
+## Project ID
+
 ## Decision
+- 
 
 ## Why
+- 
 
-## Files impacted
+## Files
+- 
 
-## Follow-up
+## Next
+- 

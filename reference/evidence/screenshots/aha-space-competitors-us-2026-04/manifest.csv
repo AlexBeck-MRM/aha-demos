@@ -1,0 +1,11 @@
+brand,slug,input_url,final_url,screenshot_file,status,capture_method,error
+American Cancer Society,american_cancer_society,https://www.cancer.org/,https://www.cancer.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/american_cancer_society.png,captured,playwright-chromium,
+American Red Cross,american_red_cross,https://www.redcross.org/,https://www.redcross.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/american_red_cross.png,captured,playwright-firefox,
+St. Jude Children's Research Hospital,st_jude,https://www.stjude.org/,https://www.stjude.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/st_jude.png,captured,playwright-chromium,
+Mayo Clinic,mayo_clinic,https://www.mayoclinic.org/,https://www.mayoclinic.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/mayo_clinic.png,captured,playwright-chromium,
+Cleveland Clinic,cleveland_clinic,https://my.clevelandclinic.org/,https://my.clevelandclinic.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/cleveland_clinic.png,captured,playwright-chromium,
+Alzheimer's Association,alzheimers_association,https://www.alz.org/,https://www.alz.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/alzheimers_association.png,captured,playwright-chromium,
+Breakthrough T1D,breakthrough_t1d,https://www.breakthrought1d.org/,https://www.breakthrought1d.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/breakthrough_t1d.png,captured,playwright-chromium,
+American Diabetes Association,american_diabetes_association,https://diabetes.org/,https://diabetes.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/american_diabetes_association.png,captured,playwright-chromium,
+American Lung Association,american_lung_association,https://www.lung.org/,https://www.lung.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/american_lung_association.png,captured,playwright-chromium,
+Susan G. Komen,susan_g_komen,https://www.komen.org/,https://www.komen.org/,reference/evidence/screenshots/aha-space-competitors-us-2026-04/susan_g_komen.png,captured,playwright-chromium,

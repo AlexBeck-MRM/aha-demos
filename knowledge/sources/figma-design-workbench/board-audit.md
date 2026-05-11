@@ -14,6 +14,7 @@
 - `Headlines`
 - `Cards`
 - `Image types`
+- `Text hierarchy`
 
 ## Sparse sections
 - `Gradients`
@@ -23,12 +24,10 @@
 - `First load`
 - `Interaction`
 - `AI`
-- `Text Formatting`
 
 ## Empty sections
 - `Carousels`
 - `Grid`
-- `Text hierarchy`
 - `Page templates`
 - `Content`
 - `Motion Reveals`
@@ -42,6 +41,7 @@
 - `Content`, `Page templates`, and `Cards` will blur unless each one gets a sharper scope. `Content` should cover content behavior, `Page templates` should cover page shells, and `Cards` should stay at component level.
 - `Interaction`, `Motion Reveals`, and `First load` all govern behavior. Without explicit boundaries, motion guidance will fragment across three sections.
 - `Links and Guidance` touches navigation language, search affordances, and inline guidance. Its file should stay about link behavior and assistive cues, not absorb broader nav strategy.
+- `Text hierarchy` should absorb the useful substance of text emphasis and formatting. Keep hierarchy as the governing section instead of splitting those rules into a parallel board topic.
 
 ## Missing or underrepresented material
 - Styleframe-02-critical patterns are not yet clearly stocked in the board: donate or contribution modules, campaign or initiative banners, article or resource intros, and community or volunteer moments.

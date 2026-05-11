@@ -2,12 +2,19 @@
 
 ## Date
 
+## Project ID
+
 ## Task
+- 
 
-## Sources reviewed
+## Sources
+- 
 
-## What changed in understanding
+## Change
+- 
 
-## Decisions made
+## Decisions
+- 
 
 ## Open questions
+- 

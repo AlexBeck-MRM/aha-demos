@@ -1,13 +1,24 @@
 import { fragmentShaderSource, vertexShaderSource } from "./shaders.js";
 
-const DEFAULT_PALETTE = ["#990000", "#B80A23", "#CF223B", "#ED1E4A", "#FF6A7A"];
+const DEFAULT_PALETTE = ["#c30000", "#d10001", "#e50012", "#f10022", "#f10022"];
+const TIME_SCALE_OPTIONS = [
+  { value: 1, label: "1x" },
+  { value: 0.5, label: "0.5x" },
+  { value: 0.25, label: "0.25x" }
+];
 
 const DEFAULT_OPTIONS = {
-  timeScale: 0.72,
-  flowSpeed: 0.24,
+  timeScale: 1,
+  flowSpeed: 0.38,
   warp: 0.32,
   turbulence: 0.42,
-  blurSoftness: 1.44,
+  blurSoftness: 1.16,
+  primaryBeat: 0.58,
+  secondaryBeat: 0.18,
+  activation: 1.12,
+  generalContrast: 1.08,
+  contrastDepth: 1.14,
+  viewportFocus: 1.0,
   saturation: 1.32,
   contrast: 1.0,
   brightness: 1.34,
@@ -19,11 +30,17 @@ const DEFAULT_OPTIONS = {
 };
 
 const PARAM_RANGES = {
-  timeScale: { min: 0.2, max: 2.4 },
-  flowSpeed: { min: 0.0, max: 1.2 },
+  timeScale: { min: 0.25, max: 1.0 },
+  flowSpeed: { min: 0.05, max: 1.0 },
   warp: { min: 0.0, max: 2.0 },
   turbulence: { min: 0.0, max: 2.4 },
-  blurSoftness: { min: 0.1, max: 3.0 },
+  blurSoftness: { min: 0.2, max: 2.2 },
+  primaryBeat: { min: 0.0, max: 1.0 },
+  secondaryBeat: { min: 0.0, max: 0.7 },
+  activation: { min: 0.0, max: 2.0 },
+  generalContrast: { min: 0.75, max: 1.75 },
+  contrastDepth: { min: 0.75, max: 1.9 },
+  viewportFocus: { min: 0.7, max: 1.65 },
   saturation: { min: 0.4, max: 2.8 },
   contrast: { min: 0.4, max: 2.2 },
   brightness: { min: 0.5, max: 2.4 },
@@ -35,34 +52,48 @@ const PARAM_RANGES = {
 const CONTROL_GROUPS = [
   {
     title: "Flow Field",
+    description: "Ambient tissue drift and blur around the heartbeat.",
     controls: [
-      { key: "timeScale", label: "Flow Tempo", step: 0.01 },
-      { key: "flowSpeed", label: "Flow", step: 0.005 },
-      { key: "warp", label: "Warp", step: 0.01 },
-      { key: "turbulence", label: "Turbulence", step: 0.01 },
-      { key: "blurSoftness", label: "Blur", step: 0.01 }
+      { key: "timeScale", label: "Time Scale", options: TIME_SCALE_OPTIONS },
+      { key: "flowSpeed", label: "Motion", step: 0.01 },
+      { key: "blurSoftness", label: "Softness", step: 0.01 }
     ]
   },
   {
-    title: "Color Response",
+    title: "Heartbeat Field",
+    description: "Normal sinus-style pulse timing with separate first and second beat strength.",
     controls: [
-      { key: "moodBlend", label: "Mood Blend", step: 0.01 },
-      { key: "oxygenGlow", label: "Oxygen Glow", step: 0.01 },
-      { key: "vibrance", label: "Vibrance", step: 0.01 },
-      { key: "saturation", label: "Saturation", step: 0.01 },
-      { key: "contrast", label: "Contrast", step: 0.01 },
-      { key: "brightness", label: "Brightness", step: 0.01 }
+      { key: "primaryBeat", label: "First Beat", step: 0.01, description: "Opening squeeze. Lower this to soften the initial hit." },
+      { key: "secondaryBeat", label: "Second Beat", step: 0.01, description: "Follow-through echo. Lower this to reduce the double-beat feel." },
+      { key: "activation", label: "Activation", step: 0.01, description: "Overall pulse energy through the red field." }
+    ]
+  },
+  {
+    title: "Surface Response",
+    description: "How large, bright, and contrasty the illuminated field feels across the viewport.",
+    controls: [
+      { key: "generalContrast", label: "Global Contrast", step: 0.01, description: "Overall separation between the bright center and deeper reds." },
+      { key: "contrastDepth", label: "Contrast Depth", step: 0.01, description: "Pushes the center deeper into shadow/light separation." },
+      { key: "viewportFocus", label: "Center Spread", step: 0.01, description: "Scales the illuminated middle area relative to the viewport." },
+      { key: "oxygenGlow", label: "Oxygen Glow", step: 0.01, description: "Brightness of the freshest active red in the pulse." },
+      { key: "moodBlend", label: "Red Hold", step: 0.01, description: "Keeps the field sitting in deeper crimson between beats." }
     ]
   }
 ];
 
 const PRESETS = {
   arterial: {
-    timeScale: 0.76,
+    timeScale: 1,
     flowSpeed: 0.3,
     warp: 0.4,
     turbulence: 0.5,
-    blurSoftness: 1.5,
+    blurSoftness: 1.22,
+    primaryBeat: 0.62,
+    secondaryBeat: 0.16,
+    activation: 1.08,
+    generalContrast: 1.04,
+    contrastDepth: 1.12,
+    viewportFocus: 0.92,
     moodBlend: 0.98,
     oxygenGlow: 1.46,
     vibrance: 1.92,
@@ -71,11 +102,17 @@ const PRESETS = {
     brightness: 1.42
   },
   calm: {
-    timeScale: 0.58,
+    timeScale: 0.5,
     flowSpeed: 0.16,
     warp: 0.2,
     turbulence: 0.26,
     blurSoftness: 1.66,
+    primaryBeat: 0.44,
+    secondaryBeat: 0.12,
+    activation: 0.68,
+    generalContrast: 0.88,
+    contrastDepth: 0.9,
+    viewportFocus: 1.14,
     moodBlend: 0.84,
     oxygenGlow: 0.9,
     vibrance: 1.38,
@@ -84,11 +121,17 @@ const PRESETS = {
     brightness: 1.2
   },
   deep: {
-    timeScale: 0.68,
+    timeScale: 0.5,
     flowSpeed: 0.2,
     warp: 0.3,
     turbulence: 0.34,
     blurSoftness: 1.58,
+    primaryBeat: 0.52,
+    secondaryBeat: 0.1,
+    activation: 0.86,
+    generalContrast: 1.18,
+    contrastDepth: 1.28,
+    viewportFocus: 0.86,
     moodBlend: 0.64,
     oxygenGlow: 0.72,
     vibrance: 1.42,
@@ -97,11 +140,17 @@ const PRESETS = {
     brightness: 1.18
   },
   bloom: {
-    timeScale: 0.82,
+    timeScale: 1,
     flowSpeed: 0.32,
     warp: 0.48,
     turbulence: 0.64,
     blurSoftness: 1.36,
+    primaryBeat: 0.66,
+    secondaryBeat: 0.22,
+    activation: 1.44,
+    generalContrast: 1.16,
+    contrastDepth: 1.2,
+    viewportFocus: 1.02,
     moodBlend: 1.0,
     oxygenGlow: 1.86,
     vibrance: 2.16,
@@ -110,11 +159,17 @@ const PRESETS = {
     brightness: 1.6
   },
   haze: {
-    timeScale: 0.62,
+    timeScale: 0.25,
     flowSpeed: 0.18,
     warp: 0.26,
     turbulence: 0.22,
     blurSoftness: 2.26,
+    primaryBeat: 0.4,
+    secondaryBeat: 0.08,
+    activation: 0.82,
+    generalContrast: 0.9,
+    contrastDepth: 0.86,
+    viewportFocus: 1.2,
     moodBlend: 0.88,
     oxygenGlow: 1.24,
     vibrance: 1.68,
@@ -132,7 +187,7 @@ const PRESET_BUTTONS = [
   { key: "haze", label: "Soft Haze" }
 ];
 
-const CORE_DEFAULT_KEYS = ["flowSpeed", "blurSoftness", "moodBlend", "oxygenGlow", "vibrance"];
+const CORE_DEFAULT_KEYS = ["timeScale", "primaryBeat", "secondaryBeat", "activation", "generalContrast"];
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
@@ -257,11 +312,11 @@ function createFallbackController(initialState, canvas) {
 }
 
 function getAutoQuality(internalScale) {
-  if (internalScale > 0.86) {
-    return { octaves: 2, taps: 3 };
-  }
-  if (internalScale > 0.7) {
+  if (internalScale > 0.82) {
     return { octaves: 2, taps: 2 };
+  }
+  if (internalScale > 0.66) {
+    return { octaves: 2, taps: 1 };
   }
   return { octaves: 1, taps: 1 };
 }
@@ -285,6 +340,7 @@ export function createVesselBackground(canvas, options = {}) {
     antialias: false,
     depth: false,
     stencil: false,
+    desynchronized: true,
     premultipliedAlpha: false,
     preserveDrawingBuffer: false,
     powerPreference: "high-performance"
@@ -311,14 +367,18 @@ export function createVesselBackground(canvas, options = {}) {
     warp: gl.getUniformLocation(program, "u_warp"),
     turbulence: gl.getUniformLocation(program, "u_turbulence"),
     blurSoftness: gl.getUniformLocation(program, "u_blur_softness"),
+    primaryBeat: gl.getUniformLocation(program, "u_primary_beat"),
+    secondaryBeat: gl.getUniformLocation(program, "u_secondary_beat"),
     saturation: gl.getUniformLocation(program, "u_saturation"),
     contrast: gl.getUniformLocation(program, "u_contrast"),
     brightness: gl.getUniformLocation(program, "u_brightness"),
     vibrance: gl.getUniformLocation(program, "u_vibrance"),
     moodBlend: gl.getUniformLocation(program, "u_mood_blend"),
+    contrastDepth: gl.getUniformLocation(program, "u_contrast_depth"),
+    viewportFocus: gl.getUniformLocation(program, "u_viewport_focus"),
     oxygenGlow: gl.getUniformLocation(program, "u_oxygen_glow"),
     seed: gl.getUniformLocation(program, "u_seed"),
-    palette: gl.getUniformLocation(program, "u_palette[0]"),
+    palette: gl.getUniformLocation(program, "u_palette") || gl.getUniformLocation(program, "u_palette[0]"),
     octaves: gl.getUniformLocation(program, "u_octaves"),
     tapCount: gl.getUniformLocation(program, "u_tap_count")
   };
@@ -340,12 +400,14 @@ export function createVesselBackground(canvas, options = {}) {
   let disposed = false;
   let rafId = 0;
   let startTime = performance.now();
-  let internalScale = state.quality === "high" ? 1.0 : state.quality === "low" ? 0.68 : 0.78;
-  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let internalScale = state.quality === "high" ? 0.76 : state.quality === "low" ? 0.44 : 0.54;
+  let dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+  let needsResize = true;
+  let lastStageScale = 1;
   const stage = canvas.parentElement instanceof HTMLElement ? canvas.parentElement : null;
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, state.quality === "high" ? 1.4 : 1.25);
     const width = Math.max(1, Math.floor(canvas.clientWidth * dpr * internalScale));
     const height = Math.max(1, Math.floor(canvas.clientHeight * dpr * internalScale));
     if (canvas.width !== width || canvas.height !== height) {
@@ -353,11 +415,16 @@ export function createVesselBackground(canvas, options = {}) {
       canvas.height = height;
       gl.viewport(0, 0, width, height);
     }
+    needsResize = false;
+  }
+
+  function markResize() {
+    needsResize = true;
   }
 
   function chooseQuality() {
     if (state.quality === "high") {
-      return { octaves: 3, taps: 3 };
+      return { octaves: 2, taps: 1 };
     }
     if (state.quality === "low") {
       return { octaves: 1, taps: 1 };
@@ -382,8 +449,10 @@ export function createVesselBackground(canvas, options = {}) {
     const beatPhase = fract(timeSeconds * heartHz);
     const beatA = (beatPhase - 0.06) / 0.024;
     const beatB = (beatPhase - 0.28) / 0.045;
-    const beat = Math.exp(-(beatA * beatA)) + 0.56 * Math.exp(-(beatB * beatB));
-    const beatTail = Math.exp(-Math.max(0, beatPhase - 0.31) * 7.8) * 0.08;
+    const primaryBeat = state.primaryBeat * Math.exp(-(beatA * beatA));
+    const secondaryBeat = state.secondaryBeat * Math.exp(-(beatB * beatB));
+    const beat = primaryBeat + secondaryBeat;
+    const beatTail = Math.exp(-Math.max(0, beatPhase - 0.31) * 7.8) * (0.018 + state.secondaryBeat * 0.06);
     const reboundT = Math.max(0, beatPhase - 0.11);
     const rebound = Math.sin(reboundT * 31.0) * Math.exp(-reboundT * 18.0);
     const breath = 0.5 + 0.5 * Math.sin(flowT * 0.09 + 0.8 * Math.sin(flowT * 0.04 + state.seed * 3.0));
@@ -395,20 +464,36 @@ export function createVesselBackground(canvas, options = {}) {
     const pulseCore = Math.max(0, beat + beatTail - 0.035) * restGate;
     const beatEnergy = clamp(pulseCore * (0.92 + 0.08 * breath) * beatOrganic, 0, 1.3);
     const bounce = Math.max(0, rebound) * restGate;
-    const scale = 1 + beatEnergy * 0.0054 + bounce * 0.0016;
-    stage.style.setProperty("--stage-pulse-scale", scale.toFixed(5));
+    const scale = 1 + beatEnergy * 0.0044 + bounce * 0.0012;
+    if (Math.abs(scale - lastStageScale) > 0.0002) {
+      stage.style.setProperty("--stage-pulse-scale", scale.toFixed(5));
+      lastStageScale = scale;
+    }
   }
 
   function frame(now) {
     if (disposed) {
       return;
     }
-    resize();
+    if (needsResize) {
+      resize();
+    }
 
     const quality = chooseQuality();
     const elapsedSeconds = (now - startTime) / 1000;
     const timeSeconds = elapsedSeconds * state.timeScale;
     syncStageScale(timeSeconds);
+    const contrastDepth = clamp(state.contrastDepth, PARAM_RANGES.contrastDepth.min, PARAM_RANGES.contrastDepth.max);
+    const viewportFocus = clamp(state.viewportFocus, PARAM_RANGES.viewportFocus.min, PARAM_RANGES.viewportFocus.max);
+    const primaryBeat = clamp(state.primaryBeat, PARAM_RANGES.primaryBeat.min, PARAM_RANGES.primaryBeat.max);
+    const secondaryBeat = clamp(state.secondaryBeat, PARAM_RANGES.secondaryBeat.min, PARAM_RANGES.secondaryBeat.max);
+    const contrastBias = contrastDepth - 1;
+    const derivedWarp = clamp(0.12 + state.flowSpeed * 0.5 + state.activation * 0.1, PARAM_RANGES.warp.min, PARAM_RANGES.warp.max);
+    const derivedTurbulence = clamp(0.1 + state.flowSpeed * 0.58 + state.activation * 0.08, PARAM_RANGES.turbulence.min, PARAM_RANGES.turbulence.max);
+    const derivedSaturation = clamp(0.98 + state.activation * 0.12 + state.oxygenGlow * 0.02, PARAM_RANGES.saturation.min, PARAM_RANGES.saturation.max);
+    const derivedVibrance = clamp(0.92 + state.activation * 0.12 + contrastBias * 0.08, PARAM_RANGES.vibrance.min, PARAM_RANGES.vibrance.max);
+    const derivedContrast = clamp(0.74 + state.generalContrast * 0.16 + contrastDepth * 0.2, PARAM_RANGES.contrast.min, PARAM_RANGES.contrast.max);
+    const derivedBrightness = clamp(0.94 + state.generalContrast * 0.04 + state.activation * 0.03 - contrastBias * 0.05, PARAM_RANGES.brightness.min, PARAM_RANGES.brightness.max);
 
     gl.useProgram(program);
     gl.bindVertexArray(vao);
@@ -418,14 +503,18 @@ export function createVesselBackground(canvas, options = {}) {
     gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
     gl.uniform1f(uniforms.time, timeSeconds);
     gl.uniform1f(uniforms.flowSpeed, state.flowSpeed);
-    gl.uniform1f(uniforms.warp, state.warp);
-    gl.uniform1f(uniforms.turbulence, state.turbulence);
+    gl.uniform1f(uniforms.warp, derivedWarp);
+    gl.uniform1f(uniforms.turbulence, derivedTurbulence);
     gl.uniform1f(uniforms.blurSoftness, state.blurSoftness);
-    gl.uniform1f(uniforms.saturation, state.saturation);
-    gl.uniform1f(uniforms.contrast, state.contrast);
-    gl.uniform1f(uniforms.brightness, state.brightness);
-    gl.uniform1f(uniforms.vibrance, state.vibrance);
+    gl.uniform1f(uniforms.primaryBeat, primaryBeat);
+    gl.uniform1f(uniforms.secondaryBeat, secondaryBeat);
+    gl.uniform1f(uniforms.saturation, derivedSaturation);
+    gl.uniform1f(uniforms.contrast, derivedContrast);
+    gl.uniform1f(uniforms.brightness, derivedBrightness);
+    gl.uniform1f(uniforms.vibrance, derivedVibrance);
     gl.uniform1f(uniforms.moodBlend, state.moodBlend);
+    gl.uniform1f(uniforms.contrastDepth, contrastDepth);
+    gl.uniform1f(uniforms.viewportFocus, viewportFocus);
     gl.uniform1f(uniforms.oxygenGlow, state.oxygenGlow);
     gl.uniform1f(uniforms.seed, state.seed);
     gl.uniform1i(uniforms.octaves, quality.octaves);
@@ -440,12 +529,15 @@ export function createVesselBackground(canvas, options = {}) {
       if (["auto", "low", "high"].includes(value)) {
         state.quality = value;
         if (state.quality === "low") {
-          internalScale = Math.min(internalScale, 0.72);
+          internalScale = 0.44;
         }
         if (state.quality === "high") {
-          internalScale = 1.0;
+          internalScale = 0.76;
         }
-        resize();
+        if (state.quality === "auto") {
+          internalScale = 0.54;
+        }
+        markResize();
       }
       return;
     }
@@ -468,13 +560,14 @@ export function createVesselBackground(canvas, options = {}) {
     };
   }
 
-  function dispose() {
+  function disposeController() {
     if (disposed) {
       return;
     }
     disposed = true;
     cancelAnimationFrame(rafId);
-    window.removeEventListener("resize", resize);
+    resizeObserver.disconnect();
+    window.removeEventListener("resize", markResize);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindVertexArray(null);
     gl.deleteBuffer(positionBuffer);
@@ -485,7 +578,9 @@ export function createVesselBackground(canvas, options = {}) {
     }
   }
 
-  window.addEventListener("resize", resize);
+  const resizeObserver = new ResizeObserver(markResize);
+  resizeObserver.observe(canvas);
+  window.addEventListener("resize", markResize);
   resize();
   rafId = requestAnimationFrame(frame);
 
@@ -493,18 +588,74 @@ export function createVesselBackground(canvas, options = {}) {
     set,
     getState,
     setPalette,
-    dispose
+    dispose: disposeController
   };
 }
 
 function createControlRow(config, value, onChange) {
-  const decimals = String(config.step).includes(".") ? String(config.step).split(".")[1].length : 0;
   const wrapper = document.createElement("div");
   wrapper.className = "control-row";
+
+  const meta = document.createElement("div");
+  meta.className = "control-row__meta";
 
   const label = document.createElement("label");
   label.textContent = config.label;
   label.htmlFor = `control-${config.key}`;
+  meta.append(label);
+
+  if (config.description) {
+    const hint = document.createElement("p");
+    hint.className = "control-row__hint";
+    hint.textContent = config.description;
+    meta.append(hint);
+  }
+
+  if (Array.isArray(config.options) && config.options.length) {
+    const choices = document.createElement("div");
+    choices.className = "control-choices";
+    const output = document.createElement("output");
+
+    const syncActive = (nextValue) => {
+      for (const button of choices.querySelectorAll("button")) {
+        button.classList.toggle("is-active", Number(button.dataset.value) === nextValue);
+      }
+      const selected = config.options.find((option) => option.value === nextValue);
+      output.textContent = selected ? selected.label : String(nextValue);
+    };
+
+    for (const option of config.options) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "ui-button control-choice";
+      button.dataset.value = String(option.value);
+      button.textContent = option.label;
+      button.addEventListener("click", () => {
+        syncActive(option.value);
+        onChange(option.value);
+      });
+      choices.append(button);
+    }
+
+    syncActive(Number(value));
+    wrapper.classList.add("control-row--choice");
+    wrapper.append(meta, choices, output);
+    return {
+      wrapper,
+      slider: {
+        value: String(value),
+        dispatchEvent(event) {
+          if (event?.type === "input") {
+            syncActive(Number(this.value));
+            onChange(Number(this.value));
+          }
+          return true;
+        }
+      }
+    };
+  }
+
+  const decimals = String(config.step).includes(".") ? String(config.step).split(".")[1].length : 0;
 
   const slider = document.createElement("input");
   slider.id = `control-${config.key}`;
@@ -523,7 +674,7 @@ function createControlRow(config, value, onChange) {
     onChange(parsed);
   });
 
-  wrapper.append(label, slider, output);
+  wrapper.append(meta, slider, output);
   return { wrapper, slider };
 }
 
@@ -571,7 +722,7 @@ function setupUi(controller) {
       if (!config) {
         continue;
       }
-      const row = createControlRow(config, initialState[config.key], (nextValue) => {
+      const row = createControlRow({ ...config, ...(PARAM_RANGES[config.key] || {}) }, initialState[config.key], (nextValue) => {
         controller.set(config.key, nextValue);
       });
       row.wrapper.classList.add("control-row--default");
@@ -593,10 +744,17 @@ function setupUi(controller) {
     title.textContent = group.title;
     section.append(title);
 
+    if (group.description) {
+      const note = document.createElement("p");
+      note.className = "control-group__note";
+      note.textContent = group.description;
+      section.append(note);
+    }
+
     const body = document.createElement("div");
     body.className = "control-group__body";
     for (const config of advancedControls) {
-      const row = createControlRow(config, initialState[config.key], (nextValue) => {
+      const row = createControlRow({ ...config, ...(PARAM_RANGES[config.key] || {}) }, initialState[config.key], (nextValue) => {
         controller.set(config.key, nextValue);
       });
       sliders[config.key] = row.slider;

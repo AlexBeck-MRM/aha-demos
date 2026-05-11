@@ -1,0 +1,16 @@
+id: aha-website-refresh
+title: AHA Website Refresh
+status: active
+owner: design-brain
+created: 2026-04-16
+last_updated: 2026-04-16
+canonical_brief: knowledge/distilled/canonical-brief.md
+decision_log: logs/decision-log.md
+route_log: logs/route-evolution.md
+retrieval_index: projects/aha-website-refresh/retrieval-index.yaml
+artifact_index: projects/aha-website-refresh/artifact-index.yaml
+quick_map: projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+cleanup_candidates: projects/aha-website-refresh/cleanup-candidates.md
+brief_file: projects/aha-website-refresh/brief.md
+open_questions_file: projects/aha-website-refresh/open-questions.md
+session_log_file: projects/aha-website-refresh/session-log.md

@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 
-OUT = Path('slides/media-jpeg')
+OUT = Path('reference/slides/media-jpeg')
 OUT.mkdir(parents=True, exist_ok=True)
 
 

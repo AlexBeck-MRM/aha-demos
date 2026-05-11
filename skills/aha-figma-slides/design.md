@@ -1,0 +1,413 @@
+---
+project_id: aha-website-refresh
+skill_id: aha-figma-slides
+status: design_draft
+source_study: reference/slides/aha-figma-slide-template-study.md
+figma_file_key: NAaHet2YIlt2qowjmhwMuw
+figma_template_section_node_id: "98:6876"
+last_updated: 2026-04-29
+---
+
+# AHA Figma Slides Skill Design
+
+## Job
+- Build short AHA slide narratives in the existing Figma slide template.
+- Use the live Figma deck as the style and layout source of truth.
+- Keep generated decks minimal, grounded, and useful.
+- Defer `SKILL.md` creation until the Figma test narrative works.
+
+## Skill Boundary
+- This skill is for AHA repo slide work only.
+- This skill should not contain a fixed narrative.
+- This skill should not contain the Healthy Eating test story.
+- Narrative source material should live in separate reference or source documents.
+- The skill should know how to choose and modify layouts.
+- The skill should not invent claims to fill slides.
+
+## Source Of Truth
+- Read the live Figma file first when access is available.
+- Use section `AHA MRM Slides`, node `98:6876`, as the template source.
+- Use `reference/slides/aha-figma-slide-template-study.md` as the cached design study.
+- Use `reference/slides/aha-slide-system-v1.6.md` and `reference/slides/tokens-v1.6.json` as older supporting references.
+- Treat the live Figma file as newer than local Markdown when they disagree.
+- Note: the current Figma plugin runtime could not load `MW Sans`.
+- For current editable tests, text nodes use `AR One Sans` fallback while preserving structure, sizing, color, spacing, and layout.
+- Before turning this into a final skill, verify whether `MW Sans` can be loaded in the target runtime or whether text editing requires a documented fallback.
+
+## Required Workflow
+- Read the user request.
+- Identify the narrative job:
+  - frame the problem
+  - explain why it matters
+  - show evidence
+  - compare options
+  - recommend direction
+  - assign next steps
+- Select layouts by purpose, not by visual preference.
+- Create slides as instances of full-slide components from the template whenever available.
+- Duplicate regular frames only when no component exists for the needed layout.
+- Place output slides horizontally with `100px` between frames unless the user asks otherwise.
+- Preserve slide size, header/footer instances, auto-layout, spacing, type, and colors.
+- Edit existing text nodes and image placeholders instead of rebuilding from scratch.
+- Map copy into component instances by semantic slot name and parent container name.
+- Do not populate repeated `Title` and `Body` fields by traversal order.
+- Validate structure after creation.
+
+## Layout Selection Rules
+- Use `Cover / Opener` for title or context-setting.
+- Use `Big Title Statement` for one strong strategic claim.
+- Use `Centered White Statement` for a short, persuasive claim that should land as a pause in the story.
+- Use `Single Narrative` for one idea with a short explanation.
+- Use `Split Narrative` for a claim with implications.
+- Use `Evidence Stack` for multiple observed signals.
+- Use `Diagnostic Board` for problem decomposition.
+- Use `Narrative + Visual` for claim plus screenshot, diagram, or model.
+- Use `Comparison Table` for current-versus-target logic.
+- Use `Decision Recommendation` for what we should do and why.
+- Use `Next Steps` for immediate actions.
+- Use dense canvases only for appendix or decision-detail pages.
+
+## Missing Layout Templates To Support
+- `Decision Recommendation`
+  - Based on `Split Narrative` or `Principles With Rationale`.
+  - Left side: recommendation.
+  - Right side: rationale, risks, and test needed.
+- `Source / Evidence Note`
+  - Based on `Single Narrative`.
+  - Compact source list and confidence note.
+- `Centered White Statement`
+  - Based on the red divider/statement logic, but on a white background.
+  - One sentence centered in the slide, optional one-line support underneath.
+  - Use when the story needs a strong transition or principle, not when the slide needs evidence detail.
+- `Before / After UX Change`
+  - Based on `Two Large Images`.
+  - Current state and target state side by side.
+- `Storyboard Sequence`
+  - Based on `Timeline Cards` or `End-to-End Journey`.
+  - Three to five moments in a guided sequence.
+- `Appendix Detail`
+  - Based on `Canvas` or `Tabular Matrix`.
+  - Dense support material outside the main story.
+
+## New AI Layout Component Bank
+- Created on `Slides Template MASTER` inside the `NEW SLIDES` section.
+- Purpose: support narrative chunking by ideal slide job, not only by the earlier template inventory.
+- Placement: to the right of the existing full-slide components.
+- Typeface note: editable text currently uses `AR One Sans`; replace with `MW Sans` when the Figma runtime exposes it.
+- Components:
+  - `AI Layout/01 Chapter / Red Centered`: `193:368`
+  - `AI Layout/02 Statement / White Centered`: `193:379`
+  - `AI Layout/03 Statement / Center Plus Signals`: `193:391`
+  - `AI Layout/04 Scope / Dark Page Wall`: `193:407`
+  - `AI Layout/05 Scope / Dark Wall With Focus`: `193:923`
+  - `AI Layout/06 System / Two Guide Families`: `193:1296`
+  - `AI Layout/07 Structure / Condition Chapters`: `193:1313`
+  - `AI Layout/08 Structure / Healthy Living Sequence`: `193:1334`
+  - `AI Layout/09 Journey / Current Question Path`: `193:1358`
+  - `AI Layout/10 Journey / Guide Path`: `193:1381`
+  - `AI Layout/11 Diagnostic / Volume Repetition Structure`: `193:1406`
+  - `AI Layout/12 Evidence / Content Practice`: `193:1427`
+  - `AI Layout/13 Photo / Thesis Overlay`: `193:1445`
+  - `AI Layout/14 Photo / Human Quote`: `193:1467`
+  - `AI Layout/15 Wireframe / Guide Page`: `193:1483`
+  - `AI Layout/16 Wireframe / Condition Authority Page`: `193:1509`
+  - `AI Layout/17 Wireframe / Before After`: `193:1541`
+  - `AI Layout/18 Content / Consolidation Canvas`: `193:1586`
+  - `AI Layout/19 Decision / Recommendation`: `193:1616`
+  - `AI Layout/20 Proof / Paired Journey Test`: `193:1634`
+- Coverage:
+  - centered statement beats
+  - dark problem/scope slides with page-wall treatment
+  - Conditions and Healthy Living guide structures
+  - current-path and guide-path diagrams
+  - evidence and modern content-practice slides
+  - photo-led reasoning slides with replaceable image areas
+  - wireframe/mock-up slides for guide and condition pages
+  - recommendation and paired proof-test slides
+- Validation:
+  - `20` components
+  - all full-slide components at `1920 x 1080`
+  - all include the template footer instance
+  - grid spacing is `260px` horizontally and `320px` vertically
+  - no text outside slide bounds found
+  - after the v10 narrative test, the statement and dark scope masters were adjusted for wrapped real copy
+  - final master QA found no text overlaps, text-outside-slide issues, or likely awkward word breaks
+  - after the v11 narrative QA, repeated `Title` and `Body` fields were renamed into semantic slots on diagnostic, sequence, guide-path, consolidation, and proof-test components
+
+## Construction Rules
+- Keep frames `1920 x 1080`.
+- Keep main content at `x=40`, usually `y=112`, usually `w=1840`.
+- Keep footer at `y=1016`, `h=64`.
+- Keep header at `y=0`, commonly `h=74`.
+- Keep white backgrounds for explanation, evidence, data, and decision slides.
+- Use red/image backgrounds only for opener, divider, metric hero, quote, and closer moments.
+- Keep `MW Sans` as the primary font.
+- Use deck colors:
+  - dark text `#181d27`
+  - supporting text `#414651`
+  - white `#ffffff`
+  - soft panel `#f5f5f5`
+  - line `#e9eaeb`
+  - red `#cf222b`
+  - red support tint `#ff9ea1`
+- Do not add new colors unless the source frame already uses a status or heatmap treatment.
+- For selected cards or highlighted items, use red text plus a red outline on a white fill.
+- Do not use pale red fills for selected content cards.
+
+## Auto-Layout Rules
+- Keep nested frames as the layout system.
+- Keep text stacks in `VERTICAL` auto-layout.
+- Keep columns in `HORIZONTAL` or `GRID` auto-layout.
+- Keep repeated cards as siblings inside one parent layout frame.
+- Keep card padding consistent with the source frame.
+- Do not convert auto-layout frames into manually positioned groups.
+- If copy does not fit, shorten the copy or choose another layout.
+
+## Content Rules
+- One main idea per slide.
+- Use short, direct slide language.
+- Prefer one strong sentence over three weak bullets.
+- Use centered statement slides sparingly, as narrative emphasis between evidence or explanation slides.
+- Use bullets for evidence, implications, or actions.
+- Label weak claims as hypotheses or open questions.
+- Keep source-backed claims traceable to repo notes or user-provided text.
+- Do not include broad taxonomy tables unless the user asks for them.
+- Avoid contrastive phrasing in client-facing slide copy.
+- Do not use `not this, but that`, `rather than`, or `instead of` as a narrative shortcut.
+- State the positive direction directly, then support it with evidence.
+
+## Validation
+- After creating slides, return created page and frame IDs.
+- Check that the slide count matches the requested narrative.
+- Check that slides are horizontally stacked with `100px` gaps.
+- Check that no generated slide is detached from the template style.
+- Check for placeholder copy such as `Section name`, `Title`, and `Body`.
+- Check semantic slot mapping on repeated-card components.
+- Check that generated client-facing copy uses `American Heart`, not `AHA`.
+- Check that no contrastive phrase shortcuts remain in generated slide text.
+- Run repo verification when repo files change:
+
+```bash
+npm test
+```
+
+## Deferred Skill Build
+- Create `SKILL.md` only after:
+  - the missing layout templates exist in Figma
+  - the six-slide test narrative works visually
+  - the repo narrative document is separate from the skill
+  - the process is repeatable without relying on hidden conversation context
+
+## Figma Test Page
+- Page: `[AI dropzone]`
+- Page node: `132:2`
+- Missing template row:
+  - `AI Template - Decision Recommendation`: `132:3`
+  - `AI Template - Source Evidence Note`: `132:28`
+  - `AI Template - Before After UX Change`: `132:45`
+  - `AI Template - Storyboard Sequence`: `132:64`
+  - `AI Template - Appendix Detail`: `132:89`
+- Narrative row:
+  - `Narrative 01 - Repository Problem`: `132:146`
+  - `Narrative 02 - Companion Ambition`: `132:160`
+  - `Narrative 03 - Healthy Eating Evidence`: `132:177`
+  - `Narrative 04 - Target Content Model`: `132:209`
+  - `Narrative 05 - Recommendation`: `132:239`
+  - `Narrative 06 - Next Steps`: `132:264`
+- Row gap: `100px`
+- Validation status: structure validated after creation.
+- Stronger topic-system narrative row:
+  - Row: `y=4200`
+  - Gap: `100px`
+  - Slide count: `10`
+  - Node IDs:
+    - `137:128`
+    - `137:142`
+    - `137:156`
+    - `137:192`
+    - `137:217`
+    - `137:246`
+    - `137:278`
+    - `137:292`
+    - `137:322`
+    - `137:347`
+  - Validation status: no text overflow found.
+- Preferred narrative row after critique:
+  - Row: `y=5600`
+  - Gap: `100px`
+  - Slide count: `10`
+  - Node IDs:
+    - `146:68`
+    - `146:82`
+    - `146:96`
+    - `146:113`
+    - `146:127`
+    - `146:141`
+    - `146:166`
+    - `146:196`
+    - `146:225`
+    - `146:250`
+  - Narrative starts with the broader mental-model problem before using Healthy Eating as the worked example.
+  - Validation status: no text overflow found.
+- Page-volume narrative row:
+  - Row: `y=7000`
+  - Gap: `100px`
+  - Slide count: `12`
+  - Node IDs:
+    - `158:128`
+    - `158:140`
+    - `158:969`
+    - `158:982`
+    - `158:1053`
+    - `158:1066`
+    - `158:1089`
+    - `158:1102`
+    - `158:1137`
+    - `158:1160`
+    - `158:1179`
+    - `158:1198`
+  - Adds centered white statement slides for persuasive principles.
+  - Adds editable reconstructed page-wall visuals based on the user-provided screenshots.
+  - Validation status: `12` slides, all gaps `100px`, no text overflow found.
+- Wider guide-system narrative row:
+  - Row: `y=8400`
+  - Gap: `100px`
+  - Slide count: `13`
+  - Node IDs:
+    - `163:200`
+    - `163:212`
+    - `163:225`
+    - `163:242`
+    - `163:255`
+    - `163:286`
+    - `163:305`
+    - `163:336`
+    - `163:356`
+    - `163:1185`
+    - `163:1198`
+    - `163:1233`
+    - `163:1252`
+  - Opens with the wider AHA information-system opportunity.
+  - Frames Conditions and Healthy Living as the two main guide families.
+  - Uses Healthy Eating only after the guide-system idea is established.
+  - Avoids contrastive phrasing in generated slide copy.
+  - Adds SEO and modern content-practice support for the page-count claim.
+  - Uses red outline with white fill for selected cards.
+  - Validation status: `13` slides, all gaps `100px`, no text overflow found, no contrastive phrase hits found, no pale-red highlighted card fills found.
+- Storytelling health-information chapter row:
+  - Row: `y=9800`
+  - Gap: `100px`
+  - Slide count: `14`
+  - Node IDs:
+    - `177:278`
+    - `177:292`
+    - `177:304`
+    - `177:317`
+    - `177:329`
+    - `177:346`
+    - `177:370`
+    - `177:397`
+    - `177:410`
+    - `177:427`
+    - `177:450`
+    - `177:1279`
+    - `177:1305`
+    - `177:1325`
+  - Starts with a red chapter slide.
+  - Uses `American Heart` in generated slide copy.
+  - Frames Health Conditions and Healthy Living as related guide families.
+  - Grounds Health Conditions in the six-part authority structure.
+  - Uses Healthy Eating as the proof case after the wider framework is established.
+  - Validation status: `14` slides, all gaps `100px`, no text overflow found, no acronym hits found, no contrastive phrase hits found, no pale-red highlighted card fills found.
+- Component-instance narrative row:
+  - Row: `y=11200`
+  - Gap: `100px`
+  - Slide count: `14`
+  - Node IDs:
+    - `189:1334`
+    - `189:1343`
+    - `189:1360`
+    - `189:1374`
+    - `189:1399`
+    - `189:1448`
+    - `189:1480`
+    - `189:1523`
+    - `189:1537`
+    - `189:1573`
+    - `189:1602`
+    - `189:1619`
+    - `189:1644`
+    - `189:1669`
+  - Uses full-slide component instances from `Slides Template MASTER / AHA MRM Slides`.
+  - Removed the generated `AI Slide Component v8/*` components and `Narrative v8 *` instances from `[AI dropzone]`.
+  - Text overrides currently use `AR One Sans` because `MW Sans` is not visible to the Figma plugin runtime.
+  - Validation status: `14` slides, all top-level nodes are instances, all gaps `100px`, no leftover source-copy hits, no `AHA` acronym hits, no contrastive phrase hits, and no generated v8 artifacts remain.
+- AI Layout narrative row:
+  - Row: `y=14000`
+  - Gap: `100px`
+  - Slide count: `16`
+  - Node IDs:
+    - `197:749`
+    - `197:760`
+    - `197:772`
+    - `197:784`
+    - `197:1300`
+    - `197:1673`
+    - `197:1690`
+    - `197:1711`
+    - `197:1735`
+    - `197:1758`
+    - `197:1783`
+    - `197:1804`
+    - `197:1822`
+    - `197:1844`
+    - `197:1870`
+    - `197:1888`
+  - Uses the new `AI Layout/*` full-slide components.
+  - Screenshot contact sheet:
+    - `Narrative v10 Screenshots / contact sheet`: `203:1498`
+    - `16` exported thumbnails
+  - Master component adjustments made after QA:
+    - `AI Layout/02 Statement / White Centered`: increased vertical spacing between statement, support, and cue
+    - `AI Layout/04 Scope / Dark Page Wall`: moved body and evidence tag down to support wrapped titles
+    - `AI Layout/05 Scope / Dark Wall With Focus`: moved body and question tag down to support wrapped titles
+  - Validation status: `16` slides, all top-level nodes are instances, all gaps `100px`, no text outside slide bounds, no text overlaps, no likely awkward word-break risks, no leftover source-copy hits, no `AHA` acronym hits, and no contrastive phrase hits.
+- Final problem-to-solution narrative row:
+  - Row: `y=17200`
+  - Gap: `100px`
+  - Slide count: `13`
+  - Node IDs:
+    - `205:1889`
+    - `205:1900`
+    - `205:1912`
+    - `205:1924`
+    - `205:1945`
+    - `205:2461`
+    - `205:2473`
+    - `205:2490`
+    - `205:2511`
+    - `205:2535`
+    - `205:2560`
+    - `205:2586`
+    - `205:2613`
+  - Uses the new `AI Layout/*` full-slide components.
+  - Narrative shape:
+    - start with the health-information problem
+    - deconstruct the challenge briefly
+    - introduce canonical guides as the solution
+    - explain topic organisation across Conditions and Healthy Living
+    - show page structures and expected user guidance
+    - include visual solution examples
+    - close on better experience and trusted source-of-truth value
+  - Screenshot contact sheet:
+    - `Narrative v11 Screenshots / contact sheet`: `239:2991`
+    - `13` exported thumbnails
+  - Master component adjustment made after QA:
+    - `AI Layout/15 Wireframe / Guide Page`: moved body copy lower and widened the title area so wrapped solution-example titles do not collide with body copy.
+    - `AI Layout/11 Diagnostic / Volume Repetition Structure`: rebuilt from a four-card evidence slide into a three-factor diagnostic around `Volume`, `Repetition`, and `Structure`.
+    - `AI Layout/06 System / Two Guide Families`: renamed card fields to `Conditions title`, `Conditions body`, `Healthy Living title`, `Healthy Living body`, and `System label`.
+    - `AI Layout/08 Structure / Healthy Living Sequence`: renamed repeated sequence fields from `Sequence 1 title`, `Sequence 1 body`, through `Sequence 5 title`, `Sequence 5 body`.
+    - `AI Layout/10 Journey / Guide Path`: renamed repeated guide-step fields from `Guide step 1 title`, `Guide step 1 body`, through `Guide step 5 title`, `Guide step 5 body`.
+    - `AI Layout/18 Content / Consolidation Canvas`: renamed repeated support fields from `Support 1 title`, `Support 1 body`, through `Support 6 title`, `Support 6 body`.
+    - `AI Layout/20 Proof / Paired Journey Test`: renamed paired-card fields to `Better experience title`, `Better experience body`, `Trusted source title`, and `Trusted source body`.
+  - Validation status: `13` slides, all top-level nodes are instances, all gaps `100px`, no text outside slide bounds, no text overlaps, no likely awkward word-break risks, no leftover source-copy hits, no `AHA` acronym hits, and no contrastive phrase hits.

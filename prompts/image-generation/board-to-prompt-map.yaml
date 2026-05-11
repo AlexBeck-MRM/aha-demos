@@ -1,0 +1,119 @@
+prompt_system: master-styleframe-prompt
+
+shared_foundation:
+  source_files:
+    - knowledge/distilled/canonical-brief.md
+    - knowledge/distilled/project-summary.md
+    - design/routes/route-comparison.md
+  inject_into:
+    - shared_aha_foundation
+    - avoid
+
+styleframes:
+  styleframe_01:
+    purpose_file: design/styleframes/01-brand-presence.md
+    inject_into:
+      - styleframe_block
+      - composition_priority
+      - required_ingredients
+    output_variants:
+      - file: prompts/image-generation/styleframe-01.md
+        route: route_a
+      - file: prompts/image-generation/styleframe-01.md
+        route: route_b
+  styleframe_02:
+    purpose_file: design/styleframes/02-website-ecosystem.md
+    inject_into:
+      - styleframe_block
+      - composition_priority
+      - required_ingredients
+    output_variants:
+      - file: prompts/image-generation/styleframe-02.md
+        route: route_a
+      - file: prompts/image-generation/styleframe-02.md
+        route: route_b
+
+standalone_prompts:
+  healthy_living_topic_grid_route2:
+    file: prompts/image-generation/healthy-living-topic-grid-route2.md
+    prompt_file: prompts/image-generation/healthy-living-topic-grid-route2.prompt.txt
+    purpose: Generate a self-contained 3x2 raster illustration reference board for the six Healthy Living guide topics.
+    source_files:
+      - design/ui-style-inventory/illustration-style.md
+      - design/ui-style-inventory/icons.md
+      - reference/evidence/mockups/aha-healthy-living-adaptive-super-hub-2026-05-07/healthy-living-adaptive-super-hub-default-variants.png
+
+routes:
+  route_a:
+    source_files:
+      - design/routes/route-a.md
+      - design/routes/route-deltas.md
+      - logs/route-evolution.md
+    inject_into:
+      - route_block
+      - composition_tuning
+      - avoid
+  route_b:
+    source_files:
+      - design/routes/route-b.md
+      - design/routes/route-deltas.md
+      - logs/route-evolution.md
+    inject_into:
+      - route_block
+      - composition_tuning
+      - avoid
+
+board_rule_groups:
+  surface:
+    source_files:
+      - design/ui-style-inventory/color-scheme.md
+      - design/ui-style-inventory/gradients.md
+      - design/ui-style-inventory/depth.md
+    inject_into:
+      - board_derived_rules.surface
+  navigation_and_discovery:
+    source_files:
+      - design/ui-style-inventory/nav-elements.md
+      - design/ui-style-inventory/mega-menu.md
+      - design/ui-style-inventory/search.md
+      - design/ui-style-inventory/tabs.md
+      - design/ui-style-inventory/links-and-guidance.md
+    inject_into:
+      - board_derived_rules.navigation_and_discovery
+  content_and_hierarchy:
+    source_files:
+      - design/ui-style-inventory/headlines.md
+      - design/ui-style-inventory/text-hierarchy.md
+      - design/ui-style-inventory/content.md
+      - design/ui-style-inventory/page-templates.md
+      - design/ui-style-inventory/article-intros.md
+    inject_into:
+      - board_derived_rules.content_and_hierarchy
+  modules:
+    source_files:
+      - design/ui-style-inventory/buttons.md
+      - design/ui-style-inventory/cards.md
+      - design/ui-style-inventory/forms.md
+      - design/ui-style-inventory/motion-reveals.md
+    inject_into:
+      - board_derived_rules.modules
+  imagery_and_trust:
+    source_files:
+      - design/ui-style-inventory/image-types.md
+      - design/ui-style-inventory/image-cropping.md
+      - design/ui-style-inventory/photography-treatment.md
+      - design/ui-style-inventory/trust-cues.md
+    inject_into:
+      - board_derived_rules.imagery_and_trust
+
+research_guardrails:
+  source_files:
+    - knowledge/distilled/experience-research-hypotheses.md
+    - knowledge/sources/experience-insights-mergers/hypotheses-and-conclusions.md
+    - knowledge/sources/discovery-playback/master-playback-notes.md
+    - knowledge/sources/discovery-playback/technology-playback-notes.md
+  enforce:
+    - trust_grows_through_clarity
+    - editorial_expression_cannot_break_information_scent
+    - search_and_navigation_must_feel_systemic_not_cosmetic
+    - homepage_should_explain_what_aha_does_before_fragmenting_attention

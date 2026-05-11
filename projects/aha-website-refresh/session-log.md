@@ -307,6 +307,28 @@ decision_refs:
 - use the new source note when comparing Healthy Living hub variants
 - decide which of the three variants should be pushed further
 
+## 2026-05-08
+### Task
+- update the Healthy Living adaptive hub around a visible six-theme chooser
+- remove the bottom picker
+- create a new two-state board from the narrowed direction
+
+### Change
+- narrow the route from three variants to one preferred structural direction
+- replace the bottom selector with six featured theme tiles as the interaction model
+- define selected-state behavior so the clicked theme becomes the lead guide area
+- update route memory to reflect the updated Healthy Living interaction pattern
+
+### Files
+- `design/routes/healthy-living-adaptive-super-hub-wireframes.md`
+- `knowledge/sources/current-site-audit/healthy-living-adaptive-super-hub-2026-05-07.md`
+- `logs/route-evolution.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- generate the updated two-state Healthy Living board
+- compare whether the six-theme chooser is simpler and stronger than the bottom picker
+
 ### Files
 - `reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/`
 - `knowledge/sources/current-site-audit/high-blood-pressure-topic-network-2026-04-20.md`
@@ -1444,6 +1466,25 @@ decision_refs:
 
 ## 2026-05-07
 ### Task
+- save the self-contained Healthy Living Route 2 topic-grid prompt
+- clean up rejected generated-image artifacts
+
+### Change
+- add a reusable standalone image prompt for the six Healthy Living guide topics
+- register the prompt in the image-generation prompt map
+- remove the now-empty rejected `output/imagegen` artifact path
+- leave older unrelated `tmp/imagegen` scratch files in place
+
+### Files
+- `prompts/image-generation/healthy-living-topic-grid-route2.md`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use `prompts/image-generation/healthy-living-topic-grid-route2.md` as the starting prompt for the next real raster image generation
+
+## 2026-05-07
+### Task
 - document and tidy the final High Blood Pressure condition guide prototype
 
 ### Change
@@ -1475,3 +1516,140 @@ decision_refs:
 - use the cleaned prototype folder for Figma transfer
 - replace placeholder links before production
 - run AHA clinical review before publication
+
+## 2026-05-07
+### Task
+- simplify the Healthy Living Route 2 topic-grid prompt
+
+### Change
+- reduce each topic illustration to one main icon-like subject plus one soft support shape
+- use the Sleep pillow/moon example as the simplicity benchmark
+- keep people excluded
+- keep the prompt self-contained and raster-only
+
+### Files
+- `prompts/image-generation/healthy-living-topic-grid-route2.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use the simplified prompt for the next raster image generation attempt
+
+## 2026-05-07
+### Task
+- save plain-text copy of the simplified Healthy Living Route 2 prompt
+
+### Change
+- add prompt-only `.txt` file for direct copy/paste or imagegen CLI use
+- link the prompt-only file from the image-generation prompt map
+
+### Files
+- `prompts/image-generation/healthy-living-topic-grid-route2.prompt.txt`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use the `.prompt.txt` file when running the next raster image generation
+
+## 2026-05-07
+### Task
+- update Healthy Living topic-grid prompt to avoid object cropping
+
+### Change
+- add explicit no-cropping rule for all topic objects
+- add interest through layering, diagonal placement, varied scale, and object relationships
+- keep the simplified icon-like direction intact
+
+### Files
+- `prompts/image-generation/healthy-living-topic-grid-route2.md`
+- `prompts/image-generation/healthy-living-topic-grid-route2.prompt.txt`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use the updated no-crop prompt for the next raster image generation attempt
+
+## 2026-05-07
+### Task
+- tune Healthy Living topic-grid prompt after near-final generated result
+
+### Change
+- require pure white board and cell backgrounds
+- soften the quit smoking and vaping tile so it does not feel like an aggressive warning sign
+- add more softness and layered bedding depth to the sleep tile
+- keep the simple icon-like direction and no-crop rule
+
+### Files
+- `prompts/image-generation/healthy-living-topic-grid-route2.md`
+- `prompts/image-generation/healthy-living-topic-grid-route2.prompt.txt`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- rerun the prompt and compare whether the vape and sleep tiles now feel closer to the intended system
+
+## 2026-05-08
+### Task
+- lock the primary illustration route and update its palette
+
+### Change
+- accept Route 2 as the single primary illustration route
+- reduce warm brown and beige dominance in the palette
+- define a cleaner core palette from the attached references
+- add situational pastel tints for nature, water, soft support, food, and sleep
+- update live Figma header copy for `Illustration Style` and `Colour Scheme`
+- update prompt handoffs so future image generation uses the cooler palette
+
+### Files
+- `design/ui-style-inventory/color-scheme.md`
+- `design/ui-style-inventory/illustration-style.md`
+- `prompts/image-generation/master-styleframe-prompt.md`
+- `prompts/image-generation/styleframe-01.md`
+- `prompts/image-generation/styleframe-02.md`
+- `prompts/image-generation/healthy-living-topic-grid-route2.md`
+- `prompts/image-generation/healthy-living-topic-grid-route2.prompt.txt`
+- `logs/decision-log.md`
+- `logs/route-evolution.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- generate the next illustration board with the cooler palette
+- check whether pastels stay secondary and red remains the main AHA signal
+
+## 2026-05-08
+### Task
+- correct illustration guideline artifact split
+
+### Change
+- keep Figma output limited to the colour palette
+- add compact editable palette frame `AHA illustration palette - cooler core v2` to the live `Colour Scheme` section
+- remove local references to the mistakenly-created Figma guideline board
+- create the illustration guideline as an image instead
+
+### Files
+- `design/figma/workbench-section-map.yaml`
+- `design/ui-style-inventory/illustration-style.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- generate the illustration guideline image
+
+## 2026-05-11
+### Task
+- run morning memory-maintenance pass
+- fix source-layer retrieval gaps
+- normalize duplicate route-log IDs
+
+### Change
+- add the missing `current-site-audit` note files to the source indexes
+- correct the Healthy Living adaptive hub source note so it points to stored evidence and the route spec, not a missing board image
+- renumber duplicate accepted route IDs so route retrieval stays unambiguous
+
+### Files
+- `knowledge/sources/index.yaml`
+- `knowledge/sources/current-site-audit/index.md`
+- `knowledge/sources/current-site-audit/healthy-living-adaptive-super-hub-2026-05-07.md`
+- `logs/route-evolution.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to generate and store the updated two-state Healthy Living board image
+- refresh the short route comparison summaries if the May route split needs a faster retrieval layer

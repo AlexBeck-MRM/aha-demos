@@ -1,6 +1,6 @@
 references:
   - id: evidence-aha-home
-    path: evidence/recordings/american_heart_association__home.mp4
+    path: reference/evidence/recordings/american_heart_association__home.mp4
     type: recording
     authority: primary
     tags:
@@ -8,7 +8,7 @@ references:
       - homepage
       - current-state
   - id: evidence-aha-key
-    path: evidence/recordings/american_heart_association__key.mp4
+    path: reference/evidence/recordings/american_heart_association__key.mp4
     type: recording
     authority: primary
     tags:
@@ -16,14 +16,14 @@ references:
       - key-page
       - current-state
   - id: evidence-manifest
-    path: evidence/capture_manifest.csv
+    path: reference/evidence/capture_manifest.csv
     type: manifest
     authority: primary
     tags:
       - inventory
       - capture
   - id: evidence-qc
-    path: evidence/qc_report_final.csv
+    path: reference/evidence/qc_report_final.csv
     type: qc-report
     authority: primary
     tags:

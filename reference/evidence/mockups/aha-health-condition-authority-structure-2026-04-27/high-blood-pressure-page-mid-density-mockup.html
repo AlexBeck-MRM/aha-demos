@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>High Blood Pressure Mid-Density Page Mockup</title>
+  <style>
+    :root {
+      --red: #eb001b;
+      --deep-red: #bf0000;
+      --ink: #403d3a;
+      --muted: #716b64;
+      --taupe: #8c857d;
+      --line: #ded8d1;
+      --soft-line: #eee9e3;
+      --paper: #ffffff;
+      --off-white: #f4f3f3;
+      --bone: #e9e5df;
+      --stone: #ddd8d2;
+      --cream: #fbfaf7;
+      --shadow: 0 22px 54px rgba(64, 61, 58, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #b7b4af;
+      color: var(--ink);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .frame {
+      width: 1760px;
+      min-height: 2880px;
+      margin: 0;
+      padding: 32px 32px 42px;
+      background: #b7b4af;
+    }
+
+    .page {
+      min-height: 2800px;
+      padding: 38px 48px 64px;
+      border-radius: 34px;
+      background: linear-gradient(180deg, #f8f7f5 0%, #f4f3f3 100%);
+      overflow: hidden;
+    }
+
+    .topbar {
+      width: 1180px;
+      height: 80px;
+      margin: 0 auto 64px;
+      padding: 0 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 14px 34px rgba(64, 61, 58, 0.18);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 850;
+      font-size: 20px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--red);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 750;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 44px;
+      max-width: 1470px;
+      margin: 0 auto;
+    }
+
+    .guide {
+      position: sticky;
+      top: 32px;
+      align-self: start;
+      border-radius: 24px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .guide-head {
+      padding: 30px 30px 26px;
+      background: var(--stone);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .guide-title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .nav-item {
+      padding: 20px 22px 20px 28px;
+      border-left: 5px solid transparent;
+      background: var(--paper);
+    }
+
+    .nav-item + .nav-item {
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .nav-item.active {
+      border-left-color: var(--red);
+      background: #fffefe;
+    }
+
+    .nav-item strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .nav-item span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 760;
+      line-height: 1.18;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 38px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .crumb {
+      width: max-content;
+      height: 24px;
+      margin-bottom: 26px;
+      border-radius: 99px;
+      background: var(--stone);
+    }
+
+    h1 {
+      margin: 0;
+      color: #c7c5c2;
+      font-size: 74px;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .lead-card {
+      margin-top: 28px;
+      padding: 28px 32px;
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .lead-card p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 23px;
+      line-height: 1.46;
+    }
+
+    .authority {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .authority span {
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffdf9;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 820;
+      line-height: 1.2;
+    }
+
+    .hero-art {
+      position: relative;
+      height: 330px;
+      border-radius: 34px;
+      background: var(--bone);
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      inset: 52px 36px 42px 34px;
+      border-radius: 45% 55% 50% 42%;
+      background: #f8f7f5;
+    }
+
+    .table {
+      position: absolute;
+      left: 82px;
+      right: 42px;
+      bottom: 78px;
+      height: 24px;
+      border-radius: 12px;
+      background: var(--stone);
+    }
+
+    .person-head {
+      position: absolute;
+      left: 102px;
+      top: 76px;
+      width: 64px;
+      height: 64px;
+      border-radius: 46% 54% 48% 52%;
+      background: var(--stone);
+    }
+
+    .hair {
+      position: absolute;
+      left: 84px;
+      top: 60px;
+      width: 88px;
+      height: 70px;
+      border-radius: 55% 45% 50% 45%;
+      background: var(--ink);
+    }
+
+    .body {
+      position: absolute;
+      left: 82px;
+      top: 139px;
+      width: 128px;
+      height: 132px;
+      border-radius: 42px 42px 14px 14px;
+      background: var(--taupe);
+    }
+
+    .shirt {
+      position: absolute;
+      left: 116px;
+      top: 144px;
+      width: 78px;
+      height: 127px;
+      border-radius: 34px 34px 12px 12px;
+      background: var(--off-white);
+    }
+
+    .arm {
+      position: absolute;
+      left: 192px;
+      top: 178px;
+      width: 95px;
+      height: 31px;
+      border-radius: 16px;
+      transform: rotate(10deg);
+      background: var(--stone);
+    }
+
+    .cuff {
+      position: absolute;
+      left: 244px;
+      top: 174px;
+      width: 42px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--taupe);
+    }
+
+    .cuff-red {
+      position: absolute;
+      left: 268px;
+      top: 179px;
+      width: 10px;
+      height: 36px;
+      border-radius: 99px;
+      background: var(--red);
+    }
+
+    .monitor {
+      position: absolute;
+      right: 50px;
+      bottom: 112px;
+      width: 84px;
+      height: 62px;
+      border-radius: 18px;
+      background: var(--paper);
+    }
+
+    .monitor::before {
+      content: "128";
+      position: absolute;
+      left: 18px;
+      top: 14px;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .monitor::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      bottom: 13px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .quick {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 30px 0;
+    }
+
+    .quick-card,
+    .info-card,
+    .section,
+    .right-card {
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .quick-card {
+      padding: 24px;
+      min-height: 126px;
+      border: 2px solid var(--soft-line);
+    }
+
+    .quick-card b {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.12;
+    }
+
+    .quick-card span {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .emergency {
+      display: grid;
+      grid-template-columns: 110px 1fr 190px;
+      gap: 22px;
+      align-items: center;
+      margin: 0 0 28px;
+      padding: 24px;
+      border: 2px solid rgba(235, 0, 27, 0.25);
+      border-radius: 22px;
+      background: #fff8f8;
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      display: grid;
+      place-items: center;
+      height: 82px;
+      border-radius: 20px;
+      background: var(--red);
+      color: white;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .emergency h2,
+    .section h2 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .emergency p {
+      margin: 8px 0 0;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 34px;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .section p {
+      margin: 14px 0 0;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.48;
+    }
+
+    .section-label {
+      color: var(--red);
+      font-size: 15px;
+      font-weight: 880;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .spot {
+      height: 150px;
+      border-radius: 26px;
+      background: var(--bone);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spot::before {
+      content: "";
+      position: absolute;
+      left: 38px;
+      top: 36px;
+      width: 72px;
+      height: 72px;
+      border-radius: 45% 55% 52% 48%;
+      background: var(--taupe);
+    }
+
+    .spot::after {
+      content: "";
+      position: absolute;
+      right: 38px;
+      bottom: 32px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .info-card {
+      padding: 24px;
+      border: 2px solid var(--soft-line);
+      box-shadow: none;
+      background: #fffdf9;
+    }
+
+    .info-card h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      line-height: 1.15;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      margin: 11px 0;
+      padding-left: 20px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.36;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .table-card {
+      overflow: hidden;
+      border: 2px solid var(--soft-line);
+      border-radius: 18px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+    }
+
+    .row div {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--soft-line);
+      background: #fffdf9;
+      font-size: 16px;
+      font-weight: 760;
+    }
+
+    .row.head div {
+      background: var(--ink);
+      color: white;
+    }
+
+    .row:last-child div {
+      border-bottom: 0;
+    }
+
+    .link-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 820;
+    }
+
+    .detail-links {
+      margin-top: 20px;
+      padding: 18px;
+      border: 2px solid var(--soft-line);
+      border-radius: 18px;
+      background: #fffdf9;
+    }
+
+    .detail-head {
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 880;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .detail-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .detail-list.two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 50px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 820;
+      line-height: 1.16;
+    }
+
+    .detail-link::after {
+      content: "›";
+      margin-left: 10px;
+      color: var(--red);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="page">
+      <nav class="topbar" aria-label="Site navigation">
+        <div class="logo"><span class="logo-mark"></span> American Heart Association</div>
+        <div class="top-actions"><span>Health Topics</span><span>Healthy Living</span><span>Ways to Give</span></div>
+      </nav>
+
+      <div class="shell">
+        <aside class="guide">
+          <div class="guide-head">
+            <p class="eyebrow">Health Guide</p>
+            <h2 class="guide-title">High Blood Pressure</h2>
+          </div>
+          <div class="nav-item active"><strong>Overview</strong><span>Start with the basics</span></div>
+          <div class="nav-item"><strong>Symptoms</strong><span>Know what needs attention</span></div>
+          <div class="nav-item"><strong>Causes</strong><span>See what can contribute</span></div>
+          <div class="nav-item"><strong>Diagnosis</strong><span>Understand tests and numbers</span></div>
+          <div class="nav-item"><strong>Treatment</strong><span>Explore care options</span></div>
+          <div class="nav-item"><strong>Living with it</strong><span>Manage day to day</span></div>
+        </aside>
+
+        <main class="content">
+          <section class="hero">
+            <div>
+              <div class="crumb" style="width: 170px"></div>
+              <h1>High Blood Pressure</h1>
+              <div class="lead-card">
+                <p>High blood pressure is common, often silent, and manageable. Use this guide to understand your numbers, know when a reading may be urgent, and choose practical next steps for lowering and managing blood pressure.</p>
+                <div class="authority">
+                  <span>Reviewed by AHA experts</span>
+                  <span>Updated Apr 2026</span>
+                  <span>Emergency guidance</span>
+                  <span>Tools available</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-art" aria-label="Route B style home blood pressure illustration">
+              <div class="blob"></div>
+              <div class="hair"></div>
+              <div class="person-head"></div>
+              <div class="body"></div>
+              <div class="shirt"></div>
+              <div class="arm"></div>
+              <div class="cuff"></div>
+              <div class="cuff-red"></div>
+              <div class="table"></div>
+              <div class="monitor"></div>
+            </div>
+          </section>
+
+          <section class="quick">
+            <div class="quick-card"><b>Understand my reading</b><span>See what the top and bottom numbers mean.</span></div>
+            <div class="quick-card"><b>Know when it is urgent</b><span>Find clear emergency guidance first.</span></div>
+            <div class="quick-card"><b>Start lowering it</b><span>Choose one practical next step for this week.</span></div>
+          </section>
+
+          <section class="emergency">
+            <div class="badge">911</div>
+            <div>
+              <h2>Very high reading with symptoms?</h2>
+              <p>If your blood pressure is higher than <b>180/120 mm Hg</b>, check it again after one minute. Call 911 if it is still that high and you have chest pain, shortness of breath, weakness, vision changes, difficulty speaking, or another serious symptom.</p>
+            </div>
+            <div class="button">When to call 911</div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <div>
+                <div class="section-label">Overview</div>
+                <h2>High blood pressure at a glance</h2>
+                <p>Blood pressure is the force of blood pushing against the walls of your arteries. Repeated high readings need attention, even if you feel well.</p>
+              </div>
+              <div class="spot"></div>
+            </div>
+            <div class="grid-two">
+              <div class="info-card">
+                <h3>Key things to know</h3>
+                <ul>
+                  <li>High blood pressure often has no symptoms.</li>
+                  <li>Your numbers matter even when you feel well.</li>
+                  <li>Small daily changes can help.</li>
+                  <li>Medication may be part of the plan.</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h3>Why it matters</h3>
+                <p>Uncontrolled high blood pressure can quietly damage blood vessels and raise the risk of stroke, heart attack, heart failure, kidney disease, and vision loss.</p>
+              </div>
+            </div>
+            <div class="detail-links">
+              <div class="detail-head">See more detail</div>
+              <div class="detail-list">
+                <span class="detail-link">Common myths</span>
+                <span class="detail-link">Heart rate basics</span>
+                <span class="detail-link">Related conditions</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <div>
+                <div class="section-label">Symptoms</div>
+                <h2>High blood pressure is often silent</h2>
+                <p>Symptoms are not a reliable way to know whether your blood pressure is high. The only way to know is to measure it.</p>
+              </div>
+              <div class="spot"></div>
+            </div>
+            <div class="grid-two">
+              <div class="info-card">
+                <h3>Get urgent help if a very high reading comes with</h3>
+                <ul>
+                  <li>chest pain or shortness of breath</li>
+                  <li>numbness, weakness, or vision changes</li>
+                  <li>difficulty speaking, confusion, or fainting</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h3>Track before you need it</h3>
+                <p>Keep recent readings, time of day, medications, missed doses, symptoms, and questions for your care team.</p>
+              </div>
+            </div>
+            <div class="detail-links">
+              <div class="detail-head">See more detail</div>
+              <div class="detail-list">
+                <span class="detail-link">When to call 911</span>
+                <span class="detail-link">Symptoms page</span>
+                <span class="detail-link">Pregnancy guidance</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <div>
+                <div class="section-label">Causes</div>
+                <h2>What can raise blood pressure</h2>
+                <p>High blood pressure usually does not have one simple cause. It can be shaped by age, family history, health conditions, medicines, sleep, stress, access to care, and everyday habits.</p>
+              </div>
+              <div class="spot"></div>
+            </div>
+            <div class="grid-two">
+              <div class="info-card">
+                <h3>Common contributors</h3>
+                <ul>
+                  <li>family history, age, diabetes, kidney disease, or sleep apnea</li>
+                  <li>eating patterns high in sodium or not enough activity</li>
+                  <li>alcohol, tobacco, stress, poor sleep, or some medicines</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h3>Some topics need more context</h3>
+                <p>Guidance for Black adults, children and teens, and pregnancy-related blood pressure should stay reachable without becoming sidebar chapters.</p>
+              </div>
+            </div>
+            <div class="detail-links">
+              <div class="detail-head">See more detail</div>
+              <div class="detail-list">
+                <span class="detail-link">Risk factors</span>
+                <span class="detail-link">Black adults</span>
+                <span class="detail-link">Children and teens</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <div>
+                <div class="section-label">Diagnosis</div>
+                <h2>Understand your blood pressure numbers</h2>
+                <p>Diagnosis depends on patterns, not one isolated reading. A health care professional can confirm what your numbers mean and what goal is right for you.</p>
+              </div>
+              <div class="spot"></div>
+            </div>
+            <div class="grid-two">
+              <div class="table-card">
+                <div class="row head"><div>Category</div><div>Top number</div><div>Bottom number</div></div>
+                <div class="row"><div>Normal</div><div>&lt; 120</div><div>&lt; 80</div></div>
+                <div class="row"><div>Elevated</div><div>120-129</div><div>&lt; 80</div></div>
+                <div class="row"><div>Stage 1</div><div>130-139</div><div>80-89</div></div>
+                <div class="row"><div>Stage 2</div><div>140+</div><div>90+</div></div>
+              </div>
+              <div class="info-card">
+                <h3>Home monitoring basics</h3>
+                <ul>
+                  <li>Use a validated upper-arm monitor.</li>
+                  <li>Sit with feet flat and arm supported.</li>
+                  <li>Avoid caffeine, smoking, and exercise beforehand.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="detail-links">
+              <div class="detail-head">See more detail and tools</div>
+              <div class="detail-list">
+                <span class="detail-link">Reading guide</span>
+                <span class="detail-link">Home monitoring</span>
+                <span class="detail-link">Blood pressure tracker</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="bottom-grid">
+            <section class="section">
+              <div class="section-label">Treatment</div>
+              <h2>Care options that can help</h2>
+              <p>Treatment usually combines regular monitoring, daily habits, and sometimes medication. Some people begin with lifestyle changes. Some need medication right away. Many people need both.</p>
+              <div class="detail-links">
+                <div class="detail-head">See more detail</div>
+                <div class="detail-list two">
+                  <span class="detail-link">Medications</span>
+                  <span class="detail-link">Types of medication</span>
+                  <span class="detail-link">Care team</span>
+                  <span class="detail-link">Resistant hypertension</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="section">
+              <div class="section-label">Living with it</div>
+              <h2>Manage day to day</h2>
+              <p>Choose a few steps you can actually keep doing, then adjust with your care team as your numbers change.</p>
+              <div class="detail-links">
+                <div class="detail-head">See more detail and tools</div>
+                <div class="detail-list two">
+                  <span class="detail-link">Lower sodium</span>
+                  <span class="detail-link">Get active</span>
+                  <span class="detail-link">Stress and weight</span>
+                  <span class="detail-link">Health lesson</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

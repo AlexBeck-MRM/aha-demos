@@ -1,0 +1,53 @@
+include,exclude_reason,source_types,texts,url
+no,non-html-or-non-page-resource,inline,See how atherosclerosis takes place,http://watchlearnlive.heart.org/CVML_Player.php?moduleSelect=athero
+no,non-html-or-non-page-resource,inline,See how high blood pressure can damage your arteries and heart,http://watchlearnlive.heart.org/CVML_Player.php?moduleSelect=highbp
+no,non-html-or-non-page-resource,inline,See how your heart can become enlarged,http://watchlearnlive.heart.org/CVML_Player.php?moduleSelect=hrtflr
+no,non-html-or-non-page-resource,inline,,https://www.facebook.com/sharer/sharer.php?u=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure
+no,non-html-or-non-page-resource,inline,Spanish (PDF),https://www.heart.org/-/media/Files/Health-Topics/Answers-by-Heart/Answers-by-Heart-SPANISH/What-Is-HighBloodPressure_Span.pdf
+no,non-html-or-non-page-resource,inline,English (PDF),https://www.heart.org/-/media/Files/Health-Topics/Answers-by-Heart/What-Is-High-Blood-Pressure.pdf
+no,non-html-or-non-page-resource,inline,See an infographic of the consequences of high blood pressure. (PDF),https://www.heart.org/-/media/Files/Health-Topics/High-Blood-Pressure/Consequences-of-High-Blood-Pressure-infographic.pdf
+yes,,inline,atherosclerosis,https://www.heart.org/en/health-topics/cholesterol/about-cholesterol/atherosclerosis
+yes,,inline,heart attack,https://www.heart.org/en/health-topics/heart-attack/about-heart-attacks
+yes,,sidebar,High Blood Pressure,https://www.heart.org/en/health-topics/high-blood-pressure
+yes,,inline|sidebar,How to Manage High Blood Pressure | Make lifestyle changes to lower your blood pressure. | Healthy lifestyle choices,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure
+yes,,sidebar,Getting Active,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/getting-active-to-control-high-blood-pressure
+yes,,sidebar,Potassium Benefits,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/how-potassium-can-help-control-high-blood-pressure
+yes,,sidebar,Limiting or Avoiding Alcohol,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/limiting-alcohol-to-manage-high-blood-pressure
+yes,,sidebar,Healthy Diet,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-blood-pressure-with-a-heart-healthy-diet
+yes,,sidebar,Managing Medications,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-high-blood-pressure-medications
+yes,,sidebar,Managing Stress,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-stress-to-control-high-blood-pressure
+yes,,sidebar,Managing Weight,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/managing-weight-to-control-high-blood-pressure
+yes,,sidebar,Shaking the Salt Habit,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/shaking-the-salt-habit-to-lower-high-blood-pressure
+yes,,sidebar,Smoking,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/smoking-high-blood-pressure-and-your-health
+yes,,inline|sidebar,Types of Medications | Learn about blood pressure-lowering medications.,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/types-of-blood-pressure-medications
+yes,,inline|sidebar,Your Health Care Team | Work with your health care team to manage your blood pressure.,https://www.heart.org/en/health-topics/high-blood-pressure/changes-you-can-make-to-manage-high-blood-pressure/your-health-care-team
+yes,,sidebar,Find High BP Tools and Resources,https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources
+yes,,sidebar,Blood Pressure Health Lesson,https://www.heart.org/en/health-topics/high-blood-pressure/find-high-blood-pressure-tools--resources/high-blood-pressure-health-lesson
+yes,,inline|sidebar,Health Threats from High BP | health threats,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure
+yes,,sidebar,High BP and Your Kidneys,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/high-blood-pressure-and-your-kidneys
+yes,,sidebar,How High BP Can Affect Your Sex Life,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-affect-your-sex-life
+yes,,inline|sidebar,How High BP Can Lead to a Heart Attack | heart attack,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-a-heart-attack
+yes,,sidebar,How High BP Can Lead to Heart Failure,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-heart-failure
+yes,,inline|sidebar,How High BP Can Lead to Stroke | stroke,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-stroke
+yes,,sidebar,How High BP Can Lead to Vision Loss,https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure/how-high-blood-pressure-can-lead-to-vision-loss
+yes,,inline|sidebar,Know Your Risk Factors | raise your risk,https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure
+yes,,sidebar,High Blood Pressure Among Black Adults,https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-among-black-adults
+yes,,sidebar,High Blood Pressure in Children and Teens,https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/high-blood-pressure-in-children
+yes,,inline|sidebar,Symptoms of High Blood Pressure | symptoms,https://www.heart.org/en/health-topics/high-blood-pressure/know-your-risk-factors-for-high-blood-pressure/what-are-the-symptoms-of-high-blood-pressure
+yes,,inline|sidebar,What is High Blood Pressure?,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure
+yes,,sidebar,All About Heart Rate,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse
+yes,,sidebar,Common High BP Myths,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/common-high-blood-pressure-myths
+yes,,sidebar,High BP Top 10,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/high-bp-top-10
+yes,,sidebar,Low Blood Pressure,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/low-blood-pressure-when-blood-pressure-is-too-low
+yes,,sidebar,Pulmonary Hypertension,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/pulmonary-hypertension-high-blood-pressure-in-the-heart-to-lung-system
+yes,,sidebar,Resistant Hypertension,https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/resistant-hypertension--high-blood-pressure-thats-hard-to-treat
+yes,,inline|sidebar,Understanding Blood Pressure Readings | your blood pressure numbers and what they mean | blood pressure reading,https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings
+yes,,sidebar,Home Blood Pressure Monitoring,https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home
+yes,,inline|sidebar,When To Call 911 | HYPERTENSIVE EMERGENCY | Learn about hypertensive emergency.,https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/when-to-call-911-for-high-blood-pressure
+yes,,inline,Get regular physical activity.,https://www.heart.org/en/healthy-living/fitness/getting-active
+yes,,inline,Follow a heart-healthy eating plan.,https://www.heart.org/en/healthy-living/healthy-eating/eat-smart
+no,non-html-or-non-page-resource,inline,,https://www.linkedin.com/shareArticle?url=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure
+yes,,inline,stroke,https://www.stroke.org/en/about-stroke/types-of-stroke
+no,non-html-or-non-page-resource,inline,,https://x.com/intent/post?url=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure
+no,non-html-or-non-page-resource,inline,Is there a difference between hypertension and high blood pressure?,https://youtu.be/KksigKoLxnU?si=BpZTDiVEqYI4VDMN
+no,non-html-or-non-page-resource,inline,,mailto:?subject=What%20is%20High%C2%A0Blood%20Pressure%3F&body=https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure

@@ -9,9 +9,12 @@
 - `reference/data/brand_capture_targets.csv`
 
 ## Working notes
+- `knowledge/sources/current-site-audit/high-blood-pressure-topic-network-2026-04-20.md`
+- `knowledge/sources/current-site-audit/high-blood-pressure-authority-page-proposal-2026-04-20.md`
 - `knowledge/sources/current-site-audit/health-condition-authority-structure-2026-04-27.md`
 - `knowledge/sources/current-site-audit/high-blood-pressure-condition-guide-final-2026-05-07.md`
 - `knowledge/sources/current-site-audit/healthy-eating-topic-network-2026-04-29.md`
+- `knowledge/sources/current-site-audit/healthy-living-adaptive-super-hub-2026-05-07.md`
 - `knowledge/sources/current-site-audit/healthy-living-detailed-page-structure-2026-04-30.md`
 - `knowledge/sources/current-site-audit/healthy-living-nav-a-b-vertical-2026-04-30.md`
 - `knowledge/sources/current-site-audit/healthy-living-navigation-approaches-2026-04-30.md`

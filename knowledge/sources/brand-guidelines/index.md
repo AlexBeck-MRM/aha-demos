@@ -1,11 +1,11 @@
 # Brand Guidelines Index
 
 ## Canonical sources
-- `assets/aha-logo-red.png`
-- `assets/aha-logo-white.png`
-- `slides/tokens-v1.6.json`
-- `slides/tokens-studio-v1.6.json`
-- `slides/aha-slide-system-v1.6.md`
+- `reference/assets/aha-logo-red.png`
+- `reference/assets/aha-logo-white.png`
+- `reference/slides/tokens-v1.6.json`
+- `reference/slides/tokens-studio-v1.6.json`
+- `reference/slides/aha-slide-system-v1.6.md`
 
 ## Working takeaways
 - AHA red should stay strategic.

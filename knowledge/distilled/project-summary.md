@@ -1,5 +1,6 @@
 ---
 status: working
+project_id: aha-website-refresh
 owner: design-brain
 last_reviewed: 2026-04-10
 source_refs:
@@ -7,8 +8,8 @@ source_refs:
   - knowledge/sources/discovery-playback/technology-playback-notes.md
   - knowledge/sources/discovery-playback/index.md
   - knowledge/sources/current-site-audit/aha-current-site-observations.md
-  - docs/aha-design-to-code-workflow-v1.md
-  - slides/aha-slide-system-v1.6.md
+  - reference/docs/aha-design-to-code-workflow-v1.md
+  - reference/slides/aha-slide-system-v1.6.md
 decision_refs:
   - DEC-001
   - ROUTE-001

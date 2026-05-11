@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const srcArg = process.argv[2] || 'slides/tokens-v1.6.json';
-const destArg = process.argv[3] || 'slides/deck-v1.6-tokens.css';
+const srcArg = process.argv[2] || 'reference/slides/tokens-v1.6.json';
+const destArg = process.argv[3] || 'reference/slides/deck-v1.6-tokens.css';
 const src = path.join(root, srcArg);
 const dest = path.join(root, destArg);
 

@@ -280,9 +280,9 @@
   },
   "tokenization": {
     "enabled": true,
-    "cssTokenSource": "slides/tokens-v1.6.json",
-    "cssTokenOutput": "slides/deck-v1.6-tokens.css",
-    "tokensStudioImport": "slides/tokens-studio-v1.6.json",
+    "cssTokenSource": "reference/slides/tokens-v1.6.json",
+    "cssTokenOutput": "reference/slides/deck-v1.6-tokens.css",
+    "tokensStudioImport": "reference/slides/tokens-studio-v1.6.json",
     "hardcodedInlineStyles": false,
     "hardcodedCssValues": false
   },

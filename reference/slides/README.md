@@ -10,21 +10,19 @@
 - `aha-slide-system-v1.6.md` - v1.6 spec.
 - `media-jpeg/*.jpg` - refined indicative placeholder image pack.
 
-## Archived versions
-- `archive/v1.1/` - early spec-only snapshot.
-- `archive/v1.3/` - v1.3 deck and spec.
-- `archive/v1.4/` - v1.4 deck and spec.
-- `archive/v1.5/` - v1.5 deck, tokens, and spec.
+## Archival rule
+Older slide-system versions now live in git history instead of a live archive folder.
+Keep only the current deliverable set in this directory unless an older file is still actively cited.
 
 ## Local preview
 ```bash
 python3 -m http.server 4173 --bind 127.0.0.1
-open "http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html"
+open "http://127.0.0.1:4173/reference/slides/deck-v1.6-all-layouts.html"
 ```
 
 ## Token build command
 ```bash
-node scripts/slides/build-slide-token-css.mjs slides/tokens-v1.6.json slides/deck-v1.6-tokens.css
+node scripts/slides/build-slide-token-css.mjs reference/slides/tokens-v1.6.json reference/slides/deck-v1.6-tokens.css
 ```
 
 ## JPEG placeholder generation
@@ -34,19 +32,13 @@ python3 scripts/slides/generate-placeholder-jpegs.py
 
 ## QA command
 ```bash
-node scripts/slides/qa-slides.mjs http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html
+node scripts/slides/qa-slides.mjs http://127.0.0.1:4173/reference/slides/deck-v1.6-all-layouts.html
 ```
-
-## Capture/import runbook (Figma)
-- Target file key: `Mn0vZrL7nud32WjHcSVear`
-- Source URL: `http://127.0.0.1:4173/slides/deck-v1.6-all-layouts.html`
-- Use HTML-to-design capture with `outputMode: existingFile`.
-- Import side-by-side; do not overwrite prior nodes.
 
 ## Figma variable import runbook (minimal manual)
 Current Figma MCP in this environment does not expose variable write/create. Use one plugin import:
 1. Open `Tokens Studio`.
-2. Import `slides/tokens-studio-v1.6.json`.
+2. Import `reference/slides/tokens-studio-v1.6.json`.
 3. Sync tokens to native Figma Variables (`Create/Update Variables from Tokens`).
 
 ## Font normalization runbook

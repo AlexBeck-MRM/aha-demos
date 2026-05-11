@@ -42,8 +42,8 @@ function toLayoutBackground(slide) {
 
 async function main() {
   const args = parseArgs(process.argv);
-  const inputPath = path.resolve(args.input || 'build/figma/deck.json');
-  const outputPath = path.resolve(args.out || 'build/presentation-spec.json');
+  const inputPath = path.resolve(args.input || '.artifacts/build/figma/deck.json');
+  const outputPath = path.resolve(args.out || '.artifacts/build/presentation-spec.json');
   const deck = JSON.parse(await fs.readFile(inputPath, 'utf8'));
 
   const grouped = new Map();

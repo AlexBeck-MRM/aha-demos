@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-RAW_DIR="${ROOT_DIR}/evidence/recordings_raw"
-OUT_DIR="${ROOT_DIR}/evidence/recordings"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+RAW_DIR="${ROOT_DIR}/reference/evidence/recordings_raw"
+OUT_DIR="${ROOT_DIR}/reference/evidence/recordings"
 DURATION="${DURATION:-10}"
 
 convert_one() {
@@ -33,7 +33,7 @@ fi
 
 if [[ $# -ne 0 ]]; then
   echo "Usage:"
-  echo "  $0                              # Trim all raw videos into evidence/recordings"
+  echo "  $0                              # Trim all raw videos into reference/evidence/recordings"
   echo "  $0 <input_raw_video> <output_mp4> [start_seconds]"
   exit 1
 fi

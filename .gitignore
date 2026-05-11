@@ -2,9 +2,11 @@
 .aha-server.pid
 
 node_modules/
-build/
-dist/
+.artifacts/
+.playwright-cli/
+.tmp/
+.venv-docx/
 output/
-reports/
+tmp/
 
 *.log

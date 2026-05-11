@@ -16,11 +16,15 @@ uniform float u_flow_speed;
 uniform float u_warp;
 uniform float u_turbulence;
 uniform float u_blur_softness;
+uniform float u_primary_beat;
+uniform float u_secondary_beat;
 uniform float u_saturation;
 uniform float u_contrast;
 uniform float u_brightness;
 uniform float u_vibrance;
 uniform float u_mood_blend;
+uniform float u_contrast_depth;
+uniform float u_viewport_focus;
 uniform float u_oxygen_glow;
 uniform float u_seed;
 uniform vec3 u_palette[5];
@@ -82,20 +86,6 @@ vec3 paletteRamp(float t) {
   return mix(u_palette[3], u_palette[4], x - 3.0);
 }
 
-vec3 rgb2hsv(vec3 c) {
-  vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-  vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
-  vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
-  float d = q.x - min(q.w, q.y);
-  float e = 1.0e-10;
-  return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-}
-
-vec3 hsv2rgb(vec3 c) {
-  vec3 p = abs(fract(c.xxx + vec3(0.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0);
-  return c.z * mix(vec3(1.0), clamp(p - 1.0, 0.0, 1.0), c.y);
-}
-
 void main() {
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   float aspect = u_resolution.x / max(1.0, u_resolution.y);
@@ -106,8 +96,10 @@ void main() {
   float beatPhase = fract(u_time * heartHz);
   float beatA = (beatPhase - 0.06) / 0.024;
   float beatB = (beatPhase - 0.28) / 0.045;
-  float beat = exp(-beatA * beatA) + 0.56 * exp(-beatB * beatB);
-  float beatTail = exp(-max(0.0, beatPhase - 0.31) * 7.8) * 0.08;
+  float primaryBeat = clamp(u_primary_beat, 0.0, 1.0) * exp(-beatA * beatA);
+  float secondaryBeat = clamp(u_secondary_beat, 0.0, 0.7) * exp(-beatB * beatB);
+  float beat = primaryBeat + secondaryBeat;
+  float beatTail = exp(-max(0.0, beatPhase - 0.31) * 7.8) * (0.018 + clamp(u_secondary_beat, 0.0, 0.7) * 0.06);
   float reboundT = max(0.0, beatPhase - 0.11);
   float rebound = sin(reboundT * 31.0) * exp(-reboundT * 18.0);
   float breath = 0.5 + 0.5 * sin(flowT * 0.09 + 0.8 * sin(flowT * 0.04 + u_seed * 3.0));
@@ -151,7 +143,8 @@ void main() {
   field += (nA - 0.5) * (0.14 * u_turbulence + 0.028);
   field += (nB - 0.5) * (0.14 * u_warp + 0.03);
 
-  vec2 centerQ = q * vec2(1.0, 0.85);
+  float viewportFocus = clamp(u_viewport_focus, 0.7, 1.65);
+  vec2 centerQ = (q / viewportFocus) * vec2(1.0, 0.85);
   float centerMask = 1.0 - smoothstep(0.18, 0.9, length(centerQ));
   float beatCenter = beatEnergy * centerMask;
   field += beatCenter * (0.02 + 0.02 * u_oxygen_glow);
@@ -186,7 +179,9 @@ void main() {
 
   smoothField /= divisor;
   smoothField = mix(field, smoothField, 0.78);
-  smoothField = smoothstep(0.08, 0.98, smoothField);
+  float contrastT = clamp((u_contrast_depth - 0.75) / 1.15, 0.0, 1.0);
+  smoothField = pow(smoothField, mix(1.08, 0.84, contrastT));
+  smoothField = smoothstep(mix(0.12, 0.05, contrastT), mix(0.98, 0.9, contrastT), smoothField);
 
   float shapedBase = pow(smoothField, mix(1.08, 0.74, clamp(u_mood_blend, 0.0, 1.0)));
   float shaped = clamp(shapedBase + seepMask * (0.02 + 0.02 * u_oxygen_glow), 0.0, 1.0);
@@ -198,6 +193,8 @@ void main() {
   color = mix(color, mix(u_palette[2], u_palette[4], 0.62), beatCenter * (0.04 + 0.08 * u_oxygen_glow));
   color += u_palette[4] * beatCenter * (0.03 + 0.05 * u_oxygen_glow);
   color = mix(color, paletteRamp(clamp(shaped + 0.04 * seepMask, 0.0, 1.0)), seepMask * 0.18);
+  color = mix(color, u_palette[0], (1.0 - smoothField) * 0.1 * contrastT);
+  color += u_palette[4] * glowMask * 0.05 * contrastT;
 
   float luma = dot(color, vec3(0.299, 0.587, 0.114));
   float beatVivid = beatCenter * (0.12 + 0.1 * u_vibrance);
@@ -219,23 +216,6 @@ void main() {
   color = max(color, 0.0);
   color = color / (vec3(1.0) + color * 0.35);
 
-  vec3 hsv = rgb2hsv(clamp(color, 0.0, 1.0));
-  float h = hsv.x;
-  if (h > 0.5) {
-    h -= 1.0;
-  }
-  h = clamp(h, -0.03, 0.035);
-  if (h < 0.0) {
-    h += 1.0;
-  }
-  hsv.x = h;
-  hsv.y = clamp(hsv.y + beatCenter * 0.06, 0.56, 1.0);
-  hsv.z = clamp(hsv.z, 0.0, 0.985);
-  color = hsv2rgb(hsv);
-
-  float grain = (hash21(gl_FragCoord.xy + vec2(u_time * 37.0, u_seed * 41.0)) - 0.5) * 0.0016;
-  color += grain;
-
-  outColor = vec4(clamp(color, 0.0, 1.0), 1.0);
+  outColor = vec4(clamp(color, 0.0, 0.985), 1.0);
 }
 `;

@@ -591,7 +591,7 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Scrape high-resolution lifestyle/person images from heart.org and stroke.org."
     )
-    parser.add_argument("--out-dir", default="output/aha-lifestyle-images", help="Output directory")
+    parser.add_argument("--out-dir", default=".artifacts/output/aha-lifestyle-images", help="Output directory")
     parser.add_argument("--min-width", type=int, default=MIN_WIDTH, help="Minimum accepted width in pixels")
     parser.add_argument("--target-count", type=int, default=DEFAULT_TARGET, help="Minimum number of images to keep")
     parser.add_argument("--max-pages", type=int, default=DEFAULT_MAX_PAGES, help="Maximum sitemap pages to inspect")

@@ -26,9 +26,10 @@ groups:
       - gradients
       - headlines
       - text-hierarchy
-      - text-formatting
       - grid
+      - responsiveness
       - image-types
+      - illustration-style
       - image-cropping
       - ai
   navigation-and-discovery:
@@ -52,6 +53,7 @@ groups:
       - page-templates
       - content
       - cards
+      - article-intros
   interaction-and-conversion:
     heading_node: "2138:29713"
     heading_name: "4. Interaction & Conversion"
@@ -187,7 +189,7 @@ sections:
     group: foundations
     brain_files:
       - "design/ui-style-inventory/gradients.md"
-    content_status: sparse
+    content_status: populated
     figma:
       section_node: "2138:29674"
       read_section_node: "2138:29674"
@@ -223,6 +225,7 @@ sections:
         - "2138:29683"
         - "2138:29687"
         - "2138:29688"
+        - "2909:45"
       notable_nodes:
         - id: "2166:637"
           type: text
@@ -274,6 +277,7 @@ sections:
         - "2138:29694"
         - "2138:29695"
         - "2138:29696"
+        - "2194:230"
 
   - id: grid
     board_name: "Grid"
@@ -290,6 +294,27 @@ sections:
         direction: "2138:29702/2126:17"
         reasoning: "2138:29702/2126:15"
       example_nodes: []
+
+  - id: responsiveness
+    board_name: "Responsiveness"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/responsiveness.md"
+    content_status: sparse
+    figma:
+      section_node: "2322:7612"
+      read_section_node: "2322:7612"
+      header_instance_node: "2322:7613"
+      editable_text_paths:
+        title: "2322:7613/2126:6"
+        direction: "2322:7613/2126:17"
+        reasoning: "2322:7613/2126:15"
+      example_nodes:
+        - "2322:7622"
+        - "2322:7627"
+        - "2322:7636"
+    notes:
+      - "Grouping under `foundations` is inferred from canvas position and section intent; confirm if the board introduces a dedicated heading for responsive behavior."
 
   - id: depth
     board_name: "Depth"
@@ -339,7 +364,7 @@ sections:
     group: content-and-storytelling
     brain_files:
       - "design/ui-style-inventory/page-templates.md"
-    content_status: empty
+    content_status: unresolved_missing_live
     figma:
       section_node: "2138:29717"
       read_section_node: "2138:29717"
@@ -349,13 +374,16 @@ sections:
         direction: "2138:29718/2126:17"
         reasoning: "2138:29718/2126:15"
       example_nodes: []
+    notes:
+      - "Section node `2138:29717` did not resolve during the 2026-04-14 live-board audit. Remap or confirm whether this section was removed from the workbench."
+      - "Section node `2138:29717` still did not resolve during the 2026-04-17 live-board review."
 
   - id: content
     board_name: "Content"
     group: content-and-storytelling
     brain_files:
       - "design/ui-style-inventory/content.md"
-    content_status: empty
+    content_status: unresolved_missing_live
     figma:
       section_node: "2138:29719"
       read_section_node: "2138:29719"
@@ -365,13 +393,16 @@ sections:
         direction: "2138:29720/2126:17"
         reasoning: "2138:29720/2126:15"
       example_nodes: []
+    notes:
+      - "Section node `2138:29719` did not resolve during the 2026-04-14 live-board audit. Remap or confirm whether this section was removed from the workbench."
+      - "Section node `2138:29719` still did not resolve during the 2026-04-17 live-board review."
 
   - id: motion-reveals
     board_name: "Motion Reveals"
     group: interaction-and-conversion
     brain_files:
       - "design/ui-style-inventory/motion-reveals.md"
-    content_status: empty
+    content_status: populated
     figma:
       section_node: "2138:29721"
       read_section_node: "2138:29721"
@@ -380,7 +411,15 @@ sections:
         title: "2138:29722/2126:6"
         direction: "2138:29722/2126:17"
         reasoning: "2138:29722/2126:15"
-      example_nodes: []
+      example_nodes:
+        - "2267:995"
+        - "2267:1007"
+      notable_nodes:
+        - id: "2267:994"
+          type: rectangle
+          name: "Resolved hero state"
+    notes:
+      - "Opportunity annotation is attached to `2267:994` and defines the intended blur-and-fade reveal behavior."
 
   - id: forms
     board_name: "Forms"
@@ -576,7 +615,7 @@ sections:
     group: foundations
     brain_files:
       - "design/ui-style-inventory/text-hierarchy.md"
-    content_status: empty
+    content_status: populated
     figma:
       section_node: "2138:29779"
       read_section_node: "2138:29779"
@@ -585,24 +624,13 @@ sections:
         title: "2138:29780/2126:6"
         direction: "2138:29780/2126:17"
         reasoning: "2138:29780/2126:15"
-      example_nodes: []
-
-  - id: text-formatting
-    board_name: "Text Formatting"
-    group: foundations
-    brain_files:
-      - "design/ui-style-inventory/text-formatting.md"
-    content_status: sparse
-    figma:
-      section_node: "2138:29782"
-      read_section_node: "2138:29782"
-      header_instance_node: "2138:29784"
-      editable_text_paths:
-        title: "2138:29784/2126:6"
-        direction: "2138:29784/2126:17"
-        reasoning: "2138:29784/2126:15"
       example_nodes:
+        - "2267:306"
+        - "2267:309"
+        - "2267:312"
         - "2138:29783"
+    notes:
+      - "This section now carries the hierarchy guidance that previously sat under `Text Formatting`."
 
   - id: dials
     board_name: "Dials"
@@ -643,7 +671,7 @@ sections:
     group: content-and-storytelling
     brain_files:
       - "design/ui-style-inventory/cards.md"
-    content_status: populated
+    content_status: sparse
     figma:
       section_node: "2138:29791"
       read_section_node: "2138:29791"
@@ -655,6 +683,22 @@ sections:
       example_nodes:
         - "2138:29792"
         - "2138:29793"
+
+  - id: article-intros
+    board_name: "Article intros"
+    group: content-and-storytelling
+    brain_files:
+      - "design/ui-style-inventory/article-intros.md"
+    content_status: empty
+    figma:
+      section_node: "2166:2533"
+      read_section_node: "2166:2533"
+      header_instance_node: "2166:2536"
+      editable_text_paths:
+        title: "2166:2536/2126:6"
+        direction: "2166:2536/2126:17"
+        reasoning: "2166:2536/2126:15"
+      example_nodes: []
 
   - id: image-types
     board_name: "Image types"
@@ -691,6 +735,22 @@ sections:
     notes:
       - "Use this section for image-role taxonomy. Do not let it absorb treatment rules that belong in photography, illustration, or cropping."
 
+  - id: illustration-style
+    board_name: "Illustration Style"
+    group: foundations
+    brain_files:
+      - "design/ui-style-inventory/illustration-style.md"
+    content_status: sparse
+    figma:
+      section_node: "2205:8993"
+      read_section_node: "2205:8993"
+      header_instance_node: "2205:8994"
+      editable_text_paths:
+        title: "2205:8994/2126:6"
+        direction: "2205:8994/2126:17"
+        reasoning: "2205:8994/2126:15"
+      example_nodes: []
+
   - id: first-load
     board_name: "First load"
     group: content-and-storytelling
@@ -713,7 +773,7 @@ sections:
     group: foundations
     brain_files:
       - "design/ui-style-inventory/image-cropping.md"
-    content_status: empty
+    content_status: populated
     figma:
       section_node: "2138:29810"
       read_section_node: "2138:29810"
@@ -722,7 +782,13 @@ sections:
         title: "2138:29811/2126:6"
         direction: "2138:29811/2126:17"
         reasoning: "2138:29811/2126:15"
-      example_nodes: []
+      example_nodes:
+        - "2205:9004"
+        - "2205:9006"
+        - "2205:9003"
+        - "2205:9528"
+        - "2205:9530"
+        - "2205:9529"
 
   - id: structure
     board_name: "Structure"

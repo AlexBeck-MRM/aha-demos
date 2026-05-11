@@ -1,10 +1,11 @@
 ---
 status: working
+project_id: aha-website-refresh
 owner: design-brain
 last_reviewed: 2026-04-10
 source_refs:
   - knowledge/sources/current-site-audit/aha-current-site-observations.md
-  - evidence/README.md
+  - reference/evidence/README.md
 decision_refs:
   - DEC-001
 ---

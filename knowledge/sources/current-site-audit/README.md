@@ -4,21 +4,22 @@
 Store the evidence base for what the current AHA ecosystem and adjacent brands actually look and feel like.
 
 ## Current grounded files
-- `evidence/README.md`
-- `evidence/capture_manifest.csv`
-- `evidence/qc_report_final.csv`
-- `evidence/recordings/`
-- `data/brand_capture_targets.csv`
+- `reference/evidence/README.md`
+- `reference/evidence/capture_manifest.csv`
+- `reference/evidence/qc_report_final.csv`
+- `reference/evidence/recordings/american_heart_association__home.mp4`
+- `reference/evidence/recordings/american_heart_association__key.mp4`
+- `reference/data/brand_capture_targets.csv`
 
 ## What the evidence base currently gives us
-- A capture pack for 20 US brands with home and key-page recordings.
-- A repeatable process for collecting visual reference evidence.
-- A current-state audit substrate that can support direction-setting by comparison.
+- A committed AHA current-state pack that can be cited directly.
+- A recapture list for the broader 20-brand comparator set when comparison work needs to go deeper again.
+- A repeatable process for collecting visual reference evidence without keeping every exploratory capture live in the repo.
 
 ## Recommended next ingestion
-- Still-image selects from the most relevant recordings.
+- Still-image selects from the most relevant AHA recordings.
 - Short notes on what to borrow and avoid from each reference.
-- AHA-specific current-site observations beyond the raw recordings.
+- Regenerated comparator captures only when they are about to be cited.
 
 ## Retrieval note
 Use this folder when making claims about navigation patterns, content density, interaction rhythms, or ecosystem norms.

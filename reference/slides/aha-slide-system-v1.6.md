@@ -14,9 +14,9 @@
 - If exact source copy caused layout collision, content was shortened while preserving intent.
 
 ## Tokenization
-- Token source: `slides/tokens-v1.6.json`.
-- Generated CSS vars: `slides/deck-v1.6-tokens.css`.
-- Styling file: `slides/deck-v1.6-all-layouts.css`.
+- Token source: `reference/slides/tokens-v1.6.json`.
+- Generated CSS vars: `reference/slides/deck-v1.6-tokens.css`.
+- Styling file: `reference/slides/deck-v1.6-all-layouts.css`.
 - Constraint achieved in v1.6: no hardcoded `px` or hex values in CSS.
 
 ## Color + icon policy
@@ -34,13 +34,13 @@
 
 ## Placeholder media policy
 - Placeholder visuals are real image assets and importable:
-  - `slides/media-jpeg/diagram-placeholder.jpg`
-  - `slides/media-jpeg/photo-placeholder.jpg`
-  - `slides/media-jpeg/annotated-placeholder.jpg`
-  - `slides/media-jpeg/chart-placeholder.jpg`
-  - `slides/media-jpeg/flow-placeholder.jpg`
-  - `slides/media-jpeg/hero-placeholder-a.jpg`
-  - `slides/media-jpeg/hero-placeholder-b.jpg`
+  - `reference/slides/media-jpeg/diagram-placeholder.jpg`
+  - `reference/slides/media-jpeg/photo-placeholder.jpg`
+  - `reference/slides/media-jpeg/annotated-placeholder.jpg`
+  - `reference/slides/media-jpeg/chart-placeholder.jpg`
+  - `reference/slides/media-jpeg/flow-placeholder.jpg`
+  - `reference/slides/media-jpeg/hero-placeholder-a.jpg`
+  - `reference/slides/media-jpeg/hero-placeholder-b.jpg`
 
 ## New red-background layouts in v1.6
 - `RD-01` Red Section Divider

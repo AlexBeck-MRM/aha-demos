@@ -228,6 +228,36 @@
 - Generate the same three in configured state for `Eat better`.
 - Compare whether the six-guide framework is clearest when always visible, chooser-led, or hero-level.
 
+## 2026-05-08
+### ID
+`ROUTE-009`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Exploring`
+
+### Shared base
+- Keep Healthy Living as the adaptive hub candidate.
+- Keep Conditions fixed.
+- Keep the six-guide framework stable.
+
+### Route A
+- No change to fixed guide behavior on Conditions.
+
+### Route B
+- Remove the bottom selector from Healthy Living.
+- Make the six Healthy Living themes the visible chooser.
+- Use featured theme tiles instead of a utility control.
+- Let the selected theme become the lead guide area.
+- Rebalance supporting content underneath.
+
+### Next
+- Generate one updated Healthy Living board with default and selected state.
+- Test whether the six themes are clearer as featured tiles than as a separate chooser.
+- Compare whether the selected lead area still feels like a hub rather than a guide page.
+
 ## 2026-05-07
 ### ID
 `ROUTE-008`
@@ -259,3 +289,35 @@
 - Use the cleaned High Blood Pressure prototype for Figma transfer.
 - Test whether Healthy Living pages can share the grouped-link and detail-page logic with different section labels.
 - Keep condition pages fixed unless evidence shows an adaptive structure improves comprehension.
+
+## 2026-05-08
+### ID
+`ROUTE-010`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Shared base
+- Keep one primary illustration system.
+- Keep no-outline flat-fill construction.
+- Keep adult proportions and simple scenes.
+- Keep white-first surfaces.
+- Keep AHA red as the primary signal.
+
+### Route A
+- Retire the warmer brown-led illustration exploration as an active route.
+- Do not use broad bone-sand atmosphere as the default illustration field.
+- Do not use contour-led or portrait-led illustration behavior.
+
+### Route B
+- Use Route 2 as the primary illustration route.
+- Shift the palette toward white, off-white, cool bone, pale stone grey, taupe-grey, charcoal, AHA red, and deep red.
+- Use warm stone and brown only for purposeful detail.
+- Use secondary pastels only for subject-specific nature, water, sleep, calm, produce, food, or support cues.
+
+### Next
+- Generate the next Route 2 illustration board with the cooler palette.
+- Test whether the palette still feels human without reading beige or brown.

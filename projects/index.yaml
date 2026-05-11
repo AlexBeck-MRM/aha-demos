@@ -1,0 +1,6 @@
+projects:
+  - id: aha-website-refresh
+    title: AHA Website Refresh
+    path: projects/aha-website-refresh
+    status: active
+    default: true

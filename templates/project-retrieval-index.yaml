@@ -1,0 +1,49 @@
+project_id: {{project_id}}
+project_path: {{project_path}}
+
+fast_path:
+  - knowledge/sources/index.yaml
+  - knowledge/distilled/canonical-brief.md
+
+task_routes:
+  question:
+    reads:
+      - knowledge/sources/index.yaml
+      - knowledge/distilled/canonical-brief.md
+  source-ingest:
+    reads:
+      - knowledge/sources/index.yaml
+      - templates/reference-entry.md
+  knowledge-distill:
+    reads:
+      - knowledge/distilled/canonical-brief.md
+      - logs/decision-log.md
+  board-review:
+    reads:
+      - knowledge/sources/figma-design-workbench/index.md
+      - design/figma/workbench-section-map.yaml
+  inventory-update:
+    reads:
+      - design/ui-style-inventory/README.md
+      - templates/inventory-entry.md
+  route-update:
+    reads:
+      - design/routes/route-comparison.md
+      - logs/route-evolution.md
+  decision:
+    reads:
+      - logs/decision-log.md
+      - templates/decision-entry.md
+  project-bootstrap:
+    reads:
+      - projects/index.yaml
+      - templates/project-state.yaml
+
+default_write_targets:
+  source_notes: knowledge/sources/
+  distilled: knowledge/distilled/
+  decisions: logs/decision-log.md
+  route_log: logs/route-evolution.md
+  inventory: design/ui-style-inventory/
+  routes: design/routes/
+  project_state: {{project_path}}/

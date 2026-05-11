@@ -230,7 +230,7 @@ def make_governance_loop(path: Path):
 
 
 def main():
-    out = Path("output/imagegen")
+    out = Path(".artifacts/output/imagegen")
     out.mkdir(parents=True, exist_ok=True)
     make_source_of_truth(out / "aha-source-of-truth.png")
     make_documented_component(out / "aha-documented-component.png")

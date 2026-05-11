@@ -1,0 +1,400 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="7600" viewBox="0 0 1280 7600" fill="none">
+  <defs>
+    <style>
+      .bg { fill: #f6f1ea; }
+      .panel { fill: #fffdfb; stroke: #e7ddd1; stroke-width: 1; }
+      .soft { fill: #f7f2ed; stroke: #eadfd3; stroke-width: 1; }
+      .warm { fill: #ece2d7; }
+      .warm2 { fill: #f1e7dd; }
+      .red { fill: #c8192e; }
+      .redSoft { fill: #f9eaec; stroke: #e9c5cb; stroke-width: 1; }
+      .ink { fill: #221f20; }
+      .sub { fill: #5f5854; }
+      .line { stroke: #e1d7cb; stroke-width: 1; }
+      .accent { stroke: #c8192e; stroke-width: 3; }
+      .chip { fill: #fff7f7; stroke: #eac8ce; stroke-width: 1; }
+      .chip2 { fill: #f3eee8; stroke: #e1d7cb; stroke-width: 1; }
+      .h1 { font: 700 58px Arial, sans-serif; fill: #221f20; }
+      .h2 { font: 700 38px Arial, sans-serif; fill: #221f20; }
+      .h3 { font: 700 24px Arial, sans-serif; fill: #221f20; }
+      .label { font: 700 13px Arial, sans-serif; letter-spacing: 1.4px; fill: #c8192e; }
+      .body { font: 400 21px Arial, sans-serif; fill: #3e3835; }
+      .small { font: 400 17px Arial, sans-serif; fill: #605a56; }
+      .mini { font: 700 15px Arial, sans-serif; fill: #221f20; }
+      .cta { font: 700 18px Arial, sans-serif; fill: #ffffff; }
+      .ctaDark { font: 700 18px Arial, sans-serif; fill: #221f20; }
+      .nav { font: 700 17px Arial, sans-serif; fill: #221f20; }
+      .num { font: 700 64px Arial, sans-serif; fill: #c8192e; opacity: 0.12; }
+    </style>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#c9b9a7" flood-opacity="0.18"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#c9b9a7" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1280" height="7600"/>
+
+  <!-- Floating header -->
+  <g filter="url(#shadow)">
+    <rect class="panel" x="24" y="20" rx="28" ry="28" width="1232" height="84"/>
+  </g>
+  <path class="red" d="M50 50 C50 34, 71 28, 82 42 C92 29, 114 34, 114 51 C114 68, 82 89, 82 89 C82 89, 50 69, 50 50 Z"/>
+  <text x="130" y="57" class="mini">American Heart Association</text>
+  <text x="130" y="79" class="small">topic authority page concept v2</text>
+  <text x="420" y="70" class="small">Health Topics</text>
+  <text x="532" y="70" class="small">Healthy Living</text>
+  <text x="664" y="70" class="small">Research</text>
+  <text x="762" y="70" class="small">Find Care</text>
+  <rect class="soft" x="888" y="40" rx="22" ry="22" width="176" height="44"/>
+  <text x="918" y="68" class="small">Search blood pressure</text>
+  <rect class="red" x="1086" y="36" rx="24" ry="24" width="142" height="50"/>
+  <text x="1127" y="68" class="cta">Donate</text>
+
+  <!-- Sticky nav -->
+  <g filter="url(#softShadow)">
+    <rect class="panel" x="28" y="132" rx="28" ry="28" width="242" height="1230"/>
+  </g>
+  <rect class="chip" x="48" y="156" rx="14" ry="14" width="116" height="30"/>
+  <text x="72" y="176" class="label">Sticky nav</text>
+  <text x="48" y="222" class="h3">Your Guide to High Blood Pressure</text>
+  <text x="48" y="258" class="small">Navigation is always present, but the content cadence changes as you move through the page.</text>
+  <line class="line" x1="48" y1="288" x2="246" y2="288"/>
+
+  <rect class="redSoft" x="48" y="312" rx="18" ry="18" width="202" height="120"/>
+  <text x="70" y="348" class="mini">Top authority strip</text>
+  <text x="70" y="378" class="small">Medically reviewed</text>
+  <text x="70" y="404" class="small">Last reviewed date</text>
+  <text x="70" y="430" class="small">Urgent threshold</text>
+
+  <circle class="red" cx="62" cy="476" r="6"/><text x="80" y="482" class="nav">Start here</text>
+  <circle class="warm" cx="62" cy="518" r="6"/><text x="80" y="524" class="nav">Understand your numbers</text>
+  <circle class="warm" cx="62" cy="560" r="6"/><text x="80" y="566" class="nav">Risk and symptoms</text>
+  <circle class="warm" cx="62" cy="602" r="6"/><text x="80" y="608" class="nav">Body effects</text>
+  <circle class="warm" cx="62" cy="644" r="6"/><text x="80" y="650" class="nav">Lower it and manage it</text>
+  <circle class="warm" cx="62" cy="686" r="6"/><text x="80" y="692" class="nav">Chapter guide</text>
+  <circle class="warm" cx="62" cy="728" r="6"/><text x="80" y="734" class="nav">Special situations</text>
+  <circle class="warm" cx="62" cy="770" r="6"/><text x="80" y="776" class="nav">Tools and tracking</text>
+  <circle class="warm" cx="62" cy="812" r="6"/><text x="80" y="818" class="nav">FAQ</text>
+  <circle class="warm" cx="62" cy="854" r="6"/><text x="80" y="860" class="nav">Sources and review</text>
+
+  <rect class="red" x="48" y="910" rx="18" ry="18" width="202" height="56"/>
+  <text x="104" y="945" class="cta">When to call 911</text>
+  <rect class="soft" x="48" y="982" rx="18" ry="18" width="202" height="56"/>
+  <text x="90" y="1017" class="ctaDark">Compare my reading</text>
+
+  <rect class="soft" x="48" y="1064" rx="20" ry="20" width="202" height="262"/>
+  <text x="68" y="1102" class="mini">Predictable skeleton</text>
+  <text x="68" y="1132" class="small">- sticky chapter nav</text>
+  <text x="68" y="1158" class="small">- top actions</text>
+  <text x="68" y="1184" class="small">- chapter labels</text>
+  <text x="68" y="1210" class="small">- review at top and bottom</text>
+  <text x="68" y="1250" class="mini">Unpredictable cadence</text>
+  <text x="68" y="1280" class="small">- split sections</text>
+  <text x="68" y="1306" class="small">- wide bands</text>
+  <text x="68" y="1332" class="small">- expandable chapter blocks</text>
+
+  <!-- Hero / start here -->
+  <text x="316" y="194" class="num">01</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="136" rx="34" ry="34" width="960" height="980"/>
+  </g>
+  <text x="332" y="198" class="label">Start here</text>
+  <text x="332" y="274" class="h1">Your Guide to High Blood Pressure</text>
+  <text x="332" y="318" class="body">One authoritative page that explains the numbers, the risk, the urgency, the body impact,</text>
+  <text x="332" y="350" class="body">and the daily plan without forcing people through a chain of signpost pages.</text>
+
+  <!-- top authority strip -->
+  <rect class="redSoft" x="332" y="388" rx="22" ry="22" width="880" height="112"/>
+  <text x="360" y="424" class="mini">Medically reviewed</text>
+  <text x="360" y="452" class="small">AHA hypertension experts</text>
+  <line class="line" x1="560" y1="408" x2="560" y2="476"/>
+  <text x="590" y="424" class="mini">Last reviewed</text>
+  <text x="590" y="452" class="small">August 2025</text>
+  <line class="line" x1="760" y1="408" x2="760" y2="476"/>
+  <text x="790" y="424" class="mini">Evidence basis</text>
+  <text x="790" y="452" class="small">Guidelines + expert sources</text>
+  <line class="line" x1="1010" y1="408" x2="1010" y2="476"/>
+  <text x="1040" y="424" class="mini">Urgent threshold</text>
+  <text x="1040" y="452" class="small">180+ and/or 120+</text>
+
+  <text x="332" y="552" class="h3">Top actions</text>
+  <rect class="red" x="332" y="582" rx="22" ry="22" width="236" height="76"/>
+  <text x="389" y="627" class="cta">Understand my reading</text>
+  <rect class="soft" x="586" y="582" rx="22" ry="22" width="178" height="76"/>
+  <text x="645" y="627" class="ctaDark">Lower it</text>
+  <rect class="redSoft" x="782" y="582" rx="22" ry="22" width="174" height="76"/>
+  <text x="823" y="627" class="ctaDark">Is it urgent?</text>
+  <rect class="soft" x="974" y="582" rx="22" ry="22" width="238" height="76"/>
+  <text x="1022" y="627" class="ctaDark">Start a 7-day plan</text>
+
+  <!-- illustration hero -->
+  <rect class="soft" x="332" y="700" rx="28" ry="28" width="522" height="372"/>
+  <text x="360" y="736" class="mini">Illustration-led hero</text>
+  <text x="360" y="764" class="small">Use the live board direction: adult vector figures, warm bone fields,</text>
+  <text x="360" y="790" class="small">shallow depth, restrained red focal cue, and an instructional scene.</text>
+  <!-- stylized BP reading illustration -->
+  <path d="M590 818 C650 770, 732 782, 782 842 C812 880, 814 930, 788 970 C764 1008, 708 1036, 648 1030 C584 1023, 530 986, 512 928 C496 876, 528 848, 590 818 Z" class="warm2"/>
+  <rect x="494" y="912" rx="30" ry="30" width="104" height="116" class="panel"/>
+  <circle cx="548" cy="854" r="46" class="panel"/>
+  <rect x="607" y="905" rx="20" ry="20" width="138" height="48" class="panel"/>
+  <rect x="608" y="968" rx="6" ry="6" width="112" height="6" class="ink"/>
+  <rect x="736" y="898" rx="10" ry="10" width="50" height="34" class="red"/>
+  <rect x="758" y="928" rx="3" ry="3" width="4" height="44" class="ink"/>
+  <text x="360" y="1042" class="small">Chosen live reference: calm home blood-pressure reading, not lifestyle photography.</text>
+
+  <rect class="soft" x="876" y="700" rx="28" ry="28" width="336" height="176"/>
+  <text x="904" y="738" class="mini">Visible text density</text>
+  <text x="904" y="770" class="small">This page should read like a real guide.</text>
+  <text x="904" y="798" class="small">Show useful summary text immediately, not just</text>
+  <text x="904" y="826" class="small">buttons and empty chrome.</text>
+
+  <rect class="soft" x="876" y="894" rx="28" ry="28" width="336" height="178"/>
+  <text x="904" y="932" class="mini">At a glance</text>
+  <text x="904" y="964" class="small">- most people have no symptoms</text>
+  <text x="904" y="990" class="small">- readings matter more than guesswork</text>
+  <text x="904" y="1016" class="small">- there is a clear urgent threshold</text>
+  <text x="904" y="1042" class="small">- lifestyle and medication can both be valid</text>
+
+  <!-- Understand your numbers -->
+  <text x="316" y="1218" class="num">02</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="1160" rx="34" ry="34" width="960" height="740"/>
+  </g>
+  <text x="332" y="1222" class="label">Core job</text>
+  <text x="332" y="1280" class="h2">Understand your numbers</text>
+  <text x="332" y="1316" class="body">This is still the primary teaching module, but it now sits inside a denser context with</text>
+  <text x="332" y="1348" class="body">more explanation, more quick help, and clearer expansion points.</text>
+
+  <rect class="soft" x="332" y="1386" rx="24" ry="24" width="388" height="462"/>
+  <text x="360" y="1424" class="mini">Reading ladder</text>
+  <rect x="360" y="1458" width="332" height="62" fill="#dcebba"/>
+  <text x="386" y="1496" class="mini">Normal</text><text x="556" y="1496" class="small">below 120 / 80</text>
+  <rect x="360" y="1524" width="332" height="62" fill="#f2e79c"/>
+  <text x="386" y="1562" class="mini">Elevated</text><text x="544" y="1562" class="small">120-129 / under 80</text>
+  <rect x="360" y="1590" width="332" height="70" fill="#f4c26d"/>
+  <text x="386" y="1632" class="mini">Stage 1</text><text x="552" y="1632" class="small">130-139 or 80-89</text>
+  <rect x="360" y="1664" width="332" height="70" fill="#ee9b52"/>
+  <text x="386" y="1706" class="mini">Stage 2</text><text x="564" y="1706" class="small">140+ or 90+</text>
+  <rect x="360" y="1738" width="332" height="82" class="red"/>
+  <text x="386" y="1788" class="mini" fill="#ffffff">Hypertensive crisis</text>
+  <text x="554" y="1788" class="small" fill="#ffffff">180+ and/or 120+</text>
+
+  <rect class="redSoft" x="746" y="1386" rx="24" ry="24" width="466" height="150"/>
+  <text x="774" y="1424" class="mini">Urgent guidance</text>
+  <text x="774" y="1456" class="small">Make this big enough that users can see the action without leaving the page.</text>
+  <rect class="red" x="774" y="1478" rx="18" ry="18" width="176" height="42"/>
+  <text x="824" y="1506" class="cta">Get urgent help</text>
+
+  <rect class="soft" x="746" y="1556" rx="24" ry="24" width="466" height="292"/>
+  <text x="774" y="1594" class="mini">Explain the numbers</text>
+  <text x="774" y="1626" class="small">Add more visible explanatory text here:</text>
+  <text x="774" y="1654" class="small">what systolic means, what diastolic means, why one reading is not the</text>
+  <text x="774" y="1682" class="small">whole story, and how home readings should be logged.</text>
+  <rect class="chip" x="774" y="1720" rx="18" ry="18" width="180" height="42"/>
+  <text x="816" y="1748" class="mini">Track my numbers</text>
+  <rect class="chip2" x="970" y="1720" rx="18" ry="18" width="202" height="42"/>
+  <text x="1013" y="1748" class="mini">What to bring to a visit</text>
+
+  <!-- Risk and symptoms -->
+  <text x="316" y="2006" class="num">03</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="1948" rx="34" ry="34" width="960" height="620"/>
+  </g>
+  <text x="332" y="2010" class="label">Fast orientation</text>
+  <text x="332" y="2068" class="h2">Risk and symptoms</text>
+  <text x="332" y="2104" class="body">Keep the main message plain: most people will not feel obvious symptoms, so this chapter</text>
+  <text x="332" y="2136" class="body">should feel clear and stabilising, not alarmist.</text>
+  <rect class="soft" x="332" y="2180" rx="24" ry="24" width="880" height="340"/>
+  <text x="360" y="2218" class="mini">Risk factor chips and audience-specific paths</text>
+  <rect class="chip2" x="360" y="2252" rx="18" ry="18" width="146" height="44"/><text x="403" y="2280" class="small">Family history</text>
+  <rect class="chip2" x="520" y="2252" rx="18" ry="18" width="112" height="44"/><text x="555" y="2280" class="small">Age</text>
+  <rect class="chip2" x="646" y="2252" rx="18" ry="18" width="138" height="44"/><text x="685" y="2280" class="small">Diet</text>
+  <rect class="chip2" x="798" y="2252" rx="18" ry="18" width="150" height="44"/><text x="841" y="2280" class="small">Inactivity</text>
+  <rect class="chip2" x="962" y="2252" rx="18" ry="18" width="138" height="44"/><text x="993" y="2280" class="small">Diabetes</text>
+
+  <rect class="redSoft" x="360" y="2326" rx="20" ry="20" width="254" height="154"/>
+  <text x="384" y="2364" class="mini">Symptoms callout</text>
+  <text x="384" y="2396" class="small">Usually there are none.</text>
+  <text x="384" y="2424" class="small">That is why this page needs more visible</text>
+  <text x="384" y="2452" class="small">readings and action guidance than today.</text>
+
+  <rect class="soft" x="638" y="2326" rx="20" ry="20" width="250" height="154"/>
+  <text x="662" y="2364" class="mini">Black adults</text>
+  <text x="662" y="2396" class="small">Keep audience-specific guidance inline</text>
+  <text x="662" y="2424" class="small">instead of hiding it behind another page.</text>
+
+  <rect class="soft" x="912" y="2326" rx="20" ry="20" width="250" height="154"/>
+  <text x="936" y="2364" class="mini">Children and teens</text>
+  <text x="936" y="2396" class="small">Same pattern for age-specific questions,</text>
+  <text x="936" y="2424" class="small">screening cues, and next steps.</text>
+
+  <!-- Body effects -->
+  <text x="316" y="2670" class="num">04</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="2612" rx="34" ry="34" width="960" height="850"/>
+  </g>
+  <text x="332" y="2674" class="label">Consequences</text>
+  <text x="332" y="2732" class="h2">How high blood pressure affects the body</text>
+  <text x="332" y="2768" class="body">This becomes a more editorial band. Not a grid of pages, not a list of links, but one</text>
+  <text x="332" y="2800" class="body">clear body story with optional expansion points.</text>
+  <rect class="soft" x="332" y="2844" rx="30" ry="30" width="360" height="560"/>
+  <path d="M522 2910 C576 2870, 642 2896, 656 2950 C669 3000, 635 3048, 582 3056 C530 3064, 492 3032, 488 2986 C484 2950, 494 2932, 522 2910 Z" class="warm2"/>
+  <circle cx="512" cy="2980" r="38" class="panel"/>
+  <rect x="474" y="3028" rx="22" ry="22" width="76" height="162" class="panel"/>
+  <rect x="442" y="3194" rx="18" ry="18" width="62" height="102" class="panel"/>
+  <rect x="520" y="3194" rx="18" ry="18" width="62" height="102" class="panel"/>
+  <text x="368" y="3360" class="small">Body illustration anchor with callouts around it.</text>
+
+  <rect class="soft" x="724" y="2844" rx="20" ry="20" width="488" height="108"/><text x="750" y="2884" class="mini">Heart attack</text><text x="750" y="2914" class="small">Short summary first. Deep dive link stays optional.</text>
+  <rect class="soft" x="724" y="2968" rx="20" ry="20" width="488" height="108"/><text x="750" y="3008" class="mini">Stroke</text><text x="750" y="3038" class="small">Keep the consequence visible in context instead of sending users away immediately.</text>
+  <rect class="soft" x="724" y="3092" rx="20" ry="20" width="488" height="108"/><text x="750" y="3132" class="mini">Kidneys</text><text x="750" y="3162" class="small">Explain monitoring and when to ask for more evaluation.</text>
+  <rect class="soft" x="724" y="3216" rx="20" ry="20" width="488" height="108"/><text x="750" y="3256" class="mini">Vision loss</text><text x="750" y="3286" class="small">Severity stays real, but the tone stays calm and useful.</text>
+
+  <!-- Manage -->
+  <text x="316" y="3564" class="num">05</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="3506" rx="34" ry="34" width="960" height="1320"/>
+  </g>
+  <text x="332" y="3568" class="label">Largest branch compressed</text>
+  <text x="332" y="3626" class="h2">Lower it and manage it</text>
+  <text x="332" y="3662" class="body">This is where the page needs to be content-rich. The current architecture jumps here the most.</text>
+  <text x="332" y="3694" class="body">In the new model, this becomes a deep chapter with tabs, summaries, and inline expansions.</text>
+
+  <rect class="chip" x="332" y="3734" rx="18" ry="18" width="126" height="40"/><text x="374" y="3760" class="mini">Food</text>
+  <rect class="chip2" x="470" y="3734" rx="18" ry="18" width="126" height="40"/><text x="504" y="3760" class="mini">Activity</text>
+  <rect class="chip2" x="608" y="3734" rx="18" ry="18" width="126" height="40"/><text x="650" y="3760" class="mini">Stress</text>
+  <rect class="chip2" x="746" y="3734" rx="18" ry="18" width="126" height="40"/><text x="788" y="3760" class="mini">Weight</text>
+  <rect class="chip2" x="884" y="3734" rx="18" ry="18" width="126" height="40"/><text x="923" y="3760" class="mini">Smoking</text>
+  <rect class="chip2" x="1022" y="3734" rx="18" ry="18" width="126" height="40"/><text x="1060" y="3760" class="mini">Meds</text>
+
+  <rect class="soft" x="332" y="3802" rx="26" ry="26" width="546" height="930"/>
+  <text x="360" y="3844" class="mini">Expanded chapter body</text>
+  <text x="360" y="3880" class="h3">A realistic starter plan, not a list of route-outs</text>
+  <text x="360" y="3914" class="small">Visible summary text gives returning users something to learn even before they expand deeper panels.</text>
+  <rect class="warm2" x="360" y="3960" rx="20" ry="20" width="490" height="190"/>
+  <text x="388" y="4000" class="mini">What matters most first</text>
+  <text x="388" y="4030" class="small">Start with a reading habit, reduce one obvious sodium source, build one realistic activity routine,</text>
+  <text x="388" y="4058" class="small">and decide with your clinician whether medication should be part of the plan.</text>
+  <rect class="red" x="388" y="4092" rx="18" ry="18" width="166" height="42"/>
+  <text x="436" y="4120" class="cta">Start this plan</text>
+
+  <rect class="soft" x="360" y="4178" rx="18" ry="18" width="490" height="84"/><text x="388" y="4228" class="mini">Expand: sodium, potassium, and meals</text>
+  <rect class="soft" x="360" y="4276" rx="18" ry="18" width="490" height="84"/><text x="388" y="4326" class="mini">Expand: movement and walking plans</text>
+  <rect class="soft" x="360" y="4374" rx="18" ry="18" width="490" height="84"/><text x="388" y="4424" class="mini">Expand: stress, sleep, and habit barriers</text>
+  <rect class="soft" x="360" y="4472" rx="18" ry="18" width="490" height="84"/><text x="388" y="4522" class="mini">Expand: medication types and tradeoffs</text>
+  <rect class="soft" x="360" y="4570" rx="18" ry="18" width="490" height="84"/><text x="388" y="4620" class="mini">Expand: what to ask your care team</text>
+
+  <rect class="soft" x="906" y="3802" rx="26" ry="26" width="306" height="260"/>
+  <text x="934" y="3842" class="mini">7-day starter plan</text>
+  <rect class="chip" x="934" y="3874" rx="14" ry="14" width="250" height="40"/><text x="966" y="3900" class="small">Day 1: measure and log</text>
+  <rect class="chip" x="934" y="3924" rx="14" ry="14" width="250" height="40"/><text x="966" y="3950" class="small">Day 2: cut one salty meal</text>
+  <rect class="chip" x="934" y="3974" rx="14" ry="14" width="250" height="40"/><text x="966" y="4000" class="small">Day 3: walk 20 minutes</text>
+  <rect class="chip" x="934" y="4024" rx="14" ry="14" width="250" height="40"/><text x="966" y="4050" class="small">Day 4: review medications</text>
+
+  <rect class="redSoft" x="906" y="4086" rx="26" ry="26" width="306" height="186"/>
+  <text x="934" y="4126" class="mini">Why the layout changes here</text>
+  <text x="934" y="4158" class="small">This chapter is intentionally denser and deeper than the others because management is where</text>
+  <text x="934" y="4186" class="small">repeat visits actually happen.</text>
+
+  <rect class="soft" x="906" y="4296" rx="26" ry="26" width="306" height="214"/>
+  <text x="934" y="4336" class="mini">Optional broader exits</text>
+  <text x="934" y="4368" class="small">Diet and fitness ecosystem pages can still exist, but they should not be required for the</text>
+  <text x="934" y="4396" class="small">main high blood pressure journey.</text>
+
+  <!-- Chapter guide -->
+  <text x="316" y="4908" class="num">06</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="4850" rx="34" ry="34" width="960" height="660"/>
+  </g>
+  <text x="332" y="4912" class="label">Jumping board</text>
+  <text x="332" y="4970" class="h2">Chapter guide</text>
+  <text x="332" y="5006" class="body">This is the bridge between one-page authority and expandable depth. Each chapter carries a short</text>
+  <text x="332" y="5038" class="body">summary, an open/close state, and optional specialist links.</text>
+  <rect class="soft" x="332" y="5082" rx="22" ry="22" width="420" height="164"/>
+  <text x="360" y="5120" class="mini">Chapter 1: Understand your numbers</text>
+  <text x="360" y="5152" class="small">What the reading means, when it is urgent, and how to track it.</text>
+  <rect class="chip2" x="360" y="5186" rx="16" ry="16" width="154" height="38"/><text x="400" y="5211" class="mini">Expand chapter</text>
+  <rect class="soft" x="792" y="5082" rx="22" ry="22" width="420" height="164"/>
+  <text x="820" y="5120" class="mini">Chapter 2: Lower it and manage it</text>
+  <text x="820" y="5152" class="small">Daily actions, medication context, and care-team coordination.</text>
+  <rect class="chip2" x="820" y="5186" rx="16" ry="16" width="154" height="38"/><text x="860" y="5211" class="mini">Expand chapter</text>
+  <rect class="soft" x="332" y="5264" rx="22" ry="22" width="420" height="164"/>
+  <text x="360" y="5302" class="mini">Chapter 3: Body effects</text>
+  <text x="360" y="5334" class="small">Heart, stroke, kidneys, vision, and what changes the risk.</text>
+  <rect class="chip2" x="360" y="5368" rx="16" ry="16" width="154" height="38"/><text x="400" y="5393" class="mini">Expand chapter</text>
+  <rect class="soft" x="792" y="5264" rx="22" ry="22" width="420" height="164"/>
+  <text x="820" y="5302" class="mini">Chapter 4: Special situations</text>
+  <text x="820" y="5334" class="small">Black adults, children and teens, pulmonary hypertension, low BP.</text>
+  <rect class="chip2" x="820" y="5368" rx="16" ry="16" width="154" height="38"/><text x="860" y="5393" class="mini">Expand chapter</text>
+
+  <!-- Special situations -->
+  <text x="316" y="5592" class="num">07</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="5534" rx="34" ry="34" width="960" height="560"/>
+  </g>
+  <text x="332" y="5596" class="label">Keep nuance available</text>
+  <text x="332" y="5654" class="h2">Special situations</text>
+  <text x="332" y="5690" class="body">These stay on the page as expandable modules first. Only the true adjacent conditions stay as</text>
+  <text x="332" y="5722" class="body">separate deep-dive destinations.</text>
+  <rect class="soft" x="332" y="5768" rx="22" ry="22" width="880" height="72"/><text x="364" y="5813" class="mini">Black adults</text><text x="1176" y="5813" class="mini">+</text>
+  <rect class="soft" x="332" y="5854" rx="22" ry="22" width="880" height="72"/><text x="364" y="5899" class="mini">Children and teens</text><text x="1176" y="5899" class="mini">+</text>
+  <rect class="soft" x="332" y="5940" rx="22" ry="22" width="880" height="72"/><text x="364" y="5985" class="mini">Resistant hypertension</text><text x="1176" y="5985" class="mini">+</text>
+
+  <!-- Tools -->
+  <text x="316" y="6174" class="num">08</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="6116" rx="34" ry="34" width="960" height="500"/>
+  </g>
+  <text x="332" y="6178" class="label">Utility and confidence</text>
+  <text x="332" y="6236" class="h2">Tools and tracking</text>
+  <text x="332" y="6272" class="body">Tools belong inside the guide so the user can act without being thrown into a separate branch.</text>
+  <rect class="soft" x="332" y="6318" rx="24" ry="24" width="270" height="238"/>
+  <text x="360" y="6358" class="mini">Compare my reading</text>
+  <text x="360" y="6390" class="small">Fast categorisation tool.</text>
+  <rect class="red" x="360" y="6506" rx="18" ry="18" width="144" height="42"/><text x="398" y="6534" class="cta">Use tool</text>
+  <rect class="soft" x="636" y="6318" rx="24" ry="24" width="270" height="238"/>
+  <text x="664" y="6358" class="mini">Home monitoring checklist</text>
+  <text x="664" y="6390" class="small">Cuff fit, timing, posture, logging.</text>
+  <rect class="chip2" x="664" y="6506" rx="18" ry="18" width="168" height="42"/><text x="705" y="6534" class="mini">View checklist</text>
+  <rect class="soft" x="940" y="6318" rx="24" ry="24" width="272" height="238"/>
+  <text x="968" y="6358" class="mini">Printable guide</text>
+  <text x="968" y="6390" class="small">One-page recap for repeat use.</text>
+  <rect class="chip2" x="968" y="6506" rx="18" ry="18" width="146" height="42"/><text x="1006" y="6534" class="mini">Download</text>
+
+  <!-- FAQ -->
+  <text x="316" y="6692" class="num">09</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="6634" rx="34" ry="34" width="960" height="360"/>
+  </g>
+  <text x="332" y="6696" class="label">Clarity</text>
+  <text x="332" y="6754" class="h2">FAQ and myths</text>
+  <text x="332" y="6790" class="body">Make the ending useful. Keep recurrent anxieties together instead of scattering them across smaller leaves.</text>
+  <rect class="soft" x="332" y="6836" rx="22" ry="22" width="880" height="64"/><text x="362" y="6878" class="mini">Can I feel high blood pressure?</text><text x="1176" y="6878" class="mini">+</text>
+  <rect class="soft" x="332" y="6914" rx="22" ry="22" width="880" height="64"/><text x="362" y="6956" class="mini">How often should I check it at home?</text><text x="1176" y="6956" class="mini">+</text>
+
+  <!-- Review -->
+  <text x="316" y="7084" class="num">10</text>
+  <g filter="url(#shadow)">
+    <rect class="panel" x="292" y="7026" rx="34" ry="34" width="960" height="456"/>
+  </g>
+  <text x="332" y="7088" class="label">Authority signals</text>
+  <text x="332" y="7146" class="h2">Sources, review, and next step</text>
+  <text x="332" y="7182" class="body">Authority is visible at both the top and bottom of the page, so the page feels reviewed, current,</text>
+  <text x="332" y="7214" class="body">and clinically responsible the whole way through.</text>
+  <rect class="soft" x="332" y="7260" rx="24" ry="24" width="556" height="176"/>
+  <text x="360" y="7300" class="mini">Review and source strip</text>
+  <text x="360" y="7330" class="small">- reviewed by hypertension experts</text>
+  <text x="360" y="7356" class="small">- last reviewed date</text>
+  <text x="360" y="7382" class="small">- evidence source links</text>
+  <text x="360" y="7408" class="small">- editorial standards</text>
+  <rect class="redSoft" x="918" y="7260" rx="24" ry="24" width="294" height="176"/>
+  <text x="946" y="7300" class="mini">Primary next step</text>
+  <text x="946" y="7330" class="small">One calm CTA:</text>
+  <text x="946" y="7356" class="small">measure it, track it, and make a plan.</text>
+  <rect class="red" x="946" y="7390" rx="20" ry="20" width="164" height="44"/>
+  <text x="988" y="7419" class="cta">Start my plan</text>
+
+  <text x="28" y="7566" class="small">V2 intent: no hero photography, illustration-led authority, visible review metadata, denser content, stable nav, varied section rhythm.</text>
+</svg>

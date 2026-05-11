@@ -87,7 +87,7 @@ function detectImageRoot(rows) {
       return screenshotPath.slice(0, markerIndex);
     }
   }
-  return "output/playwright/brand-landscape-images";
+  return ".artifacts/output/playwright/brand-landscape-images";
 }
 
 async function main() {

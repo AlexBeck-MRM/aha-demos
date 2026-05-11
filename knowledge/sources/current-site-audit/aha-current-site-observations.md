@@ -1,9 +1,9 @@
 # AHA Current Site Observations
 
 ## Grounded evidence
-- `evidence/recordings/american_heart_association__home.mp4`
-- `evidence/recordings/american_heart_association__key.mp4`
-- `evidence/README.md`
+- `reference/evidence/recordings/american_heart_association__home.mp4`
+- `reference/evidence/recordings/american_heart_association__key.mp4`
+- `reference/evidence/README.md`
 
 ## Current observations
 - The existing ecosystem signals breadth and institutional trust, but risks feeling more operational than emotionally distinct.

@@ -31,10 +31,10 @@ async function pptStats(pptxPath) {
 
 async function main() {
   const args = parseArgs(process.argv);
-  const figmaDir = path.resolve(args.figma || 'build/figma/screenshots');
-  const pptDir = path.resolve(args.ppt || 'build/ppt-renders');
-  const reportPath = path.resolve(args.report || 'reports/ppt-parity.md');
-  const specPath = path.resolve(args.spec || 'build/presentation-spec.json');
+  const figmaDir = path.resolve(args.figma || '.artifacts/build/figma/screenshots');
+  const pptDir = path.resolve(args.ppt || '.artifacts/build/ppt-renders');
+  const reportPath = path.resolve(args.report || '.artifacts/reports/ppt-parity.md');
+  const specPath = path.resolve(args.spec || '.artifacts/build/presentation-spec.json');
   const pptxPath = args.pptx ? path.resolve(args.pptx) : null;
 
   const spec = JSON.parse(await fs.readFile(specPath, 'utf8'));

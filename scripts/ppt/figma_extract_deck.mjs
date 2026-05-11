@@ -206,7 +206,7 @@ ${deck.slides.map((slide) => renderSlideHtml(slide, deck.assets)).join('')}
 async function main() {
   const args = parseArgs(process.argv);
   const slides = (args.slides || '').split(',').map((item) => item.trim()).filter(Boolean);
-  const outDir = path.resolve(args.out || 'build/figma');
+  const outDir = path.resolve(args.out || '.artifacts/build/figma');
   if (!isPilotRequest(args['file-key'], args['node-id'], slides)) {
     throw new Error(`This pilot extractor only supports file ${PILOT_FILE_KEY}, node ${PILOT_NODE_ID}, and slides ${PILOT_SLIDE_IDS.join(',')}.`);
   }

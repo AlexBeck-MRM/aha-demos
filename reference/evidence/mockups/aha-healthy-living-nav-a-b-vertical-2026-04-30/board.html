@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Healthy Living Navigation A/B Vertical Chapter Pass</title>
+    <style>
+      :root {
+        --ink: #171a21;
+        --muted: #5e6470;
+        --line: #d4d7dc;
+        --line-dark: #9aa0aa;
+        --panel: #f4f5f6;
+        --panel-2: #ebedef;
+        --white: #ffffff;
+        --soft: #fafafa;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #ffffff;
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      #nav-board {
+        width: 3600px;
+        min-height: 2520px;
+        padding: 96px;
+        background: var(--white);
+      }
+
+      .eyebrow {
+        margin: 0 0 22px;
+        color: var(--muted);
+        font-size: 34px;
+        font-weight: 750;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 2400px;
+        margin: 0;
+        font-size: 86px;
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+      }
+
+      .intro {
+        max-width: 2420px;
+        margin: 34px 0 58px;
+        color: var(--muted);
+        font-size: 38px;
+        line-height: 1.28;
+      }
+
+      .option-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+
+      .option {
+        border: 2px solid var(--line);
+        border-radius: 32px;
+        background: var(--soft);
+        padding: 36px;
+      }
+
+      .option-header {
+        display: grid;
+        grid-template-columns: 112px 1fr;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 34px;
+      }
+
+      .letter {
+        display: grid;
+        width: 112px;
+        height: 112px;
+        place-items: center;
+        border: 3px solid var(--ink);
+        border-radius: 28px;
+        background: var(--ink);
+        color: var(--white);
+        font-size: 58px;
+        font-weight: 850;
+      }
+
+      h2 {
+        margin: 0 0 8px;
+        font-size: 46px;
+        letter-spacing: -0.01em;
+      }
+
+      .option-header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 27px;
+        line-height: 1.25;
+      }
+
+      .screens {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .screen {
+        overflow: hidden;
+        min-height: 1580px;
+        border: 2px solid var(--line-dark);
+        border-radius: 24px;
+        background: var(--white);
+        box-shadow: 0 18px 40px rgba(23, 26, 33, 0.06);
+      }
+
+      .chrome {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 26px;
+        border-bottom: 2px solid var(--line);
+        background: var(--panel);
+      }
+
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 21px;
+        font-weight: 750;
+      }
+
+      .mark {
+        width: 38px;
+        height: 38px;
+        border: 3px solid var(--ink);
+        border-radius: 10px;
+        background:
+          linear-gradient(135deg, transparent 0 46%, var(--ink) 48% 55%, transparent 57%),
+          var(--white);
+      }
+
+      .global-nav {
+        display: flex;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .screen-title {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: flex-start;
+        padding: 28px 32px 20px;
+      }
+
+      .crumb {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 38px;
+        line-height: 1.02;
+        letter-spacing: -0.015em;
+      }
+
+      .label {
+        flex: 0 0 auto;
+        padding: 10px 16px;
+        border: 2px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 17px;
+        font-weight: 760;
+        text-transform: uppercase;
+      }
+
+      .hero-copy {
+        padding: 0 32px 28px;
+        color: var(--muted);
+        font-size: 22px;
+        line-height: 1.3;
+      }
+
+      .quick-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 32px 30px;
+      }
+
+      .chip {
+        padding: 13px 16px;
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        background: var(--soft);
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .guide-shell {
+        display: grid;
+        grid-template-columns: 235px 1fr;
+        gap: 24px;
+        padding: 0 28px 30px;
+      }
+
+      .rail {
+        position: relative;
+        padding: 20px 16px;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+      }
+
+      .rail-title {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 850;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .rail-item {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 9px;
+        align-items: start;
+        min-height: 64px;
+        padding: 9px 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.12;
+      }
+
+      .rail-item:first-of-type {
+        border-top: 0;
+      }
+
+      .rail-item.active {
+        color: var(--ink);
+        font-weight: 850;
+      }
+
+      .num {
+        display: inline-grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .chapter-stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .chapter-card {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 18px;
+        padding: 22px;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+        background: var(--white);
+      }
+
+      .chapter-card.featured {
+        border-color: var(--ink);
+        background: var(--panel);
+      }
+
+      .chapter-card h4,
+      .browser-card h4,
+      .side-box h4,
+      .article-context h4 {
+        margin: 0 0 8px;
+        font-size: 27px;
+        line-height: 1.08;
+      }
+
+      .chapter-card p,
+      .browser-card p,
+      .side-box p,
+      .article-context p,
+      .article-body p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.3;
+      }
+
+      .chapter-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .mini {
+        padding: 12px;
+        border: 1.5px solid var(--line);
+        border-radius: 12px;
+        background: var(--soft);
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.24;
+      }
+
+      .timeline {
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        border: 3px solid var(--ink);
+        border-radius: 18px;
+        font-size: 22px;
+        font-weight: 850;
+      }
+
+      .page-body {
+        display: grid;
+        grid-template-columns: 235px 1fr;
+        gap: 24px;
+        padding: 0 28px 30px;
+      }
+
+      .article-body {
+        display: grid;
+        gap: 18px;
+      }
+
+      .article-context {
+        padding: 20px;
+        border: 2px solid var(--ink);
+        border-radius: 18px;
+        background: var(--panel);
+      }
+
+      .article-lines {
+        display: grid;
+        gap: 13px;
+        padding: 22px;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+      }
+
+      .line {
+        height: 15px;
+        border-radius: 999px;
+        background: var(--line);
+      }
+
+      .line.short {
+        width: 68%;
+      }
+
+      .line.medium {
+        width: 84%;
+      }
+
+      .side-box {
+        padding: 18px;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+        background: var(--soft);
+      }
+
+      .link-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .link-list div {
+        padding: 10px 0;
+        border-top: 1.5px solid var(--line);
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 720;
+      }
+
+      .browser-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 0 30px 30px;
+      }
+
+      .browser-stack {
+        display: grid;
+        gap: 16px;
+      }
+
+      .browser-card {
+        display: grid;
+        grid-template-columns: 76px 1fr 118px;
+        gap: 18px;
+        align-items: start;
+        padding: 20px;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+        background: var(--white);
+      }
+
+      .browser-card.open {
+        border-color: var(--ink);
+        background: var(--panel);
+      }
+
+      .slots {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .slot {
+        min-height: 72px;
+        padding: 10px;
+        border: 1.5px solid var(--line);
+        border-radius: 12px;
+        background: var(--soft);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.18;
+      }
+
+      .action {
+        padding: 12px 12px;
+        border: 2px solid var(--ink);
+        border-radius: 12px;
+        text-align: center;
+        color: var(--ink);
+        font-size: 15px;
+        font-weight: 850;
+      }
+
+      .browser-side {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-content: start;
+        gap: 14px;
+      }
+
+      .filter {
+        padding: 16px;
+        border: 2px solid var(--line);
+        border-radius: 16px;
+        background: var(--panel);
+      }
+
+      .filter h4 {
+        margin: 0 0 12px;
+        font-size: 20px;
+      }
+
+      .filter-row {
+        height: 36px;
+        margin-top: 10px;
+        border: 2px solid var(--line);
+        border-radius: 999px;
+        background: var(--white);
+      }
+
+      .compact-context {
+        margin: 0 32px 22px;
+        padding: 22px;
+        border: 2px solid var(--ink);
+        border-radius: 20px;
+        background: var(--panel);
+      }
+
+      .compact-context .meta {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 17px;
+        font-weight: 850;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .subpage-grid {
+        display: grid;
+        grid-template-columns: 1fr 260px;
+        gap: 22px;
+        padding: 0 32px 30px;
+      }
+
+      .local-toc {
+        padding: 18px;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+        background: var(--soft);
+      }
+
+      .local-toc h4 {
+        margin: 0 0 12px;
+        font-size: 21px;
+      }
+
+      .toc-item {
+        padding: 11px 0;
+        border-top: 1.5px solid var(--line);
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.16;
+      }
+
+      .toc-item.active {
+        color: var(--ink);
+        font-weight: 850;
+      }
+
+      .assessment {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 34px;
+      }
+
+      .note {
+        min-height: 170px;
+        padding: 24px;
+        border: 2px solid var(--line);
+        border-radius: 20px;
+        background: var(--white);
+      }
+
+      .note h4 {
+        margin: 0 0 12px;
+        font-size: 26px;
+      }
+
+      .note ul {
+        margin: 0;
+        padding-left: 26px;
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1.35;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="nav-board">
+      <p class="eyebrow">Healthy Living guide IA</p>
+      <h1>Focused A/B pass: make the chapters the vertical planning spine.</h1>
+      <p class="intro">
+        Both directions keep the topic guide as the canonical home. The main difference is whether the chapter structure stays visible as a persistent rail while reading, or becomes a richer browseable chapter index that users enter from.
+      </p>
+
+      <section class="option-grid" aria-label="Two navigation approaches">
+        <article class="option">
+          <header class="option-header">
+            <div class="letter">A</div>
+            <div>
+              <h2>Persistent Chapter Rail</h2>
+              <p>Best for deep reading. The guide always has a left-side spine, while articles inherit the same chapter position.</p>
+            </div>
+          </header>
+
+          <div class="screens">
+            <section class="screen">
+              <div class="chrome">
+                <div class="brand"><span class="mark"></span> American Heart Association</div>
+                <div class="global-nav"><span>Healthy Living</span><span>Health Topics</span><span>Search</span></div>
+              </div>
+              <div class="screen-title">
+                <div>
+                  <p class="crumb">Home / Healthy Living / Healthy Eating</p>
+                  <h3>Healthy Eating Guide</h3>
+                </div>
+                <span class="label">Topic guide</span>
+              </div>
+              <p class="hero-copy">
+                A practical guide to eating for heart health, from the first principles to shopping, cooking, real-life barriers, and health goals.
+              </p>
+              <div class="quick-row">
+                <div class="chip">I am starting fresh</div>
+                <div class="chip">I need meal ideas</div>
+                <div class="chip">I want to lower blood pressure</div>
+                <div class="chip">I need budget-friendly choices</div>
+              </div>
+              <div class="guide-shell">
+                <nav class="rail" aria-label="Guide chapters">
+                  <p class="rail-title">Chapters</p>
+                  <div class="rail-item active"><span class="num">1</span><span>Start Here</span></div>
+                  <div class="rail-item"><span class="num">2</span><span>Eating Basics</span></div>
+                  <div class="rail-item"><span class="num">3</span><span>Build Your Plate</span></div>
+                  <div class="rail-item"><span class="num">4</span><span>Choose Foods</span></div>
+                  <div class="rail-item"><span class="num">5</span><span>Plan & Cook</span></div>
+                  <div class="rail-item"><span class="num">6</span><span>Key Nutrients</span></div>
+                  <div class="rail-item"><span class="num">7</span><span>Real Life</span></div>
+                  <div class="rail-item"><span class="num">8</span><span>Health Goals</span></div>
+                  <div class="rail-item"><span class="num">+</span><span>Tools & Recipes</span></div>
+                </nav>
+
+                <div class="chapter-stack">
+                  <section class="chapter-card featured">
+                    <div class="timeline">1</div>
+                    <div>
+                      <h4>Start Here</h4>
+                      <p>Define what heart-healthy eating means and give people a plain-language starting point.</p>
+                      <div class="chapter-meta">
+                        <div class="mini">Core lesson: what changes matter most</div>
+                        <div class="mini">Featured: 5 Heart-Healthy Eating Habits</div>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="chapter-card">
+                    <div class="timeline">2</div>
+                    <div>
+                      <h4>Eating Basics</h4>
+                      <p>Explain nutrition foundations without making people decode the old article archive.</p>
+                      <div class="chapter-meta">
+                        <div class="mini">Core lesson: protein, grains, dairy, portions</div>
+                        <div class="mini">Article: Nutrition Basics</div>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="chapter-card">
+                    <div class="timeline">3</div>
+                    <div>
+                      <h4>Build Your Plate</h4>
+                      <p>Show how foods work together: vegetables, fruit, whole grains, lean proteins, and healthy fats.</p>
+                      <div class="chapter-meta">
+                        <div class="mini">Core lesson: plate pattern and add color</div>
+                        <div class="mini">Tool: seasonal color guide</div>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="chapter-card">
+                    <div class="timeline">4</div>
+                    <div>
+                      <h4>Choose Foods</h4>
+                      <p>Help people make decisions in shops, restaurants, and packaged-food moments.</p>
+                      <div class="chapter-meta">
+                        <div class="mini">Core lesson: labels and trade-offs</div>
+                        <div class="mini">Article: How to read food labels</div>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="chapter-card">
+                    <div class="timeline">5</div>
+                    <div>
+                      <h4>Plan & Cook</h4>
+                      <p>Move from knowledge into meals, routines, cooking skills, shopping lists, and recipes.</p>
+                      <div class="chapter-meta">
+                        <div class="mini">Core lesson: weekly meal planning</div>
+                        <div class="mini">Library: recipes and cookbooks</div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </section>
+
+            <section class="screen">
+              <div class="chrome">
+                <div class="brand"><span class="mark"></span> American Heart Association</div>
+                <div class="global-nav"><span>Healthy Living</span><span>Guide</span><span>Search</span></div>
+              </div>
+              <div class="screen-title">
+                <div>
+                  <p class="crumb">Healthy Eating / Choose Foods</p>
+                  <h3>How to Read a Nutrition Label</h3>
+                </div>
+                <span class="label">Support page</span>
+              </div>
+              <p class="hero-copy">
+                A focused article still knows where it belongs. It is not a loose page in a long sidebar.
+              </p>
+              <div class="page-body">
+                <nav class="rail" aria-label="Guide chapters">
+                  <p class="rail-title">Healthy Eating Guide</p>
+                  <div class="rail-item"><span class="num">1</span><span>Start Here</span></div>
+                  <div class="rail-item"><span class="num">2</span><span>Eating Basics</span></div>
+                  <div class="rail-item"><span class="num">3</span><span>Build Your Plate</span></div>
+                  <div class="rail-item active"><span class="num">4</span><span>Choose Foods</span></div>
+                  <div class="rail-item"><span class="num">5</span><span>Plan & Cook</span></div>
+                  <div class="rail-item"><span class="num">6</span><span>Key Nutrients</span></div>
+                  <div class="rail-item"><span class="num">7</span><span>Real Life</span></div>
+                  <div class="rail-item"><span class="num">8</span><span>Health Goals</span></div>
+                </nav>
+                <div class="article-body">
+                  <section class="article-context">
+                    <h4>Part of Chapter 4: Choose Foods</h4>
+                    <p>Use this article when you are comparing packaged foods, ingredients, and serving sizes.</p>
+                  </section>
+                  <section class="article-lines">
+                    <div class="line"></div>
+                    <div class="line medium"></div>
+                    <div class="line"></div>
+                    <div class="line short"></div>
+                    <div class="line"></div>
+                    <div class="line medium"></div>
+                    <div class="line short"></div>
+                  </section>
+                  <section class="side-box">
+                    <h4>More in Choose Foods</h4>
+                    <p>Keep support pages findable through the chapter, not through a full archive tree.</p>
+                    <div class="link-list">
+                      <div>Are ultraprocessed foods good or bad?</div>
+                      <div>Heart-Check foods</div>
+                      <div>Caffeine and heart disease</div>
+                      <div>Common terminology: science of food</div>
+                    </div>
+                  </section>
+                  <section class="side-box">
+                    <h4>Next guide step</h4>
+                    <p>Go to Chapter 5: Plan & Cook when people are ready to turn choices into meals.</p>
+                  </section>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="assessment">
+            <div class="note">
+              <h4>Why it works</h4>
+              <ul>
+                <li>Strongest sense of orientation while reading.</li>
+                <li>Clear bridge from guide chapters into support pages.</li>
+                <li>Good for longer evergreen guides.</li>
+              </ul>
+            </div>
+            <div class="note">
+              <h4>What to watch</h4>
+              <ul>
+                <li>The rail must stay chapter-only.</li>
+                <li>It could feel heavy on smaller topics unless collapsed well.</li>
+                <li>Article lists need discipline inside each chapter.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="option">
+          <header class="option-header">
+            <div class="letter">B</div>
+            <div>
+              <h2>Vertical Chapter Browser</h2>
+              <p>Best for browsing. The guide opens as a structured chapter index, with richer previews before users choose where to go.</p>
+            </div>
+          </header>
+
+          <div class="screens">
+            <section class="screen">
+              <div class="chrome">
+                <div class="brand"><span class="mark"></span> American Heart Association</div>
+                <div class="global-nav"><span>Healthy Living</span><span>Health Topics</span><span>Search</span></div>
+              </div>
+              <div class="screen-title">
+                <div>
+                  <p class="crumb">Home / Healthy Living / Healthy Eating</p>
+                  <h3>Healthy Eating Guide</h3>
+                </div>
+                <span class="label">Topic guide</span>
+              </div>
+              <p class="hero-copy">
+                Start with a guided chapter browser. Each chapter preview shows what to learn, what to use, and what related pages sit underneath it.
+              </p>
+              <div class="browser-layout">
+                <div class="browser-stack">
+                  <section class="browser-card open">
+                    <div class="timeline">1</div>
+                    <div>
+                      <h4>Start Here</h4>
+                      <p>What heart-healthy eating is, what matters most, and what to do first.</p>
+                      <div class="slots">
+                        <div class="slot">Guide lesson: simple starting point</div>
+                        <div class="slot">Article: diet and lifestyle recommendations</div>
+                        <div class="slot">Tool: quick habit checklist</div>
+                      </div>
+                    </div>
+                    <div class="action">Open chapter</div>
+                  </section>
+                  <section class="browser-card">
+                    <div class="timeline">2</div>
+                    <div>
+                      <h4>Eating Basics</h4>
+                      <p>Build confidence with nutrients, portions, food groups, and everyday trade-offs.</p>
+                      <div class="slots">
+                        <div class="slot">Guide lesson: food groups</div>
+                        <div class="slot">Article: Nutrition Basics</div>
+                        <div class="slot">Infographic: balanced plate</div>
+                      </div>
+                    </div>
+                    <div class="action">Preview</div>
+                  </section>
+                  <section class="browser-card">
+                    <div class="timeline">3</div>
+                    <div>
+                      <h4>Build Your Plate</h4>
+                      <p>Turn the basics into a repeatable plate pattern with more color and variety.</p>
+                      <div class="slots">
+                        <div class="slot">Guide lesson: plate pattern</div>
+                        <div class="slot">Article: Add Color</div>
+                        <div class="slot">Tool: produce guide</div>
+                      </div>
+                    </div>
+                    <div class="action">Preview</div>
+                  </section>
+                  <section class="browser-card">
+                    <div class="timeline">4</div>
+                    <div>
+                      <h4>Choose Foods</h4>
+                      <p>Make decisions at the grocery shelf, in restaurants, and when labels are confusing.</p>
+                      <div class="slots">
+                        <div class="slot">Guide lesson: labels</div>
+                        <div class="slot">Article: ultraprocessed foods</div>
+                        <div class="slot">Resource: Heart-Check</div>
+                      </div>
+                    </div>
+                    <div class="action">Preview</div>
+                  </section>
+                  <section class="browser-card">
+                    <div class="timeline">5</div>
+                    <div>
+                      <h4>Plan & Cook</h4>
+                      <p>Bring eating advice into the kitchen through planning, cooking skills, and recipes.</p>
+                      <div class="slots">
+                        <div class="slot">Guide lesson: weekly meals</div>
+                        <div class="slot">Collection: cooking skills</div>
+                        <div class="slot">Library: recipes</div>
+                      </div>
+                    </div>
+                    <div class="action">Preview</div>
+                  </section>
+                </div>
+                <aside class="browser-side" aria-label="Find a route">
+                  <section class="filter">
+                    <h4>Find the right place</h4>
+                    <div class="filter-row"></div>
+                    <div class="filter-row"></div>
+                    <div class="filter-row"></div>
+                    <div class="filter-row"></div>
+                  </section>
+                  <section class="filter">
+                    <h4>Popular routes</h4>
+                    <div class="link-list">
+                      <div>Lower sodium</div>
+                      <div>Eat better on a budget</div>
+                      <div>Family meals</div>
+                      <div>Recipes</div>
+                    </div>
+                  </section>
+                </aside>
+              </div>
+            </section>
+
+            <section class="screen">
+              <div class="chrome">
+                <div class="brand"><span class="mark"></span> American Heart Association</div>
+                <div class="global-nav"><span>Healthy Living</span><span>Guide</span><span>Search</span></div>
+              </div>
+              <div class="screen-title">
+                <div>
+                  <p class="crumb">Healthy Eating / Plan & Cook</p>
+                  <h3>Healthy Cooking Skills</h3>
+                </div>
+                <span class="label">Support page</span>
+              </div>
+              <section class="compact-context">
+                <p class="meta">Part of Chapter 5</p>
+                <h4>Plan & Cook</h4>
+                <p>This page supports the chapter by going deeper on practical cooking techniques, substitutions, and meal routines.</p>
+              </section>
+              <div class="subpage-grid">
+                <div class="article-body">
+                  <section class="article-lines">
+                    <div class="line"></div>
+                    <div class="line medium"></div>
+                    <div class="line"></div>
+                    <div class="line short"></div>
+                    <div class="line"></div>
+                    <div class="line medium"></div>
+                    <div class="line"></div>
+                    <div class="line short"></div>
+                  </section>
+                  <section class="side-box">
+                    <h4>Return to the guide</h4>
+                    <p>The article does not need a full sidebar. It needs a strong route back to the parent chapter and adjacent resources.</p>
+                  </section>
+                  <section class="side-box">
+                    <h4>Related tools</h4>
+                    <div class="link-list">
+                      <div>Heart-healthy recipes</div>
+                      <div>Cooking at home</div>
+                      <div>Healthy substitutions</div>
+                      <div>Budget meal planning</div>
+                    </div>
+                  </section>
+                </div>
+                <aside class="local-toc">
+                  <h4>In this chapter</h4>
+                  <div class="toc-item">Chapter overview</div>
+                  <div class="toc-item active">Cooking skills</div>
+                  <div class="toc-item">Healthy substitutions</div>
+                  <div class="toc-item">Meal planning</div>
+                  <div class="toc-item">Recipes</div>
+                  <div class="toc-item">Next: Key Nutrients</div>
+                </aside>
+              </div>
+            </section>
+          </div>
+
+          <div class="assessment">
+            <div class="note">
+              <h4>Why it works</h4>
+              <ul>
+                <li>More browseable at the top of the guide.</li>
+                <li>Better for users who want to scan before committing.</li>
+                <li>Can expose articles and tools without turning nav into a tree.</li>
+              </ul>
+            </div>
+            <div class="note">
+              <h4>What to watch</h4>
+              <ul>
+                <li>Subpages may feel less anchored than option A.</li>
+                <li>The chapter browser needs editorial rules to stay compact.</li>
+                <li>Users may need stronger progress cues while reading.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

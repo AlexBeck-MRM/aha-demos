@@ -1,0 +1,117 @@
+version: 1
+
+global_files:
+  current_project: projects/current-project.yaml
+  project_index: projects/index.yaml
+
+intents:
+  - id: question
+    required_reads:
+      - knowledge/sources/index.yaml
+      - knowledge/distilled/canonical-brief.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes: []
+    required_logs: []
+
+  - id: source-ingest
+    required_reads:
+      - knowledge/sources/index.yaml
+      - knowledge/AGENTS.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes:
+      - knowledge/sources/
+      - reference/
+      - projects/{current_project}/session-log.md
+    required_logs:
+      - projects/{current_project}/session-log.md
+
+  - id: knowledge-distill
+    required_reads:
+      - knowledge/sources/index.yaml
+      - knowledge/distilled/canonical-brief.md
+      - brain/ops-language.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes:
+      - knowledge/distilled/
+      - projects/{current_project}/session-log.md
+      - logs/decision-log.md
+    required_logs:
+      - projects/{current_project}/session-log.md
+
+  - id: board-review
+    required_reads:
+      - knowledge/sources/figma-design-workbench/index.md
+      - design/figma/workbench-section-map.yaml
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes:
+      - design/ui-style-inventory/
+      - projects/{current_project}/session-log.md
+      - logs/decision-log.md
+    required_logs:
+      - projects/{current_project}/session-log.md
+
+  - id: inventory-update
+    required_reads:
+      - knowledge/sources/index.yaml
+      - knowledge/distilled/canonical-brief.md
+      - design/ui-style-inventory/README.md
+      - design/figma/workbench-section-map.yaml
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes:
+      - design/ui-style-inventory/
+      - projects/{current_project}/session-log.md
+      - logs/decision-log.md
+    required_logs:
+      - projects/{current_project}/session-log.md
+
+  - id: route-update
+    required_reads:
+      - knowledge/distilled/canonical-brief.md
+      - brain/ops-language.md
+      - design/routes/route-comparison.md
+      - design/routes/route-deltas.md
+      - logs/route-evolution.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes:
+      - design/routes/
+      - logs/route-evolution.md
+      - projects/{current_project}/session-log.md
+    required_logs:
+      - logs/route-evolution.md
+      - projects/{current_project}/session-log.md
+
+  - id: decision
+    required_reads:
+      - knowledge/distilled/canonical-brief.md
+      - brain/ops-language.md
+      - logs/decision-log.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+    allowed_writes:
+      - logs/decision-log.md
+      - projects/{current_project}/session-log.md
+    required_logs:
+      - logs/decision-log.md
+      - projects/{current_project}/session-log.md
+
+  - id: project-bootstrap
+    required_reads:
+      - brain/ops-language.md
+      - projects/index.yaml
+      - projects/current-project.yaml
+      - templates/project-state.yaml
+      - templates/project-brief.md
+      - templates/project-open-questions.md
+      - templates/project-session-log.md
+      - templates/project-retrieval-index.yaml
+    allowed_writes:
+      - projects/
+      - logs/decision-log.md
+    required_logs:
+      - logs/decision-log.md

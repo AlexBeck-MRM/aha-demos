@@ -116,7 +116,7 @@ async function main() {
   }
 
   const base = `http://localhost:${PORT}`;
-  const urls = [`${base}/shader.html`];
+  const urls = [`${base}/experiments/visualisers/shader.html`];
   if (!noOpen) {
     try {
       openUrls(urls);

@@ -13,3 +13,6 @@
 
 ## Retrieval rule
 If the task names a board section, read `design/figma/workbench-section-map.yaml` first, then the corresponding brain file, then the section node itself if deeper visual inspection is needed.
+
+## Freshness rule
+If the corresponding Markdown file is not marked as synced to Figma, refresh it from the live section before relying on it.

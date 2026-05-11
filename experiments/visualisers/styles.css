@@ -61,15 +61,15 @@ body {
   --stage-radius: clamp(28px, 6vmin, 64px);
   --stage-pulse-scale: 1;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 50vw;
-  height: 50vh;
-  border-radius: var(--stage-radius);
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
   overflow: hidden;
-  background: #bf0e2f;
+  background: #d10001;
   transform-origin: 50% 50%;
-  transform: translate3d(-50%, -50%, 0) scale(var(--stage-pulse-scale));
+  transform: scale(var(--stage-pulse-scale));
+  contain: paint;
   will-change: transform;
 }
 
@@ -79,23 +79,62 @@ body {
   width: 100%;
   height: 100%;
   display: block;
+  contain: paint;
 }
 
 .css-vessel {
+  --aha-red-1: #f10022;
+  --aha-red-2: #e50012;
+  --aha-red-3: #d10001;
+  --aha-red-4: #c30000;
   position: absolute;
   inset: 0;
-  background: linear-gradient(150deg, #990000 0%, #cf222b 44%, #d21f37 100%);
+  background:
+    radial-gradient(
+      var(--field-core-x, 68%) var(--field-core-y, 56%) at calc(var(--center-x, 50%) - 8%) calc(var(--center-y, 52%) - 6%),
+      rgb(241 0 34 / calc(var(--surface-bright-opacity, 0.14) * 2.2)) 0%,
+      rgb(241 0 34 / calc(var(--surface-bright-opacity, 0.14) * 1.6)) 18%,
+      rgb(229 0 18 / calc(var(--surface-bright-opacity, 0.14) * 1.2)) 38%,
+      rgb(209 0 1 / calc(var(--surface-bright-opacity, 0.14) * 0.55)) 54%,
+      rgb(241 0 34 / 0) 76%
+    ),
+    radial-gradient(
+      var(--field-shadow-x, 86%) var(--field-shadow-y, 72%) at calc(var(--center-x, 50%) + 10%) calc(var(--center-y, 52%) + 12%),
+      rgb(195 0 0 / calc(var(--surface-shadow-opacity, 0.18) * 1.9)) 6%,
+      rgb(195 0 0 / calc(var(--surface-shadow-opacity, 0.18) * 1.35)) 26%,
+      rgb(209 0 1 / calc(var(--surface-shadow-opacity, 0.18) * 0.9)) 46%,
+      rgb(195 0 0 / 0) 82%
+    ),
+    radial-gradient(
+      58% 48% at calc(var(--center-x, 50%) - 1%) calc(var(--center-y, 52%) - 1%),
+      rgb(241 0 34 / 0.28) 0%,
+      rgb(229 0 18 / 0.24) 18%,
+      rgb(209 0 1 / 0.16) 42%,
+      rgb(209 0 1 / 0) 70%
+    ),
+    radial-gradient(
+      96% 78% at calc(var(--center-x, 50%) + 14%) calc(var(--center-y, 52%) + 8%),
+      rgb(195 0 0 / 0.42) 0%,
+      rgb(195 0 0 / 0.22) 32%,
+      rgb(195 0 0 / 0) 76%
+    ),
+    radial-gradient(
+      140% 120% at 50% 50%,
+      rgb(195 0 0 / 0) 58%,
+      rgb(195 0 0 / var(--field-vignette-opacity, 0.12)) 100%
+    ),
+    linear-gradient(156deg, var(--aha-red-4) 0%, var(--aha-red-3) 28%, var(--aha-red-2) 62%, var(--aha-red-1) 100%);
   isolation: isolate;
   transform-origin: 50% 50%;
-  will-change: filter;
+  contain: paint;
 }
 
 .css-vessel__layer {
   position: absolute;
-  inset: -24%;
+  inset: -28%;
   filter: blur(var(--css-blur, 96px));
   transform-origin: 50% 50%;
-  background-size: 122% 122%;
+  background-size: 138% 138%;
   background-position: 50% 50%, 50% 50%;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
@@ -103,10 +142,12 @@ body {
 }
 
 .css-vessel__layer--a {
-  opacity: 0.7;
+  opacity: calc(0.32 + var(--activation-energy, 0) * 0.12 + var(--primary-hit, 0) * 0.08);
   background:
-    radial-gradient(circle at 30% 42%, rgba(255, 88, 110, 0.95), rgba(255, 88, 110, 0) 52%),
-    radial-gradient(circle at 72% 60%, rgba(174, 0, 27, 0.9), rgba(174, 0, 27, 0) 58%);
+    radial-gradient(ellipse 76% 58% at 28% 44%, rgb(241 0 34 / 0.42), rgb(241 0 34 / 0) 72%),
+    radial-gradient(ellipse 70% 74% at 66% 54%, rgb(209 0 1 / 0.34), rgb(209 0 1 / 0) 76%),
+    conic-gradient(from 154deg at 48% 50%, rgb(241 0 34 / 0.12), rgb(195 0 0 / 0.18), rgb(229 0 18 / 0.14), rgb(241 0 34 / 0.12));
+  mix-blend-mode: screen;
   animation-name: vesselDriftA, heartbeatNudgeA;
   animation-duration: var(--drift-a, 22s), var(--beat-period, 0.83s);
   animation-timing-function: ease-in-out, cubic-bezier(0.24, 0.08, 0.16, 1);
@@ -114,10 +155,12 @@ body {
 }
 
 .css-vessel__layer--b {
-  opacity: 0.62;
+  opacity: calc(0.24 + var(--activation-energy, 0) * 0.08);
   background:
-    radial-gradient(circle at 22% 72%, rgba(214, 35, 49, 0.92), rgba(214, 35, 49, 0) 48%),
-    radial-gradient(circle at 78% 28%, rgba(132, 0, 24, 0.82), rgba(132, 0, 24, 0) 52%);
+    radial-gradient(ellipse 84% 62% at 24% 72%, rgb(229 0 18 / 0.34), rgb(229 0 18 / 0) 72%),
+    radial-gradient(ellipse 68% 88% at 76% 30%, rgb(195 0 0 / 0.28), rgb(195 0 0 / 0) 74%),
+    conic-gradient(from 306deg at 54% 48%, rgb(195 0 0 / 0.18), rgb(229 0 18 / 0.08), rgb(209 0 1 / 0.2), rgb(195 0 0 / 0.18));
+  mix-blend-mode: multiply;
   animation-name: vesselDriftB, heartbeatNudgeB;
   animation-duration: var(--drift-b, 18s), var(--beat-period, 0.83s);
   animation-timing-function: ease-in-out, cubic-bezier(0.24, 0.08, 0.16, 1);
@@ -125,10 +168,12 @@ body {
 }
 
 .css-vessel__layer--c {
-  opacity: 0.5;
+  opacity: calc(0.22 + var(--activation-energy, 0) * 0.08 + var(--perfusion-level, 0) * 0.08);
   background:
-    radial-gradient(circle at 58% 38%, rgba(255, 64, 96, 0.9), rgba(255, 64, 96, 0) 45%),
-    radial-gradient(circle at 38% 80%, rgba(166, 0, 20, 0.9), rgba(166, 0, 20, 0) 52%);
+    radial-gradient(ellipse 62% 72% at 58% 38%, rgb(241 0 34 / 0.26), rgb(241 0 34 / 0) 72%),
+    radial-gradient(ellipse 86% 64% at 38% 78%, rgb(209 0 1 / 0.26), rgb(209 0 1 / 0) 74%),
+    conic-gradient(from 94deg at 50% 56%, rgb(241 0 34 / 0.08), rgb(195 0 0 / 0.14), rgb(229 0 18 / 0.08), rgb(241 0 34 / 0.08));
+  mix-blend-mode: screen;
   animation-name: vesselDriftC, heartbeatNudgeC;
   animation-duration: var(--drift-c, 26s), var(--beat-period, 0.83s);
   animation-timing-function: ease-in-out, cubic-bezier(0.24, 0.08, 0.16, 1);
@@ -136,10 +181,12 @@ body {
 }
 
 .css-vessel__layer--d {
-  opacity: 0.46;
+  opacity: calc(0.22 + var(--activation-energy, 0) * 0.06);
   background:
-    radial-gradient(circle at 50% 50%, rgba(255, 106, 129, 0.76), rgba(255, 106, 129, 0) 50%),
-    radial-gradient(circle at 50% 64%, rgba(116, 0, 18, 0.72), rgba(116, 0, 18, 0) 58%);
+    radial-gradient(ellipse 72% 82% at 50% 48%, rgb(241 0 34 / 0.22), rgb(241 0 34 / 0) 74%),
+    radial-gradient(ellipse 90% 76% at 48% 66%, rgb(195 0 0 / 0.22), rgb(195 0 0 / 0) 78%),
+    conic-gradient(from 218deg at 50% 50%, rgb(241 0 34 / 0.05), rgb(209 0 1 / 0.12), rgb(229 0 18 / 0.06), rgb(241 0 34 / 0.05));
+  mix-blend-mode: soft-light;
   animation-name: vesselDriftD, heartbeatNudgeD;
   animation-duration: var(--drift-d, 31s), var(--beat-period, 0.83s);
   animation-timing-function: ease-in-out, cubic-bezier(0.24, 0.08, 0.16, 1);
@@ -149,21 +196,28 @@ body {
 .css-vessel::after {
   content: "";
   position: absolute;
-  inset: -14%;
+  inset: -20%;
   background:
     radial-gradient(
-      circle at var(--beat-core-x, 50%) var(--beat-core-y, 52%),
-      rgba(255, 130, 145, 0.22) 0%,
-      rgba(255, 130, 145, 0.14) calc(var(--heartbeat-radius, 44%) * 0.42),
-      rgba(255, 130, 145, 0) calc(var(--heartbeat-radius, 44%) + var(--heartbeat-falloff, 26%))
+      ellipse var(--pulse-radius-x, 44%) var(--pulse-radius-y, 32%) at calc(var(--beat-core-x, 50%) + var(--pulse-skew-x, 0%)) calc(var(--beat-core-y, 52%) + var(--pulse-skew-y, 0%)),
+      rgb(241 0 34 / 0.58) 0%,
+      rgb(241 0 34 / 0.24) 38%,
+      rgb(241 0 34 / 0) calc(72% + var(--pulse-soft-edge, 22%))
     ),
     radial-gradient(
-      circle at var(--beat-core-x, 50%) var(--beat-core-y, 52%),
-      rgba(145, 0, 22, 0.26) calc(var(--heartbeat-radius, 44%) * 0.4),
-      rgba(145, 0, 22, 0) calc(var(--heartbeat-radius, 44%) + var(--heartbeat-falloff, 26%) * 1.4)
+      ellipse calc(var(--pulse-radius-x, 44%) * 0.84) calc(var(--pulse-radius-y, 32%) * 1.18) at calc(var(--beat-core-x, 50%) - var(--pulse-skew-x, 0%)) calc(var(--beat-core-y, 52%) + 4%),
+      rgb(229 0 18 / 0.32) 8%,
+      rgb(229 0 18 / 0) calc(68% + var(--pulse-soft-edge, 22%))
+    ),
+    radial-gradient(
+      ellipse calc(var(--pulse-radius-x, 44%) * 1.24) calc(var(--pulse-radius-y, 32%) * 0.94) at var(--beat-core-x, 50%) calc(var(--beat-core-y, 52%) - 5%),
+      rgb(209 0 1 / 0.28) 18%,
+      rgb(209 0 1 / 0) calc(74% + var(--pulse-soft-edge, 22%))
     );
-  filter: blur(calc(var(--css-blur, 96px) * 0.72));
-  opacity: var(--oxygen-glow, 0.54);
+  filter: blur(calc(var(--css-blur, 96px) * 0.62));
+  opacity: calc(var(--activation-opacity, 0.3) * 1.12);
+  mix-blend-mode: screen;
+  transform: rotate(var(--pulse-angle, 0deg)) scaleX(var(--pulse-stretch-x, 1)) scaleY(var(--pulse-stretch-y, 1));
   animation: heartbeatGlow var(--beat-period, 0.83s) ease-in-out infinite;
   pointer-events: none;
 }
@@ -171,54 +225,143 @@ body {
 .css-vessel::before {
   content: "";
   position: absolute;
-  inset: -22%;
+  inset: -28%;
   background:
     radial-gradient(
-      circle at var(--beat-core-x, 50%) var(--beat-core-y, 52%),
-      rgba(255, 92, 116, 0.2) 0%,
-      rgba(255, 92, 116, 0.14) calc(var(--heartbeat-radius, 44%) * 0.32),
-      rgba(255, 92, 116, 0) calc(var(--heartbeat-radius, 44%) + var(--heartbeat-falloff, 26%) * 0.85)
+      ellipse calc(var(--pulse-radius-x, 44%) * 1.32) calc(var(--pulse-radius-y, 32%) * 1.08) at calc(var(--beat-core-x, 50%) + 4%) calc(var(--beat-core-y, 52%) + 3%),
+      rgb(195 0 0 / 0.34) 18%,
+      rgb(195 0 0 / 0) calc(76% + var(--pulse-soft-edge, 22%))
     ),
     radial-gradient(
-      circle at var(--beat-core-x, 50%) var(--beat-core-y, 52%),
-      rgba(121, 0, 18, 0.3) calc(var(--heartbeat-radius, 44%) * 0.48),
-      rgba(121, 0, 18, 0) calc(var(--heartbeat-radius, 44%) + var(--heartbeat-falloff, 26%) * 1.55)
+      ellipse calc(var(--pulse-radius-x, 44%) * 0.96) calc(var(--pulse-radius-y, 32%) * 1.26) at calc(var(--beat-core-x, 50%) - 5%) calc(var(--beat-core-y, 52%) + 8%),
+      rgb(209 0 1 / 0.3) 10%,
+      rgb(209 0 1 / 0) calc(70% + var(--pulse-soft-edge, 22%))
     );
   filter: blur(calc(var(--css-blur, 96px) * 0.7));
-  opacity: calc(var(--pulse-wave-opacity, 0.22) * 0.55);
+  opacity: calc(var(--shadow-opacity, 0.24) * 1.08);
+  mix-blend-mode: multiply;
+  transform: rotate(calc(var(--pulse-angle, 0deg) * -0.55)) scale(1.06);
   animation: heartbeatDepth var(--beat-period, 0.83s) cubic-bezier(0.24, 0.08, 0.16, 1) infinite;
   pointer-events: none;
 }
 
 @keyframes vesselDriftA {
-  0% { transform: translate3d(-7%, -4%, 0) scale(1.14) rotate(0deg); }
-  50% { transform: translate3d(7%, 6%, 0) scale(1.2) rotate(7deg); }
-  100% { transform: translate3d(-7%, -4%, 0) scale(1.14) rotate(0deg); }
+  0% {
+    transform:
+      translate3d(calc(-7% + var(--tissue-shift-x, 0%) * 0.9), calc(-4% + var(--tissue-shift-y, 0%) * 0.7), 0)
+      scale(calc(1.14 + var(--tissue-compress, 0) * 0.07 - var(--tissue-relax, 0) * 0.04))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * 0.45));
+  }
+  50% {
+    transform:
+      translate3d(calc(7% + var(--tissue-shift-x, 0%) * -0.7), calc(6% + var(--tissue-shift-y, 0%) * -0.5), 0)
+      scale(calc(1.2 + var(--tissue-compress, 0) * 0.05 - var(--tissue-relax, 0) * 0.03))
+      rotate(calc(7deg + var(--tissue-tilt, 0deg) * 0.3));
+  }
+  100% {
+    transform:
+      translate3d(calc(-7% + var(--tissue-shift-x, 0%) * 0.9), calc(-4% + var(--tissue-shift-y, 0%) * 0.7), 0)
+      scale(calc(1.14 + var(--tissue-compress, 0) * 0.07 - var(--tissue-relax, 0) * 0.04))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * 0.45));
+  }
 }
 
 @keyframes vesselDriftB {
-  0% { transform: translate3d(8%, -5%, 0) scale(1.13) rotate(0deg); }
-  50% { transform: translate3d(-6%, 7%, 0) scale(1.19) rotate(-6deg); }
-  100% { transform: translate3d(8%, -5%, 0) scale(1.13) rotate(0deg); }
+  0% {
+    transform:
+      translate3d(calc(8% + var(--tissue-shift-x, 0%) * -0.6), calc(-5% + var(--tissue-shift-y, 0%) * 1.1), 0)
+      scale(calc(1.13 + var(--tissue-compress, 0) * 0.06 - var(--tissue-relax, 0) * 0.02))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * -0.35));
+  }
+  50% {
+    transform:
+      translate3d(calc(-6% + var(--tissue-shift-x, 0%) * 0.45), calc(7% + var(--tissue-shift-y, 0%) * -0.55), 0)
+      scale(calc(1.19 + var(--tissue-compress, 0) * 0.04))
+      rotate(calc(-6deg + var(--tissue-tilt, 0deg) * -0.24));
+  }
+  100% {
+    transform:
+      translate3d(calc(8% + var(--tissue-shift-x, 0%) * -0.6), calc(-5% + var(--tissue-shift-y, 0%) * 1.1), 0)
+      scale(calc(1.13 + var(--tissue-compress, 0) * 0.06 - var(--tissue-relax, 0) * 0.02))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * -0.35));
+  }
 }
 
 @keyframes vesselDriftC {
-  0% { transform: translate3d(-5%, 8%, 0) scale(1.1) rotate(0deg); }
-  50% { transform: translate3d(5%, -7%, 0) scale(1.18) rotate(8deg); }
-  100% { transform: translate3d(-5%, 8%, 0) scale(1.1) rotate(0deg); }
+  0% {
+    transform:
+      translate3d(calc(-5% + var(--tissue-shift-x, 0%) * 0.58), calc(8% + var(--tissue-shift-y, 0%) * -0.8), 0)
+      scale(calc(1.1 + var(--tissue-compress, 0) * 0.05))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * 0.28));
+  }
+  50% {
+    transform:
+      translate3d(calc(5% + var(--tissue-shift-x, 0%) * -0.42), calc(-7% + var(--tissue-shift-y, 0%) * 0.65), 0)
+      scale(calc(1.18 + var(--tissue-compress, 0) * 0.06 - var(--tissue-relax, 0) * 0.02))
+      rotate(calc(8deg + var(--tissue-tilt, 0deg) * 0.2));
+  }
+  100% {
+    transform:
+      translate3d(calc(-5% + var(--tissue-shift-x, 0%) * 0.58), calc(8% + var(--tissue-shift-y, 0%) * -0.8), 0)
+      scale(calc(1.1 + var(--tissue-compress, 0) * 0.05))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * 0.28));
+  }
 }
 
 @keyframes vesselDriftD {
-  0% { transform: translate3d(4%, 5%, 0) scale(1.16) rotate(0deg); }
-  50% { transform: translate3d(-5%, -4%, 0) scale(1.24) rotate(-5deg); }
-  100% { transform: translate3d(4%, 5%, 0) scale(1.16) rotate(0deg); }
+  0% {
+    transform:
+      translate3d(calc(4% + var(--tissue-shift-x, 0%) * -0.35), calc(5% + var(--tissue-shift-y, 0%) * -0.9), 0)
+      scale(calc(1.16 + var(--tissue-compress, 0) * 0.08 - var(--tissue-relax, 0) * 0.04))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * -0.18));
+  }
+  50% {
+    transform:
+      translate3d(calc(-5% + var(--tissue-shift-x, 0%) * 0.26), calc(-4% + var(--tissue-shift-y, 0%) * 0.5), 0)
+      scale(calc(1.24 + var(--tissue-compress, 0) * 0.05))
+      rotate(calc(-5deg + var(--tissue-tilt, 0deg) * -0.14));
+  }
+  100% {
+    transform:
+      translate3d(calc(4% + var(--tissue-shift-x, 0%) * -0.35), calc(5% + var(--tissue-shift-y, 0%) * -0.9), 0)
+      scale(calc(1.16 + var(--tissue-compress, 0) * 0.08 - var(--tissue-relax, 0) * 0.04))
+      rotate(calc(0deg + var(--tissue-tilt, 0deg) * -0.18));
+  }
 }
 
 @keyframes heartbeatGlow {
-  0%, 100% { transform: scale(1.0); opacity: calc(var(--oxygen-glow, 0.54) * (0.7 + var(--beat-light, 0.4) * 0.06)); }
-  12% { transform: scale(calc(1 + var(--pulse-bloom, 0.6) * 0.008)); opacity: calc(var(--oxygen-glow, 0.54) * (0.84 + var(--beat-light, 0.4) * 0.12)); }
-  28% { transform: scale(calc(1 + var(--pulse-bloom, 0.6) * 0.006 * var(--dub-balance, 0.55))); opacity: calc(var(--oxygen-glow, 0.54) * (0.78 + var(--beat-light, 0.4) * 0.08)); }
-  58% { transform: scale(calc(1 + var(--pulse-bloom, 0.6) * 0.003)); opacity: calc(var(--oxygen-glow, 0.54) * (0.74 + var(--beat-light, 0.4) * 0.06)); }
+  0%, 100% {
+    transform: rotate(var(--pulse-angle, 0deg)) scaleX(var(--pulse-stretch-x, 1)) scaleY(var(--pulse-stretch-y, 1));
+    opacity: calc(var(--oxygen-glow, 0.54) * 0.36);
+  }
+  10% {
+    transform:
+      rotate(var(--pulse-angle, 0deg))
+      scaleX(calc(var(--pulse-stretch-x, 1) * (1.02 + var(--primary-hit, 0) * 0.08)))
+      scaleY(calc(var(--pulse-stretch-y, 1) * (0.98 - var(--primary-hit, 0) * 0.05)));
+    opacity: calc(var(--oxygen-glow, 0.54) * (0.7 + var(--primary-hit, 0) * 0.34));
+  }
+  24% {
+    transform:
+      rotate(var(--pulse-angle, 0deg))
+      scaleX(calc(var(--pulse-stretch-x, 1) * (1.05 + var(--perfusion-level, 0) * 0.12)))
+      scaleY(calc(var(--pulse-stretch-y, 1) * (1.02 + var(--perfusion-level, 0) * 0.06)));
+    opacity: calc(var(--oxygen-glow, 0.54) * (0.84 + var(--perfusion-level, 0) * 0.32));
+  }
+  40% {
+    transform:
+      rotate(var(--pulse-angle, 0deg))
+      scaleX(calc(var(--pulse-stretch-x, 1) * (1.01 + var(--echo-hit, 0) * 0.08)))
+      scaleY(calc(var(--pulse-stretch-y, 1) * (1 + var(--echo-hit, 0) * 0.06)));
+    opacity: calc(var(--oxygen-glow, 0.54) * (0.62 + var(--echo-hit, 0) * 0.22));
+  }
+  68% {
+    transform:
+      rotate(var(--pulse-angle, 0deg))
+      scaleX(calc(var(--pulse-stretch-x, 1) * (1.02 + var(--recoil-level, 0) * 0.05)))
+      scaleY(calc(var(--pulse-stretch-y, 1) * (1.01 + var(--recoil-level, 0) * 0.04)));
+    opacity: calc(var(--oxygen-glow, 0.54) * 0.48);
+  }
 }
 
 @keyframes heartbeatScale {
@@ -230,20 +373,32 @@ body {
 
 @keyframes heartbeatDepth {
   0%, 100% {
-    transform: scale(1.0);
-    opacity: calc(var(--pulse-wave-opacity, 0.22) * 0.32);
+    transform: rotate(calc(var(--pulse-angle, 0deg) * -0.55)) scale(1.02);
+    opacity: calc(var(--pulse-wave-opacity, 0.22) * 0.24);
   }
-  12% {
-    transform: scale(calc(1 + var(--pulse-zoom, 0.012) * (0.2 + var(--pulse-bloom, 0.6) * 0.08)));
-    opacity: calc(var(--pulse-wave-opacity, 0.22) * (0.5 + var(--beat-light, 0.4) * 0.08));
+  10% {
+    transform:
+      rotate(calc(var(--pulse-angle, 0deg) * -0.55))
+      scale(calc(1.01 - var(--primary-hit, 0) * 0.06));
+    opacity: calc(var(--pulse-wave-opacity, 0.22) * (0.36 + var(--primary-hit, 0) * 0.16));
   }
-  28% {
-    transform: scale(calc(1 + var(--pulse-zoom, 0.012) * (0.12 + var(--dub-balance, 0.55) * 0.14)));
-    opacity: calc(var(--pulse-wave-opacity, 0.22) * (0.42 + var(--dub-balance, 0.55) * 0.1));
+  24% {
+    transform:
+      rotate(calc(var(--pulse-angle, 0deg) * -0.55))
+      scale(calc(1.05 + var(--perfusion-level, 0) * 0.14));
+    opacity: calc(var(--pulse-wave-opacity, 0.22) * (0.74 + var(--perfusion-level, 0) * 0.24));
   }
-  58% {
-    transform: scale(calc(1 + var(--pulse-zoom, 0.012) * 0.05));
-    opacity: calc(var(--pulse-wave-opacity, 0.22) * 0.4);
+  42% {
+    transform:
+      rotate(calc(var(--pulse-angle, 0deg) * -0.55))
+      scale(calc(1.03 + var(--echo-hit, 0) * 0.08));
+    opacity: calc(var(--pulse-wave-opacity, 0.22) * (0.44 + var(--echo-hit, 0) * 0.16));
+  }
+  70% {
+    transform:
+      rotate(calc(var(--pulse-angle, 0deg) * -0.55))
+      scale(calc(1.02 + var(--recoil-level, 0) * 0.03));
+    opacity: calc(var(--pulse-wave-opacity, 0.22) * 0.28);
   }
 }
 
@@ -437,6 +592,13 @@ body {
   color: rgba(255, 232, 238, 0.86);
 }
 
+.control-group__note {
+  margin: -4px 0 10px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: rgba(255, 212, 222, 0.72);
+}
+
 .control-group__body {
   display: grid;
   gap: 9px;
@@ -444,35 +606,117 @@ body {
 
 .control-row {
   display: grid;
-  grid-template-columns: 114px 1fr 46px;
-  align-items: center;
+  grid-template-columns: 126px 1fr 46px;
+  align-items: start;
   gap: 10px;
+  min-height: 52px;
+}
+
+.control-row--choice {
+  grid-template-columns: 126px 1fr 52px;
+}
+
+.control-row__meta {
+  display: grid;
+  gap: 3px;
+  padding-top: 3px;
 }
 
 .control-row label {
   font-size: 11px;
   line-height: 1.2;
   color: rgba(255, 228, 236, 0.9);
+  cursor: pointer;
+  user-select: none;
+}
+
+.control-row__hint {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+  color: rgba(255, 204, 216, 0.66);
+}
+
+.control-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.control-choice {
+  min-height: 34px;
+  padding: 7px 0;
+  font-size: 11px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.control-choice.is-active {
+  border-color: rgba(255, 188, 205, 0.62);
+  background: linear-gradient(180deg, rgba(255, 92, 135, 0.34), rgba(255, 65, 114, 0.22));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .control-row input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
+  height: 30px;
+  padding: 8px 0;
   accent-color: #ff5f84;
+  background: transparent;
+  cursor: pointer;
+  align-self: center;
 }
 
 .control-row input[type="range"]::-webkit-slider-runnable-track {
-  height: 4px;
+  height: 8px;
   border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 120, 153, 0.34), rgba(255, 82, 127, 0.7));
 }
 
 .control-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
   margin-top: -5px;
+  border: 2px solid rgba(255, 233, 239, 0.92);
+  border-radius: 999px;
+  background: #ff5f84;
+  box-shadow: 0 0 0 4px rgba(255, 95, 132, 0.14);
+  cursor: pointer;
+}
+
+.control-row input[type="range"]::-moz-range-track {
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 120, 153, 0.34), rgba(255, 82, 127, 0.7));
+}
+
+.control-row input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 233, 239, 0.92);
+  border-radius: 999px;
+  background: #ff5f84;
+  box-shadow: 0 0 0 4px rgba(255, 95, 132, 0.14);
+  cursor: pointer;
+}
+
+.control-row input[type="range"]:hover::-webkit-slider-thumb,
+.control-row input[type="range"]:focus-visible::-webkit-slider-thumb,
+.control-row input[type="range"]:hover::-moz-range-thumb,
+.control-row input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 6px rgba(255, 95, 132, 0.18);
 }
 
 .control-row output {
   font-size: 11px;
   text-align: right;
   color: rgba(255, 236, 242, 0.9);
+  align-self: center;
 }
 
 .control-row--default {

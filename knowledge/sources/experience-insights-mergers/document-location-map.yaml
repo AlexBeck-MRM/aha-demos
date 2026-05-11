@@ -1,0 +1,171 @@
+source_file: /Users/alexanderbeck/Downloads/AHA – Insights Mergers.pdf
+artifact_root: .artifacts/build/insights-mergers
+purpose: >
+  Static page-and-region map for validating the merged experience-insights ingest
+  against the rendered PDF export when document text structure is unreliable.
+confidence_legend:
+  high: page intro and card-level crops were readable enough for close paraphrase
+  medium-high: page intro and part of the card set were readable, but some wording remained soft
+  medium: page topic and broad logic were validated, but card wording stayed partially blurred
+pages:
+  - page_number: 1
+    theme: symptom-and-condition-content
+    confidence: high
+    validation_scope: card-level
+    supports_sections:
+      - symptom and condition content
+    source_intro:
+      location: top intro block
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-1.png
+        - .artifacts/build/insights-mergers/page-1-band.png
+    hypothesis_conclusion_region:
+      location: lower half of page, left-to-mid columns
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-1-bottom.png
+        - .artifacts/build/insights-mergers/page-1-col-1.png
+        - .artifacts/build/insights-mergers/page-1-col-2.png
+        - .artifacts/build/insights-mergers/page-1-col-3.png
+        - .artifacts/build/insights-mergers/page-1-col-4.png
+    validated_hypothesis_cards:
+      - .artifacts/build/insights-mergers/cards/page-1-col-1-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-2-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-2-purple-2.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-3-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-3-purple-2.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-4-purple-1.png
+    validated_conclusion_cards:
+      - .artifacts/build/insights-mergers/cards/page-1-col-1-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-2-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-2-green-2.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-2-green-3.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-3-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-3-green-2.png
+      - .artifacts/build/insights-mergers/cards/page-1-col-4-green-1.png
+    note: Strongest page for card-by-card validation.
+
+  - page_number: 2
+    theme: donation-volunteering-and-staged-engagement
+    confidence: medium-high
+    validation_scope: partial card-level
+    supports_sections:
+      - donation, volunteering, and staged engagement
+    source_intro:
+      location: top intro block
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-2.png
+        - .artifacts/build/insights-mergers/page-2-band.png
+    hypothesis_conclusion_region:
+      location: lower half of page, left-side hypothesis set
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-2-bottom.png
+        - .artifacts/build/insights-mergers/page-2-col-1.png
+    validated_hypothesis_cards:
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-purple-2.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-purple-3.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-purple-4.png
+    validated_conclusion_cards:
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-green-2.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-green-3.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-green-4.png
+    auxiliary_processing_artifacts:
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-purple-1-nearest8.png
+      - .artifacts/build/insights-mergers/cards/page-2-col-1-purple-1-proc.png
+    note: >
+      Validation is strongest on the left-side card set. The page theme and intro are clear,
+      but some wording elsewhere on the page remained too soft for broader card-level extraction.
+
+  - page_number: 3
+    theme: editorial-packaging-and-curation
+    confidence: medium
+    validation_scope: page-and-column-level
+    supports_sections:
+      - editorial packaging and curation
+    source_intro:
+      location: top intro block
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-3.png
+        - .artifacts/build/insights-mergers/page-3-band.png
+    hypothesis_conclusion_region:
+      location: lower half of page, left-to-mid columns
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-3-col-1.png
+        - .artifacts/build/insights-mergers/page-3-col-1-x3.png
+        - .artifacts/build/insights-mergers/page-3-col-2.png
+        - .artifacts/build/insights-mergers/page-3-col-2-x3.png
+        - .artifacts/build/insights-mergers/page-3-col-3.png
+        - .artifacts/build/insights-mergers/page-3-col-4.png
+        - .artifacts/build/insights-mergers/page-3-col-5.png
+        - .artifacts/build/insights-mergers/page-3-col-6.png
+    validated_hypothesis_cards: []
+    validated_conclusion_cards: []
+    note: >
+      Page theme and several page-level claims were visually validated, but no individual
+      card crop reached the same reliability as pages 1, 2, 4, and 5. Treat this page as
+      directional unless a higher-resolution export is available.
+
+  - page_number: 4
+    theme: navigation-search-labels-and-recovery
+    confidence: high
+    validation_scope: card-level
+    supports_sections:
+      - navigation, search, labels, and recovery
+    source_intro:
+      location: top intro block
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-4.png
+        - .artifacts/build/insights-mergers/page-4-band.png
+    hypothesis_conclusion_region:
+      location: lower half of page, left-to-mid columns
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-4-bottom.png
+        - .artifacts/build/insights-mergers/page-4-col-1.png
+        - .artifacts/build/insights-mergers/page-4-col-2.png
+    validated_hypothesis_cards:
+      - .artifacts/build/insights-mergers/cards/page-4-col-1-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-1-purple-2.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-1-purple-3.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-2-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-2-purple-2.png
+    validated_conclusion_cards:
+      - .artifacts/build/insights-mergers/cards/page-4-col-1-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-1-green-2.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-1-green-3.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-2-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-4-col-2-green-2.png
+    note: Strong page for validating the findability and search logic.
+
+  - page_number: 5
+    theme: homepage-mission-clarity-and-audience-orientation
+    confidence: high
+    validation_scope: card-level
+    supports_sections:
+      - homepage mission clarity and audience orientation
+    source_intro:
+      location: top intro block
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-5.png
+        - .artifacts/build/insights-mergers/page-5-band.png
+    hypothesis_conclusion_region:
+      location: lower half of page, left-to-mid columns
+      evidence_assets:
+        - .artifacts/build/insights-mergers/page-5-bottom.png
+        - .artifacts/build/insights-mergers/page-5-col-1.png
+        - .artifacts/build/insights-mergers/page-5-col-2.png
+    validated_hypothesis_cards:
+      - .artifacts/build/insights-mergers/cards/page-5-col-1-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-1-purple-2.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-1-purple-3.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-2-purple-1.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-2-purple-2.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-2-purple-3.png
+    validated_conclusion_cards:
+      - .artifacts/build/insights-mergers/cards/page-5-col-1-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-1-green-2.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-1-green-3.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-2-green-1.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-2-green-2.png
+      - .artifacts/build/insights-mergers/cards/page-5-col-2-green-3.png
+    note: Strong page for validating mission clarity, hierarchy, and homepage coherence.

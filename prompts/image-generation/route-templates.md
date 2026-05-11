@@ -1,13 +1,7 @@
-# Image Prompt Template: Route Variants
+# route prompt reference
 
-## Route A block
-Slightly warmer, more editorial, more atmospheric, softer module transitions, stronger emotional pull.
+route behavior now lives inside the two canonical styleframe prompt files.
 
-## Route B block
-Cleaner, more precise, more system-forward, brighter whites, stronger operational clarity.
-
-## Shared constraints
-- Keep floating navigation.
-- Keep tactile buttons and inputs.
-- Use red strategically.
-- Keep the site human and trustworthy.
+use:
+- `styleframe-01.md` -> `route a` or `route b`
+- `styleframe-02.md` -> `route a` or `route b`

@@ -1,0 +1,76 @@
+project_id: aha-website-refresh
+project_path: projects/aha-website-refresh
+
+fast_path:
+  - knowledge/sources/index.yaml
+  - knowledge/distilled/canonical-brief.md
+  - projects/aha-website-refresh/artifact-index.yaml
+  - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+  - knowledge/sources/discovery-playback/index.md
+  - design/routes/route-comparison.md
+
+task_routes:
+  question:
+    reads:
+      - knowledge/sources/index.yaml
+      - knowledge/distilled/canonical-brief.md
+      - projects/aha-website-refresh/artifact-index.yaml
+      - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+      - knowledge/sources/discovery-playback/master-playback-notes.md
+      - design/routes/route-comparison.md
+  artifact-lookup:
+    reads:
+      - projects/aha-website-refresh/artifact-index.yaml
+      - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+      - projects/aha-website-refresh/cleanup-candidates.md
+      - projects/aha-website-refresh/session-log.md
+  source-ingest:
+    reads:
+      - knowledge/sources/index.yaml
+      - knowledge/AGENTS.md
+      - templates/reference-entry.md
+  knowledge-distill:
+    reads:
+      - knowledge/distilled/canonical-brief.md
+      - knowledge/distilled/index.md
+      - brain/ops-language.md
+      - logs/decision-log.md
+  board-review:
+    reads:
+      - knowledge/sources/figma-design-workbench/index.md
+      - design/figma/workbench-section-map.yaml
+      - design/ui-style-inventory/README.md
+  inventory-update:
+    reads:
+      - knowledge/distilled/canonical-brief.md
+      - design/ui-style-inventory/README.md
+      - templates/inventory-entry.md
+  route-update:
+    reads:
+      - brain/ops-language.md
+      - design/routes/route-comparison.md
+      - design/routes/route-deltas.md
+      - logs/route-evolution.md
+  decision:
+    reads:
+      - brain/ops-language.md
+      - logs/decision-log.md
+      - templates/decision-entry.md
+  project-bootstrap:
+    reads:
+      - brain/ops-language.md
+      - projects/index.yaml
+      - templates/project-state.yaml
+      - templates/project-retrieval-index.yaml
+
+default_write_targets:
+  artifact_index: projects/aha-website-refresh/artifact-index.yaml
+  quick_map: projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+  cleanup_candidates: projects/aha-website-refresh/cleanup-candidates.md
+  source_notes: knowledge/sources/
+  distilled: knowledge/distilled/
+  decisions: logs/decision-log.md
+  route_log: logs/route-evolution.md
+  inventory: design/ui-style-inventory/
+  routes: design/routes/
+  project_state: projects/aha-website-refresh/

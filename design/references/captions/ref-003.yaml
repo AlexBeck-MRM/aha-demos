@@ -1,7 +1,7 @@
 id: ref-003
 title: Slide system v1.6
 category: page-templates
-source: slides/aha-slide-system-v1.6.md
+source: reference/slides/aha-slide-system-v1.6.md
 route_bias: shared
 why_it_matters: Shows the repo already values token discipline, layout contracts, and reusable documentation patterns.
 borrow:

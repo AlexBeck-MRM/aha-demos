@@ -5,7 +5,7 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 
 const VIEWPORT = { width: 1280, height: 1080 };
-const OUTPUT_ROOT = 'evidence/discovery_playback';
+const OUTPUT_ROOT = 'reference/evidence/discovery_playback';
 
 const targets = [
   {

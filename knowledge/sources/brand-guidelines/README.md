@@ -4,11 +4,11 @@
 Hold the closest thing to official AHA brand source material, plus any validated proxy signals already present in the repo.
 
 ## Current grounded files
-- `assets/aha-logo-red.png`
-- `assets/aha-logo-white.png`
-- `slides/tokens-v1.6.json`
-- `slides/tokens-studio-v1.6.json`
-- `slides/aha-slide-system-v1.6.md`
+- `reference/assets/aha-logo-red.png`
+- `reference/assets/aha-logo-white.png`
+- `reference/slides/tokens-v1.6.json`
+- `reference/slides/tokens-studio-v1.6.json`
+- `reference/slides/aha-slide-system-v1.6.md`
 
 ## Signals already visible in the repo
 - AHA red should remain a controlled signature accent, not a constant highlight color.

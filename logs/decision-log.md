@@ -478,3 +478,93 @@
 - Use this cleaned prototype as the source for future Figma transfer.
 - Replace placeholder links with final IA targets before production.
 - Send medical copy through AHA clinical review before publication.
+
+## 2026-05-08
+### ID
+`DEC-013`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Lock Route 2 as the single primary illustration route.
+- Update the illustration colour system away from warm brown and beige dominance.
+- Use the attached palette reference as the new anchor:
+  - white
+  - off-white
+  - cool bone
+  - light stone grey
+  - taupe-grey
+  - charcoal
+  - AHA red
+  - deep red
+- Keep AHA red as the primary action, emotion, and brand signal.
+- Allow light secondary pastels only for subject-specific cues:
+  - water or air
+  - nature
+  - soft red support
+  - food or seasonal warmth
+- Sync the live Figma `Illustration Style` and `Colour Scheme` header copy to the updated direction.
+
+### Why
+- The selected illustration route is strong, but the previous palette let warm stone, taupe, and brown become too dominant.
+- The canonical brief still needs a white-first, trustworthy, human ecosystem.
+- A cooler pale-neutral base keeps the work cleaner beside dense UI and guide content.
+- Subject-specific pastels help Healthy Living and education scenes without turning the system into a broad colourful wellness palette.
+- The main risk is still generic health illustration, so the system needs strict red-signal behavior and AHA-specific subjects.
+
+### Files
+- `design/ui-style-inventory/color-scheme.md`
+- `design/ui-style-inventory/illustration-style.md`
+- `prompts/image-generation/master-styleframe-prompt.md`
+- `prompts/image-generation/styleframe-01.md`
+- `prompts/image-generation/styleframe-02.md`
+- `prompts/image-generation/healthy-living-topic-grid-route2.md`
+- `prompts/image-generation/healthy-living-topic-grid-route2.prompt.txt`
+- `logs/decision-log.md`
+- `logs/route-evolution.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Generate the next illustration board with the cooler palette.
+- Check whether the secondary pastels stay situational and do not compete with AHA red.
+
+## 2026-05-08
+### ID
+`DEC-014`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`Medium`
+
+### Decision
+- Keep the colour palette as the only Figma-created artifact for this adjustment.
+- Create the illustration guideline as an image artifact, not as an editable Figma board.
+- Add the compact editable palette swatch frame to the live `Colour Scheme` section.
+- Remove local references to the mistakenly-created Figma guideline board.
+
+### Why
+- The user wants Figma used for colours only.
+- The illustration guideline should behave like the attached visual reference: a generated image board that can be reviewed as style direction.
+- Keeping the guideline out of Figma avoids turning a visual reference into a premature editable system artifact.
+
+### Files
+- `design/figma/workbench-section-map.yaml`
+- `design/ui-style-inventory/illustration-style.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Generate the illustration guideline image with the cooler palette.
+- Use the Figma palette frame as the colour reference.

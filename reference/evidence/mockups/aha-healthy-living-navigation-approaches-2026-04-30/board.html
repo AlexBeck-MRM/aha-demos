@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHA Healthy Living Navigation Approaches</title>
+  <style>
+    :root {
+      --red: #c8102e;
+      --ink: #171d28;
+      --muted: #66717f;
+      --line: #d9dee5;
+      --soft: #f4f6f8;
+      --wash: #f7f3ed;
+      --paper: #fff;
+      --charcoal: #3f4653;
+      --green: #2f6b50;
+      --blue: #245d7a;
+      --gold: #f1be48;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .board {
+      width: 3400px;
+      padding: 72px;
+      background:
+        linear-gradient(90deg, rgba(23, 29, 40, 0.035) 0 1px, transparent 1px 160px),
+        linear-gradient(180deg, rgba(23, 29, 40, 0.035) 0 1px, transparent 1px 160px),
+        var(--wash);
+    }
+
+    h1, h2, h3, h4, p { margin: 0; letter-spacing: 0; }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 1120px;
+      gap: 90px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      margin-bottom: 14px;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 1850px;
+      font-size: 64px;
+      line-height: 1.03;
+    }
+
+    .header p {
+      color: var(--muted);
+      font-size: 26px;
+      line-height: 1.34;
+    }
+
+    .sequence {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+      margin-bottom: 34px;
+      padding: 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.78);
+    }
+
+    .step {
+      min-height: 88px;
+      padding: 16px;
+      border: 2px solid #e4e8ee;
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .step strong {
+      display: block;
+      font-size: 21px;
+      line-height: 1.05;
+    }
+
+    .step span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.22;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .approach {
+      min-height: 680px;
+      padding: 28px;
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 28px 80px rgba(28,31,38,.08);
+    }
+
+    .approach-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .approach h2 {
+      font-size: 31px;
+      line-height: 1.08;
+    }
+
+    .approach-head p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.28;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--charcoal);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .screen {
+      overflow: hidden;
+      min-height: 500px;
+      border: 2px solid #cfd6df;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .screen-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 2px solid #e6eaf0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .mini-nav {
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 14px;
+      border-bottom: 2px solid #edf0f4;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--red);
+    }
+
+    .nav-lines span,
+    .line,
+    .short-line {
+      display: block;
+      height: 9px;
+      border-radius: 999px;
+      background: #d6dce4;
+    }
+
+    .nav-lines span:first-child { width: 140px; margin-bottom: 8px; background: #aeb7c3; }
+    .nav-lines span:last-child { width: 210px; }
+
+    .pill {
+      height: 26px;
+      width: 74px;
+      border-radius: 999px;
+      background: var(--red);
+    }
+
+    .content { padding: 18px; }
+
+    .hero {
+      padding: 18px;
+      border-radius: 8px;
+      background: #fbf4f1;
+      border: 2px solid #f0e2dc;
+    }
+
+    .kicker {
+      width: 80px;
+      height: 8px;
+      margin-bottom: 11px;
+      border-radius: 999px;
+      background: var(--red);
+    }
+
+    .title-line {
+      height: 22px;
+      width: 82%;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+
+    .title-line.small { width: 58%; margin-top: 9px; }
+
+    .body-lines {
+      margin-top: 17px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .body-lines span {
+      height: 8px;
+      border-radius: 999px;
+      background: #cfd6df;
+    }
+
+    .body-lines span:nth-child(1) { width: 92%; }
+    .body-lines span:nth-child(2) { width: 74%; }
+    .body-lines span:nth-child(3) { width: 58%; }
+
+    .layout-rail {
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .rail {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding: 10px;
+      border-radius: 7px;
+      background: #f4f6f8;
+    }
+
+    .rail span {
+      height: 12px;
+      border-radius: 999px;
+      background: #cfd6df;
+    }
+
+    .rail span.active { background: var(--red); }
+
+    .chapter-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .chapter-card {
+      min-height: 52px;
+      padding: 10px;
+      border: 2px solid #dfe4ea;
+      border-radius: 7px;
+      background: #fff;
+    }
+
+    .chapter-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.1;
+    }
+
+    .chapter-card em {
+      display: block;
+      margin-top: 7px;
+      height: 7px;
+      width: 80%;
+      border-radius: 999px;
+      background: #cfd6df;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 7px;
+      margin: 15px 0;
+      padding: 8px;
+      border-radius: 999px;
+      background: #f0f3f6;
+    }
+
+    .tabs span {
+      height: 26px;
+      flex: 1;
+      border-radius: 999px;
+      background: #d7dde5;
+    }
+
+    .tabs span.active { background: var(--red); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 90px;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .drawer {
+      display: grid;
+      gap: 9px;
+      align-content: start;
+      padding: 11px;
+      border-radius: 8px;
+      background: #f4f6f8;
+      border: 2px solid #dfe4ea;
+    }
+
+    .drawer span {
+      height: 10px;
+      border-radius: 999px;
+      background: #c4ccd7;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+      margin: 16px 0;
+    }
+
+    .stepper span {
+      height: 36px;
+      border-radius: 8px;
+      background: #e2e7ed;
+      border-top: 6px solid #cfd6df;
+    }
+
+    .stepper span.active {
+      background: #fff2f4;
+      border-color: var(--red);
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 13px;
+    }
+
+    .resource {
+      min-height: 62px;
+      padding: 10px;
+      border-radius: 7px;
+      border: 2px solid #dfe4ea;
+      background: #fff;
+    }
+
+    .resource b {
+      display: block;
+      height: 11px;
+      width: 70%;
+      border-radius: 999px;
+      background: #9fa9b6;
+    }
+
+    .resource i {
+      display: block;
+      height: 7px;
+      width: 88%;
+      margin-top: 9px;
+      border-radius: 999px;
+      background: #d1d8e0;
+    }
+
+    .article-shell {
+      display: grid;
+      gap: 13px;
+      margin-top: 15px;
+    }
+
+    .article-title {
+      height: 26px;
+      width: 82%;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+
+    .back-link {
+      height: 22px;
+      width: 155px;
+      border-radius: 999px;
+      background: #fff2f4;
+      border: 2px solid #f0ccd2;
+    }
+
+    .related {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f4f6f8;
+    }
+
+    .related h4 {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .related span {
+      display: block;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: #c4ccd7;
+    }
+
+    .chapter-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .chapter-strip span {
+      min-height: 58px;
+      border-radius: 8px;
+      border: 2px solid #dfe4ea;
+      background: #fff;
+    }
+
+    .chapter-strip span.active {
+      border-color: #f0ccd2;
+      background: #fff2f4;
+    }
+
+    .filter-bar {
+      display: grid;
+      grid-template-columns: 1fr 80px;
+      gap: 8px;
+      margin: 15px 0;
+    }
+
+    .filter-bar span {
+      height: 31px;
+      border-radius: 999px;
+      background: #eef2f6;
+      border: 2px solid #dfe4ea;
+    }
+
+    .minimal-progress {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 5px;
+      margin: 15px 0;
+    }
+
+    .minimal-progress span {
+      height: 8px;
+      border-radius: 999px;
+      background: #d4dae2;
+    }
+
+    .minimal-progress span.active { background: var(--red); }
+
+    .caption {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 17px;
+      padding-top: 14px;
+      border-top: 2px solid #eef1f5;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .dot {
+      flex: 0 0 auto;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <main id="nav-board" class="board">
+    <section class="header">
+      <div>
+        <div class="eyebrow">Healthy Living IA</div>
+        <h1>Six navigation models for guides with supporting articles</h1>
+      </div>
+      <p>The core guide should stay canonical and chapter-led. Supporting articles, tools, recipes, and infographics need to be findable without becoming the main navigation structure again.</p>
+    </section>
+
+    <section class="sequence" aria-label="Universal Healthy Living sequence">
+      <div class="step"><strong>Start Here</strong><span>Plain-language orientation.</span></div>
+      <div class="step"><strong>Learn Basics</strong><span>Terms, reasons, baseline facts.</span></div>
+      <div class="step"><strong>Know What Matters</strong><span>High-impact choices and signals.</span></div>
+      <div class="step"><strong>Make a Plan</strong><span>Personal route and preparation.</span></div>
+      <div class="step"><strong>Practice Daily</strong><span>Routine, tools, recipes, exercises.</span></div>
+      <div class="step"><strong>Solve Problems</strong><span>Setbacks, barriers, edge cases.</span></div>
+      <div class="step"><strong>Connect Health</strong><span>Conditions, goals, risk links.</span></div>
+      <div class="step"><strong>Tools & Support</strong><span>Resources, programs, sources.</span></div>
+    </section>
+
+    <section class="grid">
+      <article class="approach">
+        <div class="approach-head">
+          <div>
+            <h2>1. Persistent Chapter Rail</h2>
+            <p>Best for dense guides where users need a stable sense of place.</p>
+          </div>
+          <span class="tag">Healthy Eating</span>
+        </div>
+        <div class="pair">
+          <div class="screen">
+            <div class="screen-label"><span>Guide page</span><span>Healthy Eating</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="hero"><div class="kicker"></div><div class="title-line"></div><div class="title-line small"></div><div class="body-lines"><span></span><span></span><span></span></div></div>
+              <div class="layout-rail">
+                <div class="rail"><span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="chapter-list">
+                  <div class="chapter-card"><strong>Build Your Plate</strong><em></em></div>
+                  <div class="chapter-card"><strong>Choose Foods</strong><em></em></div>
+                  <div class="chapter-card"><strong>Plan & Cook</strong><em></em></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screen">
+            <div class="screen-label"><span>Subpage</span><span>Food labels</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="back-link"></div>
+              <div class="article-shell"><div class="article-title"></div><div class="body-lines"><span></span><span></span><span></span></div></div>
+              <div class="layout-rail">
+                <div class="rail"><span></span><span></span><span class="active"></span><span></span><span></span></div>
+                <div class="related"><h4>More in Choose Foods</h4><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span class="dot"></span><span>Strongest canonical feel, but the rail must show chapters only. Articles appear inside the active chapter, not as a huge sidebar.</span></div>
+      </article>
+
+      <article class="approach">
+        <div class="approach-head">
+          <div>
+            <h2>2. Chapter Tabs + Resource Drawer</h2>
+            <p>Good when the guide needs a lighter surface and articles are secondary.</p>
+          </div>
+          <span class="tag">Sleep</span>
+        </div>
+        <div class="pair">
+          <div class="screen">
+            <div class="screen-label"><span>Guide page</span><span>Sleep</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="hero"><div class="kicker"></div><div class="title-line"></div><div class="body-lines"><span></span><span></span></div></div>
+              <div class="tabs"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+              <div class="two-col">
+                <div class="chapter-list"><div class="chapter-card"><strong>Sleep Basics</strong><em></em></div><div class="chapter-card"><strong>Build Your Routine</strong><em></em></div></div>
+                <div class="drawer"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="screen">
+            <div class="screen-label"><span>Subpage</span><span>Tech tweaks</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="tabs"><span></span><span></span><span class="active"></span><span></span></div>
+              <div class="article-title"></div>
+              <div class="body-lines"><span></span><span></span><span></span></div>
+              <div class="related"><h4>Open chapter resources</h4><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span class="dot"></span><span>Lower distraction, but article discoverability depends on a clear drawer trigger and good chapter labels.</span></div>
+      </article>
+
+      <article class="approach">
+        <div class="approach-head">
+          <div>
+            <h2>3. Journey Stepper</h2>
+            <p>Best for behavior change topics where people move from intent to practice.</p>
+          </div>
+          <span class="tag">Smoking</span>
+        </div>
+        <div class="pair">
+          <div class="screen">
+            <div class="screen-label"><span>Guide page</span><span>Quit Tobacco</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="hero"><div class="kicker"></div><div class="title-line"></div><div class="body-lines"><span></span><span></span></div></div>
+              <div class="stepper"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+              <div class="resource-grid"><div class="resource"><b></b><i></i></div><div class="resource"><b></b><i></i></div><div class="resource"><b></b><i></i></div><div class="resource"><b></b><i></i></div></div>
+            </div>
+          </div>
+          <div class="screen">
+            <div class="screen-label"><span>Subpage</span><span>Ready to quit vaping?</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="stepper"><span></span><span></span><span class="active"></span><span></span><span></span></div>
+              <div class="article-title"></div>
+              <div class="body-lines"><span></span><span></span><span></span></div>
+              <div class="related"><h4>Next in your quit plan</h4><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span class="dot"></span><span>Very strong for quitting, exercise, and habit-building. Less ideal for reference-heavy topics unless paired with a chapter index.</span></div>
+      </article>
+
+      <article class="approach">
+        <div class="approach-head">
+          <div>
+            <h2>4. Chapter Cards + Article Shelves</h2>
+            <p>Best for browsing. Each chapter previews a small set of support pages.</p>
+          </div>
+          <span class="tag">Healthy Eating</span>
+        </div>
+        <div class="pair">
+          <div class="screen">
+            <div class="screen-label"><span>Guide page</span><span>Healthy Eating</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="hero"><div class="kicker"></div><div class="title-line"></div><div class="body-lines"><span></span><span></span></div></div>
+              <div class="chapter-strip"><span class="active"></span><span></span><span></span><span></span></div>
+              <div class="related"><h4>Featured in Plan & Cook</h4><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="screen">
+            <div class="screen-label"><span>Subpage</span><span>Meal planning</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="back-link"></div>
+              <div class="article-title"></div>
+              <div class="body-lines"><span></span><span></span><span></span></div>
+              <div class="related"><h4>Chapter shelf</h4><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span class="dot"></span><span>Good editorial discovery without turning every article into navigation. Needs discipline: shelf size should stay small.</span></div>
+      </article>
+
+      <article class="approach">
+        <div class="approach-head">
+          <div>
+            <h2>5. Guide + Filtered Library</h2>
+            <p>Best when a topic has many support assets, like recipes or infographics.</p>
+          </div>
+          <span class="tag">Sleep</span>
+        </div>
+        <div class="pair">
+          <div class="screen">
+            <div class="screen-label"><span>Guide page</span><span>Sleep</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="hero"><div class="kicker"></div><div class="title-line"></div><div class="body-lines"><span></span><span></span></div></div>
+              <div class="filter-bar"><span></span><span></span></div>
+              <div class="resource-grid"><div class="resource"><b></b><i></i></div><div class="resource"><b></b><i></i></div><div class="resource"><b></b><i></i></div><div class="resource"><b></b><i></i></div></div>
+            </div>
+          </div>
+          <div class="screen">
+            <div class="screen-label"><span>Subpage</span><span>Sleep infographic</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="filter-bar"><span></span><span></span></div>
+              <div class="article-title"></div>
+              <div class="body-lines"><span></span><span></span><span></span></div>
+              <div class="related"><h4>Filtered resources</h4><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span class="dot"></span><span>Useful as a secondary resource layer. Risk: if promoted too high, the guide turns back into an archive.</span></div>
+      </article>
+
+      <article class="approach">
+        <div class="approach-head">
+          <div>
+            <h2>6. Minimal Progress + More in Chapter</h2>
+            <p>Best when reading flow matters more than visible navigation density.</p>
+          </div>
+          <span class="tag">Smoking</span>
+        </div>
+        <div class="pair">
+          <div class="screen">
+            <div class="screen-label"><span>Guide page</span><span>Quit Tobacco</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="minimal-progress"><span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="hero"><div class="kicker"></div><div class="title-line"></div><div class="body-lines"><span></span><span></span><span></span></div></div>
+              <div class="chapter-list"><div class="chapter-card"><strong>Make a Plan</strong><em></em></div><div class="chapter-card"><strong>Practice Daily</strong><em></em></div></div>
+            </div>
+          </div>
+          <div class="screen">
+            <div class="screen-label"><span>Subpage</span><span>Friends & family</span></div>
+            <div class="mini-nav"><div class="mark"></div><div class="nav-lines"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="content">
+              <div class="minimal-progress"><span></span><span></span><span></span><span></span><span></span><span class="active"></span><span></span><span></span></div>
+              <div class="article-title"></div>
+              <div class="body-lines"><span></span><span></span><span></span></div>
+              <div class="related"><h4>More in Solve Problems</h4><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span class="dot"></span><span>Cleanest reading experience. Needs strong breadcrumbs and chapter endings so users can recover after entering from search.</span></div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>Recommendation to test: persistent chapter nav for the guide, compact guide context on subpages, and chapter-level article shelves.</span>
+      <span>American Heart Association</span>
+    </footer>
+  </main>
+</body>
+</html>

@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image
 
 
-ROOT = Path("output/playwright/brand-landscape")
+ROOT = Path(".artifacts/output/playwright/brand-landscape")
 SIZE = 300
 PADDING = 20
 

@@ -19,11 +19,11 @@ try {
 }
 
 const DEFAULTS = {
-  targets: 'data/brand_capture_targets.csv',
-  manifest: 'evidence/capture_manifest.csv',
-  screenshotsDir: 'evidence/screenshots',
-  recordingsDir: 'evidence/recordings',
-  rawRecordingsDir: 'evidence/recordings_raw',
+  targets: 'reference/data/brand_capture_targets.csv',
+  manifest: 'reference/evidence/capture_manifest.csv',
+  screenshotsDir: 'reference/evidence/screenshots',
+  recordingsDir: 'reference/evidence/recordings',
+  rawRecordingsDir: 'reference/evidence/recordings_raw',
   trimScript: 'scripts/brand/trim_videos.sh',
   timeoutMs: 45000,
 };

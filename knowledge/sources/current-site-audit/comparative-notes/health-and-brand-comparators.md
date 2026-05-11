@@ -1,7 +1,7 @@
 # Health And Brand Comparators
 
 ## Evidence base
-Grounded in the capture pack described in `evidence/README.md` and `data/brand_capture_targets.csv`.
+Grounded in the committed AHA current-state recordings plus the comparator target list in `reference/data/brand_capture_targets.csv`.
 
 ## Working comparator set
 - mission-led nonprofits
@@ -18,3 +18,6 @@ Grounded in the capture pack described in `evidence/README.md` and `data/brand_c
 - generic charity-web softness
 - overpacked category menus
 - all-purpose card walls with no clear rhythm
+
+## Retrieval note
+If a comparator point needs direct visual proof, regenerate or re-import the specific target instead of expanding the committed evidence pack wholesale.
