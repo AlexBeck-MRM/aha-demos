@@ -24,6 +24,33 @@ task_routes:
       - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
       - projects/aha-website-refresh/cleanup-candidates.md
       - projects/aha-website-refresh/session-log.md
+  brain-maintenance:
+    reads:
+      - brain/ops-language.md
+      - brain/daily-stewardship-loop.md
+      - projects/aha-website-refresh/artifact-index.yaml
+      - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+      - projects/aha-website-refresh/cleanup-candidates.md
+      - projects/aha-website-refresh/automation-inbox.md
+      - projects/aha-website-refresh/now.md
+      - projects/aha-website-refresh/session-log.md
+      - package.json
+  repo-housekeeping:
+    reads:
+      - AGENTS.md
+      - README.md
+      - .gitignore
+      - package.json
+      - brain/router.yaml
+      - brain/ops-language.md
+      - brain/daily-stewardship-loop.md
+      - projects/aha-website-refresh/artifact-index.yaml
+      - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+      - projects/aha-website-refresh/cleanup-candidates.md
+      - projects/aha-website-refresh/automation-inbox.md
+      - projects/aha-website-refresh/now.md
+      - projects/aha-website-refresh/session-log.md
+      - scripts/docs/verify-design-brain.mjs
   source-ingest:
     reads:
       - knowledge/sources/index.yaml
@@ -67,6 +94,8 @@ default_write_targets:
   artifact_index: projects/aha-website-refresh/artifact-index.yaml
   quick_map: projects/aha-website-refresh/WHERE-THINGS-LIVE.md
   cleanup_candidates: projects/aha-website-refresh/cleanup-candidates.md
+  automation_inbox: projects/aha-website-refresh/automation-inbox.md
+  now: projects/aha-website-refresh/now.md
   source_notes: knowledge/sources/
   distilled: knowledge/distilled/
   decisions: logs/decision-log.md

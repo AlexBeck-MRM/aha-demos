@@ -1653,3 +1653,1586 @@ decision_refs:
 ### Next
 - decide whether to generate and store the updated two-state Healthy Living board image
 - refresh the short route comparison summaries if the May route split needs a faster retrieval layer
+
+## 2026-06-17
+### Task
+- run AHA brain library-maintenance pass
+- restore missing local maintenance state files
+- register current icon prompt assets
+
+### Change
+- verify the repo before edits
+- confirm no Finder metadata files are present
+- add current-state memory for this maintenance loop
+- add automation inbox for blocked owner decisions and no-Figma follow-ups
+- add compact hourly maintenance history
+- register the icon prompt files in the prompt map
+- add the icon prompt set to artifact lookup and human lookup
+- keep Figma out of scope
+
+### Files
+- `brain/hourly-maintenance-loop.md`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/automation-inbox.md`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `prompts/image-generation/icon-style-evolution-sheet.md`
+- `prompts/image-generation/restrained-solid-icon-preview.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use the registered icon prompts for the next raster icon generation pass
+- keep proof-icon regeneration outside this no-Figma maintenance loop
+- decide whether `npm run clean` should keep `output/icons/`
+
+## 2026-06-17
+### Task
+- analyse daily maintenance chats
+- merge Daily Brain Sync and library maintenance into one stronger loop
+- give maintenance enough router authority to act on routine organization
+
+### Change
+- add read-only `artifact-lookup` routing
+- add `brain-maintenance` routing for project lookup, cleanup, inbox, now, and session state
+- add the active project `brain-maintenance` retrieval path
+- define generated asset destinations in `design/generated/README.md`
+- copy current icon review sheets from ignored `output/imagegen/` to `design/generated/review/2026-06-17-icon-style-exploration/`
+- add a review manifest for the generated icon sheets
+- add the icon review sheets to artifact lookup and human lookup
+- close the `npm run clean` policy question by keeping `output/` disposable after promotion
+- keep Figma sync and proof-icon generation as explicit non-default tasks
+
+### Files
+- `brain/router.yaml`
+- `brain/hourly-maintenance-loop.md`
+- `projects/aha-website-refresh/retrieval-index.yaml`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/automation-inbox.md`
+- `projects/aha-website-refresh/cleanup-candidates.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+- `design/generated/README.md`
+- `design/generated/review/2026-06-17-icon-style-exploration/manifest.md`
+- `design/generated/review/2026-06-17-icon-style-exploration/*.png`
+
+### Next
+- replace the app automation prompt with the AHA Brain Daily Librarian loop
+- use the AHA Brain Daily Librarian loop on the next scheduled run
+- keep accepted icon direction separate from review storage
+
+## 2026-06-17
+### Task
+- set the accepted spatial icon sheet as the local icon style guide
+- make the icon base style reusable for future AHA icon work
+
+### Change
+- replace the old line/duo icon direction with `Medical Soft Spatial - Colour Block`
+- define the canonical shape, colour, depth, detail, and subject rules
+- add the v4 icon sheet to the accepted generated icon folder
+- register the accepted icon style in artifact lookup and human lookup
+- add the accepted prompt to the prompt map
+- record DEC-015
+- leave Figma out of this pass
+
+### Files
+- `design/ui-style-inventory/icons.md`
+- `design/generated/icons/medical-soft-spatial-colour-block/manifest.md`
+- `design/generated/icons/medical-soft-spatial-colour-block/aha-medical-soft-spatial-colour-block-12-sheet-v4.png`
+- `prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use `design/ui-style-inventory/icons.md` as the first local style source for future icon prompts
+- decide later whether to sync the local icon guide back to the live Icons board
+
+## 2026-06-17
+### Task
+- create a 12-icon stress-test sheet for the accepted spatial icon style
+
+### Change
+- add a reusable stress-test prompt for 12 new AHA icon subjects
+- generate two stress-test sheets
+- keep `v1` as evidence of implementation drift
+- keep `v2` as the cleaner review candidate
+- copy both sheets from ignored output into durable review storage
+- register the stress-test prompt and review folder in lookup files
+
+### Files
+- `prompts/image-generation/medical-soft-spatial-colour-block-stress-test.md`
+- `design/generated/review/2026-06-17-medical-soft-spatial-stress-test/manifest.md`
+- `design/generated/review/2026-06-17-medical-soft-spatial-stress-test/aha-medical-soft-spatial-colour-block-stress-test-v1.png`
+- `design/generated/review/2026-06-17-medical-soft-spatial-stress-test/aha-medical-soft-spatial-colour-block-stress-test-v2.png`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- review whether the cleaner `v2` stress-test sheet exposes any remaining weak subject patterns
+- decide whether any stress-test subjects should graduate into the accepted icon pattern list
+
+## 2026-06-17
+### Task
+- organize generated icon sheets before pausing ideation
+
+### Change
+- copy remaining icon-generation sheets out of ignored `output/imagegen/`
+- separate broad exploration, Medical Soft Spatial iteration, accepted base, and stress-test review folders
+- update review manifests so each folder explains its role
+- add missing icon prompts to the prompt map
+- register the Medical Soft Spatial iteration folder in artifact lookup and human lookup
+- keep `output/` disposable
+
+### Files
+- `design/generated/review/2026-06-17-icon-style-exploration/manifest.md`
+- `design/generated/review/2026-06-17-icon-style-exploration/*.png`
+- `design/generated/review/2026-06-17-medical-soft-spatial-iteration/manifest.md`
+- `design/generated/review/2026-06-17-medical-soft-spatial-iteration/*.png`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- resume tomorrow from `design/ui-style-inventory/icons.md`
+- use the accepted v4 sheet as the base and the stress-test folder as review evidence
+
+## 2026-06-18
+### Task
+- run AHA Brain Daily Librarian baseline pass
+- verify lookup, generated-asset, and cleanup state after the 2026-06-17 icon maintenance work
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- confirm generated icon review assets already have durable copies in `design/generated/`
+- confirm `artifact-index.yaml`, `WHERE-THINGS-LIVE.md`, `cleanup-candidates.md`, and `automation-inbox.md` already cover the current local icon maintenance state
+- keep lookup, cleanup, and inbox files unchanged because no new durable delta crossed the bar
+- update current-state memory for this pass
+
+### Files
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- run any board-header sync only in an explicit Figma-enabled pass
+- add new lookup entries only when new durable assets or accepted decisions appear
+
+## 2026-06-18
+### Task
+- finish AHA Design System Step 2 variable consolidation
+- keep live Figma cleanup non-rebinding and non-deleting
+
+### Change
+- verify Figma account as `alexander.beck@mrm.com`
+- verify live counts before mutation
+- rename variable collections in place to clean visible names
+- complete deferred component color token renames under `component/color/*`
+- rename generic `space/semantic/*` aliases to `spacing/gap/*`
+- rename 2px and 6px spacing exceptions to `space/deferred/2px` and `space/deferred/6px`
+- add compatibility-shim descriptions to old spacing, width, and container variables
+- re-export final live variables to JSON and CSV
+- update Step 2 matrix, preview, cleanup report, and delete-candidate report
+- verify brain structure and final export counts
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-structure-preview.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-delete-candidates.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-final-cleanup-report.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-2-final.raw.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-2-final.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-2-final.csv`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-migration-matrix-step-1.5.csv`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-batch-plan.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-execution-log.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-readiness-checklist.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- keep deletion blocked until live binding usage is audited
+- keep live rebinding blocked until a separate rebind plan is approved
+- map `spacing/stack/*`, `spacing/inline/*`, and `spacing/inset/*` before adding more relationship aliases
+
+## 2026-06-18
+### Task
+- run Step 3 read-only usage audit for AHA Design System variables
+- prepare live rebind plan before mutation
+
+### Change
+- verify Figma account as `alexander.beck@mrm.com`
+- verify current live baseline as 7 collections, 838 variables, 699 color, 129 float, and 10 string
+- confirm no unresolved aliases and no duplicate variable names
+- discover MCP limitation: `loadAllPagesAsync` is unsupported in this runtime
+- scan variable aliases, local styles, style consumers, and 13 key component/foundation pages
+- identify live usage blocking deletion for old spacing, layout container, layout width, and typography regular shims
+- create Step 3 usage audit and rebind plan
+- update delete-candidate report with Step 3 findings
+- keep Figma mutation blocked until fresh Step 3 checkpoint is confirmed
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-3-usage-audit.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-3-rebind-plan.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-delete-candidates.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- confirm fresh Figma checkpoint before any live mutation
+- run collection name correction after checkpoint
+- run one rebind canary per batch before broader rebinding
+
+## 2026-06-18
+### Task
+- run Step 3 live variable rebinding and cleanup after owner checkpoint
+- keep visual output stable and avoid deletion without zero-use proof
+
+### Change
+- verify Figma account as `alexander.beck@mrm.com`
+- use checkpoint `Pre Step 3 live rebinding checkpoint - 2026-06-18`
+- rename `Primitives` to `_Primitives`
+- rename `Radius` to `Effects`
+- update `spacing/gap/*` variables so they carry direct responsive values instead of aliasing old `spacing-*` tokens
+- rebind verified gap-like spacing consumers on `Typography`, `Spacing, radius & grids`, and `Buttons`
+- create 15 canonical `layout/*` variables in `Spacing & Layout`
+- rebind verified layout consumers on `Spacing, radius & grids`
+- rebind 11 local text styles and 2 direct Typography-page text nodes from `Font weight/regular` to `font/weight/500`
+- keep all variables that still have live or uncertain consumers
+- re-export final Step 3 variables to JSON and CSV
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-structure-preview.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-3-final.raw.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-3-final.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-3-final.csv`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-delete-candidates.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-3-final-report.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-3-rebind-plan.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-3-usage-audit.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- do not delete `Layout Widths` or `Layout Containers` until a complete zero-use proof exists
+- map remaining padding/inset usage before creating or rebinding to `spacing/inset/*`
+- rebind layout consumers at source components where instance descendants are immutable
+- keep `Font weight/regular` as deprecated compatibility until a full all-page zero-use audit is available
+
+## 2026-06-18
+### Task
+- finish Step 4 live variable organization cleanup
+- collapse visible Figma collections to the approved five-collection model
+
+### Change
+- verify Figma account as `alexander.beck@mrm.com`
+- rename `_Primitives / Colors/*` raw ramps to `_Primitives / color/palette/*`
+- rename `_Primitives / viewport-width/*` to `_Primitives / size/layout/*`
+- reorganize `Color` into `semantic/*`, `component/*`, and `utility/*`
+- rebind 39 effect-style color bindings from deprecated effect-source variables to `semantic/effect/*`
+- create verified `spacing/inset/*` variables and rebind 158 Typography-page padding fields
+- resolve alias issues caused by owner-side deletion of deferred 2px and 6px primitives
+- delete 23 deprecated effect-source variables after checks passed
+- export the final Step 4 variable library
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-structure-preview.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-4-final.raw.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-4-final.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-4-final.csv`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-2-delete-candidates.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-4-final-report.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-4-organization-audit.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-step-4-organization-matrix.csv`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether direct 2px and 6px spacing values should return as explicit exception primitives
+- expand `spacing/inset/*` only when additional padding usage requires it
+- add semantic text-role aliases in a separate typography pass
+
+## 2026-06-18
+### Task
+- adjust the live variable library structure for James handoff
+- add responsive typography structure and a Components collection
+
+### Change
+- rename `_Primitives` to `Primitives`
+- rename `Spacing & Layout` to `Layout`
+- create 28 numeric typography primitive variables in `Primitives`
+- convert `Typography` from one `Value` mode to `XL / L / M / S`
+- alias `Typography / font/size/*` and `font/line-height/*` to numeric primitives by responsive mode
+- create `Components` collection with `Light mode / Dark mode`
+- seed `Components` with 25 component color alias variables
+- validate no unresolved aliases and no duplicate names
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-structure-preview.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether component consumers should be rebound from `Color / component/*` to `Components / color/*`
+- add semantic text-role typography aliases after James review
+
+## 2026-06-18
+### Task
+- correct live icon-size variable placement in the AHA Design System library
+- keep component size tokens inside the existing `Components` collection
+
+### Change
+- verify Figma account as `alexander.beck@mrm.com`
+- move the accepted icon-size token set into `Components / icons/size/*`
+- remove the mistaken `Component Sizing` collection from the live file
+- remove duplicate `Components / icons/sizing/*` variables created during correction
+- scope all corrected icon-size variables to `WIDTH_HEIGHT`
+- add WEB code syntax using `--aha-component-icons-size-*`
+- keep hidden primitive `Primitives / space/350 = 56`
+- alias all corrected icon-size variables to `Primitives / space/*`
+- verify the live library is back to six collections and `Components` contains 34 variables
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- bind live icon components to `Components / icons/size/*` when icon component cleanup continues
+- decide the responsive implementation separately before changing the `Components` collection mode strategy
+
+## 2026-06-18
+### Task
+- extract Critical Mass website design language for token guide reference
+
+### Change
+- read `criticalmass.com` homepage, capabilities, news, jobs, contact, London office, and Chicago office
+- capture desktop, tablet, and mobile evidence with Playwright
+- document color, type, spacing, grid, section scale, media use, scroll behavior, hover behavior, navigation, and responsive behavior
+- add token-guide translation notes and open-source photo guidance
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- use `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` before restyling the token guide
+- verify image licenses before adding any open-source photography to the token guide
+
+## 2026-06-18
+### Task
+- apply Critical Mass web direction to the AHA token system guide
+- keep token guidance and section anchors stable
+
+### Change
+- replace the fixed docs sidebar with an oversized masthead and four-square guide menu
+- add full-screen menu search and section navigation
+- add a large hard-edged media band after the intro
+- use warm eggshell, AHA red, system blue, pale blue, strict grid bands, and row-based documentation styling
+- add Wikimedia Commons image attribution and license note
+- update menu JavaScript for open, close, Escape, focus loop, search, and active section state
+- update README asset names and media source metadata
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/styles.css`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/script.js`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/assets/design-thinking-workshop-wmde-2.jpg`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- verify rendered desktop and mobile layouts
+- verify menu, search, anchor navigation, and accessibility focus behavior
+
+## 2026-06-18
+### Task
+- implement responsive spacing token plan for the AHA Design System variable library
+- remember the live WIP Figma file location for future token work
+
+### Change
+- verified the live Figma URL resolves by metadata read
+- recorded the design-system file in `WHERE-THINGS-LIVE.md` and `artifact-index.yaml`
+- documented the responsive spacing target matrix for `spacing/gap/*` and `spacing/inset/*`
+- documented the required missing primitive steps: `space/175`, `space/350`, `space/450`, `space/550`, `space/700`, and `space/900`
+- attempted the live Plugin API remap, but Figma rejected it because edit access is unavailable
+- ran `npm run figma:check -- --url "https://www.figma.com/design/DYhenSpnamlWoqLmszNKE3/AHA---Design-System--WIP-?node-id=1-1183&t=xIdbppZWlLAihoHF-1&view=variables" --json`
+- confirmed the native remote Figma connector is configured but not logged in
+- opened the Figma OAuth URL for native connector login, but the browser callback did not complete before the login process was stopped
+
+### Files
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- log into the native Figma connector as `alexander.beck@mrm.com`
+- confirm the account has editor access to `DYhenSpnamlWoqLmszNKE3`
+- rerun the responsive spacing remap and variable export validation
+
+## 2026-06-18
+### Task
+- rewrite the AHA token guide for design-team reading
+- strengthen the active guide-menu state
+
+### Change
+- remove account-specific source language from the guide
+- remove the top status line above the masthead
+- rewrite the guide around a clearer editorial path: overview, structure, layers, usage, export, and cleanup
+- add rationale for the collection model, mode behavior, semantic layers, component APIs, and export naming
+- keep practical token rules in tables so readers get detail as they move through the story
+- make the active menu item a hard-edged blue block with a red marker and white text
+- make Escape clear menu search and close the guide menu
+- make README publish notes account-neutral
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/styles.css`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/script.js`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- verify rendered desktop and mobile guide copy
+- verify active menu state, search, section navigation, and focus behavior
+
+## 2026-06-18
+### Task
+- remove the top-right guide menu from the token guide
+- move search below the sidebar section links
+
+### Change
+- replace the full-screen guide menu and four-square trigger with a persistent sidebar
+- keep the same section anchors and active-section styling
+- move guide search below the sidebar navigation links
+- simplify menu JavaScript by removing overlay, close, Escape-close, and focus-trap behavior
+- keep search indexing, result links, section scrolling, and active-state updates
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/styles.css`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/script.js`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- verify desktop and mobile rendered layout
+- verify sidebar search, section navigation, active state, skip link, and console health
+
+## 2026-06-18
+### Task
+- improve token-guide section spacing with persistent sidebar orientation
+- apply Critical Mass typography from the live website
+
+### Change
+- download the Critical Mass webfont files declared by `criticalmass.com/fonts.css`
+- add `Compacta Std` and `PP Object Sans` font-face rules to the guide
+- apply `Compacta Std` to display headings and `PP Object Sans` to body and UI text
+- reduce chapter heading scale by roughly 70 percent
+- move chapter headings farther from the right-side documentation content
+- keep colored chapter bands and the persistent left sidebar
+- document the new font assets in the README
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/styles.css`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/assets/fonts/CompactaStd.woff2`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/assets/fonts/PPObjectSans-Regular.woff2`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/assets/fonts/PPObjectSans-Bold.woff2`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/assets/fonts/PPObjectSans-Slanted.woff2`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/assets/fonts/PPObjectSans-BoldSlanted.woff2`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- review the rendered guide with the design team at `http://127.0.0.1:4173/`
+
+## 2026-06-19
+### Task
+- run AHA Brain Daily Librarian baseline pass
+- verify lookup and cleanup state after the 2026-06-18 design-system and token-guide work
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- refresh current-state memory for this pass
+- log `output/playwright/criticalmass/` as a cleanup defer because `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` cites scratch capture artifacts
+- add one stable owner decision for durable evidence placement of the Critical Mass captures
+- keep lookup files unchanged because no new accepted or promoted artifact crossed the bar under the current router authority
+
+### Files
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/automation-inbox.md`
+- `projects/aha-website-refresh/cleanup-candidates.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- run any board-header sync only in an explicit Figma-enabled pass
+
+## 2026-06-23
+### Task
+- create a flat, line-based icon style as a bitmap reference sheet
+
+### Change
+- generated a 12-icon `Flat Clinical Line` bitmap candidate
+- copied the selected PNG from `.codex/generated_images` into durable generated review assets
+- added the prompt source and manifest for reuse
+- updated generated-asset lookup surfaces
+- kept `Medical Soft Spatial - Colour Block` as the accepted icon direction
+
+### Files
+- `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v1.png`
+- `design/generated/review/2026-06-23-flat-clinical-line/manifest.md`
+- `prompts/image-generation/flat-clinical-line-icon-sheet.md`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed generated bitmap sheet
+- confirmed copied asset is a `1254 x 1254` PNG
+
+### Next
+- decide whether the flat line candidate should stay a utility-only companion style or become the main icon direction
+
+## 2026-06-20
+### Task
+- run AHA Brain Daily Librarian pass
+- index the current token-guide site in lookup files
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- add `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/` to machine and human lookup files
+- refresh current-state memory for the 2026-06-20 pass
+- keep the Critical Mass capture placement question stable in cleanup and inbox
+
+### Files
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- run any board-header sync only in an explicit Figma-enabled pass
+
+## 2026-06-21
+### Task
+- run AHA Brain Daily Librarian pass
+- verify whether any new scratch or lookup state crossed the maintenance bar
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- confirm lookup, cleanup, and inbox files already cover the durable June 17-20 icon and token-guide work
+- keep uncited `output/playwright/token-guide-component-policy-*.png` in scratch because no durable note cites them
+- add a compact maintenance rule so future runs do not reopen uncited Playwright QA captures as cleanup or lookup work
+- refresh current-state memory for the 2026-06-21 pass
+
+### Files
+- `brain/hourly-maintenance-loop.md`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- run any board-header sync only in an explicit Figma-enabled pass
+
+## 2026-06-22
+### Task
+- run AHA Brain Daily Librarian pass
+- verify whether any new repo-backed maintenance action crossed the bar
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- confirm the token-guide site, generated review manifests, and known scratch captures still resolve from current lookup files
+- keep `output/playwright/token-guide-component-policy-*.png` in scratch because no durable note cites them
+- keep lookup, cleanup, and inbox files unchanged because no new durable artifact or resolved owner decision appeared
+- refresh current-state memory for the 2026-06-22 pass
+
+### Files
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- run any board-header sync only in an explicit Figma-enabled pass
+
+## 2026-06-22
+### Task
+- apply the responsive spacing token plan in the live AHA Design System WIP Figma file
+- keep typography audit-only for this pass
+- sync repo lookup docs and token guides to the live change
+
+### Change
+- verified native Figma identity as `alexander.beck@mrm.com`
+- confirmed live structure is `Primitives`, `Layout`, and `Typography`
+- created missing hidden primitives `space/175`, `space/450`, `space/550`, `space/700`, and `space/900`
+- verified existing `space/350` and normalized its hidden/code-syntax state
+- remapped `Layout / spacing/gap/*` aliases across `S / M / L / XL`
+- remapped `Layout / spacing/inset/*` aliases across `S / M / L / XL`
+- audited `Typography / font/size/*` and `Typography / font/line-height/*` without changing typography tokens
+- final live validation passed with 858 local variables, no duplicate variable names, no unresolved aliases, six responsive spacing primitives present once, and all 100 planned spacing mode cells resolving correctly
+
+### Files
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- spot-check bound components/pages in Figma by switching `S / M / L / XL` modes
+- prepare a separate typography proposal only if the audited static type tokens need further responsive tuning
+
+## 2026-06-22
+### Task
+- apply the approved follow-up cleanup from the full Figma variables library review
+- keep primitive publishing included
+- remove deprecated static-font shims after preflight
+
+### Change
+- verified native Figma identity as `alexander.beck@mrm.com`
+- attempted a named Figma version checkpoint, but the MCP connector reported `figma.saveVersionHistoryAsync is not yet supported`
+- captured a pre-change target snapshot through the Figma connector before mutation
+- exposed `space/175`, `space/350`, `space/450`, `space/550`, `space/700`, and `space/900` for publishing while keeping their existing spacing-primitive scopes
+- added WEB code syntax to all `Layout / spacing/inset/*` tokens
+- added descriptions to all `Components / icons/size/*` tokens
+- added published exact-value primitives for the app store badge border and avatar neutral background
+- re-aliased the app store badge border and avatar neutral component color tokens so they no longer hold raw color mode values
+- removed eight `Typography / _deprecated/static-font/*` shims
+- left paragraph-width and toggle-border scope cleanup untouched until the authoring policy is clearer
+
+### Validation
+- final live validation reported 852 local variables
+- collection counts: Primitives 449, Color 276, Layout 40, Effects 31, Typography 22, Components 34
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+- no deprecated static-font variables remaining
+- no missing inset code syntax
+- no missing icon-size descriptions
+- no raw mode values remaining on the two target component color tokens
+
+### Files
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- spot-check components that may have direct node bindings to the removed static-font variables
+- decide picker-scope policy separately for paragraph width and toggle border tokens
+
+## 2026-06-22
+### Task
+- apply responsive typography and scope cleanup improvements in the live AHA Design System WIP Figma file
+- keep body typography stable
+- sync repo docs and logs to the live change
+
+### Change
+- verified native Figma identity as `alexander.beck@mrm.com`
+- inspected live typography aliases, primitive coverage, and scope candidates
+- added published primitives `typography/size/56`, `typography/size/64`, and `typography/size/80`
+- added published primitives `typography/line-height/48`, `typography/line-height/64`, `typography/line-height/76`, and `typography/line-height/96`
+- published all numeric typography size and line-height primitives
+- remapped display typography aliases so `XL` grows beyond `L`
+- kept body typography stable at `md = 16 / 24`, `lg = 18 / 28`, and `xl = 20 / 30`
+- scoped `Layout / layout/width/paragraph-max` to `WIDTH_HEIGHT`
+- scoped `Components / toggles/color/toggle-border`, `toggle-slim-border-pressed`, and `toggle-slim-border-pressed-hover` to `STROKE_COLOR`
+- confirmed the MCP connector does not support `saveVersionHistoryAsync` or `commitUndo`
+
+### Validation
+- final live validation reported 859 local variables
+- collection counts: Primitives 456, Color 276, Layout 40, Effects 31, Typography 22, Components 34
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+- no hidden numeric typography size or line-height primitives
+- body scale remains 16/24 or larger across all modes
+- Typography page spot-check found 1,288 Typography/Layout bindings
+- Buttons page spot-check found 1,389 Layout/Typography/Components bindings
+- Toggles page spot-check confirmed the three target border tokens use `STROKE_COLOR`
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- check text style naming and grouping against the display/body token roles
+- decide whether unused toggle border tokens should stay or move to cleanup review
+
+## 2026-06-22
+### Task
+- add intermediate typography primitives for granular responsive display scaling
+- keep semantic typography token names stable
+- sync repo docs and logs
+
+### Change
+- verified native Figma identity as `alexander.beck@mrm.com`
+- inspected live display aliases and primitive gaps
+- added published primitives `typography/size/26`, `typography/size/34`, `typography/size/44`, `typography/size/52`, and `typography/size/68`
+- added published primitives `typography/line-height/34`, `typography/line-height/42`, `typography/line-height/68`, and `typography/line-height/80`
+- remapped display typography aliases to the granular `S / M / L / XL` matrix
+- kept body typography stable at `md = 16 / 24`, `lg = 18 / 28`, and `xl = 20 / 30`
+- final live validation reported 868 variables
+- collection counts: Primitives 465, Color 276, Layout 40, Effects 31, Typography 22, Components 34
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+- Typography page spot-check found 1,288 Typography/Layout bindings
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- check text-style naming and grouping against the granular display ramp
+- check real page compositions for any display token that still jumps too much between `M` and `L`
+
+## 2026-06-22
+### Task
+- apply the final token-system cleanup in the live AHA Design System WIP Figma file
+- keep semantic token names and responsive spacing/type behavior stable
+- sync repo docs and logs to the live change
+
+### Change
+- verified native Figma identity as `alexander.beck@mrm.com`
+- published the approved `space/*` scale through `space/1600`
+- added `Primitives / size/layout/320 = 320`
+- re-aliased `Layout / layout/width/xxs` to `Primitives / size/layout/320`
+- kept `space/2000` hidden as legacy spacing overflow
+- added exact alpha, border, and shadow color primitives
+- removed raw values from `Color`, `Layout`, `Typography`, and `Components`
+- added descriptions to utility palettes, text styles, unbound-but-used paint styles, effect presets, and grid presets
+- fixed `Text md/Semibold` so `fontStyle` binds to `Primitives / typography/weight/600`
+- moved duplicate `*/Regular` text styles under `_compat/text/*` because live consumers still exist and the MCP runtime cannot load Lub Dub for safe rebinding
+- removed paragraph-spacing variable bindings from all 44 text styles
+- removed 81 zero-consumer legacy paint styles after usage preflight
+- final live validation reported 908 variables
+- collection counts: Primitives 505, Color 276, Layout 40, Effects 31, Typography 22, Components 34
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+- no missing WEB code syntax
+- no raw values in `Color`, `Layout`, `Typography`, or `Components`
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- in Figma desktop with Lub Dub available, set all text-style numeric paragraph spacing values to 0
+- if deletion is still wanted, rebind `_compat/text/*` consumers to matching Medium styles before removing those compatibility styles
+- use retained paint-style descriptions as the cleanup line for future style-library pruning
+
+## 2026-06-22
+### Task
+- fix the live AHA Design System WIP type scale
+- add missing component spacing tokens for buttons
+- keep writing-guide work out of scope
+- sync repo docs and logs to the live change
+
+### Change
+- verified native Figma identity as `alexander.beck@mrm.com`
+- snapshot-audited the live variable collections, text styles, and button component roots before editing
+- recreated affected scale variables in visible largest-to-smallest order while keeping canonical public names and WEB syntax unchanged
+- applied the approved responsive typography matrix for display and text size/line-height aliases
+- added `Primitives / typography/size/22`
+- added `Primitives / space/component/button/18`, `space/component/button/14`, and `space/component/button/10`
+- removed unused intermediate typography primitives after a scoped zero-reference audit
+- added public `Components / buttons/*` spacing aliases for vertical padding, horizontal padding, icon-only padding, button gaps, and social button spacing
+- rebound Buttons page component root padding and gap fields from deprecated layout spacing or raw non-zero values to `Components / buttons/*`
+- updated local effect and grid style bindings created by the variable replacement so hidden backup variables could be removed cleanly
+
+### Validation
+- final live validation reported 916 variables
+- collection counts: Primitives 495, Color 276, Layout 40, Effects 31, Typography 22, Components 52
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+- no temporary replacement variables
+- all checked alias layers use aliases rather than raw values
+- typography matrix resolves to the approved `XL / L / M / S` values
+- scale groups validate largest-to-smallest: primitive spacing, primitive typography size, primitive typography line-height, layout widths, radii, shadow levels, component icon sizes, button spacing tokens, and `Typography`
+- Buttons page component roots have 0 raw non-zero padding/gap values and 0 deprecated spacing bindings
+- Typography and Buttons page screenshots rendered after the change for visual spot-check
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- keep future button padding and gap changes inside `Components / buttons/*`
+- avoid reintroducing display-only type scale edits without checking the text scale matrix too
+
+## 2026-06-22
+### Task
+- inspect reported Components button spacing variable mix in AHA Design System WIP
+- scan for similar component-spacing alias drift
+- repair live Figma variables if editor access is available
+
+### Change
+- confirmed native Figma account as `alexander.beck@mrm.com`
+- confirmed Figma MCP is configured and logged in for file `DYhenSpnamlWoqLmszNKE3`
+- identified the visible issue: `Components / buttons / padding-y` mixes `Primitives / space/component/button/*` aliases with generic `Primitives / space/*` aliases
+- confirmed the intended structure from repo docs: public button spacing API stays in `Components / buttons/*`; exact component button values stay in `Primitives / space/component/button/*`
+- read representative Buttons page nodes and confirmed public aliases resolve for main button padding, icon-only padding, social padding, and social gap
+- found related node-level evidence that button instances still expose deprecated spacing tokens such as `_deprecated/spacing/xxs`
+- attempted full local variable graph scan through Figma Plugin API
+- deferred live scan and repair because Figma returned: `Looks like you don't have edit access to this file. The file owner can share it with you and make you an editor.`
+- attempted REST variable fallback and deferred because Figma REST returned `403 Invalid token`
+
+### Files
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- restore editor access for `alexander.beck@mrm.com` on AHA Design System WIP
+- run local variable graph audit with Figma Plugin API
+- add missing exact button primitives for all button API values that currently fall through to generic spacing, likely `space/component/button/8`, `space/component/button/12`, `space/component/button/16`, and `space/component/button/24`
+- rebind `Components / buttons/*` spacing aliases to `Primitives / space/component/button/*`
+- verify no `Components / buttons/*` spacing alias points directly to generic `Primitives / space/*`
+- verify button component roots have no raw non-zero padding or gap values and no deprecated spacing bindings
+
+## 2026-06-22
+### Task
+- expand the button-spacing alias-boundary review beyond the screenshot
+- use repo exports and live node reads while full live variable API access is blocked
+
+### Change
+- scanned current token docs for button API values against documented `space/component/button/*` primitives
+- found documented button-specific primitives only for `10`, `14`, and `18`
+- found button padding API values also require `8`, `12`, and `16`
+- found definite affected padding aliases:
+  - `buttons/padding-y/lg = 12`
+  - `buttons/padding-y/sm = 8`
+  - `buttons/padding-x/lg = 16`
+  - `buttons/padding-x/sm = 12`
+  - `buttons/icon-only/padding/lg = 12`
+  - `buttons/icon-only/padding/sm = 8`
+  - `buttons/social/padding-x/with-text = 16`
+- flagged conditional gap aliases for design-system decision:
+  - `buttons/gap/md = 8`
+  - `buttons/gap/sm = 4`
+  - `buttons/social/gap = 24`
+- scanned latest full raw export available in repo, `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-4-final.raw.json`
+- found the export predates the final `Components / buttons/*` pass, so it cannot fully prove current live state
+- found `Layout / _deprecated/spacing/sm` in the old raw export, but it is marked `deletedButReferenced`, so it should not be treated as a current local variable issue
+- checked representative live button nodes through read-only `get_variable_defs`
+- confirmed affected public aliases are actively used on live button nodes, including `var(--aha-buttons-padding-y-lg) = 12`, `var(--aha-buttons-padding-y-sm) = 8`, `var(--aha-buttons-padding-x-lg) = 16`, `var(--aha-buttons-icon-only-padding-lg) = 12`, and social spacing aliases
+- did not find enough live API access to complete an exhaustive current variable-table scan
+
+### Files
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- restore editor access for the Figma Plugin API
+- run a full current live variable-table audit, not just node-level variable reads
+- create or confirm `Primitives / space/component/button/8`, `12`, and `16`
+- rebind all definite affected button padding aliases to those component-specific primitives
+- decide whether button gap aliases should use generic spacing or a separate exact button-gap primitive layer
+- keep deleted-but-referenced variables out of current repair plans unless a live binding audit shows they still affect active components
+
+## 2026-06-22
+### Task
+- create a repeatable full Figma variable read and repair workflow
+- stop relying on selection-bound or node-level variable reads for token cleanup
+
+### Change
+- added `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- added `npm run figma:variables`
+- added `fetch` command for full Figma REST `variables/local` export
+- added `audit` command for full local variable graph checks
+- added `plan-button-spacing` command to build a reviewable button spacing repair payload
+- added `apply-button-spacing` command that writes only with `--yes`, a token, and Figma edit access
+- documented the workflow in `scripts/README.md`
+- confirmed local audit works against `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-full-variable-export-step-4-final.raw.json`
+- confirmed live fetch is blocked in this shell because `FIGMA_TOKEN` or `FIGMA_ACCESS_TOKEN` is not set
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- `package.json`
+- `scripts/README.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- set `FIGMA_TOKEN` or `FIGMA_ACCESS_TOKEN` with `file_variables:read`
+- run `npm run figma:variables -- fetch --out /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/figma-variable-audits/latest.raw.json`
+- run `npm run figma:variables -- audit --input /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/figma-variable-audits/latest.raw.json`
+- run `npm run figma:variables -- plan-button-spacing --input /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/figma-variable-audits/latest.raw.json`
+- review the plan before running `apply-button-spacing --yes`
+- use a token with `file_variables:write` and edit access for live mutation
+
+## 2026-06-22
+### Task
+- retry live access to AHA Design System WIP after user confirmed the work Figma account
+- complete the full live variable audit and repair the button spacing alias boundary
+
+### Change
+- confirmed Figma MCP `whoami` is `alexander.beck@mrm.com`
+- confirmed the account has a full/expert seat on `Figma - Agency Design Platform`
+- confirmed the Figma Plugin API can read the live file directly through `use_figma`
+- audited all 916 local variables across six collections before mutation
+- verified pre-repair integrity: no duplicate variable names, no unresolved aliases, and no missing mode values
+- found 14 bad button padding mode cells where `Components / buttons/*` aliases pointed to generic `Primitives / space/*`
+- created the missing exact button primitives:
+  - `Primitives / space/component/button/8`
+  - `Primitives / space/component/button/12`
+  - `Primitives / space/component/button/16`
+- gave the new primitives matching descriptions, publish state, and WEB code syntax
+- rebound both Light mode and Dark mode values for:
+  - `Components / buttons/padding-y/lg`
+  - `Components / buttons/padding-y/sm`
+  - `Components / buttons/padding-x/lg`
+  - `Components / buttons/padding-x/sm`
+  - `Components / buttons/icon-only/padding/lg`
+  - `Components / buttons/icon-only/padding/sm`
+  - `Components / buttons/social/padding-x/with-text`
+
+### Validation
+- post-repair live audit reports 919 local variables
+- collection counts: Primitives 498, Color 276, Layout 40, Effects 31, Typography 22, Components 52
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+- `Primitives / space/component/button/*` now includes `8`, `10`, `12`, `14`, `16`, and `18`
+- button spacing audit checked 36 mode cells and found 0 padding alias-boundary problems
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- leave button gap aliases unchanged unless we decide gaps should also use exact component-specific primitives
+- keep REST-token setup separate from MCP access; MCP can read/write the file, but shell REST commands still need `FIGMA_TOKEN` or `FIGMA_ACCESS_TOKEN`
+
+## 2026-06-22
+### Task
+- check the remaining button spacing findings against the written token guide
+- align local guide and lookup docs to the live Figma repair
+
+### Change
+- confirmed the guide treats `spacing/gap/*` and core `space/*` values as valid for auto-layout gaps
+- confirmed the guide did not require button gap aliases to use exact `space/component/button/*` primitives
+- left `buttons/gap/md`, `buttons/gap/sm`, and `buttons/social/gap` unchanged in Figma
+- made the guide explicit that every public button padding alias should resolve through `Primitives / space/component/button/*`
+- updated the documented button padding primitive set to include `8`, `10`, `12`, `14`, `16`, and `18`
+- updated current validation counts from 916 / 495 primitives to 919 / 498 primitives
+- recorded DEC-023 for the button padding alias-boundary rule
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- revisit button gaps only if a separate component-gap primitive rule is approved
+- use the guide rule before treating generic gap aliases as defects
+
+## 2026-06-22
+### Task
+- move AHA design-system reference work into one dedicated folder
+- keep token guide, variable docs, exports, and export scripts discoverable together
+
+### Change
+- created `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/` as the durable design-system reference home
+- moved AHA design-system docs, reports, CSV/JSON exports, and variable export chunks into `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/`
+- moved the variable export normalizer into `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/`
+- moved the token guide site into `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/`
+- added `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/README.md` as the folder entrypoint
+- updated `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs` so new variable audit artifacts default to `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/figma-variable-audits/`
+- updated lookup files and path references from the old `reference/docs/` and `reference/site/` locations
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/cleanup-candidates.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `npm run verify:brain` passed
+- no stale design-system doc, normalizer, token guide site, or figma-variable-audit path references remain in text files
+
+### Next
+- use `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/README.md` as the entrypoint for design-system reference work
+- keep future Figma variable exports under `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/figma-variable-audits/`
+
+## 2026-06-22
+### Task
+- correct the button spacing primitive rule after user review
+- update live Figma variables and written design-system docs
+- save the rule for future token work
+
+### Change
+- confirmed native Figma account as `alexander.beck@mrm.com`
+- audited the live AHA Design System WIP variable library before mutation
+- found redundant `space/component/button/8`, `space/component/button/12`, and `space/component/button/16` primitives
+- confirmed normal spacing primitives already cover those values:
+  - `space/50` = 8
+  - `space/75` = 12
+  - `space/100` = 16
+- rebound both Light mode and Dark mode values for:
+  - `Components / buttons/padding-y/lg` to `space/75`
+  - `Components / buttons/padding-y/sm` to `space/50`
+  - `Components / buttons/padding-x/lg` to `space/100`
+  - `Components / buttons/padding-x/sm` to `space/75`
+  - `Components / buttons/icon-only/padding/lg` to `space/75`
+  - `Components / buttons/icon-only/padding/sm` to `space/50`
+  - `Components / buttons/social/padding-x/with-text` to `space/100`
+- removed redundant `Primitives / space/component/button/8`, `12`, and `16`
+- kept `Primitives / space/component/button/10`, `14`, and `18` as off-scale button anatomy exceptions
+- marked `DEC-023` superseded and added `DEC-024`
+- updated the token guide, handoff docs, lookup files, and variable audit script to prefer normal `space/*` primitives before component-specific button primitives
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Use normal `Primitives / space/*` values first for future button spacing.
+- Create `Primitives / space/component/button/*` only for approved off-scale button anatomy values.
+- Keep public component-facing aliases in `Components / buttons/*`.
+
+## 2026-06-22
+### Task
+- move design-system work completely out of the AHA brain repository
+- create a standalone Projects-code folder for all AHA design-system material
+
+### Change
+- created `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/` as the external design-system workspace
+- moved the design-system docs, JSON/CSV exports, variable export chunks, token-guide site, normalizer, and Figma variable audit script into that external folder
+- removed the internal `reference/design-system/` folder from the AHA brain
+- removed the internal `scripts/dev/figma-variables.mjs` script from the AHA brain
+- added `npm run figma:variables` to `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/package.json`
+- updated AHA brain lookup files to point at the external folder instead of owning the design-system material
+- removed the stale `figma:variables` package script from the AHA brain
+
+### Files
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/package.json`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/`
+- `package.json`
+- `scripts/README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/automation-inbox.md`
+- `projects/aha-website-refresh/cleanup-candidates.md`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- run token export and variable audit commands from `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens`
+- use the AHA brain only as a pointer to this external design-system workspace
+
+## 2026-06-22
+### Task
+- fix mixed button padding primitive mappings in the live Figma design system
+- explain why the mixed mapping is wrong
+- update written rules so the fix is not reversed
+
+### Change
+- confirmed native Figma account as `alexander.beck@mrm.com`
+- audited the live AHA Design System WIP variable library before mutation
+- found public button padding aliases mixing generic `Primitives / space/*` targets with exact `Primitives / space/component/button/*` targets
+- created:
+  - `Primitives / space/component/button/8`
+  - `Primitives / space/component/button/12`
+  - `Primitives / space/component/button/16`
+- rebound both Light mode and Dark mode values for:
+  - `Components / buttons/padding-y/lg` to `space/component/button/12`
+  - `Components / buttons/padding-y/sm` to `space/component/button/8`
+  - `Components / buttons/padding-x/lg` to `space/component/button/16`
+  - `Components / buttons/padding-x/sm` to `space/component/button/12`
+  - `Components / buttons/icon-only/padding/lg` to `space/component/button/12`
+  - `Components / buttons/icon-only/padding/sm` to `space/component/button/8`
+  - `Components / buttons/social/padding-x/with-text` to `space/component/button/16`
+- left button gap aliases on generic `space/*` until a separate gap-specific decision is made
+- marked `DEC-024` superseded and added `DEC-025`
+- updated lookup files, token guide docs, and the variable audit script to use the button-specific primitive layer for button padding
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- live Figma validation reported 919 variables
+- all six `space/component/button/{8,10,12,14,16,18}` primitives exist exactly once
+- all public button padding aliases resolve through `Primitives / space/component/button/*`
+- no duplicate variable names
+- no unresolved aliases
+
+### Next
+- keep future button padding aliases on `Primitives / space/component/button/*`
+- decide separately whether button gaps need a component-specific primitive layer
+
+## 2026-06-22
+### Task
+- correct button spacing mappings to use standard primitive spacers
+- remove the duplicate button-specific primitives created for on-scale values
+- update docs and helper script to prevent the duplicate-primitive rule from returning
+
+### Change
+- confirmed native Figma account as `alexander.beck@mrm.com`
+- audited the live AHA Design System WIP variable library before mutation
+- confirmed `space/component/button/8`, `space/component/button/12`, and `space/component/button/16` were only referenced by the seven public component aliases from the previous pass
+- rebound both Light mode and Dark mode values for:
+  - `Components / buttons/padding-y/lg` to `space/75`
+  - `Components / buttons/padding-y/sm` to `space/50`
+  - `Components / buttons/padding-x/lg` to `space/100`
+  - `Components / buttons/padding-x/sm` to `space/75`
+  - `Components / buttons/icon-only/padding/lg` to `space/75`
+  - `Components / buttons/icon-only/padding/sm` to `space/50`
+  - `Components / buttons/social/padding-x/with-text` to `space/100`
+- removed:
+  - `Primitives / space/component/button/8`
+  - `Primitives / space/component/button/12`
+  - `Primitives / space/component/button/16`
+- kept `Primitives / space/component/button/10`, `14`, and `18` because those values are not standard spacers
+- marked `DEC-025` superseded and added `DEC-026`
+- updated lookup files, token guide docs, and the variable audit script to prefer standard `space/*` primitives before component-specific button primitives
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- live Figma validation reported 916 variables
+- `Primitives` returned to 495 variables
+- `space/component/button/8`, `space/component/button/12`, and `space/component/button/16` no longer exist
+- affected button padding aliases resolve through `Primitives / space/50`, `space/75`, and `space/100`
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+
+### Next
+- keep on-scale button spacing aliases on standard `Primitives / space/*`
+- create a component button primitive only when the value is not present in the standard spacing scale
+
+## 2026-06-22
+### Task
+- remove the remaining component button spacing primitives
+- use standard primitive spacers for all button spacing aliases
+
+### Change
+- confirmed native Figma account as `alexander.beck@mrm.com`
+- remapped all remaining component button primitive references:
+  - `space/component/button/10` to `space/75`
+  - `space/component/button/14` to `space/100`
+  - `space/component/button/18` to `space/125`
+- removed:
+  - `Primitives / space/component/button/10`
+  - `Primitives / space/component/button/14`
+  - `Primitives / space/component/button/18`
+- confirmed no `Primitives / space/component/button/*` variables remain
+- confirmed no variable aliases point to `Primitives / space/component/button/*`
+- updated `DEC-026`, lookup files, token guide docs, and the variable audit script so component button spacing primitives are not recreated
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md`
+- `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/scripts/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- live Figma validation reported 913 variables
+- `Primitives` now has 492 variables
+- no `space/component/button/*` variables remain
+- no aliases point to `space/component/button/*`
+- no duplicate variable names
+- no unresolved aliases
+- no missing mode values
+
+### Next
+- keep button spacing aliases on standard `Primitives / space/*`
+- do not create `Primitives / space/component/button/*`
+
+## 2026-06-23
+### Task
+- run AHA Brain Daily Librarian pass
+- verify whether any current-state reference drift crossed the maintenance bar
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- confirm the token-guide site, generated review manifests, and `output/playwright/criticalmass/` still resolve from current lookup files
+- remove stale current-state references to absent `output/playwright/token-guide-component-policy-*.png`
+- keep lookup, cleanup, inbox, and learning-rule files unchanged because no new durable artifact or resolved owner decision appeared
+- refresh current-state memory for the `2026-06-23` pass
+
+### Files
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- run any board-header sync only in an explicit Figma-enabled pass
+
+## 2026-06-24
+### Task
+- run AHA Brain Daily Librarian pass
+- verify whether any current-state or scratch-evidence drift crossed the maintenance bar
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- confirm `npm run verify:brain` passes
+- confirm no Finder metadata files are present
+- confirm the token-guide site, generated review manifests, the flat line icon review folder, `output/playwright/criticalmass/`, and `output/playwright/aha-token-system-guide-audit/` still resolve
+- keep uncited `output/playwright/aha-token-system-guide-audit/` captures in scratch because no durable note cites them
+- keep lookup, cleanup, inbox, and learning-rule files unchanged because no new durable artifact, broken reference, or resolved owner decision appeared
+- refresh current-state memory for the `2026-06-24` pass
+
+### Files
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+- keep `output/playwright/aha-token-system-guide-audit/` in scratch unless a durable note starts citing it or the captures move to `reference/evidence/`
+
+## 2026-06-24
+### Task
+- make the flat line icon bitmap candidate chunkier, closer to the supplied AHA example
+
+### Change
+- generated `aha-flat-clinical-line-12-sheet-v2.png`
+- shifted the candidate toward dominant AHA-red strokes, heavier rounded outlines, simpler icon geometry, and pale blush circular fields
+- kept the sheet as a bitmap review candidate, not a vector source or accepted replacement direction
+- updated the candidate prompt, manifest, and lookup entries
+
+### Files
+- `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v2.png`
+- `design/generated/review/2026-06-23-flat-clinical-line/manifest.md`
+- `prompts/image-generation/flat-clinical-line-icon-sheet.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed generated bitmap sheet
+- confirmed copied asset is a `1254 x 1254` PNG
+
+### Next
+- decide whether v2 should become the preferred flat-line review candidate or whether another pass should pull back the blush circles
+
+## 2026-06-24
+### Task
+- remove the circular backgrounds from the chunky flat-line icon bitmap
+
+### Change
+- created `aha-flat-clinical-line-12-sheet-v3-no-backgrounds.png` from v2
+- removed the pale blush circular fields by replacing background-tint pixels with white
+- kept the chunky red icon linework and original sheet layout
+- updated the candidate manifest and lookup entries
+
+### Files
+- `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v3-no-backgrounds.png`
+- `design/generated/review/2026-06-23-flat-clinical-line/manifest.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed the no-background bitmap sheet
+- confirmed the copied asset is a `1254 x 1254` PNG
+
+### Next
+- use `v3-no-backgrounds` as the current flat-line review pick unless the circular fields are needed again
+
+## 2026-06-24
+### Task
+- combine the chunky no-background icon candidate with a second colour
+
+### Change
+- generated `aha-flat-clinical-line-12-sheet-v4-duo-colour.png`
+- kept the chunky rounded bitmap line style and white sheet background
+- added a controlled red-plus-purple stroke hierarchy so red carries AHA/action signals and purple carries secondary structure
+- updated the candidate prompt, manifest, and lookup entries
+
+### Files
+- `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v4-duo-colour.png`
+- `design/generated/review/2026-06-23-flat-clinical-line/manifest.md`
+- `prompts/image-generation/flat-clinical-line-icon-sheet.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed generated bitmap sheet
+- confirmed the copied asset is a `1254 x 1254` PNG
+
+### Next
+- review whether purple should be this dark or whether the second colour should shift closer to the existing AHA infographic purple
+
+## 2026-06-24
+### Task
+- replace the purple second colour with warm grey in the chunky duo-line bitmap
+
+### Change
+- created `aha-flat-clinical-line-12-sheet-v5-warm-grey.png`
+- recoloured purple support strokes from v4 to warm grey
+- kept the chunky red signal strokes, white background, and 12-icon sheet layout
+- updated the candidate prompt notes, manifest, and lookup entries
+
+### Files
+- `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v5-warm-grey.png`
+- `design/generated/review/2026-06-23-flat-clinical-line/manifest.md`
+- `prompts/image-generation/flat-clinical-line-icon-sheet.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed the warm-grey bitmap sheet
+- confirmed the copied asset is a `1254 x 1254` PNG
+
+### Next
+- use `v5-warm-grey` as the current chunky two-colour review pick
+
+## 2026-06-24
+### Task
+- create a large transparent one-colour topic icon sheet from the attached reference board
+
+### Change
+- generated a 54-topic chunky red line icon sheet using the attached board as topic and arrangement reference
+- removed the chroma-key background and created true alpha
+- sanitized all visible pixels to AHA red `#c8102e`
+- created a large cutout-ready PNG at `8064 x 5376`
+- recorded the cutout grid as `8` columns, `7` rows, `1008 x 768` cells
+- added the reusable prompt, manifest, lookup entries, and session note
+
+### Files
+- `design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-alpha-cutout-grid.png`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/manifest.md`
+- `prompts/image-generation/one-colour-topic-icon-sheet.md`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed the final transparent bitmap sheet
+- confirmed final file is `8064 x 5376` `RGBA`
+- confirmed transparent corner alpha values are all `0`
+- confirmed visible pixels are all AHA red and no green fringe remains
+- confirmed exact cutout cells are `1008 x 768`
+
+### Next
+- use `aha-one-colour-topic-icons-v1-alpha-cutout-grid.png` for same-size cutout review
+
+## 2026-06-24
+### Task
+- recreate the one-colour topic icon sheet with cleaner chunky line spacing, no white fills, and separate transparent cutouts
+
+### Change
+- generated `aha-one-colour-topic-icons-v2-chromakey.png` from the cleaner chunky line prompt
+- removed the green key and all generated white/off-white fills
+- sanitized every visible pixel to AHA red `#c8102e`
+- created the final transparent review sheet `aha-one-colour-topic-icons-v2-alpha-cutout-grid.png`
+- created `cutouts-v2/` with 54 same-size transparent PNGs at `1008 x 768`
+- used component-aware cutout extraction so adjacent row fragments do not appear in individual icon files
+- updated the reusable prompt, manifest, artifact index, and lookup file
+
+### Files
+- `design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v2-alpha-cutout-grid.png`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/cutouts-v2/`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v2-chromakey.png`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/manifest.md`
+- `prompts/image-generation/one-colour-topic-icon-sheet.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- visually reviewed the full `v2` transparent bitmap sheet
+- visually checked the emergency siren and pills/capsules cutouts against the reported collision issues
+- confirmed final sheet is `8064 x 5376` `RGBA`
+- confirmed sheet corner alpha values are all `0`
+- confirmed the sheet has `0` non-red visible pixels, `0` visible white pixels, and `0` visible green pixels
+- confirmed fully transparent pixels use white RGB with alpha `0`
+- confirmed `cutouts-v2/` contains `54` PNGs, each `1008 x 768`, with transparent corners and no non-red, white, or green visible pixels
+
+### Next
+- use `aha-one-colour-topic-icons-v2-alpha-cutout-grid.png` and `cutouts-v2/` as the current one-colour topic icon review outputs
+
+## 2026-06-25
+### Task
+- run AHA Brain Daily Librarian pass
+- verify whether any verifier-safe maintenance drift crossed the bar
+- keep this pass no-Figma and non-destructive
+
+### Change
+- verify `brain-maintenance` router and retrieval paths
+- remove `design/generated/review/.DS_Store` so `npm run verify:brain` returns green again
+- confirm follow-up `npm run verify:brain` passes
+- confirm no Finder metadata files remain
+- confirm the token-guide site, generated review manifests, the flat line icon review folder, the one-colour topic icon review folder, `output/playwright/criticalmass/`, and `output/playwright/aha-token-system-guide-audit/` still resolve
+- keep uncited `output/playwright/aha-token-system-guide-audit/` captures in scratch because no durable note cites them
+- keep lookup, cleanup, inbox, and learning-rule files unchanged because no new durable artifact, broken reference, or resolved owner decision appeared
+- refresh current-state memory for the `2026-06-25` pass
+
+### Files
+- `design/generated/review/.DS_Store`
+- `projects/aha-website-refresh/now.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- decide whether to promote `output/playwright/criticalmass/` into `reference/evidence/` or rewrite `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` to avoid scratch evidence
+- keep `output/playwright/aha-token-system-guide-audit/` in scratch unless a durable note starts citing it or the captures move to `reference/evidence/`
+- keep proof-icon raster generation outside this no-Figma maintenance loop
+
+## 2026-06-25
+### Task
+- implement conservative AHA Design Brain organization cleanup
+
+### Change
+- rename the daily stewardship contract to `brain/daily-stewardship-loop.md`
+- add `repo-housekeeping` as the rare route for parent-level cleanup across root docs, ignore rules, package scripts, verifier policy, and lookup files
+- align `.gitignore`, `npm run clean`, and `scripts/docs/verify-design-brain.mjs` around the same disposable roots
+- keep `design/generated/` as the curated generated-asset home
+- keep one-colour icon processing files in the manifest, but remove chromakey/raw intermediates from durable artifact-index support lists
+- update lookup, cleanup, inbox, and current-state files for the new policy
+- avoid Figma, commits, and destructive clean commands
+
+### Files
+- `.gitignore`
+- `package.json`
+- `README.md`
+- `brain/daily-stewardship-loop.md`
+- `brain/router.yaml`
+- `scripts/docs/verify-design-brain.mjs`
+- `projects/aha-website-refresh/retrieval-index.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/cleanup-candidates.md`
+- `projects/aha-website-refresh/automation-inbox.md`
+- `projects/aha-website-refresh/now.md`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/manifest.md`
+
+### Validation
+- `npm run verify:brain` passed after the route, rename, and disposable-root policy updates
+- active lookup files no longer point to the old hourly maintenance filename
+- `.playwright-mcp/` is now ignored and covered by `npm run clean`
+
+### Next
+- keep `output/playwright/criticalmass/` open until its external token-guide citation is moved to durable evidence or rewritten
+- run `npm run clean` only after useful generated or captured work has been promoted
+
+## 2026-06-25
+### Task
+- add lightweight accessible Ken Burns slideshow reference component
+
+### Change
+- add a self-contained React and CSS Modules component under `reference/components/`
+- use oversized slide layers, clamped motion, two-layer crossfade, reduced-motion handling, and separate user/system pause state
+- add handover notes for usage, overscan behavior, accessibility defaults, and consumer-app integration
+- keep root package dependencies unchanged because this repo has no React app build target
+
+### Files
+- `reference/components/KenBurnsSlideshow/`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- copy the component into the consuming React app before production use
+- run that app's typecheck, lint, tests, build, and browser QA once the component is wired into a real page

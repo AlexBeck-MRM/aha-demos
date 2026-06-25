@@ -568,3 +568,502 @@
 ### Next
 - Generate the illustration guideline image with the cooler palette.
 - Use the Figma palette frame as the colour reference.
+
+## 2026-06-17
+### ID
+`DEC-015`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Set `Medical Soft Spatial - Colour Block` as the base style for AHA topic, action, education, and support icons.
+- Use the v4 12-icon sheet as the accepted visual reference.
+- Keep the style neutral-first, spatial, matte, and white-surface friendly.
+- Use AHA red only as a separated information signal.
+- Allow extra large structural detail when it makes the subject clearer, especially CPR/AED and mental wellbeing.
+- Keep all generated icon shapes accountable: subject, attached part, information signal, or contact shadow.
+- Leave Figma out of this local style-guide pass.
+
+### Why
+- The accepted sheet gives the icon system a clear base style that is warmer than line glyphs but calmer than realistic 3D illustration.
+- Broad neutral masses and shallow depth keep the icons useful inside dense UI.
+- Purposeful red supports AHA brand recognition without turning the set into a red decorative system.
+- The refinement showed that over-simplifying can hurt meaning. CPR needs the compression action, and mental wellbeing needs an internal emotional cue.
+- The same refinement also showed that arbitrary bases, backplates, blobs, and support shapes quickly weaken the system.
+
+### Files
+- `design/ui-style-inventory/icons.md`
+- `design/generated/icons/medical-soft-spatial-colour-block/manifest.md`
+- `design/generated/icons/medical-soft-spatial-colour-block/aha-medical-soft-spatial-colour-block-12-sheet-v4.png`
+- `prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md`
+- `prompts/image-generation/board-to-prompt-map.yaml`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Use `design/ui-style-inventory/icons.md` and the v4 sheet as the first references for any new AHA icon prompt.
+- Decide later whether the local icon guide should be synced back to the live Icons board.
+
+## 2026-06-18
+### ID
+`DEC-016`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Add live Figma icon-size variables for the design-system library.
+- Put component icon-size tokens inside the existing `Components` collection.
+- Use component-first grouping: `Components / icons/size/*`.
+- Use lowercase size names aligned with existing component variants: `xs`, `sm`, `md`, `lg`, `xl`.
+- Add hidden primitive `Primitives / space/350 = 56` so 56px icon sizes can alias to the primitive scale.
+- Remove the mistaken `Component Sizing` collection from the live Figma library.
+
+### Why
+- Component tokens should stay under the component collection. A top-level `Component Sizing` collection split the component API in a way that was harder to scan and did not match the intended library structure.
+- The existing `Components` collection already uses `Light mode` and `Dark mode`, so icon-size variables currently resolve to the same value in both modes.
+- Responsive icon behavior should be handled through a deliberate component-mode or breakpoint-alias strategy later, not by adding a stray visible collection.
+- Existing button and utility component variants already use lowercase size names.
+- Aliasing icon sizes to `space/*` primitives keeps the component tokens tied to the numeric base scale.
+
+### Files
+- `Figma: AHA - Design System [WIP]`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Bind icon component width and height fields to `Components / icons/size/*` when component cleanup continues.
+- Decide the responsive implementation separately before changing the `Components` collection mode strategy.
+
+## 2026-06-18
+### ID
+`DEC-017`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Adopt `S / M / L / XL` as the responsive spacing mode language for the AHA Design System variable library.
+- Treat `S` as mobile, `M` as tablet/small desktop, `L` as desktop, and `XL` as wide desktop.
+- Keep semantic spacing token names stable.
+- Change only per-mode primitive aliases for `Layout / spacing/gap/*` and `Layout / spacing/inset/*`.
+- Ensure the cascade has these primitive spacing steps: `space/175`, `space/350`, `space/450`, `space/550`, `space/700`, and `space/900`.
+- Apply the live Figma mutation through the native Figma MCP connector as `alexander.beck@mrm.com`.
+
+### Why
+- The existing modes already describe responsive behavior, but the current spacing aliases do not create different mobile-to-wide-desktop behavior.
+- Smaller breakpoints need tighter jumps; larger breakpoints need more expressive spacing without changing token names or breaking component bindings.
+- Keeping the work to alias remapping gives designers a responsive system without renaming the public API.
+- The 2026-06-22 live pass verified `alexander.beck@mrm.com`, created five missing primitive steps, reused existing `space/350`, and remapped all planned `spacing/gap/*` and `spacing/inset/*` mode aliases.
+- Final live validation passed with 858 local variables, no duplicate variable names, no unresolved aliases, all six new primitive steps present exactly once, and all 100 planned spacing cells resolving to the intended values.
+
+### Files
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Spot-check bound components/pages in Figma by switching `S / M / L / XL` modes and checking that spacing compresses and expands without layout breakage.
+- Keep typography unchanged for this pass; use the typography audit as the input for a separate type-ramp proposal if needed.
+
+## 2026-06-22
+### ID
+`DEC-018`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Publish the responsive spacing primitives instead of keeping them hidden.
+- Add WEB code syntax to all `Layout / spacing/inset/*` tokens.
+- Add descriptions to all `Components / icons/size/*` tokens.
+- Keep exact component color values by adding published `Primitives / color/component/*` primitives and aliasing the component color tokens to them.
+- Remove the eight `Typography / _deprecated/static-font/*` compatibility shims.
+- Leave picker-scope cleanup untouched until the authoring policy is clearer.
+
+### Why
+- Primitives should be visible as part of the design-system library rather than treated as hidden implementation details.
+- Inset tokens need the same export readiness as gap tokens.
+- Component icon-size tokens were technically valid, but lacked in-file guidance for designers.
+- The app-store badge border and avatar neutral background had no exact primitive match. Adding exact-value primitives keeps visual output stable while removing raw values from the component layer.
+- Preflight found no variable-alias or local-style references to the deprecated static-font shims, so removing them simplifies the Typography collection without changing the intended type model.
+- Scope cleanup changes where tokens appear in Figma pickers. That is useful, but it should be a deliberate authoring-policy decision, not bundled into this metadata cleanup.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Spot-check bound components that may have used old static-font variables directly on nodes.
+- Decide scope policy separately for paragraph width and toggle border tokens before changing picker visibility.
+
+## 2026-06-22
+### ID
+`DEC-019`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Add a responsive display typography ramp while keeping semantic typography token names stable.
+- Add published primitives for `typography/size/56`, `typography/size/64`, `typography/size/80`, `typography/line-height/48`, `typography/line-height/64`, `typography/line-height/76`, and `typography/line-height/96`.
+- Publish all numeric typography size and line-height primitives.
+- Keep body typography stable across `S / M / L / XL`.
+- Scope `Layout / layout/width/paragraph-max` to `WIDTH_HEIGHT`.
+- Scope the three `Components / toggles/color/*border*` variables to `STROKE_COLOR`.
+
+### Why
+- The previous display ramp already changed between mobile and desktop, but `XL` and `L` were mostly the same.
+- Wide desktop needs a stronger display step without changing the public semantic token names.
+- Body copy should stay predictable and readable; primary body remains 16/24 across all modes.
+- Numeric typography primitives should be visible in the published primitive layer, matching the current primitive publishing rule.
+- Paragraph width should appear in size/width authoring surfaces, not every picker.
+- Toggle border colors should appear in stroke color pickers, not fill, text, or unrelated property pickers.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Check whether text styles should be renamed or regrouped to make display/body roles clearer.
+- Check whether the unused toggle border component tokens should stay as future-state tokens or move into a cleanup queue.
+
+## 2026-06-22
+### ID
+`DEC-020`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Add intermediate typography primitives for granular display scaling.
+- Add published size primitives `typography/size/26`, `typography/size/34`, `typography/size/44`, `typography/size/52`, and `typography/size/68`.
+- Add published line-height primitives `typography/line-height/34`, `typography/line-height/42`, `typography/line-height/68`, and `typography/line-height/80`.
+- Remap display typography aliases to use the granular ramp across `S / M / L / XL`.
+- Keep body typography stable.
+
+### Why
+- The first display ramp made breakpoints responsive, but some jumps were still too coarse.
+- Intermediate primitives give the display ramp better step control without changing semantic token names.
+- Body text needs predictability more than expression; primary body stays 16/24.
+- Published primitives make the base scale visible for designers and export consumers.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Check text-style naming and grouping against the granular display ramp.
+- Check real page compositions for any display token that still jumps too much between `M` and `L`.
+
+## 2026-06-22
+### ID
+`DEC-021`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Complete the final token-system cleanup pass in the live AHA Design System WIP file.
+- Publish the approved `space/*` scale through `space/1600`.
+- Add `Primitives / size/layout/320` and alias `Layout / layout/width/xxs` to it.
+- Add exact alpha, border, and shadow color primitives so `Color`, `Layout`, `Typography`, and `Components` no longer hold raw values.
+- Keep broad utility palettes visible, with descriptions that mark them as support/data/illustration tokens.
+- Move duplicate `*/Regular` text styles under `_compat/text/*` because live nodes still use them and the MCP runtime cannot load Lub Dub for safe rebinding.
+- Remove paragraph-spacing variable bindings from all text styles.
+- Remove 81 zero-consumer legacy paint styles after preflight.
+
+### Why
+- Public semantic tokens should alias primitives rather than carry raw values.
+- Spacing primitive publishing should be consistent with the visible responsive scale.
+- `layout/width/xxs` is a layout-size decision, not a spacing decision.
+- Lub Dub Medium is the normal/default weight for this system, but deleting Regular styles would break existing bound nodes without a font-available rebind path.
+- Figma Plugin API cannot bind blur radius, so backdrop blur styles stay documented presets.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- In Figma desktop with Lub Dub available, set all text-style numeric paragraph spacing values to 0 and rebind `_compat/text/*` consumers to matching Medium styles if deletion is still wanted.
+- Use the retained paint-style descriptions as the cleanup line for future style-library pruning.
+
+## 2026-06-22
+### ID
+`DEC-022`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Replace the earlier granular display-only type ramp with the approved responsive display and text type matrix.
+- Order visible scale variables largest-to-smallest where Figma ordering affects authoring: primitive spacing, primitive typography, layout widths, radii, shadow levels, component icon sizes, and `Typography`.
+- Add exact button padding primitives and public `Components / buttons/*` spacing aliases.
+- Rebind button component root padding and gap fields to the component spacing API.
+- Remove unused intermediate typography primitives after a scoped zero-consumer audit.
+
+### Why
+- Designers were seeing an incorrect type ramp and confusing variable order in the live variable table.
+- Button padding and gap values were real component decisions, but they were still represented as deprecated layout spacing aliases or raw values.
+- Exact 10/14/18 button padding values should be documented component decisions, not rounded into the core 4px spacing scale.
+- Keeping canonical token names stable while recreating variables kept the public API unchanged and fixed the authoring order.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Keep any future button anatomy changes bound to `Components / buttons/*`, not `Layout / _deprecated/spacing/*`.
+- If text styles are later renamed or regrouped, keep the `Typography` variable matrix unchanged unless a new type decision replaces it.
+
+## 2026-06-22
+### ID
+`DEC-023`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Superseded by DEC-024`
+
+### Confidence
+`High`
+
+### Decision
+- Keep public button spacing aliases in `Components / buttons/*`.
+- Route every public button padding alias through exact `Primitives / space/component/button/*` primitives.
+- Add `space/component/button/8`, `space/component/button/12`, and `space/component/button/16` so the padding API no longer mixes exact component primitives with generic spacing primitives.
+- Leave button gap aliases on the generic `Primitives / space/*` scale under the current guide.
+
+### Why
+- The screenshot exposed a real authoring problem: one button padding group mixed component-specific and generic primitive targets.
+- Padding is button anatomy, so the alias chain should be internally consistent even when a value overlaps the generic 4px spacing scale.
+- Gaps are still governed by the general spacing guidance: use `spacing/gap/*` or core `space/*` values for auto-layout gap decisions unless a component-gap rule is explicitly added.
+- A full live audit found no duplicate variable names, unresolved aliases, or missing mode values, so this should stay a narrow boundary repair rather than a broader token rewrite.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Superseded.
+- Follow `DEC-024` for the current button spacing rule.
+
+## 2026-06-22
+### ID
+`DEC-024`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Superseded by DEC-025`
+
+### Confidence
+`High`
+
+### Decision
+- Use the normal `Primitives / space/*` scale for button spacing whenever the value exists there.
+- Keep public button spacing aliases in `Components / buttons/*`.
+- Use `Primitives / space/component/button/*` only for intentional off-scale button anatomy values that do not exist in the normal spacing scale.
+- Rebind `8`, `12`, and `16` button padding aliases to `space/50`, `space/75`, and `space/100`.
+- Remove `space/component/button/8`, `space/component/button/12`, and `space/component/button/16`.
+- This entry's off-scale exception rule is superseded; the current rule removes all component-specific button spacing primitives.
+
+### Why
+- `8`, `12`, and `16` are already part of the approved spacing scale, so duplicating them inside a button-specific primitive group creates a parallel mini scale.
+- `Components / buttons/*` is the public button API; it does not require a unique primitive for every value it exposes.
+- Button-specific primitives are useful only when the button anatomy needs exact values outside the core scale.
+- The corrected structure is easier for designers to understand and keeps component APIs aligned with the system spacing model.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `reference/design-system/site/aha-token-system-guide/index.html`
+- `scripts/dev/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Superseded.
+- Follow `DEC-025` for the current button padding rule.
+
+## 2026-06-22
+### ID
+`DEC-025`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Superseded by DEC-026`
+
+### Confidence
+`High`
+
+### Decision
+- Keep public button spacing aliases in `Components / buttons/*`.
+- Route every public button padding alias through exact `Primitives / space/component/button/*` primitives.
+- Add `space/component/button/8`, `space/component/button/12`, and `space/component/button/16` so button padding groups no longer mix generic spacing primitives with button anatomy primitives.
+- Rebind both Light mode and Dark mode values for `buttons/padding-y/lg`, `buttons/padding-y/sm`, `buttons/padding-x/lg`, `buttons/padding-x/sm`, `buttons/icon-only/padding/lg`, `buttons/icon-only/padding/sm`, and `buttons/social/padding-x/with-text`.
+- Keep button gap aliases on normal `Primitives / space/*` until a separate component-gap primitive rule is approved.
+
+### Why
+- Mixed primitive targets inside one button padding group made the variable table read as inconsistent, even when the resolved pixel values were correct.
+- Padding is button anatomy, so the alias chain should make that ownership visible.
+- `Components / buttons/*` stays the public API, while `Primitives / space/component/button/*` records exact button padding decisions.
+- Gaps can stay generic for now because gap behavior is a layout relationship, not button padding anatomy.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `reference/design-system/site/aha-token-system-guide/index.html`
+- `scripts/dev/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Superseded.
+- Follow `DEC-026` for the current button spacing rule.
+
+## 2026-06-22
+### ID
+`DEC-026`
+
+### Project ID
+`aha-website-refresh`
+
+### Status
+`Accepted`
+
+### Confidence
+`High`
+
+### Decision
+- Use the standard `Primitives / space/*` scale for all button spacing.
+- Keep public button spacing aliases in `Components / buttons/*`.
+- Rebind previous `10`, `14`, and `18` button padding aliases to standard spacers: `space/75`, `space/100`, and `space/125`.
+- Remove all `space/component/button/*` primitives.
+- Do not create component-specific button spacing primitives.
+
+### Why
+- A component-specific primitive layer duplicates the standard spacing scale and makes the system harder to maintain.
+- `Components / buttons/*` is the public component API; its aliases can point to standard primitives without losing button ownership at the authoring layer.
+- Values that are not on the standard scale should be rounded onto the approved spacing scale instead of creating new primitive branches.
+
+### Files
+- `Figma: AHA Design System WIP`
+- `reference/design-system/docs/aha-design-system-final-variable-library-guide.md`
+- `reference/design-system/docs/aha-design-system-current-token-table.md`
+- `reference/design-system/docs/aha-design-system-james-handoff-variable-structure.md`
+- `reference/design-system/site/aha-token-system-guide/index.html`
+- `scripts/dev/figma-variables.mjs`
+- `scripts/README.md`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `logs/decision-log.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Next
+- Keep button padding and gap aliases on standard `Primitives / space/*`.
+- Do not add `Primitives / space/component/button/*`.

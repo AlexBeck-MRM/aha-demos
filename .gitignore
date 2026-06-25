@@ -4,6 +4,7 @@
 node_modules/
 .artifacts/
 .playwright-cli/
+.playwright-mcp/
 .tmp/
 .venv-docx/
 output/

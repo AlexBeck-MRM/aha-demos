@@ -4,7 +4,7 @@
   "description": "Retrieval-first design brain for the AHA website refresh",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf .artifacts .playwright-cli .tmp output .aha-server.pid",
+    "clean": "rm -rf .artifacts .playwright-cli .playwright-mcp .tmp output tmp .aha-server.pid",
     "verify:brain": "node scripts/docs/verify-design-brain.mjs",
     "project:init": "node scripts/docs/init-project.mjs",
     "figma:check": "node scripts/dev/figma-check.mjs",

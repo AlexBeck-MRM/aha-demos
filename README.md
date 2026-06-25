@@ -18,7 +18,7 @@ Codex should retrieve in this order:
 
 ### Core design-brain layers
 - `AGENTS.md` root operating contract for Codex.
-- `brain/` deterministic routing rules for task classification, required reads, and allowed write targets.
+- `brain/` deterministic routing rules, required reads, allowed write targets, and the daily stewardship loop.
 - `projects/` active-project registry, retrieval indexes, open questions, and session state.
 - `knowledge/` source intake, distilled summaries, and glossary.
 - `language/` voice, messaging, taxonomy, and microcopy patterns.
@@ -118,6 +118,8 @@ Clean generated output:
 npm run clean
 ```
 
+This removes disposable local roots only: `.artifacts/`, `.playwright-cli/`, `.playwright-mcp/`, `.tmp/`, `output/`, `tmp/`, and `.aha-server.pid`.
+
 Run the local visual preview launcher:
 
 ```bash
@@ -163,6 +165,7 @@ This writes generated artifacts into ignored folders under `.artifacts/build/`, 
 
 - The live repo should stay compact enough to browse without archive archaeology.
 - If a folder is mainly generated output, it should be ignored or deleted after the useful result is promoted.
+- Use `repo-housekeeping` for rare structural cleanup that touches root docs, ignore rules, package scripts, verifier checks, or lookup policy.
 - If a file only duplicates content already preserved in markdown or git history, prefer deleting it.
 - If a source pack is large but only one or two files are actually cited, keep the cited files and the regeneration inputs.
 - Derived project documents should carry an explicit `project_id` in front matter so retrieval and logging stay project-bound.

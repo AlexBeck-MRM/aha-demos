@@ -42,6 +42,72 @@ standalone_prompts:
       - design/ui-style-inventory/illustration-style.md
       - design/ui-style-inventory/icons.md
       - reference/evidence/mockups/aha-healthy-living-adaptive-super-hub-2026-05-07/healthy-living-adaptive-super-hub-default-variants.png
+  icon_style_evolution_sheet:
+    file: prompts/image-generation/icon-style-evolution-sheet.md
+    purpose: Generate a 6x6 raster comparison sheet for Line, Restrained Solid, and Tonal Cutout icon directions.
+    source_files:
+      - design/ui-style-inventory/color-scheme.md
+      - design/ui-style-inventory/illustration-style.md
+      - logs/decision-log.md
+  restrained_solid_icon_preview:
+    file: prompts/image-generation/restrained-solid-icon-preview.md
+    purpose: Generate a focused 4x4 restrained-solid raster icon reference sheet.
+    source_files:
+      - design/ui-style-inventory/color-scheme.md
+      - design/ui-style-inventory/illustration-style.md
+      - logs/decision-log.md
+  spatial_icon_style_exploration:
+    file: prompts/image-generation/spatial-icon-style-exploration.md
+    purpose: Generate a comparison sheet for early spatial icon style directions, including the Lava-adjacent route.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/ui-style-inventory/illustration-style.md
+      - design/generated/review/2026-06-17-icon-style-exploration/manifest.md
+  medical_soft_spatial_icon_preview:
+    file: prompts/image-generation/medical-soft-spatial-icon-preview.md
+    purpose: Generate early Medical Soft Spatial icon preview sheets before the colour-block style was accepted.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/manifest.md
+  medical_soft_spatial_natural_colour_preview:
+    file: prompts/image-generation/medical-soft-spatial-natural-colour-preview.md
+    purpose: Generate a natural-colour preview that tested the boundary between useful local colour and over-realistic detail.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/manifest.md
+  medical_soft_spatial_colour_block_pilot:
+    file: prompts/image-generation/medical-soft-spatial-colour-block-pilot.md
+    purpose: Generate the six-icon pilot that established the accepted colour-block behavior.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/manifest.md
+  medical_soft_spatial_colour_block_icons:
+    file: prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md
+    purpose: Generate the accepted 12-icon Medical Soft Spatial - Colour Block reference sheet.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/ui-style-inventory/color-scheme.md
+      - knowledge/distilled/canonical-brief.md
+      - design/generated/icons/medical-soft-spatial-colour-block/manifest.md
+  medical_soft_spatial_colour_block_stress_test:
+    file: prompts/image-generation/medical-soft-spatial-colour-block-stress-test.md
+    purpose: Generate a 12-icon stress-test sheet for new AHA subjects in the accepted Medical Soft Spatial - Colour Block style.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/generated/icons/medical-soft-spatial-colour-block/manifest.md
+      - design/generated/review/2026-06-17-medical-soft-spatial-stress-test/manifest.md
+  flat_clinical_line_icon_sheet:
+    file: prompts/image-generation/flat-clinical-line-icon-sheet.md
+    purpose: Generate a bitmap reference sheet for a flat, line-based AHA icon style candidate.
+    source_files:
+      - design/ui-style-inventory/icons.md
+      - design/generated/review/2026-06-23-flat-clinical-line/manifest.md
+  one_colour_topic_icon_sheet:
+    file: prompts/image-generation/one-colour-topic-icon-sheet.md
+    purpose: Generate a transparent one-colour topic icon sheet with same-size cutout cells.
+    source_files:
+      - design/generated/review/2026-06-23-flat-clinical-line/manifest.md
+      - design/generated/review/2026-06-24-one-colour-topic-icons/manifest.md
 
 routes:
   route_a:

@@ -5,8 +5,10 @@ const root = process.cwd();
 const ignoredRoots = new Set([
   ".git",
   "node_modules",
+  ".aha-server.pid",
   ".artifacts",
   ".playwright-cli",
+  ".playwright-mcp",
   ".venv-docx",
   ".tmp",
   "output",
@@ -20,6 +22,7 @@ const requiredPaths = [
   "package.json",
   "brain/README.md",
   "brain/ops-language.md",
+  "brain/daily-stewardship-loop.md",
   "brain/router.yaml",
   "projects/README.md",
   "projects/index.yaml",
@@ -29,6 +32,11 @@ const requiredPaths = [
   "projects/aha-website-refresh/open-questions.md",
   "projects/aha-website-refresh/session-log.md",
   "projects/aha-website-refresh/retrieval-index.yaml",
+  "projects/aha-website-refresh/artifact-index.yaml",
+  "projects/aha-website-refresh/WHERE-THINGS-LIVE.md",
+  "projects/aha-website-refresh/cleanup-candidates.md",
+  "projects/aha-website-refresh/automation-inbox.md",
+  "projects/aha-website-refresh/now.md",
   "knowledge/AGENTS.md",
   "knowledge/glossary.md",
   "knowledge/sources/README.md",
@@ -93,6 +101,7 @@ const requiredPaths = [
   "design/figma/workbench-section-map.yaml",
   "design/ui-style-inventory/README.md",
   "design/references/manifest.yaml",
+  "design/generated/README.md",
   "prompts/image-generation/board-to-prompt-map.yaml",
   "prompts/image-generation/master-styleframe-prompt.md",
   "prompts/image-generation/styleframe-01.md",
@@ -178,6 +187,9 @@ const referenceCaptionFiles = [
 
 const requiredIntentIds = [
   "question",
+  "artifact-lookup",
+  "brain-maintenance",
+  "repo-housekeeping",
   "source-ingest",
   "knowledge-distill",
   "board-review",
@@ -214,6 +226,9 @@ const requiredProjectStateKeys = [
 
 const requiredRetrievalRoutes = [
   "question",
+  "artifact-lookup",
+  "brain-maintenance",
+  "repo-housekeeping",
   "source-ingest",
   "knowledge-distill",
   "board-review",
@@ -224,6 +239,11 @@ const requiredRetrievalRoutes = [
 ];
 
 const requiredDefaultWriteTargets = [
+  "artifact_index",
+  "quick_map",
+  "cleanup_candidates",
+  "automation_inbox",
+  "now",
   "source_notes",
   "distilled",
   "decisions",
@@ -367,6 +387,7 @@ validateInventoryMetadata();
 
 const currentProject = validateProjects();
 validateRouter(currentProject);
+validateArtifactLookup(currentProject);
 validateOperationalLanguage(currentProject);
 
 console.log("Design brain structure looks valid.");
@@ -679,6 +700,95 @@ function validateRouter(currentProject) {
   failIfAny("brain/router.yaml intent blocks are missing required sections:", invalidIntentBlocks);
 }
 
+function validateArtifactLookup(currentProject) {
+  const artifactIndexPath = path.join(currentProject.path, "artifact-index.yaml");
+  const wherePath = path.join(currentProject.path, "WHERE-THINGS-LIVE.md");
+  const artifactIndexContents = read(artifactIndexPath);
+  const artifacts = parseListBlocks(artifactIndexContents, 2);
+
+  if (artifacts.length === 0) {
+    fail(`${artifactIndexPath} must contain at least one artifact entry.`);
+  }
+
+  const requiredArtifactFields = [
+    "title",
+    "topic",
+    "type",
+    "status",
+    "cleanup_tag",
+    "recommended_action",
+    "primary_entry",
+  ];
+
+  const validCleanupTags = new Set([
+    "current",
+    "supporting",
+    "superseded",
+    "out_of_place",
+    "generated",
+    "local_scratch",
+    "completed",
+    "review_for_removal",
+    "review_for_relocation",
+  ]);
+
+  const seenIds = new Set();
+  const duplicateIds = [];
+  const missingArtifactFields = [];
+  const invalidCleanupTags = [];
+  const missingArtifactRefs = [];
+
+  for (const artifact of artifacts) {
+    const block = artifact.__body || "";
+
+    if (seenIds.has(artifact.id)) {
+      duplicateIds.push(artifact.id);
+    }
+    seenIds.add(artifact.id);
+
+    for (const key of requiredArtifactFields) {
+      if (!extractScalar(block, key, 4)) {
+        missingArtifactFields.push(`${artifact.id} :: ${key}`);
+      }
+    }
+
+    const cleanupTag = extractScalar(block, "cleanup_tag", 4);
+    if (cleanupTag && !validCleanupTags.has(cleanupTag)) {
+      invalidCleanupTags.push(`${artifact.id} :: ${cleanupTag}`);
+    }
+
+    const refs = [
+      extractScalar(block, "primary_entry", 4),
+      ...(extractList(block, "source_notes", 4, 6) || []),
+      ...(extractList(block, "supporting_files", 4, 6) || []),
+      ...(extractList(block, "preview_files", 4, 6) || []),
+    ].filter(Boolean);
+
+    for (const ref of refs) {
+      if (skipLookupReference(ref)) {
+        continue;
+      }
+
+      const resolved = resolvePlaceholders(ref, currentProject);
+      if (!pathReferenceExists(resolved)) {
+        missingArtifactRefs.push(`${artifact.id} :: ${ref}`);
+      }
+    }
+  }
+
+  failIfAny(`${artifactIndexPath} contains duplicate artifact ids:`, duplicateIds);
+  failIfAny(`${artifactIndexPath} entries are missing required fields:`, missingArtifactFields);
+  failIfAny(`${artifactIndexPath} entries contain unknown cleanup tags:`, invalidCleanupTags);
+  failIfAny(`${artifactIndexPath} points to missing durable artifact paths:`, missingArtifactRefs);
+
+  const whereRefs = extractBacktickedPathReferences(read(wherePath));
+  const missingWhereRefs = whereRefs
+    .filter((ref) => !skipLookupReference(ref))
+    .filter((ref) => !pathReferenceExists(resolvePlaceholders(ref, currentProject)));
+
+  failIfAny(`${wherePath} points to missing durable lookup paths:`, missingWhereRefs);
+}
+
 function validateOperationalLanguage(currentProject) {
   for (const { path: relativePath, headings } of operationalHeadingSchemas) {
     validateOrderedStrings(relativePath, headings);
@@ -903,6 +1013,28 @@ function extractScalar(contents, key, indent = 0) {
 
 function stripQuotes(value) {
   return value.replace(/^['"]|['"]$/g, "");
+}
+
+function extractBacktickedPathReferences(contents) {
+  const refs = [...contents.matchAll(/`([^`]+)`/g)].map((match) => stripQuotes(match[1].trim()));
+  return [...new Set(refs.filter((ref) => looksLikePathReference(ref)))];
+}
+
+function looksLikePathReference(value) {
+  return value.startsWith(".") || value.includes("/") || /\.[a-z0-9]+$/i.test(value);
+}
+
+function skipLookupReference(value) {
+  if (!value || !looksLikePathReference(value)) {
+    return true;
+  }
+
+  if (/^[a-z]+:\/\//i.test(value)) {
+    return true;
+  }
+
+  const rootName = value.split("/")[0];
+  return ignoredRoots.has(rootName);
 }
 
 function resolvePlaceholders(relativePath, project) {

@@ -10,6 +10,7 @@
 - Project state: `projects/aha-website-refresh/`.
 - Routing contract: `brain/router.yaml`.
 - Retrieval index: `projects/aha-website-refresh/retrieval-index.yaml`.
+- Daily stewardship contract: `brain/daily-stewardship-loop.md`.
 
 ## Current Prototypes
 - High Blood Pressure condition guide prototype:
@@ -76,6 +77,29 @@
 - Figma source note:
   - `knowledge/sources/figma-design-workbench/index.md`
 
+## AHA Design System Figma Library
+- Live design-system file:
+  - [AHA Design System WIP](https://www.figma.com/design/DYhenSpnamlWoqLmszNKE3/AHA---Design-System--WIP-?node-id=1-1183&t=xIdbppZWlLAihoHF-1&view=variables)
+  - Figma file key: `DYhenSpnamlWoqLmszNKE3`
+  - Reference node: `1:1183`
+- Variable documentation:
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/README.md
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-final-variable-library-guide.md
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-current-token-table.md
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/aha-design-system-james-handoff-variable-structure.md
+- Access note:
+  - Native remote connector expected account: alexander.beck@mrm.com
+  - 2026-06-22 responsive spacing remap was applied live through the native Figma MCP connector as alexander.beck@mrm.com.
+  - 2026-06-22 follow-up cleanup added missing inset code syntax, added icon-size descriptions, replaced two raw component color cells with primitive aliases, removed deprecated static-font shims, and exposed the responsive spacing primitives for publishing.
+  - 2026-06-22 first responsive typography pass added the initial display primitives, published numeric typography primitives, kept body typography stable, and scoped paragraph-width/toggle-border tokens to the right picker surfaces.
+  - 2026-06-22 granular typography pass added nine intermediate display primitives, kept body typography stable, and verified the Typography page binding sample.
+  - 2026-06-22 final token cleanup published the approved spacing primitives through the 1600 step, added exact alpha/border/shadow primitives, removed raw values from `Color`, `Layout`, `Typography`, and `Components`, re-aliased layout width xxs to the 320 layout-size primitive, moved Regular text styles under the compatibility text group, and removed 81 zero-consumer legacy paint styles.
+  - 2026-06-22 live type-scale and button-spacing fix rebuilt visible scale ordering largest-to-smallest, applied the approved display/text responsive type matrix, added public button spacing aliases in the Components collection, and rebound button component root padding/gap fields away from deprecated layout spacing and raw non-zero values.
+  - 2026-06-22 button-spacing standard-spacer correction removed all component button spacing primitives; button spacing aliases now resolve through standard Primitives / space values only.
+  - Final live validation found 913 local variables, no duplicate variable names, no unresolved aliases, no missing mode values, no missing WEB code syntax, no temporary replacement variables, and all planned spacing/type/button aliases resolving correctly.
+  - Numeric text-style paragraph spacing still needs a manual Figma desktop pass because the MCP runtime cannot load Lub Dub.
+  - Run the Figma check script with the WIP URL before future live token edits, then confirm identity with native Figma `whoami`.
+
 ## Evidence And Mockups
 - Condition authority boards:
   - `reference/evidence/mockups/aha-health-condition-authority-structure-2026-04-27/`
@@ -94,6 +118,49 @@
   - `reference/evidence/mockups/aha-healthy-living-nav-a-b-vertical-2026-04-30/`
   - `reference/evidence/mockups/aha-healthy-living-adaptive-super-hub-2026-05-07/`
 
+## Generated Assets
+- Generated asset rules:
+  - `design/generated/README.md`
+- Accepted icon style:
+  - `design/ui-style-inventory/icons.md`
+  - `design/generated/icons/medical-soft-spatial-colour-block/manifest.md`
+  - `design/generated/icons/medical-soft-spatial-colour-block/aha-medical-soft-spatial-colour-block-12-sheet-v4.png`
+  - `prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md`
+- Medical Soft Spatial iteration review:
+  - `design/generated/review/2026-06-17-medical-soft-spatial-iteration/manifest.md`
+  - `design/generated/review/2026-06-17-medical-soft-spatial-iteration/`
+- Current spatial icon stress test:
+  - `design/generated/review/2026-06-17-medical-soft-spatial-stress-test/manifest.md`
+  - `design/generated/review/2026-06-17-medical-soft-spatial-stress-test/aha-medical-soft-spatial-colour-block-stress-test-v1.png`
+  - `design/generated/review/2026-06-17-medical-soft-spatial-stress-test/aha-medical-soft-spatial-colour-block-stress-test-v2.png`
+  - `prompts/image-generation/medical-soft-spatial-colour-block-stress-test.md`
+- Flat line icon candidate:
+  - `design/generated/review/2026-06-23-flat-clinical-line/manifest.md`
+  - `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v1.png`
+  - `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v2.png`
+  - `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v3-no-backgrounds.png`
+  - `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v4-duo-colour.png`
+  - `design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v5-warm-grey.png`
+  - `prompts/image-generation/flat-clinical-line-icon-sheet.md`
+- One-colour topic icon cutout sheet:
+  - `design/generated/review/2026-06-24-one-colour-topic-icons/manifest.md`
+  - `design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v2-alpha-cutout-grid.png`
+  - `design/generated/review/2026-06-24-one-colour-topic-icons/cutouts-v2/`
+  - `design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-alpha-cutout-grid.png`
+  - `prompts/image-generation/one-colour-topic-icon-sheet.md`
+  - Processing trail stays in the manifest; current lookup points at the review pick and cutouts.
+- Current icon style exploration review:
+  - `design/generated/review/2026-06-17-icon-style-exploration/manifest.md`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-icon-style-evolution-sheet.png`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-icon-style-evolution-sheet-v2.png`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-icon-style-evolution-sheet-v3.png`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-restrained-solid-icon-preview.png`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-restrained-solid-icon-preview-v2.png`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-spatial-icon-style-exploration.png`
+  - `design/generated/review/2026-06-17-icon-style-exploration/aha-spatial-icon-style-exploration-lava.png`
+- Local generated scratch:
+  - `output/`
+
 ## Presentations
 - Current slide system:
   - `reference/slides/aha-slide-system-v1.6.md`
@@ -104,6 +171,15 @@
   - `reference/slides/aha-competitor-brand-appeal-matrix/`
 - Generated condition-guide narrative:
   - `reference/slides/condition-guide-six-section-narrative/`
+
+## Reference Sites
+- Current token-system guide:
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/README.md
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/README.md
+- Current external-reference note for that guide:
+  - /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md
 
 ## Language
 - Messaging:
@@ -119,6 +195,19 @@
 ## Prompts
 - Image generation systems:
   - `prompts/image-generation/`
+- Image generation prompt map:
+  - `prompts/image-generation/board-to-prompt-map.yaml`
+- Icon prompt assets:
+  - `prompts/image-generation/icon-style-evolution-sheet.md`
+  - `prompts/image-generation/restrained-solid-icon-preview.md`
+  - `prompts/image-generation/spatial-icon-style-exploration.md`
+  - `prompts/image-generation/medical-soft-spatial-icon-preview.md`
+  - `prompts/image-generation/medical-soft-spatial-natural-colour-preview.md`
+  - `prompts/image-generation/medical-soft-spatial-colour-block-pilot.md`
+  - `prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md`
+  - `prompts/image-generation/medical-soft-spatial-colour-block-stress-test.md`
+  - `prompts/image-generation/flat-clinical-line-icon-sheet.md`
+  - `prompts/image-generation/one-colour-topic-icon-sheet.md`
 - Wireframe inputs:
   - `prompts/wireframes/`
 
@@ -136,23 +225,26 @@
   - `scripts/brand/`
 
 ## Cleanup Flags
+- Housekeeping route:
+  - `repo-housekeeping` is for rare structural cleanup across root docs, ignore rules, package scripts, verifier policy, and lookup docs.
 - Relocated on 2026-05-07:
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/`
   - `reference/evidence/mockups/aha-condition-guide-navigation-boards-2026-05-07/`
   - `reference/slides/condition-guide-six-section-narrative/`
 - Superseded but useful:
   - `reference/evidence/mockups/aha-high-blood-pressure-authority-page-2026-04/`
-- Removed on 2026-05-07:
+- Disposable local roots covered by `.gitignore` and `npm run clean`:
+  - `.artifacts/`
   - `.playwright-cli/`
   - `.playwright-mcp/`
   - `.tmp/`
   - `output/`
-- Remaining local scratch or generated output:
-  - `.artifacts/`
   - `tmp/`
+  - `.aha-server.pid`
 
 ## Rule
 - Do not delete cleanup-flagged files from this file alone.
 - Check `projects/aha-website-refresh/cleanup-candidates.md`.
 - Check references with `rg`.
 - Move or remove only after owner confirmation.
+- Keep `output/` disposable after generated assets are copied to `design/generated/`.

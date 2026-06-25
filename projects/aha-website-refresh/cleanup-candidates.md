@@ -29,10 +29,13 @@
 | defer | `reference/evidence/screenshots/aha-healthy-eating-topic-network-2026-04-29/` | Large screenshot pack. Useful, but heavy. | Keep manifests and cited screenshots; review full pack after decisions settle. |
 | defer | `reference/evidence/screenshots/aha-high-blood-pressure-topic-network-2026-04-20/` | Large screenshot pack. Useful, but heavy. | Keep manifests and cited screenshots; review full pack after decisions settle. |
 | defer | `reference/evidence/logos/` | Raw logos and review sheets may duplicate data and screenshots. | Keep until brand matrix references are stable. |
-| done | `.playwright-cli/` | Ignored browser logs and screenshots. | Deleted on 2026-05-07. |
-| done | `.playwright-mcp/` | Ignored browser logs and snapshots. | Deleted on 2026-05-07. |
+| done | `.playwright-cli/` | Ignored browser logs and screenshots. | Deleted on 2026-05-07; ignore and clean policy refreshed on 2026-06-25. |
+| done | `.playwright-mcp/` | Ignored browser logs and snapshots. | Deleted on 2026-05-07; added back to `.gitignore` and `npm run clean` on 2026-06-25 because the tool can recreate it. |
 | done | `.tmp/` | Ignored temporary slide output. | Deleted on 2026-05-07. |
 | done | `output/` | Ignored generated image output. | Deleted on 2026-05-07. |
+| done | `output/imagegen/` | Current icon review sheets were only in ignored generated output. | Review copies added to `design/generated/review/2026-06-17-icon-style-exploration/`; keep `output/` disposable. |
+| done | `design/generated/review/2026-06-24-one-colour-topic-icons/*chromakey*` and `*raw*` | Processing files were useful provenance but too noisy for durable lookup surfaces. | Kept in the manifest only; removed from artifact-index supporting files on 2026-06-25. |
+| defer | `output/playwright/criticalmass/` | `/Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/design.md` cites this ignored capture folder as durable `capture_artifacts`. | Promote the cited captures to `reference/evidence/` and update the note, or rewrite the note so scratch stays scratch. |
 | defer | `.artifacts/` | Ignored build and output artifacts; some may be useful visual review material. | Promote durable assets into `reference/` or `design/`, then clean. |
 | defer | `tmp/health-topic-taxonomy-audit.md` | Temporary file is cited by the condition authority source note. | Move to `knowledge/sources/current-site-audit/` or remove the citation after summary is complete. |
 | defer | `tmp/hbp-live-page-extracts.json` | Temporary HBP extraction data may be raw source evidence. | Move to `reference/evidence/` if needed; delete if absorbed into source notes. |

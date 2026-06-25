@@ -1,6 +1,6 @@
 project_id: aha-website-refresh
 status: active
-updated: 2026-05-07
+updated: 2026-06-25
 purpose: Fast lookup for current artifacts, source notes, previews, and cleanup status.
 
 lookup_rule:
@@ -22,6 +22,25 @@ cleanup_tags:
   review_for_relocation: Candidate for move to a durable folder after references are updated.
 
 artifacts:
+  - id: design-brain-housekeeping-contract
+    title: Design brain housekeeping contract
+    topic: housekeeping
+    type: routing-and-maintenance-contract
+    status: current
+    cleanup_tag: current
+    recommended_action: use repo-housekeeping for rare parent-level structural cleanup; use brain-maintenance for routine daily stewardship
+    primary_entry: brain/daily-stewardship-loop.md
+    supporting_files:
+      - brain/router.yaml
+      - projects/aha-website-refresh/retrieval-index.yaml
+      - scripts/docs/verify-design-brain.mjs
+      - .gitignore
+      - package.json
+    notes:
+      - `repo-housekeeping` is the narrow route for root docs, ignore rules, clean scripts, verifier policy, and lookup cleanup.
+      - `brain-maintenance` remains the route for daily lookup hygiene and non-destructive current-state updates.
+      - The daily stewardship file was renamed from the old hourly maintenance filename on 2026-06-25 so the filename matches the actual automation contract.
+
   - id: hbp-condition-guide-prototype
     title: High Blood Pressure condition guide prototype
     topic: high-blood-pressure
@@ -241,6 +260,217 @@ artifacts:
       - design/ui-style-inventory/
       - design/figma/workbench-section-map.yaml
 
+  - id: aha-design-system-wip-variables
+    title: AHA Design System WIP variable library
+    topic: design-system
+    type: figma-variable-library
+    status: current
+    cleanup_tag: current
+    recommended_action: use as the canonical Figma variable library; verify native connector identity before future live token edits
+    primary_entry: https://www.figma.com/design/DYhenSpnamlWoqLmszNKE3/AHA---Design-System--WIP-?node-id=1-1183&t=xIdbppZWlLAihoHF-1&view=variables
+    figma:
+      file_key: DYhenSpnamlWoqLmszNKE3
+      node_id: "1:1183"
+      expected_account: alexander.beck@mrm.com
+      access_status: applied_on_2026-06-22_native_figma_mcp_as_alexander_beck_mrm_com
+    supporting_files:
+      - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+      - projects/aha-website-refresh/session-log.md
+    notes:
+      - External design-system workspace is /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system.
+      - Use /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/README.md as the external entrypoint.
+      - Variable docs live under /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/docs/.
+      - 2026-06-22 responsive spacing remap and follow-up variable cleanup applied live through native Figma MCP as alexander.beck@mrm.com.
+      - Current live validation reports 913 local variables, no duplicate names, no unresolved aliases, no missing mode values, no missing WEB code syntax, no raw values in alias layers, published responsive spacing primitives, current numeric typography primitives, public button spacing aliases, and no deprecated static-font shims.
+      - Responsive spacing plan keeps `S / M / L / XL` as mobile, tablet/small desktop, desktop, and wide desktop.
+      - Semantic spacing token names stayed stable; only per-mode primitive aliases changed.
+      - The 2026-06-22 live remap added five missing primitive steps, reused existing `space/350`, and verified all 100 planned `spacing/gap/*` and `spacing/inset/*` mode cells.
+      - The 2026-06-22 typography passes added display-ramp primitives, kept body typography stable, and scoped paragraph-width and toggle-border tokens to authoring-specific pickers.
+      - The 2026-06-22 granular typography pass added nine intermediate display primitives and remapped display aliases to smoother `S / M / L / XL` steps.
+      - The 2026-06-22 final token cleanup published the approved `space/*` scale through `space/1600`, added `size/layout/320`, re-aliased `layout/width/xxs`, added exact alpha/border/shadow primitives, moved Regular text styles under `_compat/text/*`, removed paragraph-spacing variable bindings from all 44 text styles, and removed 81 zero-consumer legacy paint styles.
+      - The 2026-06-22 live type-scale and button-spacing fix rebuilt visible scale order largest-to-smallest, replaced the earlier granular display ramp with the approved display/text matrix, added `Components / buttons/*` spacing aliases, and rebound button component root padding/gap fields away from deprecated layout spacing and raw non-zero values.
+      - The 2026-06-22 button-spacing standard-spacer correction removed all `space/component/button/*` primitives; button spacing aliases now use standard `space/*` primitives only, including `space/75`, `space/100`, and `space/125` for the former 10, 14, and 18 values.
+      - Numeric text-style paragraph spacing still needs a manual Figma desktop pass with Lub Dub available.
+
+  - id: icon-prompt-system
+    title: Icon prompt system
+    topic: image-generation
+    type: reusable-prompt-set
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in prompts/image-generation while icon style exploration is active
+    primary_entry: prompts/image-generation/board-to-prompt-map.yaml
+    supporting_files:
+      - prompts/image-generation/icon-style-evolution-sheet.md
+      - prompts/image-generation/restrained-solid-icon-preview.md
+      - prompts/image-generation/spatial-icon-style-exploration.md
+      - prompts/image-generation/medical-soft-spatial-icon-preview.md
+      - prompts/image-generation/medical-soft-spatial-natural-colour-preview.md
+      - prompts/image-generation/medical-soft-spatial-colour-block-pilot.md
+      - prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md
+      - prompts/image-generation/medical-soft-spatial-colour-block-stress-test.md
+      - prompts/image-generation/flat-clinical-line-icon-sheet.md
+      - prompts/image-generation/one-colour-topic-icon-sheet.md
+      - design/ui-style-inventory/color-scheme.md
+      - design/ui-style-inventory/icons.md
+      - design/ui-style-inventory/illustration-style.md
+    notes:
+      - Builds from DEC-013 cooler illustration palette.
+      - Keeps icon exploration prompt assets discoverable without adding Figma work.
+
+  - id: medical-soft-spatial-colour-block-icons
+    title: Medical Soft Spatial Colour Block icon style
+    topic: icon-system
+    type: accepted-generated-icon-reference
+    status: current
+    cleanup_tag: current
+    recommended_action: keep as the accepted base style reference for AHA topic, action, education, and support icons
+    primary_entry: design/ui-style-inventory/icons.md
+    supporting_files:
+      - design/generated/icons/medical-soft-spatial-colour-block/manifest.md
+      - design/generated/icons/medical-soft-spatial-colour-block/aha-medical-soft-spatial-colour-block-12-sheet-v4.png
+      - prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md
+    notes:
+      - Accepted locally on 2026-06-17 after refinement from the spatial icon review sheet.
+      - Figma was intentionally left out of this pass.
+
+  - id: icon-style-exploration-review
+    title: Icon style exploration review sheets
+    topic: image-generation
+    type: generated-review-assets
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep in design/generated/review while icon style exploration is active; do not treat as accepted production icon direction
+    primary_entry: design/generated/review/2026-06-17-icon-style-exploration/manifest.md
+    supporting_files:
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-icon-style-evolution-sheet.png
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-icon-style-evolution-sheet-v2.png
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-icon-style-evolution-sheet-v3.png
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-restrained-solid-icon-preview.png
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-restrained-solid-icon-preview-v2.png
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-spatial-icon-style-exploration.png
+      - design/generated/review/2026-06-17-icon-style-exploration/aha-spatial-icon-style-exploration-lava.png
+      - prompts/image-generation/icon-style-evolution-sheet.md
+      - prompts/image-generation/restrained-solid-icon-preview.md
+      - prompts/image-generation/spatial-icon-style-exploration.md
+    notes:
+      - Copied from ignored output/imagegen on 2026-06-17 so the review sheets are not only in scratch.
+      - Accepted icon systems should get a separate current artifact entry.
+
+  - id: medical-soft-spatial-iteration-review
+    title: Medical Soft Spatial icon iteration sheets
+    topic: icon-system
+    type: generated-review-assets
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as the iteration trail that led to the accepted Medical Soft Spatial icon style; do not treat as accepted production direction
+    primary_entry: design/generated/review/2026-06-17-medical-soft-spatial-iteration/manifest.md
+    supporting_files:
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v2.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v3.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v4.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v5.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v6.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v7.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v8.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-icon-preview-v9.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-natural-colour-preview.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-colour-block-pilot-v1.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-colour-block-pilot-v2.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-colour-block-12-sheet-v1.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-colour-block-12-sheet-v2.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-iteration/aha-medical-soft-spatial-colour-block-12-sheet-v3.png
+      - prompts/image-generation/medical-soft-spatial-icon-preview.md
+      - prompts/image-generation/medical-soft-spatial-natural-colour-preview.md
+      - prompts/image-generation/medical-soft-spatial-colour-block-pilot.md
+      - prompts/image-generation/medical-soft-spatial-colour-block-full-sheet.md
+    notes:
+      - The accepted base is stored separately in `design/generated/icons/medical-soft-spatial-colour-block/`.
+      - This folder captures the visual trail from early spatial tests through the accepted style refinement.
+
+  - id: medical-soft-spatial-stress-test-review
+    title: Medical Soft Spatial icon stress-test sheets
+    topic: icon-system
+    type: generated-review-assets
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as stress-test evidence for the accepted Medical Soft Spatial icon style; do not treat as a replacement for the accepted base sheet
+    primary_entry: design/generated/review/2026-06-17-medical-soft-spatial-stress-test/manifest.md
+    supporting_files:
+      - design/generated/review/2026-06-17-medical-soft-spatial-stress-test/aha-medical-soft-spatial-colour-block-stress-test-v1.png
+      - design/generated/review/2026-06-17-medical-soft-spatial-stress-test/aha-medical-soft-spatial-colour-block-stress-test-v2.png
+      - prompts/image-generation/medical-soft-spatial-colour-block-stress-test.md
+    notes:
+      - `v1` exposed stress-test drift around text-like lines, measurement marks, and brain detail.
+      - `v2` is the cleaner review candidate.
+
+  - id: flat-clinical-line-icon-review
+    title: Flat Clinical Line icon review sheet
+    topic: icon-system
+    type: generated-review-assets
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as a bitmap candidate for a flatter line-based AHA icon style; do not treat as an accepted replacement for Medical Soft Spatial
+    primary_entry: design/generated/review/2026-06-23-flat-clinical-line/manifest.md
+    supporting_files:
+      - design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v1.png
+      - design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v2.png
+      - design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v3-no-backgrounds.png
+      - design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v4-duo-colour.png
+      - design/generated/review/2026-06-23-flat-clinical-line/aha-flat-clinical-line-12-sheet-v5-warm-grey.png
+      - prompts/image-generation/flat-clinical-line-icon-sheet.md
+    notes:
+      - Created on 2026-06-23 as a bitmap-only candidate after the user requested a flat line-based icon style.
+      - `v2` was created on 2026-06-24 to move the candidate closer to chunky AHA infographic examples.
+      - `v3-no-backgrounds` removes the pale circular fields from `v2` while preserving the chunky red icon linework.
+      - `v4-duo-colour` combines the chunky no-background direction with a controlled red-plus-purple stroke hierarchy.
+      - `v5-warm-grey` replaces the purple support colour with warm grey and is the current review pick for this branch.
+      - The accepted icon direction remains `Medical Soft Spatial - Colour Block` until a separate design decision changes it.
+
+  - id: one-colour-topic-icon-review
+    title: One-colour topic icon cutout sheet
+    topic: icon-system
+    type: generated-review-assets
+    status: supporting
+    cleanup_tag: supporting
+    recommended_action: keep as the large transparent review sheet for one-colour AHA topic icons; use v2 and cutouts-v2 for current review
+    primary_entry: design/generated/review/2026-06-24-one-colour-topic-icons/manifest.md
+    supporting_files:
+      - design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v2-alpha-cutout-grid.png
+      - design/generated/review/2026-06-24-one-colour-topic-icons/cutouts-v2/
+      - design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-alpha-cutout-grid.png
+      - design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-alpha-clean-large.png
+      - design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-alpha-clean.png
+      - design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-alpha.png
+      - design/generated/review/2026-06-24-one-colour-topic-icons/aha-one-colour-topic-icons-v1-chromakey.png
+      - prompts/image-generation/one-colour-topic-icon-sheet.md
+    notes:
+      - Created on 2026-06-24 from the attached 54-topic reference board.
+      - Current pick is `v2`, a transparent `8064 x 5376` PNG with `8 x 7` cells of `1008 x 768`.
+      - `v2` removes white/off-white fills and keeps only AHA red `#c8102e` visible linework.
+      - `cutouts-v2/` contains 54 same-size transparent PNGs generated with component-aware cropping to remove adjacent row fragments.
+      - Transparent pixels use white RGB with alpha `0`.
+      - The manifest keeps the chromakey, large chromakey, red-only, and raw cutout-grid processing trail; the artifact index lists only the review picks and useful comparison files.
+
+  - id: token-system-guide-site
+    title: Token system guide
+    topic: design-system
+    type: reference-site
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in the external AHA Design System workspace as the current designer-facing token guide
+    primary_entry: projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+    supporting_files:
+      - projects/aha-website-refresh/WHERE-THINGS-LIVE.md
+      - projects/aha-website-refresh/session-log.md
+    notes:
+      - External guide entrypoint is /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/index.html.
+      - External guide support files live under /Users/alexanderbeck/Projects-code/cm-internal-design-tokens/docs/aha-design-system/site/aha-token-system-guide/.
+      - Current static guide for the six-collection variable-library structure and token-system usage rules.
+      - `design.md` keeps the Critical Mass reference extraction that informed the current site direction.
+      - Keep the cited Playwright captures in scratch until their durable evidence home is decided.
+
   - id: figma-design-workbench
     title: Figma design workbench
     topic: figma
@@ -299,18 +529,21 @@ artifacts:
     title: Local generated output and scratch
     topic: housekeeping
     type: generated-and-scratch-folders
-    status: completed
-    cleanup_tag: completed
-    recommended_action: keep no source-of-truth material only in ignored folders
+    status: current
+    cleanup_tag: local_scratch
+    recommended_action: keep no source-of-truth material only in ignored folders; promote useful results before running npm run clean
     primary_entry: .gitignore
     supporting_files:
+      - package.json
+    disposable_roots:
       - .artifacts/
-      - tmp/
-    removed_files:
       - .playwright-cli/
       - .playwright-mcp/
       - .tmp/
       - output/
+      - tmp/
+      - .aha-server.pid
     notes:
-      - Explicit remove targets deleted on 2026-05-07.
-      - Defer targets remain in place where they may still contain useful review material.
+      - `.gitignore`, `npm run clean`, and the verifier now agree on the disposable root set.
+      - `npm run clean` is destructive; run it only after useful generated or captured work has been promoted into `design/` or `reference/`.
+      - `output/playwright/criticalmass/` remains unresolved because an external token-guide note still cites it as capture evidence.

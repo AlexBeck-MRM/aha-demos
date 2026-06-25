@@ -14,6 +14,75 @@ intents:
     allowed_writes: []
     required_logs: []
 
+  - id: artifact-lookup
+    required_reads:
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+      - projects/{current_project}/artifact-index.yaml
+      - projects/{current_project}/WHERE-THINGS-LIVE.md
+      - projects/{current_project}/cleanup-candidates.md
+      - projects/{current_project}/session-log.md
+    allowed_writes: []
+    required_logs: []
+
+  - id: brain-maintenance
+    required_reads:
+      - brain/ops-language.md
+      - brain/daily-stewardship-loop.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+      - projects/{current_project}/artifact-index.yaml
+      - projects/{current_project}/WHERE-THINGS-LIVE.md
+      - projects/{current_project}/cleanup-candidates.md
+      - projects/{current_project}/automation-inbox.md
+      - projects/{current_project}/now.md
+      - projects/{current_project}/session-log.md
+      - package.json
+    allowed_writes:
+      - projects/{current_project}/artifact-index.yaml
+      - projects/{current_project}/WHERE-THINGS-LIVE.md
+      - projects/{current_project}/cleanup-candidates.md
+      - projects/{current_project}/automation-inbox.md
+      - projects/{current_project}/now.md
+      - projects/{current_project}/session-log.md
+    required_logs:
+      - projects/{current_project}/session-log.md
+
+  - id: repo-housekeeping
+    required_reads:
+      - AGENTS.md
+      - README.md
+      - .gitignore
+      - package.json
+      - brain/router.yaml
+      - brain/ops-language.md
+      - brain/daily-stewardship-loop.md
+      - projects/current-project.yaml
+      - projects/{current_project}/retrieval-index.yaml
+      - projects/{current_project}/artifact-index.yaml
+      - projects/{current_project}/WHERE-THINGS-LIVE.md
+      - projects/{current_project}/cleanup-candidates.md
+      - projects/{current_project}/automation-inbox.md
+      - projects/{current_project}/now.md
+      - projects/{current_project}/session-log.md
+      - scripts/docs/verify-design-brain.mjs
+    allowed_writes:
+      - README.md
+      - .gitignore
+      - package.json
+      - brain/router.yaml
+      - brain/daily-stewardship-loop.md
+      - projects/{current_project}/retrieval-index.yaml
+      - projects/{current_project}/artifact-index.yaml
+      - projects/{current_project}/WHERE-THINGS-LIVE.md
+      - projects/{current_project}/cleanup-candidates.md
+      - projects/{current_project}/automation-inbox.md
+      - projects/{current_project}/now.md
+      - projects/{current_project}/session-log.md
+      - scripts/docs/verify-design-brain.mjs
+    required_logs:
+      - projects/{current_project}/session-log.md
+
   - id: source-ingest
     required_reads:
       - knowledge/sources/index.yaml
