@@ -3775,3 +3775,410 @@ decision_refs:
 - Playwright confirmed no console warnings or errors and no desktop/mobile horizontal overflow
 - `npm run verify:brain` passed
 - `git diff --check` passed
+
+## 2026-06-29
+### Task
+- add MP4 loop export for the living-gradient playground
+
+### Change
+- add an `Export MP4` action to the Parameterizer action row
+- calculate the export loop length from the active mode and current motion speed or shader speed
+- render a deterministic 1080px square canvas loop from the current parameter state so the first and last frames align cleanly
+- prefer browser-native MP4 MediaRecorder encoders and show a clear unsupported-browser status when MP4 recording is unavailable
+- keep the export path no-dependency and static-prototype friendly
+- update lookup notes with the MP4 export behavior
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright confirmed `Export MP4` appears in the Parameterizer action row
+- Playwright confirmed export loop plans vary by active mode: `breath` generated a `10.91s` plan, `cloudmesh` generated a `21.82s` plan, and `shaderflow` at `2.00x` shader speed generated an `8.00s` plan
+- Playwright confirmed the export status updates and an MP4 download completes as `aha-living-gradient-shaderflow-8.00s-loop.mp4`
+- file inspection confirmed the downloaded test export is an ISO MP4 container
+- Playwright confirmed no console warnings or errors and no desktop/mobile horizontal overflow
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+## 2026-06-29
+### Task
+- restore richer colour in the living-gradient playground after the v16 gentle-light pass became too washed out
+
+### Change
+- bump authored config and browser-storage schema from `v16` to `v17` so older saved soft settings do not auto-load
+- tighten the default warm-field size and blur so red, deep red, and orange remain distinct colour masses
+- raise baseline saturation, brightness, red dominance, and deep-red strength
+- keep orange sparse and top-right biased, but make the warm reveal brighter than the v16 baseline
+- align CSS fallback values, generated CSS/config exports, and P3 warm-field rendering with the new richer baseline
+- update artifact lookup notes with the current `v17` baseline
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed authored defaults compute `--lg-field-size: 103%`, `--lg-field-blur: 26px`, `--lg-saturation: 1.24`, `--lg-brightness: 1.10`, `--lg-warm-ambient: 0.049`, `--lg-warm-reveal-opacity: 0.769`, and `--lg-shader-blur: 6px`
+- Playwright confirmed Copy Config includes schema `aha-living-gradient-playground/v17`
+- Playwright confirmed Save Settings writes `aha-living-gradient-playground:v17`, reload restores the saved value, and Reset clears storage back to authored defaults
+- Playwright confirmed no console warnings or errors and no desktop/mobile horizontal overflow
+- screenshots saved to `output/playwright/aha-living-gradient-playground/v17-richer-colour/`
+
+## 2026-06-29
+### Task
+- make the repo root work as a GitHub Pages site for the current living-gradient prototype
+
+### Change
+- add a root `index.html` that sends the GitHub Pages root to the current living-gradient playground
+- add `.nojekyll` so static prototype folders and assets are served directly
+- add a GitHub Actions Pages workflow that deploys the static repo from `main`
+
+### Files
+- `index.html`
+- `.nojekyll`
+- `.github/workflows/deploy-pages.yml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- root `index.html` served locally at `http://127.0.0.1:4173/`
+- Playwright confirmed the root opens `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/` and renders the living-gradient prototype
+- commit `47f3ab2` pushed to `main` with the Pages entrypoint, workflow, and current prototype files
+- pushed `main` to `gh-pages` as a branch-source fallback
+- GitHub Pages API rejected site creation with `422`: `Your current plan does not support GitHub Pages for this repository.`
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+## 2026-06-29
+### Task
+- simplify the living-gradient playground around the best-performing breathing direction
+
+### Change
+- reduce the mode API to three modes: `breath`, `heartlight`, and `shaderflow`
+- keep Breath Field as the default and closest current direction
+- keep Light Breath as a simpler shadow/light CSS variant
+- keep Shader Flow as the retained procedural shader option
+- bump saved settings and config schema to `v18` so older saved states with removed modes do not reload
+- simplify the visible parameters per mode so the right panel focuses on breath timing, top-right light, orange/deep pressure, softness, colour trim, and essential shader controls
+- change the shader fallback from removed `cloudmesh` to `breath`
+- update lookup notes to the three-mode contract
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed the effect overview exposes only `breath`, `heartlight`, and `shaderflow`
+- Playwright confirmed clean reload defaults to Breath Field with no saved storage keys
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v18`
+- Playwright confirmed Shader Flow still renders WebGL canvases and shows only the reduced shader control set
+- Playwright confirmed no console warnings or errors and no desktop/mobile horizontal overflow
+- screenshots saved to `output/playwright/aha-living-gradient-playground/v18-simplified-breath/`
+
+## 2026-06-29
+### Task
+- remove washed-out colour behavior from the simplified living-gradient playground
+
+### Change
+- bump saved settings and config schema to `v19` so older saved v18 brightness/colour states do not reload
+- remove default brightness lift and increase saturation without adding lightened colour stops
+- restrict CSS gradient field stops to the three intended colours: red, deep red, and orange
+- remove the remaining light red/intermediate red values from active CSS fields, P3 fallbacks, shader constants, and MP4 export ramps
+- reduce warm opacity so orange remains light/energy without turning the red field coral
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- colour scan confirmed no remaining old light/intermediate gradient values in the active prototype files: `236 0 32`, `136 17 18`, `255 58 58`, `230 31 30`, `228 18 30`, `63 0 5`, `106 5 10`, or old P3 red/deep values
+- Playwright confirmed clean reload exports schema `aha-living-gradient-playground/v19`
+- Playwright confirmed authored defaults compute `--lg-brightness: 1.00`, `--lg-saturation: 1.34`, `--lg-warm-ambient: 0.032`, `--lg-warm-reveal-opacity: 0.668`, `--lg-red-field-opacity: 1.000`, and `--lg-red-alt-opacity: 0.960`
+- Playwright confirmed no console warnings or errors and no desktop horizontal overflow
+- screenshots saved to `output/playwright/aha-living-gradient-playground/v19-three-colour/`
+
+## 2026-06-29
+### Task
+- repair the simplified living-gradient playground so opacity never washes the artwork over white
+
+### Change
+- bump saved settings and config schema to `v20`
+- keep only `breath`, `heartlight`, and `shaderflow`
+- remove the stale P3, brightness, saturation, cloudmesh, softplasma, pulse, current, and emberveil implementation surface from the active prototype contract
+- keep every `.living-gradient` surface on an opaque middle-red base so transparent fields composite over red, not page white
+- reduce the right-panel controls to the parameters that affect each selected effect
+- drive Shader Flow from the same breath-cycle idea and keep its renderer/export path on red, deep red, and orange only
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- targeted scan confirmed the active prototype files no longer contain v19 storage/schema, removed mode implementations, P3 alternates, brightness/saturation controls, or the known washed-out intermediate red values
+- Playwright confirmed only three effect cards render: `breath`, `heartlight`, and `shaderflow`
+- Playwright confirmed Breath and Light Breath expose only cycle, breath depth, warm light, deep pressure, field size, soft falloff, colour intensity, surfaces, and motion/contrast controls
+- Playwright confirmed Shader Flow exposes only cycle, shader speed, shader rotation, warm light, deep pressure, warp/noise, shader blur, colour intensity, surfaces, and motion/contrast controls
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v20`
+- Playwright confirmed clean reload starts with no saved storage keys, Save Settings writes `aha-living-gradient-playground:v20`, and the saved value reloads
+- Playwright confirmed Export MP4 produced a shortened Shader Flow download named `aha-living-gradient-shaderflow-5.33s-loop.mp4`
+- Playwright confirmed `.living-gradient` computes an opaque `rgb(226, 0, 30)` base, with no desktop or mobile horizontal overflow and no console warnings or errors
+- screenshots saved to `output/playwright/aha-living-gradient-playground/v20-opaque-three-colour/`
+
+## 2026-06-29
+### Task
+- tune the v20 living-gradient modes so each one reaches the supplied red/deep/orange reference composition during its cycle
+
+### Change
+- increase the warm top-right peak while keeping the colour source limited to orange over the opaque middle-red base
+- move deep-red pressure lower-left so it supports the reference shadow shape without darkening the whole center
+- tighten the warm field geometry so the orange reads as an upper-right light state, not a full-surface wash
+- apply the same reference-match balance to CSS modes, Shader Flow, and MP4 export frames
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- reference image sampling established the target top-right average at approximately `(220, 97, 54)`
+- Playwright export-frame sampling at phase `0.4` confirmed all three modes reach the reference warm-top-right state:
+  - `breath`: top-right `(239, 102, 35)`
+  - `heartlight`: top-right `(239, 99, 34)`
+  - `shaderflow`: top-right `(239, 98, 34)`
+- Playwright confirmed only three mode cards, no horizontal overflow, opaque `rgb(226, 0, 30)` gradient backing, and zero console warnings or errors
+- controlled peak screenshots saved to `output/playwright/aha-living-gradient-playground/v20-reference-match/`
+
+## 2026-06-29
+### Task
+- add a slow-motion flame simulation to the living-gradient playground
+
+### Change
+- add `slowflame` / Slow Flame as a fourth shader-based mode
+- bump saved settings and config schema to `v21`
+- build the flame shader from the approved middle red, deep red, and orange only, with an opaque middle-red base and a heavily blurred rising plume
+- give Slow Flame a mode-specific control set: cycle, shader speed, warm light, deep pressure, field size, warp/noise, shader blur, colour intensity, surfaces, and motion/contrast
+- add Slow Flame support to Copy CSS, Copy Config, MP4 export rendering, reduced-motion fallback, and prototype lookup notes
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed the mode API renders `breath`, `heartlight`, `shaderflow`, and `slowflame`
+- Playwright confirmed Slow Flame exports schema `aha-living-gradient-playground/v21`, renders five WebGL shader canvases, shows no horizontal overflow, and keeps the computed gradient backing at opaque `rgb(226, 0, 30)`
+- Playwright confirmed Slow Flame exposes only its relevant controls and reduced motion disables shader canvases in favor of a static three-colour fallback
+- Playwright console check found zero warnings and zero errors
+- screenshot sampling of `output/playwright/aha-living-gradient-playground/v21-slow-flame/background-final-3.png` found top/right warm light, red center, deep lower-left, and no pale or white-ish pixels in the artwork crop
+
+## 2026-06-29
+### Task
+- rebuild the living-gradient playground around the flame direction only
+
+### Change
+- replace the legacy multi-effect runtime with one responsive flame shader and four presets: A, B, C, and D
+- remove the active blur control, CSS breath modes, Shader Flow branch, Slow Flame mode branch, and old shared mode plumbing
+- add flame-specific controls for scale, horizontal/vertical position, plume width/height, flame strength, cycle, evolution speed, rise, sway, organic edge, inner tongue, warm light, deep pressure, and colour intensity
+- add a compact in-demo explanation of how the shader works from an opaque middle-red base through noise masks, shadow, and orange light
+- keep Copy CSS, Copy Config, Save Settings, Reset, reduced-motion fallback, and MP4 export aligned to the single flame contract
+- update lookup notes to schema/storage `v22`
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed schema `aha-living-gradient-playground/v22`, visual mode `flame`, four preset cards, five WebGL shader canvases, no horizontal overflow on desktop or mobile, and zero console warnings/errors
+- Playwright confirmed Save Settings restores a saved preset on reload and Reset clears storage back to preset A
+- Playwright confirmed reduced motion disables shader canvases and uses a static three-colour flame fallback
+- screenshots saved to `output/playwright/aha-living-gradient-playground/v22-flame-presets/`
+
+## 2026-06-29
+### Task
+- make the single flame shader visibly faster and more evolutionary
+
+### Change
+- shorten preset cycles and raise default evolution speeds so A-D loop in roughly 9-14 seconds instead of 40-60 seconds
+- expand the Evolution speed control range to `0.4x` through `4.0x`
+- increase the shader's internal rising/noise multiplier so the organic flame edge and inner tongue visibly evolve within each loop
+- keep the schema at `v22` because the control contract is unchanged
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright confirmed preset export loop lengths now resolve to approximately `A 11.85s`, `B 9.33s`, `C 14.4s`, and `D 11.43s`
+- Playwright confirmed five shader canvases, schema `aha-living-gradient-playground/v22`, and no horizontal overflow
+
+## 2026-06-29
+### Task
+- make all flame preview examples show the same shader section
+
+### Change
+- remove per-surface aspect remapping so logo, button, card, and background sample the same normalized flame section
+- remove the surface-specific warm-light multiplier so the examples no longer vary intensity by surface type
+- keep the existing responsive canvas sizing; only the crop/mask changes per example
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- targeted scan confirmed no remaining `u_surface`, `surfaceWeight`, per-resolution aspect remap, or old shader mode references in the active prototype files
+- Playwright reload confirmed zero console warnings/errors
+- screenshot saved to `output/playwright/aha-living-gradient-playground/v22-same-section/full-preview.png`
+
+## 2026-06-29
+### Task
+- remove square-edged flame artifacts from the single shader
+
+### Change
+- replace the broad rectangular upper-light carrier with a tapered flame mask
+- constrain orange to the organic flame body and inner tongue instead of letting it form an independent top-right plateau
+- add noisy edge falloff, a narrowing plume, and a rounded tip structure so the visible shape behaves like flame rather than a square field
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright console check found zero warnings/errors
+- card and background screenshots saved to `output/playwright/aha-living-gradient-playground/v22-organic-flame/`
+
+## 2026-06-29
+### Task
+- add deeper flame shader controls and make blur adjustable
+
+### Change
+- bump saved settings and config schema to `v23`
+- add visible controls for taper, tip roundness, edge softness, warm spread, shadow reach, noise scale, spine wobble, tongue width, and shader blur
+- keep shader blur at `0px` by default, with the slider reaching `180px`
+- include the expanded shader controls in Copy CSS and Copy Config
+- include shader blur in the MP4 export render path
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed the expanded controls render for taper, tip roundness, edge softness, warm spread, shadow reach, noise scale, spine wobble, tongue width, and shader blur
+- Playwright confirmed shader blur defaults to `0px`, updates the live shader canvas to `blur(140px)` when adjusted, and exports through both Copy CSS and Copy Config under schema `aha-living-gradient-playground/v23`
+- Playwright console check found zero warnings/errors
+- screenshot saved to `output/playwright/aha-living-gradient-playground/v23-expanded-controls/blur-140.png`
+
+## 2026-06-29
+### Task
+- restore the orange colour event after the expanded flame controls made the default shader too red/deep
+
+### Change
+- bump saved settings and config schema to `v24` so stale `v23` local storage cannot keep the weaker orange defaults
+- raise the default warm-light and warm-spread presets
+- replace the overly constrained warm mask with noisy top/right flame lobes, a softer crown, and a restrained inner tongue
+- keep the orange inside the flame body so it does not return as a square field
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed clean `v24` defaults load with `Warm light 1.24`, `Warm spread 0.92`, and `Shader blur 0px`
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v24`
+- Playwright confirmed no horizontal overflow and zero console warnings/errors
+- screenshots saved to `output/playwright/aha-living-gradient-playground/v24-orange-restored/`
+
+## 2026-06-29
+### Task
+- add flame rotation control and allow much larger flame scaling
+
+### Change
+- bump saved settings and config schema to `v25`
+- add a `Rotation` slider from `-180deg` to `180deg`
+- wire rotation through preset values, CSS custom properties, Copy CSS, Copy Config, WebGL uniforms, and MP4 export
+- expand Overall scale, Plume width, and Plume height controls to a maximum of `5.00`
+- widen horizontal and vertical positioning from `-100%` to `200%` so oversized flames can be situated off-canvas
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed the Rotation slider ranges from `-180deg` to `180deg`
+- Playwright confirmed Overall scale, Plume width, and Plume height all reach `5.00`
+- Playwright confirmed horizontal and vertical position controls range from `-100%` to `200%`
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v25` with `flameRotation`, `flameScale`, `flameWidth`, and `flameHeight`
+- Playwright confirmed no horizontal overflow and zero console warnings/errors after setting rotation to `45deg` and scale/width/height to `5.00`
+- screenshot saved to `output/playwright/aha-living-gradient-playground/v25-rotation-scale/background-rotated-5x.png`

@@ -1,4 +1,5 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v17";
+const STORAGE_KEY = "aha-living-gradient-playground:v25";
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v25";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -14,191 +15,169 @@ const modeReadout = document.querySelector("[data-mode-readout]");
 
 const EXPORT_SIZE = 1080;
 const EXPORT_FPS = 30;
+const TAU = Math.PI * 2;
 const MP4_MIME_TYPES = [
   "video/mp4;codecs=avc1.42E01E",
   "video/mp4;codecs=avc1",
   "video/mp4;codecs=h264",
   "video/mp4",
 ];
-const TAU = Math.PI * 2;
 
-const fieldMarkup = {
-  "lg-field-red": '<span class="lg-field lg-field-red" aria-hidden="true"></span>',
-  "lg-field-red-alt": '<span class="lg-field lg-field-red-alt" aria-hidden="true"></span>',
-  "lg-field-deep": '<span class="lg-field lg-field-deep" aria-hidden="true"></span>',
-  "lg-field-warm": '<span class="lg-field lg-field-warm" aria-hidden="true"></span>',
-  "lg-field-veil": '<span class="lg-field lg-field-veil" aria-hidden="true"></span>',
-  "lg-field-cloud-a": '<span class="lg-field lg-field-cloud-a" aria-hidden="true"></span>',
-  "lg-field-cloud-b": '<span class="lg-field lg-field-cloud-b" aria-hidden="true"></span>',
-  "lg-field-cloud-c": '<span class="lg-field lg-field-cloud-c" aria-hidden="true"></span>',
-  "lg-field-cloud-d": '<span class="lg-field lg-field-cloud-d" aria-hidden="true"></span>',
-};
-
-const baseFields = ["lg-field-red", "lg-field-red-alt", "lg-field-deep", "lg-field-warm", "lg-field-veil"];
-const modeFields = {
-  breath: baseFields,
-  current: baseFields,
-  pulse: baseFields,
-  cloudmesh: [...baseFields, "lg-field-cloud-a", "lg-field-cloud-b", "lg-field-cloud-c", "lg-field-cloud-d"],
-  heartlight: baseFields,
-  emberveil: baseFields,
-  shaderflow: [],
-  softplasma: [],
-};
-const shaderModes = new Set(["shaderflow", "softplasma"]);
-const shaderSharedKeys = {
-  "motion-system": ["motionEnergy", "effectSize"],
-};
-
-const modes = [
+const presets = [
   {
-    value: "breath",
-    label: "Breath Field",
-    family: "Expansion",
-    accent: "warmth returns",
-    summary: "A slow red inhale with top-right warmth expanding like light.",
-    duration: 18,
-    parameterTitle: "Breath Parameters",
-    parameterKeys: ["duration", "revealStrength", "revealWindow", "revealPhase", "pulseIntensity", "rest", "warmWindow", "bloomX", "bloomY", "orangeIntensity", "redDominance", "deepStrength", "surfaceBlend", "scale", "fieldSpread", "softness", "driftDistance", "deepDrift"],
-    trimKeys: ["brightness", "saturation", "p3"],
+    id: "A",
+    label: "A",
+    name: "Calm Vertical",
+    summary: "A centered slow flame with restrained light and steady shadow.",
+    values: {
+      duration: 16,
+      evolutionSpeed: 1.35,
+      flameScale: 1.08,
+      flameRotation: 0,
+      flameX: 0.55,
+      flameY: 0.5,
+      flameWidth: 0.58,
+      flameHeight: 1.14,
+      flameStrength: 1.16,
+      taperPower: 1.28,
+      tipRoundness: 0.55,
+      edgeSoftness: 0.32,
+      warmLight: 1.24,
+      warmSpread: 0.92,
+      deepPressure: 1.14,
+      shadowReach: 1,
+      turbulence: 0.9,
+      noiseScale: 1,
+      rise: 0.68,
+      sway: 0.24,
+      spineWobble: 0.62,
+      tongue: 0.58,
+      tongueWidth: 1,
+      colorIntensity: 1.1,
+      shaderBlur: 0,
+    },
   },
   {
-    value: "current",
-    label: "Living Current",
-    family: "Travel",
-    accent: "oversized fields",
-    summary: "Large colour masses move gently while warmth stays dissipated.",
-    duration: 20,
-    parameterTitle: "Current Parameters",
-    parameterKeys: ["duration", "revealStrength", "revealWindow", "revealPhase", "warmWindow", "bloomX", "bloomY", "orangeIntensity", "redDominance", "deepStrength", "surfaceBlend", "scale", "fieldSpread", "softness", "driftDistance", "deepDrift"],
-    trimKeys: ["brightness", "saturation", "p3"],
+    id: "B",
+    label: "B",
+    name: "Upper Light",
+    summary: "More orange energy gathers near the top-right without washing the red.",
+    values: {
+      duration: 14,
+      evolutionSpeed: 1.5,
+      flameScale: 1.12,
+      flameRotation: -4,
+      flameX: 0.63,
+      flameY: 0.48,
+      flameWidth: 0.66,
+      flameHeight: 1.05,
+      flameStrength: 1.24,
+      taperPower: 1.18,
+      tipRoundness: 0.52,
+      edgeSoftness: 0.3,
+      warmLight: 1.3,
+      warmSpread: 1.08,
+      deepPressure: 1,
+      shadowReach: 0.88,
+      turbulence: 1.02,
+      noiseScale: 1.08,
+      rise: 0.78,
+      sway: 0.34,
+      spineWobble: 0.74,
+      tongue: 0.76,
+      tongueWidth: 0.92,
+      colorIntensity: 1.12,
+      shaderBlur: 0,
+    },
   },
   {
-    value: "pulse",
-    label: "Warm Pulse",
-    family: "Event",
-    accent: "periodic bloom",
-    summary: "Red rests while warmth rises as a softened top-right light.",
-    duration: 18,
-    parameterTitle: "Pulse Parameters",
-    parameterKeys: ["duration", "revealStrength", "revealWindow", "revealPhase", "pulseIntensity", "rest", "warmWindow", "bloomX", "bloomY", "orangeIntensity", "redDominance", "deepStrength", "surfaceBlend", "scale", "fieldSpread", "softness", "driftDistance", "deepDrift"],
-    trimKeys: ["brightness", "saturation", "p3"],
+    id: "C",
+    label: "C",
+    name: "Shadow Breath",
+    summary: "Deep red carries more weight while orange stays narrow and alive.",
+    values: {
+      duration: 18,
+      evolutionSpeed: 1.25,
+      flameScale: 1.1,
+      flameRotation: 3,
+      flameX: 0.52,
+      flameY: 0.54,
+      flameWidth: 0.6,
+      flameHeight: 1.18,
+      flameStrength: 1.18,
+      taperPower: 1.38,
+      tipRoundness: 0.64,
+      edgeSoftness: 0.28,
+      warmLight: 1.08,
+      warmSpread: 0.78,
+      deepPressure: 1.36,
+      shadowReach: 1.22,
+      turbulence: 1.12,
+      noiseScale: 1.16,
+      rise: 0.58,
+      sway: 0.22,
+      spineWobble: 0.56,
+      tongue: 0.54,
+      tongueWidth: 1.08,
+      colorIntensity: 1.12,
+      shaderBlur: 0,
+    },
   },
   {
-    value: "cloudmesh",
-    label: "Radial Cloud Mesh",
-    family: "Cloud",
-    accent: "radial drift",
-    summary: "Slow cloud fields overlap with a diffused warm upper edge.",
-    duration: 24,
-    parameterTitle: "Cloud Parameters",
-    parameterKeys: ["duration", "revealStrength", "revealWindow", "revealPhase", "warmWindow", "bloomX", "bloomY", "orangeIntensity", "redDominance", "deepStrength", "surfaceBlend", "scale", "fieldSpread", "softness", "driftDistance", "deepDrift", "meshBlur", "meshTension"],
-    trimKeys: ["brightness", "saturation", "p3"],
-  },
-  {
-    value: "shaderflow",
-    label: "Shader Flow",
-    family: "Shader",
-    accent: "warped colour ramp",
-    summary: "A procedural gradient map flows through soft domain-warped noise.",
-    duration: 16,
-    parameterTitle: "Shader Flow Parameters",
-    sharedKeys: shaderSharedKeys,
-    parameterKeys: ["shaderSpeed", "shaderRotation", "turbulence", "warpStrength", "colorCloseness", "warmEvent", "orangeIntensity", "deepPull", "deepStrength", "revealStrength", "shaderBlur", "renderScale"],
-    trimKeys: ["brightness", "saturation"],
-  },
-  {
-    value: "softplasma",
-    label: "Soft Plasma",
-    family: "Shader",
-    accent: "metaball warmth",
-    summary: "Soft plasma fields merge and dissolve through the AHA colour ramp.",
-    duration: 14,
-    parameterTitle: "Soft Plasma Parameters",
-    sharedKeys: shaderSharedKeys,
-    parameterKeys: ["shaderSpeed", "shaderRotation", "turbulence", "warpStrength", "colorCloseness", "warmEvent", "orangeIntensity", "deepPull", "deepStrength", "revealStrength", "shaderBlur", "renderScale"],
-    trimKeys: ["brightness", "saturation"],
-  },
-  {
-    value: "heartlight",
-    label: "Heartlight Beam",
-    family: "Light",
-    accent: "top-right beam",
-    summary: "Deep red carries the logo while a restrained orange light breathes in from above.",
-    duration: 26,
-    parameterTitle: "Heartlight Parameters",
-    parameterKeys: ["duration", "revealStrength", "revealWindow", "revealPhase", "warmWindow", "bloomX", "bloomY", "orangeIntensity", "redDominance", "deepStrength", "surfaceBlend", "scale", "fieldSpread", "softness", "driftDistance", "deepDrift"],
-    trimKeys: ["brightness", "saturation", "p3"],
-  },
-  {
-    value: "emberveil",
-    label: "Ember Veil",
-    family: "Veil",
-    accent: "slow tri-colour",
-    summary: "A quieter red/deep-red veil with minimal orange moving through the upper field.",
-    duration: 32,
-    parameterTitle: "Ember Veil Parameters",
-    parameterKeys: ["duration", "revealStrength", "revealWindow", "revealPhase", "warmWindow", "bloomX", "bloomY", "orangeIntensity", "redDominance", "deepStrength", "surfaceBlend", "scale", "fieldSpread", "softness", "driftDistance", "deepDrift"],
-    trimKeys: ["brightness", "saturation", "p3"],
+    id: "D",
+    label: "D",
+    name: "Wide Field",
+    summary: "A broader flame field for large backgrounds and cropped surfaces.",
+    values: {
+      duration: 16,
+      evolutionSpeed: 1.4,
+      flameScale: 1.24,
+      flameRotation: -8,
+      flameX: 0.6,
+      flameY: 0.5,
+      flameWidth: 0.86,
+      flameHeight: 1.02,
+      flameStrength: 1.14,
+      taperPower: 1.05,
+      tipRoundness: 0.42,
+      edgeSoftness: 0.38,
+      warmLight: 1.18,
+      warmSpread: 0.96,
+      deepPressure: 1.12,
+      shadowReach: 0.96,
+      turbulence: 0.82,
+      noiseScale: 0.9,
+      rise: 0.64,
+      sway: 0.28,
+      spineWobble: 0.52,
+      tongue: 0.46,
+      tongueWidth: 1.18,
+      colorIntensity: 1.1,
+      shaderBlur: 0,
+    },
   },
 ];
 
-const modeLabels = Object.fromEntries(modes.map((mode) => [mode.value, mode.label]));
-const modeDurations = Object.fromEntries(modes.map((mode) => [mode.value, mode.duration]));
+const presetById = new Map(presets.map((preset) => [preset.id, preset]));
 
-const controlDefinitions = {
-  duration: { key: "duration", label: "Cycle", type: "range", min: 4, max: 80, step: 1, default: 12, unit: "s" },
-  motionSpeed: { key: "motionSpeed", label: "Motion speed", type: "range", min: 0.35, max: 4.5, step: 0.01, default: 1.1 },
-  motionEnergy: { key: "motionEnergy", label: "Motion energy", type: "range", min: 0.25, max: 3.2, step: 0.01, default: 1.02 },
-  effectSize: { key: "effectSize", label: "Colour field size", type: "range", min: 0.35, max: 1.35, step: 0.01, default: 0.76 },
-  revealStrength: { key: "revealStrength", label: "Reveal strength", type: "range", min: 0, max: 1.65, step: 0.01, default: 0.72 },
-  revealWindow: { key: "revealWindow", label: "Reveal window", type: "range", min: 0.05, max: 0.72, step: 0.01, default: 0.46 },
-  revealPhase: { key: "revealPhase", label: "Reveal phase", type: "range", min: 0, max: 140, step: 0.25, default: 0, unit: "s" },
-  pulseIntensity: { key: "pulseIntensity", label: "Pulse rise", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.32 },
-  rest: { key: "rest", label: "Red rest", type: "range", min: 0, max: 95, step: 1, default: 34, unit: "%" },
-  phase: { key: "phase", label: "Phase offset", type: "range", min: 0, max: 140, step: 0.25, default: 0, unit: "s" },
-  warmWindow: { key: "warmWindow", label: "Warm window", type: "range", min: 0.08, max: 1.35, step: 0.01, default: 0.36 },
-  orangeIntensity: { key: "orangeIntensity", label: "Orange bloom", type: "range", min: 0, max: 1.7, step: 0.01, default: 0.92 },
-  redDominance: { key: "redDominance", label: "Red coverage", type: "range", min: 0.2, max: 1.3, step: 0.01, default: 1.08 },
-  deepStrength: { key: "deepStrength", label: "Deep pressure", type: "range", min: 0, max: 1.35, step: 0.01, default: 1.18 },
-  brightness: { key: "brightness", label: "Brightness", type: "range", min: 0.55, max: 1.55, step: 0.01, default: 1.1 },
-  saturation: { key: "saturation", label: "Saturation", type: "range", min: 0.45, max: 1.85, step: 0.01, default: 1.24 },
-  p3: { key: "p3", label: "P3 colour", type: "checkbox", default: false },
-  driftDistance: { key: "driftDistance", label: "Drift radius", type: "range", min: 0, max: 70, step: 1, default: 17, unit: "%" },
-  bloomX: { key: "bloomX", label: "Bloom X", type: "range", min: -60, max: 160, step: 1, default: 88, unit: "%" },
-  bloomY: { key: "bloomY", label: "Bloom Y", type: "range", min: -60, max: 160, step: 1, default: 6, unit: "%" },
-  scale: { key: "scale", label: "Field scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: 0.82 },
-  softness: { key: "softness", label: "Soft falloff", type: "range", min: 8, max: 180, step: 1, default: 64, unit: "%" },
-  fieldSpread: { key: "fieldSpread", label: "Field size", type: "range", min: 0.35, max: 2.2, step: 0.01, default: 0.72 },
-  meshTension: { key: "meshTension", label: "Field bend", type: "range", min: 0, max: 1.5, step: 0.01, default: 0.56 },
-  meshBlur: { key: "meshBlur", label: "Cloud blur", type: "range", min: 8, max: 180, step: 1, default: 64, unit: "px" },
-  deepDrift: { key: "deepDrift", label: "Deep drift", type: "range", min: 0, max: 90, step: 1, default: 26, unit: "%" },
-  surfaceBlend: { key: "surfaceBlend", label: "Field blend", type: "range", min: 0.35, max: 1.55, step: 0.01, default: 1.24 },
-  shaderSpeed: { key: "shaderSpeed", label: "Shader speed", type: "range", min: 0.1, max: 3, step: 0.01, default: 1.22 },
-  shaderRotation: { key: "shaderRotation", label: "Shader rotation", type: "range", min: -180, max: 180, step: 1, default: 0, unit: "deg" },
-  turbulence: { key: "turbulence", label: "Turbulence", type: "range", min: 0, max: 2.4, step: 0.01, default: 1.08 },
-  warpStrength: { key: "warpStrength", label: "Warp strength", type: "range", min: 0, max: 2.6, step: 0.01, default: 1.16 },
-  colorCloseness: { key: "colorCloseness", label: "Colour closeness", type: "range", min: 0.35, max: 1.9, step: 0.01, default: 0.72 },
-  warmEvent: { key: "warmEvent", label: "Warm event", type: "range", min: 0, max: 1.8, step: 0.01, default: 1.16 },
-  deepPull: { key: "deepPull", label: "Deep pull", type: "range", min: 0, max: 1.8, step: 0.01, default: 1.42 },
-  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 24, step: 1, default: 6, unit: "px" },
-  renderScale: { key: "renderScale", label: "Render scale", type: "range", min: 0.35, max: 1, step: 0.01, default: 0.65 },
-  "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
-  "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
-  "surfaces.button": { key: "surfaces.button", label: "Button", type: "checkbox", default: true },
-  "surfaces.card": { key: "surfaces.card", label: "Card", type: "checkbox", default: true },
-  "surfaces.background": { key: "surfaces.background", label: "Background", type: "checkbox", default: true },
-  reducedMotion: { key: "reducedMotion", label: "Reduced motion", type: "checkbox", default: false },
-  contrastSafe: { key: "contrastSafe", label: "Contrast safe", type: "checkbox", default: false },
-  paused: { key: "paused", label: "Paused", type: "checkbox", default: false },
-};
-
-const sharedControlGroups = [
+const controlGroups = [
   {
-    id: "motion-system",
-    title: "Motion System",
+    id: "flame-shape",
+    title: "Flame Shape",
     open: true,
-    keys: ["motionSpeed", "motionEnergy", "effectSize"],
+    keys: ["flameScale", "flameRotation", "flameX", "flameY", "flameWidth", "flameHeight", "flameStrength", "taperPower", "tipRoundness"],
+  },
+  {
+    id: "texture",
+    title: "Motion & Texture",
+    open: true,
+    keys: ["duration", "evolutionSpeed", "rise", "sway", "spineWobble", "turbulence", "noiseScale", "edgeSoftness", "tongue", "tongueWidth"],
+  },
+  {
+    id: "colour",
+    title: "Colour",
+    open: true,
+    keys: ["warmLight", "warmSpread", "deepPressure", "shadowReach", "colorIntensity", "shaderBlur"],
   },
   {
     id: "surfaces",
@@ -214,6 +193,42 @@ const sharedControlGroups = [
   },
 ];
 
+const controlDefinitions = {
+  duration: { key: "duration", label: "Cycle", type: "range", min: 6, max: 36, step: 1, default: 16, unit: "s" },
+  evolutionSpeed: { key: "evolutionSpeed", label: "Evolution speed", type: "range", min: 0.4, max: 4, step: 0.01, default: 1.35, unit: "x" },
+  flameScale: { key: "flameScale", label: "Overall scale", type: "range", min: 0.25, max: 5, step: 0.01, default: 1.08 },
+  flameRotation: { key: "flameRotation", label: "Rotation", type: "range", min: -180, max: 180, step: 1, default: 0, unit: "deg" },
+  flameX: { key: "flameX", label: "Horizontal position", type: "range", min: -1, max: 2, step: 0.01, default: 0.55 },
+  flameY: { key: "flameY", label: "Vertical position", type: "range", min: -1, max: 2, step: 0.01, default: 0.5 },
+  flameWidth: { key: "flameWidth", label: "Plume width", type: "range", min: 0.08, max: 5, step: 0.01, default: 0.58 },
+  flameHeight: { key: "flameHeight", label: "Plume height", type: "range", min: 0.16, max: 5, step: 0.01, default: 1.14 },
+  flameStrength: { key: "flameStrength", label: "Flame strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.16 },
+  taperPower: { key: "taperPower", label: "Taper", type: "range", min: 0.45, max: 2.6, step: 0.01, default: 1.28 },
+  tipRoundness: { key: "tipRoundness", label: "Tip roundness", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.55 },
+  warmLight: { key: "warmLight", label: "Warm light", type: "range", min: 0, max: 1.65, step: 0.01, default: 1.24 },
+  warmSpread: { key: "warmSpread", label: "Warm spread", type: "range", min: 0, max: 1.6, step: 0.01, default: 0.92 },
+  deepPressure: { key: "deepPressure", label: "Deep pressure", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.14 },
+  shadowReach: { key: "shadowReach", label: "Shadow reach", type: "range", min: 0, max: 1.8, step: 0.01, default: 1 },
+  turbulence: { key: "turbulence", label: "Organic edge", type: "range", min: 0, max: 1.8, step: 0.01, default: 0.9 },
+  edgeSoftness: { key: "edgeSoftness", label: "Edge softness", type: "range", min: 0.04, max: 0.9, step: 0.01, default: 0.32 },
+  noiseScale: { key: "noiseScale", label: "Noise scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: 1 },
+  rise: { key: "rise", label: "Rising pull", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.68 },
+  sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 1, step: 0.01, default: 0.24 },
+  spineWobble: { key: "spineWobble", label: "Spine wobble", type: "range", min: 0, max: 1.6, step: 0.01, default: 0.62 },
+  tongue: { key: "tongue", label: "Inner tongue", type: "range", min: 0, max: 1.2, step: 0.01, default: 0.58 },
+  tongueWidth: { key: "tongueWidth", label: "Tongue width", type: "range", min: 0.25, max: 2, step: 0.01, default: 1 },
+  colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: 1.1 },
+  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: 0, unit: "px" },
+  "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
+  "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
+  "surfaces.button": { key: "surfaces.button", label: "Button", type: "checkbox", default: true },
+  "surfaces.card": { key: "surfaces.card", label: "Card", type: "checkbox", default: true },
+  "surfaces.background": { key: "surfaces.background", label: "Background", type: "checkbox", default: true },
+  reducedMotion: { key: "reducedMotion", label: "Reduced motion", type: "checkbox", default: false },
+  contrastSafe: { key: "contrastSafe", label: "Contrast safe", type: "checkbox", default: false },
+  paused: { key: "paused", label: "Paused", type: "checkbox", default: false },
+};
+
 const controls = Object.values(controlDefinitions);
 const controlByKey = new Map(controls.map((control) => [control.key, control]));
 const defaultState = createDefaultState();
@@ -221,6 +236,7 @@ const defaultState = createDefaultState();
 let state = normalizeState(loadSavedState());
 let isRendering = false;
 let savedStateSnapshot = serializeState(state);
+
 const shaderRuntime = {
   items: new Map(),
   raf: 0,
@@ -230,58 +246,52 @@ const shaderRuntime = {
 
 const formatters = {
   duration: (value) => `${Math.round(value)}s`,
-  motionSpeed: (value) => `${value.toFixed(2)}x`,
-  motionEnergy: (value) => `${value.toFixed(2)}x`,
-  effectSize: (value) => value.toFixed(2),
-  revealStrength: (value) => value.toFixed(2),
-  revealWindow: (value) => value.toFixed(2),
-  revealPhase: (value) => `${Number(value).toFixed(value % 1 === 0 ? 0 : 2)}s`,
-  pulseIntensity: (value) => value.toFixed(2),
-  rest: (value) => `${Math.round(value)}%`,
-  phase: (value) => `${Number(value).toFixed(value % 1 === 0 ? 0 : 2)}s`,
-  warmWindow: (value) => value.toFixed(2),
-  orangeIntensity: (value) => value.toFixed(2),
-  redDominance: (value) => value.toFixed(2),
-  deepStrength: (value) => value.toFixed(2),
-  brightness: (value) => value.toFixed(2),
-  saturation: (value) => value.toFixed(2),
-  driftDistance: (value) => `${Math.round(value)}%`,
-  bloomX: (value) => `${Math.round(value)}%`,
-  bloomY: (value) => `${Math.round(value)}%`,
-  scale: (value) => value.toFixed(2),
-  softness: (value) => `${Math.round(value)}%`,
-  fieldSpread: (value) => value.toFixed(2),
-  meshTension: (value) => value.toFixed(2),
-  meshBlur: (value) => `${Math.round(value)}px`,
-  deepDrift: (value) => `${Math.round(value)}%`,
-  surfaceBlend: (value) => value.toFixed(2),
-  shaderSpeed: (value) => `${value.toFixed(2)}x`,
-  shaderRotation: (value) => `${Math.round(value)}deg`,
+  evolutionSpeed: (value) => `${value.toFixed(2)}x`,
+  flameScale: (value) => value.toFixed(2),
+  flameRotation: (value) => `${Math.round(value)}deg`,
+  flameX: (value) => `${Math.round(value * 100)}%`,
+  flameY: (value) => `${Math.round(value * 100)}%`,
+  flameWidth: (value) => value.toFixed(2),
+  flameHeight: (value) => value.toFixed(2),
+  flameStrength: (value) => value.toFixed(2),
+  taperPower: (value) => value.toFixed(2),
+  tipRoundness: (value) => value.toFixed(2),
+  warmLight: (value) => value.toFixed(2),
+  warmSpread: (value) => value.toFixed(2),
+  deepPressure: (value) => value.toFixed(2),
+  shadowReach: (value) => value.toFixed(2),
   turbulence: (value) => value.toFixed(2),
-  warpStrength: (value) => value.toFixed(2),
-  colorCloseness: (value) => value.toFixed(2),
-  warmEvent: (value) => value.toFixed(2),
-  deepPull: (value) => value.toFixed(2),
+  edgeSoftness: (value) => value.toFixed(2),
+  noiseScale: (value) => value.toFixed(2),
+  rise: (value) => value.toFixed(2),
+  sway: (value) => value.toFixed(2),
+  spineWobble: (value) => value.toFixed(2),
+  tongue: (value) => value.toFixed(2),
+  tongueWidth: (value) => value.toFixed(2),
+  colorIntensity: (value) => value.toFixed(2),
   shaderBlur: (value) => `${Math.round(value)}px`,
-  renderScale: (value) => value.toFixed(2),
 };
 
 function createDefaultState() {
-  const next = { mode: "breath" };
-
-  controls.forEach((control) => {
-    setNestedValue(next, control.key, control.default);
-  });
-
-  return next;
+  return {
+    preset: "A",
+    ...structuredClone(presetById.get("A").values),
+    surfaces: {
+      all: true,
+      logo: true,
+      button: true,
+      card: true,
+      background: true,
+    },
+    reducedMotion: false,
+    contrastSafe: false,
+    paused: false,
+  };
 }
 
 function renderPanel() {
-  const activeMode = getActiveMode();
-  const activeControlGroups = getActiveControlSchema(activeMode);
-
-  controlsRoot.innerHTML = `${renderModeOverview(activeMode)}${activeControlGroups.map((group) => {
-    const rows = group.controls.map(renderControl).join("");
+  controlsRoot.innerHTML = `${renderExplanation()}${renderPresetOverview()}${controlGroups.map((group) => {
+    const rows = group.keys.map((key) => controlDefinitions[key]).filter(Boolean).map(renderControl).join("");
     return `<details class="parameterizer-folder" ${group.open ? "open" : ""}>
       <summary class="parameterizer-folder-title">${group.title}</summary>
       <div class="parameterizer-folder-body">${rows}</div>
@@ -291,61 +301,26 @@ function renderPanel() {
   bindControls();
 }
 
-function getActiveMode() {
-  return modes.find((mode) => mode.value === state.mode) ?? modes[0];
+function renderExplanation() {
+  return `<section class="shader-explainer" aria-label="Shader explanation">
+    <div class="effect-overview-title">What this is showing</div>
+    <p>This demo is now one flame shader. A-D are presets that move the same sliders into different compositions.</p>
+    <p>The shader starts with an opaque AHA red field, builds a responsive flame mask from layered noise, then mixes in deep red for shadow and orange for the rising light. No white or extra red is used inside the animated artwork.</p>
+  </section>`;
 }
 
-function getActiveControlSchema(activeMode) {
-  const trimControls = activeMode.trimKeys
-    .filter((key) => !activeMode.parameterKeys.includes(key))
-    .map((key) => controlDefinitions[key])
-    .filter(Boolean);
-  const mappedSharedGroups = sharedControlGroups
-    .map((group) => ({
-      ...group,
-      controls: (activeMode.sharedKeys?.[group.id] ?? group.keys)
-        .map((key) => controlDefinitions[key])
-        .filter(Boolean),
-    }))
-    .filter((group) => group.controls.length > 0);
-  const primarySharedGroup = mappedSharedGroups[0];
-  const secondarySharedGroups = mappedSharedGroups.slice(1);
-  const effectParameterGroup = {
-    id: `${activeMode.value}-parameters`,
-    title: activeMode.parameterTitle,
-    open: true,
-    controls: activeMode.parameterKeys
-      .map((key) => controlDefinitions[key])
-      .filter(Boolean),
-  };
-  const trimGroup = {
-    id: `${activeMode.value}-trim`,
-    title: "Colour Trim",
-    open: true,
-    controls: trimControls,
-  };
-
-  return [
-    ...(primarySharedGroup ? [primarySharedGroup] : []),
-    effectParameterGroup,
-    ...(trimGroup.controls.length ? [trimGroup] : []),
-    ...secondarySharedGroups,
-  ];
-}
-
-function renderModeOverview(activeMode) {
-  const cards = modes.map((mode) => {
-    const active = mode.value === activeMode.value;
-    return `<button class="effect-card${active ? " is-active" : ""}" type="button" data-mode-card="${mode.value}" aria-pressed="${active}">
-      <span class="effect-card-kicker">${mode.family}</span>
-      <strong>${mode.label}</strong>
-      <span class="effect-card-summary">${mode.summary}</span>
-      <span class="effect-card-meta">${mode.duration}s · ${mode.accent}</span>
+function renderPresetOverview() {
+  const cards = presets.map((preset) => {
+    const active = preset.id === state.preset;
+    return `<button class="effect-card${active ? " is-active" : ""}" type="button" data-preset-card="${preset.id}" aria-pressed="${active}">
+      <span class="effect-card-kicker">Preset ${preset.label}</span>
+      <strong>${preset.name}</strong>
+      <span class="effect-card-summary">${preset.summary}</span>
     </button>`;
   }).join("");
 
-  return `<section class="effect-overview" aria-label="Effect overview">
-    <div class="effect-overview-title">Effects</div>
+  return `<section class="effect-overview" aria-label="Flame presets">
+    <div class="effect-overview-title">Presets</div>
     <div class="effect-card-grid">${cards}</div>
   </section>`;
 }
@@ -370,13 +345,9 @@ function renderControl(control) {
 }
 
 function bindControls() {
-  controlsRoot.querySelectorAll("[data-mode-card]").forEach((card) => {
+  controlsRoot.querySelectorAll("[data-preset-card]").forEach((card) => {
     card.addEventListener("click", (event) => {
-      const nextMode = event.currentTarget.dataset.modeCard;
-      if (nextMode === state.mode) return;
-
-      state.mode = nextMode;
-      state.duration = modeDurations[nextMode] ?? state.duration;
+      applyPreset(event.currentTarget.dataset.presetCard);
       markStateDirty();
       renderPanel();
       render();
@@ -394,10 +365,10 @@ function bindControls() {
       if (definition.type === "checkbox") value = event.currentTarget.checked;
 
       setStateValue(key, value);
-
-      if (key === "surfaces.all") {
-        syncSurfaceDisabledState();
+      if (!key.startsWith("surfaces.") && key !== "reducedMotion" && key !== "contrastSafe" && key !== "paused") {
+        state.preset = getMatchingPresetId() ?? "Custom";
       }
+      if (key === "surfaces.all") syncSurfaceDisabledState();
 
       markStateDirty();
       render();
@@ -405,39 +376,23 @@ function bindControls() {
   });
 }
 
-function syncControlValues() {
-  isRendering = true;
-
-  controlsRoot.querySelectorAll("[data-control-key]").forEach((control) => {
-    const key = control.dataset.controlKey;
-    const value = getStateValue(key);
-
-    if (control.type === "checkbox") {
-      control.checked = Boolean(value);
-    } else {
-      control.value = value;
-    }
+function applyPreset(presetId) {
+  const preset = presetById.get(presetId);
+  if (!preset) return;
+  state.preset = preset.id;
+  Object.entries(preset.values).forEach(([key, value]) => {
+    setStateValue(key, value);
   });
+}
 
-  controlsRoot.querySelectorAll("[data-value-for]").forEach((output) => {
-    const key = output.dataset.valueFor;
-    const value = getStateValue(key);
-    output.textContent = formatValue(key, value);
-  });
-
-  controlsRoot.querySelectorAll("[data-mode-card]").forEach((card) => {
-    const isActive = card.dataset.modeCard === state.mode;
-    card.classList.toggle("is-active", isActive);
-    card.setAttribute("aria-pressed", String(isActive));
-  });
-
-  syncSurfaceDisabledState();
-  isRendering = false;
+function getMatchingPresetId() {
+  return presets.find((preset) => Object.entries(preset.values).every(([key, value]) => {
+    return Math.abs(Number(getStateValue(key)) - Number(value)) < 0.001;
+  }))?.id;
 }
 
 function getStateValue(key) {
   if (!key.includes(".")) return state[key];
-
   const [root, child] = key.split(".");
   return state[root]?.[child];
 }
@@ -447,173 +402,92 @@ function setStateValue(key, value) {
     state[key] = value;
     return;
   }
-
   const [root, child] = key.split(".");
+  if (!state[root]) state[root] = {};
   state[root][child] = value;
 }
 
-function setProperty(name, value) {
-  prototype.style.setProperty(name, value);
+function setNestedValue(target, key, value) {
+  if (!key.includes(".")) {
+    target[key] = value;
+    return;
+  }
+  const [root, child] = key.split(".");
+  if (!target[root]) target[root] = {};
+  target[root][child] = value;
 }
 
-function getDerivedMetrics() {
-  const restFactor = clamp(1 - state.rest / 145, 0.38, 1);
-  const duration = clamp(state.duration / state.motionSpeed, 2.5, 180);
-  const motionEnergy = state.motionEnergy;
-  const sizeFactor = state.effectSize;
-  const orangePeak = clamp((0.2 + state.orangeIntensity * (0.72 + state.pulseIntensity * 0.84)) * state.warmWindow, 0, 0.88);
-  const warmPeak = clamp(orangePeak * state.surfaceBlend, 0, 0.82);
-  const warmPeakSoft = clamp(warmPeak * 0.84, 0, 0.68);
-  const warmAmbient = clamp(state.orangeIntensity * 0.07 * restFactor, 0, 0.11);
-  const warmRevealOpacity = clamp(warmPeak + state.revealStrength * 0.38, 0, 1);
-  const warmRevealShoulder = clamp(warmAmbient + warmRevealOpacity * state.revealWindow * 1.28, warmAmbient, 0.72);
-  const redFieldOpacity = clamp((0.68 + state.redDominance * 0.24) * state.surfaceBlend, 0.62, 0.98);
-  const redAltOpacity = clamp((0.3 + state.redDominance * 0.36) * state.surfaceBlend, 0.26, 0.86);
-  const deepAlpha = clamp((0.46 + state.deepStrength * 0.74) * state.surfaceBlend, 0.38, 1);
-  const deepAlphaSoft = clamp(deepAlpha * 0.86, 0.26, 0.94);
-  const deepRevealOpacity = clamp(deepAlpha + state.revealStrength * 0.22, 0.42, 1);
-  const deepRevealShoulder = clamp(deepAlphaSoft + state.revealWindow * 0.34, 0.24, 0.96);
-  const blur = Math.round(clamp(state.softness * 0.47 * clamp(0.7 + sizeFactor * 0.2, 0.72, 1.02), 6, 78));
-  const fieldSize = Math.round(clamp((108 + state.fieldSpread * 38) * sizeFactor, 78, 190));
-  const fieldScale = clamp((0.9 + state.scale * 0.22) * clamp(0.86 + sizeFactor * 0.1, 0.88, 1.01), 0.86, 1.42);
-  const deepFieldScale = clamp(fieldScale + state.deepStrength * 0.16, 1.08, 1.72);
-  const driftX = Math.round(state.driftDistance * motionEnergy);
-  const driftY = Math.round(state.driftDistance * -0.72);
-  const driftYEnergy = Math.round(driftY * motionEnergy);
-  const meshScale = clamp(1.1 + state.meshTension * 0.34 + (motionEnergy - 1) * 0.08, 1.04, 1.58);
-  const meshTilt = Math.round((-14 + state.meshTension * 34) * clamp(motionEnergy, 0.55, 1.9));
-  return {
-    duration,
-    motionEnergy,
-    sizeFactor,
-    orangePeak,
-    warmPeak,
-    warmPeakSoft,
-    warmAmbient,
-    warmRevealOpacity,
-    warmRevealShoulder,
-    redFieldOpacity,
-    redAltOpacity,
-    deepAlpha,
-    deepAlphaSoft,
-    deepRevealOpacity,
-    deepRevealShoulder,
-    blur,
-    fieldSize,
-    fieldScale,
-    deepFieldScale,
-    driftX,
-    driftYEnergy,
-    meshScale,
-    meshTilt,
-  };
+function syncControlValues() {
+  isRendering = true;
+
+  controlsRoot.querySelectorAll("[data-control-key]").forEach((control) => {
+    const key = control.dataset.controlKey;
+    const value = getStateValue(key);
+    if (control.type === "checkbox") {
+      control.checked = Boolean(value);
+    } else {
+      control.value = value;
+    }
+  });
+
+  controlsRoot.querySelectorAll("[data-value-for]").forEach((output) => {
+    const key = output.dataset.valueFor;
+    output.textContent = formatValue(key, getStateValue(key));
+  });
+
+  controlsRoot.querySelectorAll("[data-preset-card]").forEach((card) => {
+    const isActive = card.dataset.presetCard === state.preset;
+    card.classList.toggle("is-active", isActive);
+    card.setAttribute("aria-pressed", String(isActive));
+  });
+
+  syncSurfaceDisabledState();
+  isRendering = false;
+}
+
+function syncSurfaceDisabledState() {
+  controlsRoot.querySelectorAll('[data-control-key^="surfaces."]:not([data-control-key="surfaces.all"])').forEach((toggle) => {
+    toggle.disabled = !state.surfaces.all;
+  });
 }
 
 function updateDerivedVariables() {
-  const metrics = getDerivedMetrics();
-  setProperty("--lg-duration", `${metrics.duration.toFixed(2)}s`);
-  setProperty("--lg-authored-duration", `${state.duration}s`);
-  setProperty("--lg-motion-speed", state.motionSpeed.toFixed(2));
-  setProperty("--lg-motion-energy", state.motionEnergy.toFixed(2));
-  setProperty("--lg-effect-size", state.effectSize.toFixed(2));
-  setProperty("--lg-orange-intensity", state.orangeIntensity.toFixed(2));
-  setProperty("--lg-red-dominance", state.redDominance.toFixed(2));
-  setProperty("--lg-deep-strength", state.deepStrength.toFixed(2));
-  setProperty("--lg-brightness", state.brightness.toFixed(2));
-  setProperty("--lg-saturation", state.saturation.toFixed(2));
-  setProperty("--lg-drift-distance", state.driftDistance.toString());
-  setProperty("--lg-bloom-x", `${state.bloomX}%`);
-  setProperty("--lg-bloom-y", `${state.bloomY}%`);
-  setProperty("--lg-scale", state.scale.toFixed(2));
-  setProperty("--lg-softness", state.softness.toString());
-  setProperty("--lg-rest", (state.rest / 100).toFixed(2));
-  setProperty("--lg-phase", `${state.phase}s`);
-  setProperty("--lg-reveal-strength", state.revealStrength.toFixed(2));
-  setProperty("--lg-reveal-window", state.revealWindow.toFixed(2));
-  setProperty("--lg-reveal-phase", `${state.revealPhase}s`);
-  setProperty("--lg-warm-window", state.warmWindow.toFixed(2));
-  setProperty("--lg-field-spread", state.fieldSpread.toFixed(2));
-  setProperty("--lg-field-size", `${metrics.fieldSize}%`);
-  setProperty("--lg-mesh-tension", state.meshTension.toFixed(2));
-  setProperty("--lg-mesh-blur", `${state.meshBlur}px`);
-  setProperty("--lg-deep-drift", `${state.deepDrift}%`);
-  setProperty("--lg-surface-blend", state.surfaceBlend.toFixed(2));
-  setProperty("--lg-orange-alpha", metrics.warmPeak.toFixed(3));
-  setProperty("--lg-orange-alpha-soft", metrics.warmPeakSoft.toFixed(3));
-  setProperty("--lg-pulse-alpha", metrics.warmPeak.toFixed(3));
-  setProperty("--lg-pulse-alpha-soft", metrics.warmPeakSoft.toFixed(3));
-  setProperty("--lg-deep-alpha", metrics.deepAlpha.toFixed(3));
-  setProperty("--lg-blur", `${metrics.blur}px`);
-  setProperty("--lg-field-blur", `${metrics.blur}px`);
-  setProperty("--lg-field-scale", metrics.fieldScale.toFixed(2));
-  setProperty("--lg-field-scale-deep", metrics.deepFieldScale.toFixed(2));
-  setProperty("--lg-red-field-opacity", metrics.redFieldOpacity.toFixed(3));
-  setProperty("--lg-red-alt-opacity", metrics.redAltOpacity.toFixed(3));
-  setProperty("--lg-warm-peak", metrics.warmPeak.toFixed(3));
-  setProperty("--lg-warm-peak-soft", metrics.warmPeakSoft.toFixed(3));
-  setProperty("--lg-warm-ambient", metrics.warmAmbient.toFixed(3));
-  setProperty("--lg-warm-reveal-opacity", metrics.warmRevealOpacity.toFixed(3));
-  setProperty("--lg-warm-reveal-shoulder", metrics.warmRevealShoulder.toFixed(3));
-  setProperty("--lg-deep-field-opacity", metrics.deepAlpha.toFixed(3));
-  setProperty("--lg-deep-field-opacity-soft", metrics.deepAlphaSoft.toFixed(3));
-  setProperty("--lg-deep-reveal-opacity", metrics.deepRevealOpacity.toFixed(3));
-  setProperty("--lg-deep-reveal-shoulder", metrics.deepRevealShoulder.toFixed(3));
-  setProperty("--lg-drift-x", `${metrics.driftX}%`);
-  setProperty("--lg-drift-y", `${metrics.driftYEnergy}%`);
-  setProperty("--lg-drift-x-neg", `${metrics.driftX * -1}%`);
-  setProperty("--lg-drift-y-neg", `${metrics.driftYEnergy * -1}%`);
-  setProperty("--lg-mesh-scale", metrics.meshScale.toFixed(2));
-  setProperty("--lg-mesh-tilt", `${metrics.meshTilt}deg`);
-  setProperty("--lg-shader-speed", state.shaderSpeed.toFixed(2));
-  setProperty("--lg-shader-rotation", `${state.shaderRotation}deg`);
-  setProperty("--lg-shader-turbulence", state.turbulence.toFixed(2));
-  setProperty("--lg-shader-warp", state.warpStrength.toFixed(2));
-  setProperty("--lg-color-closeness", state.colorCloseness.toFixed(2));
-  setProperty("--lg-warm-event", state.warmEvent.toFixed(2));
-  setProperty("--lg-deep-pull", state.deepPull.toFixed(2));
-  setProperty("--lg-shader-blur", `${state.shaderBlur}px`);
-  setProperty("--lg-render-scale", state.renderScale.toFixed(2));
-}
-
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function formatValue(key, value) {
-  return formatters[key] ? formatters[key](Number(value)) : String(value);
-}
-
-function applyMode(mode) {
-  const activeMode = shaderModes.has(mode) && !canUseWebGL() ? "cloudmesh" : mode;
-  state.mode = mode;
-  prototype.dataset.mode = activeMode;
-  modeReadout.textContent = activeMode === mode ? modeLabels[mode] : `${modeLabels[mode]} unavailable`;
-  gradients.forEach((surface) => {
-    surface.dataset.mode = activeMode;
-  });
-  ensureGradientFields(activeMode);
-}
-
-function ensureGradientFields(mode = state.mode) {
-  const fields = modeFields[mode] ?? baseFields;
-  const fieldSet = fields.join(" ");
-  const template = fields.map((field) => fieldMarkup[field]).join("");
-
-  gradients.forEach((surface) => {
-    if (surface.dataset.fieldSet === fieldSet) return;
-    surface.querySelectorAll(".lg-field").forEach((field) => field.remove());
-    surface.insertAdjacentHTML("afterbegin", template);
-    surface.dataset.fieldSet = fieldSet;
-  });
-
-  prototype.classList.add("is-fields-ready");
+  prototype.style.setProperty("--lg-duration", `${state.duration.toFixed(2)}s`);
+  prototype.style.setProperty("--lg-evolution-speed", state.evolutionSpeed.toFixed(2));
+  prototype.style.setProperty("--lg-flame-scale", state.flameScale.toFixed(2));
+  prototype.style.setProperty("--lg-flame-rotation", `${Math.round(state.flameRotation)}deg`);
+  prototype.style.setProperty("--lg-flame-x", `${Math.round(state.flameX * 100)}%`);
+  prototype.style.setProperty("--lg-flame-y", `${Math.round(state.flameY * 100)}%`);
+  prototype.style.setProperty("--lg-flame-width", state.flameWidth.toFixed(2));
+  prototype.style.setProperty("--lg-flame-height", state.flameHeight.toFixed(2));
+  prototype.style.setProperty("--lg-flame-strength", state.flameStrength.toFixed(2));
+  prototype.style.setProperty("--lg-taper-power", state.taperPower.toFixed(2));
+  prototype.style.setProperty("--lg-tip-roundness", state.tipRoundness.toFixed(2));
+  prototype.style.setProperty("--lg-warm-light", state.warmLight.toFixed(2));
+  prototype.style.setProperty("--lg-warm-spread", state.warmSpread.toFixed(2));
+  prototype.style.setProperty("--lg-deep-pressure", state.deepPressure.toFixed(2));
+  prototype.style.setProperty("--lg-shadow-reach", state.shadowReach.toFixed(2));
+  prototype.style.setProperty("--lg-organic-edge", state.turbulence.toFixed(2));
+  prototype.style.setProperty("--lg-edge-softness", state.edgeSoftness.toFixed(2));
+  prototype.style.setProperty("--lg-noise-scale", state.noiseScale.toFixed(2));
+  prototype.style.setProperty("--lg-rise", state.rise.toFixed(2));
+  prototype.style.setProperty("--lg-sway", state.sway.toFixed(2));
+  prototype.style.setProperty("--lg-spine-wobble", state.spineWobble.toFixed(2));
+  prototype.style.setProperty("--lg-inner-tongue", state.tongue.toFixed(2));
+  prototype.style.setProperty("--lg-tongue-width", state.tongueWidth.toFixed(2));
+  prototype.style.setProperty("--lg-color-intensity", state.colorIntensity.toFixed(2));
+  prototype.style.setProperty("--lg-shader-blur", `${Math.round(state.shaderBlur)}px`);
 }
 
 function applyFlags() {
-  prototype.dataset.p3 = String(state.p3);
+  prototype.dataset.preset = state.preset;
+  modeReadout.textContent = state.preset === "Custom" ? "Custom" : `Preset ${state.preset}`;
   prototype.classList.toggle("is-reduced-motion", state.reducedMotion);
   prototype.classList.toggle("is-contrast-safe", state.contrastSafe);
   prototype.classList.toggle("is-paused", state.paused);
+  gradients.forEach((surface) => {
+    surface.dataset.mode = "flame";
+  });
 }
 
 function applySurfaceToggles() {
@@ -625,15 +499,8 @@ function applySurfaceToggles() {
   });
 }
 
-function syncSurfaceDisabledState() {
-  controlsRoot.querySelectorAll('[data-control-key^="surfaces."]:not([data-control-key="surfaces.all"])').forEach((toggle) => {
-    toggle.disabled = !state.surfaces.all;
-  });
-}
-
 function canUseWebGL() {
   if (shaderRuntime.webglAvailable !== null) return shaderRuntime.webglAvailable;
-
   const canvas = document.createElement("canvas");
   const gl = canvas.getContext("webgl", {
     alpha: false,
@@ -647,20 +514,18 @@ function canUseWebGL() {
 }
 
 function updateShaderRuntime() {
-  const active = shaderModes.has(state.mode) && canUseWebGL() && !state.reducedMotion;
+  const active = canUseWebGL() && !state.reducedMotion;
   const globalEnabled = state.surfaces.all;
 
   gradients.forEach((surface) => {
     const surfaceName = surface.dataset.surface;
     const enabled = active && globalEnabled && state.surfaces[surfaceName];
     surface.classList.toggle("has-shader", enabled);
-
     if (enabled) {
       ensureShaderSurface(surface);
-      return;
+    } else {
+      destroyShaderSurface(surface);
     }
-
-    destroyShaderSurface(surface);
   });
 
   drawShadersOnce();
@@ -719,18 +584,30 @@ function ensureShaderSurface(surface) {
     uniforms: {
       resolution: gl.getUniformLocation(program, "u_resolution"),
       time: gl.getUniformLocation(program, "u_time"),
-      mode: gl.getUniformLocation(program, "u_mode"),
+      cycle: gl.getUniformLocation(program, "u_cycle"),
       speed: gl.getUniformLocation(program, "u_speed"),
+      scale: gl.getUniformLocation(program, "u_scale"),
       rotation: gl.getUniformLocation(program, "u_rotation"),
-      turbulence: gl.getUniformLocation(program, "u_turbulence"),
-      warp: gl.getUniformLocation(program, "u_warp"),
-      closeness: gl.getUniformLocation(program, "u_closeness"),
+      flameX: gl.getUniformLocation(program, "u_flame_x"),
+      flameY: gl.getUniformLocation(program, "u_flame_y"),
+      flameWidth: gl.getUniformLocation(program, "u_flame_width"),
+      flameHeight: gl.getUniformLocation(program, "u_flame_height"),
+      flameStrength: gl.getUniformLocation(program, "u_flame_strength"),
+      taperPower: gl.getUniformLocation(program, "u_taper_power"),
+      tipRoundness: gl.getUniformLocation(program, "u_tip_roundness"),
       warm: gl.getUniformLocation(program, "u_warm"),
+      warmSpread: gl.getUniformLocation(program, "u_warm_spread"),
       deep: gl.getUniformLocation(program, "u_deep"),
-      reveal: gl.getUniformLocation(program, "u_reveal"),
+      shadowReach: gl.getUniformLocation(program, "u_shadow_reach"),
+      turbulence: gl.getUniformLocation(program, "u_turbulence"),
+      edgeSoftness: gl.getUniformLocation(program, "u_edge_softness"),
+      noiseScale: gl.getUniformLocation(program, "u_noise_scale"),
+      rise: gl.getUniformLocation(program, "u_rise"),
+      sway: gl.getUniformLocation(program, "u_sway"),
+      spineWobble: gl.getUniformLocation(program, "u_spine_wobble"),
+      tongue: gl.getUniformLocation(program, "u_tongue"),
+      tongueWidth: gl.getUniformLocation(program, "u_tongue_width"),
       energy: gl.getUniformLocation(program, "u_energy"),
-      size: gl.getUniformLocation(program, "u_size"),
-      surface: gl.getUniformLocation(program, "u_surface"),
     },
   });
 }
@@ -738,7 +615,6 @@ function ensureShaderSurface(surface) {
 function destroyShaderSurface(surface) {
   const item = shaderRuntime.items.get(surface);
   if (!item) return;
-
   item.canvas.remove();
   shaderRuntime.items.delete(surface);
 }
@@ -750,22 +626,34 @@ const shaderFragmentSource = `
 
   uniform vec2 u_resolution;
   uniform float u_time;
-  uniform int u_mode;
+  uniform float u_cycle;
   uniform float u_speed;
+  uniform float u_scale;
   uniform float u_rotation;
-  uniform float u_turbulence;
-  uniform float u_warp;
-  uniform float u_closeness;
+  uniform float u_flame_x;
+  uniform float u_flame_y;
+  uniform float u_flame_width;
+  uniform float u_flame_height;
+  uniform float u_flame_strength;
+  uniform float u_taper_power;
+  uniform float u_tip_roundness;
   uniform float u_warm;
+  uniform float u_warm_spread;
   uniform float u_deep;
-  uniform float u_reveal;
+  uniform float u_shadow_reach;
+  uniform float u_turbulence;
+  uniform float u_edge_softness;
+  uniform float u_noise_scale;
+  uniform float u_rise;
+  uniform float u_sway;
+  uniform float u_spine_wobble;
+  uniform float u_tongue;
+  uniform float u_tongue_width;
   uniform float u_energy;
-  uniform float u_size;
-  uniform float u_surface;
 
   const vec3 AHA_ORANGE = vec3(0.941, 0.424, 0.137);
-  const vec3 AHA_RED = vec3(0.78, 0.018, 0.084);
-  const vec3 AHA_DEEP = vec3(0.533, 0.067, 0.071);
+  const vec3 AHA_RED = vec3(0.886, 0.0, 0.118);
+  const vec3 AHA_DEEP = vec3(0.322, 0.008, 0.031);
 
   float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -776,7 +664,7 @@ const shaderFragmentSource = `
     vec2 f = fract(p);
     vec2 u = f * f * (3.0 - 2.0 * f);
     return mix(
-      mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
+      mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
       mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
       u.y
     );
@@ -787,97 +675,83 @@ const shaderFragmentSource = `
     float amplitude = 0.5;
     for (int i = 0; i < 5; i++) {
       value += amplitude * noise(p);
-      p *= 2.02;
+      p *= 2.03;
       amplitude *= 0.52;
     }
     return value;
   }
 
-  float softEvent(float t) {
-    float phase = fract(t * 0.075);
-    float up = smoothstep(0.30, 0.48, phase);
-    float down = 1.0 - smoothstep(0.58, 0.82, phase);
-    return up * down;
+  float breathSignal(float t) {
+    float phase = fract(t * max(u_speed, 0.01) / max(u_cycle, 1.0));
+    float inhale = smoothstep(0.1, 0.42, phase);
+    float exhale = 1.0 - smoothstep(0.58, 0.94, phase);
+    return inhale * exhale;
   }
 
-  float gaussian(vec2 uv, vec2 center, float radius) {
-    vec2 diff = uv - center;
-    return exp(-dot(diff, diff) / max(radius, 0.001));
-  }
+  vec3 flame(vec2 uv, float t) {
+    float aspect = 1.0;
+    float breath = breathSignal(t);
+    float riseTime = t * 0.18 * max(u_speed, 0.08) * max(u_rise, 0.02);
+    vec2 center = vec2(u_flame_x, u_flame_y);
+    vec2 p = uv - center;
+    p.x *= aspect;
+    float rotation = radians(u_rotation);
+    float s = sin(rotation);
+    float c = cos(rotation);
+    p = vec2(c * p.x - s * p.y, s * p.x + c * p.y);
+    p /= max(u_scale, 0.01);
 
-  vec2 rotateUv(vec2 uv, float degrees) {
-    float angle = radians(degrees);
-    float c = cos(angle);
-    float s = sin(angle);
-    vec2 p = uv - 0.5;
-    return vec2(p.x * c - p.y * s, p.x * s + p.y * c) + 0.5;
-  }
+    float vertical = clamp((p.y / max(u_flame_height, 0.01)) + 0.56, 0.0, 1.0);
+    float activeHeight = smoothstep(0.0, 0.14, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
+    float taper = mix(max(u_flame_width, 0.01), max(u_flame_width, 0.01) * 0.13, pow(vertical, max(u_taper_power, 0.01)));
+    float noiseScale = max(u_noise_scale, 0.01);
+    float spineNoise = fbm(vec2(vertical * 2.2 * noiseScale - riseTime, riseTime * 1.15));
+    float spine = (spineNoise - 0.5) * taper * u_spine_wobble * u_sway;
+    float x = p.x - spine;
+    float edge = abs(x) / max(taper, 0.001);
+    float slowNoise = fbm(vec2(x * 2.4 * noiseScale, vertical * 2.1 * noiseScale - riseTime));
+    float edgeNoise = fbm(vec2(x * 5.6 * noiseScale + riseTime * 0.8, vertical * 5.8 * noiseScale - riseTime * 2.4));
+    float noisyEdge = edge - (slowNoise - 0.5) * 0.34 * u_turbulence - (edgeNoise - 0.5) * 0.14 * u_turbulence;
+    float edgeStart = clamp(0.78 - u_edge_softness * 0.42, 0.24, 0.95);
+    float edgeEnd = clamp(edgeStart + u_edge_softness, edgeStart + 0.04, 1.45);
+    float body = (1.0 - smoothstep(edgeStart, edgeEnd, noisyEdge)) * activeHeight * u_flame_strength;
+    float tipRound = 1.0 - smoothstep(0.0, 1.0, length(vec2(x / max(taper * 0.7, 0.001), (vertical - 0.88) / 0.18)));
+    body = clamp(max(body, tipRound * 0.38 * u_tip_roundness) * (1.0 - smoothstep(0.98, 1.0, vertical)), 0.0, 1.0);
 
-  vec3 rampColour(float value, float warmMask, float deepMask) {
-    float redBand = smoothstep(0.1, 0.82, value);
-    vec3 color = mix(AHA_DEEP, AHA_RED, redBand);
-    color = mix(color, AHA_ORANGE, clamp(warmMask, 0.0, 0.58));
-    color = mix(color, AHA_DEEP, clamp(deepMask, 0.0, 1.0));
-    return color;
-  }
+    float tongueCenter = spine + taper * 0.08 + (fbm(vec2(vertical * 4.2 * noiseScale - riseTime * 0.9, riseTime)) - 0.5) * taper * 0.42;
+    float tongueWidth = max(taper * (0.22 + (1.0 - vertical) * 0.24) * u_tongue_width, 0.006);
+    float tongueShape = 1.0 - smoothstep(0.32, 1.18, abs(p.x - tongueCenter) / tongueWidth);
+    float tongue = tongueShape * body * smoothstep(0.12, 0.76, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
 
-  vec3 shaderFlow(vec2 uv, float t) {
-    vec2 rotatedUv = rotateUv(uv, u_rotation);
-    float aspect = u_resolution.x / max(u_resolution.y, 1.0);
-    vec2 p = (rotatedUv - 0.5) * vec2(aspect, 1.0);
-    float energy = clamp(u_energy, 0.25, 3.2);
-    float size = clamp(u_size, 0.35, 1.35);
-    float scale = mix(1.7, 3.8, clamp(u_closeness, 0.0, 1.9) / 1.9) * mix(1.12, 0.78, (size - 0.35) / 1.0);
-    vec2 q = p * scale;
-    float drift = t * 0.052 * u_speed * mix(0.72, 1.38, min(energy, 2.2) / 2.2);
-    vec2 warpA = vec2(fbm(q + vec2(drift, -drift * 0.7)), fbm(q + vec2(4.2 - drift * 0.6, 2.1 + drift)));
-    q += (warpA - 0.5) * 0.66 * u_warp * u_turbulence * mix(0.78, 1.24, min(energy, 2.2) / 2.2);
-    float grain = fbm(q + vec2(t * 0.028, -t * 0.018));
-    float diagonal = rotatedUv.x * 0.5 + rotatedUv.y * 0.68;
-    float topRight = gaussian(rotatedUv, vec2(0.86, 0.9), 0.38);
-    float value = diagonal + (grain - 0.5) * 0.24 * u_turbulence;
-    float reveal = softEvent(t * u_speed * 1.35 + u_reveal * 0.12) * u_warm * u_surface * (0.72 + u_reveal * 0.22);
-    float warmMask = smoothstep(0.54, 1.04, topRight + value * 0.42 + reveal * 0.18) * reveal * 0.52;
-    float deepBase = smoothstep(0.52, 0.02, value - u_deep * 0.12);
-    float bottomPull = smoothstep(0.42, 0.98, 1.0 - uv.y) * smoothstep(0.82, 0.0, uv.x);
-    float deepMask = clamp(deepBase * (0.5 + u_deep * 0.3) + bottomPull * u_deep * 0.34, 0.0, 0.92);
-    vec3 color = rampColour(value, warmMask, deepMask);
-    float redLift = smoothstep(0.28, 0.82, grain) * 0.025;
-    return color + vec3(redLift);
-  }
+    float lightNoise = fbm(vec2(x * 3.1 * noiseScale + riseTime * 0.42, vertical * 3.8 * noiseScale - riseTime * 1.35));
+    float lightCenter = spine + taper * (0.32 + u_warm_spread * 0.08 + (lightNoise - 0.5) * 0.72);
+    float lightWidth = max(taper * (0.34 + u_warm_spread * 0.46) * (1.08 - vertical * 0.26), 0.006);
+    float upperBand = smoothstep(0.34, 0.76, vertical) * (1.0 - smoothstep(0.98, 1.0, vertical));
+    float upperLight = body * upperBand * (1.0 - smoothstep(0.28, 1.2 + u_edge_softness * 0.24, abs(p.x - lightCenter) / lightWidth));
+    upperLight *= mix(0.78, 1.2, lightNoise);
 
-  vec3 softPlasma(vec2 uv, float t) {
-    vec2 rotatedUv = rotateUv(uv, u_rotation);
-    float aspect = u_resolution.x / max(u_resolution.y, 1.0);
-    vec2 p = vec2((rotatedUv.x - 0.5) * aspect + 0.5, rotatedUv.y);
-    float energy = clamp(u_energy, 0.25, 3.2);
-    float size = clamp(u_size, 0.35, 1.35);
-    float s = 0.34 + (1.35 - size) * 0.22 + (1.0 - clamp(u_closeness, 0.35, 1.9) / 1.9) * 0.08;
-    float t1 = t * 0.16 * u_speed * mix(0.72, 1.36, min(energy, 2.2) / 2.2);
-    vec2 warpP = vec2(fbm(p * (1.6 + u_turbulence) + vec2(t1, -t1 * 0.7)), fbm(p * (1.8 + u_turbulence) + vec2(3.1 - t1, 1.8 + t1 * 0.6)));
-    p += (warpP - 0.5) * 0.12 * u_warp;
-    float warm = 0.0;
-    warm += gaussian(p, vec2(0.84 + 0.1 * sin(t1), 0.9 + 0.08 * cos(t1 * 0.7)), s * 0.72);
-    warm += gaussian(p, vec2(0.68 + 0.16 * cos(t1 * 0.8), 0.72 + 0.12 * sin(t1 * 1.1)), s * 0.6);
-    float deep = 0.0;
-    deep += gaussian(p, vec2(0.1 + 0.16 * sin(t1 * 0.64), 0.1 + 0.12 * cos(t1 * 0.84)), s * 0.78);
-    deep += gaussian(p, vec2(0.42 + 0.1 * cos(t1 * 0.52), 0.24 + 0.12 * sin(t1 * 0.48)), s * 0.64);
-    float red = gaussian(p, vec2(0.36 + 0.16 * sin(t1 * 0.9), 0.36 + 0.14 * cos(t1 * 0.6)), s * 1.06);
-    float event = softEvent(t * u_speed * 1.2 + 0.18 + u_reveal * 0.08) * u_warm * u_surface * (0.72 + u_reveal * 0.18);
-    float texture = fbm((p + vec2(t * 0.016, -t * 0.012)) * (2.2 + u_turbulence));
-    float value = clamp(0.5 + red * 0.25 + texture * 0.12 - deep * 0.16 * u_deep, 0.0, 1.0);
-    float warmMask = smoothstep(0.28, 1.12, warm + texture * 0.12) * event * 0.48;
-    float bottomPull = smoothstep(0.56, 1.0, 1.0 - uv.y) * smoothstep(0.82, 0.0, uv.x);
-    float deepMask = clamp(smoothstep(0.18, 0.8, deep) * (0.44 + u_deep * 0.28) + bottomPull * u_deep * 0.28, 0.0, 0.86);
-    return rampColour(value, warmMask, deepMask);
+    float crownWidth = max(taper * (0.56 + u_warm_spread * 0.38), 0.006);
+    float crown = body * smoothstep(0.62, 0.9, vertical) * (1.0 - smoothstep(0.99, 1.0, vertical));
+    crown *= 1.0 - smoothstep(0.36, 1.18, abs(x - taper * 0.34) / crownWidth);
+
+    float warmPulse = mix(0.78, 1.18, breath);
+    float warmMask = clamp((upperLight * 0.94 + tongue * u_tongue * 0.68 + crown * 0.54) * u_warm * warmPulse, 0.0, 0.94);
+
+    float lowerLeft = smoothstep(0.68, 0.02, vertical) * smoothstep(taper * 0.7, -taper * u_shadow_reach, p.x);
+    float sideShadow = smoothstep(-0.02, -taper * u_shadow_reach, p.x) * (0.34 + (1.0 - vertical) * 0.32);
+    float outsideShadow = (1.0 - clamp(body, 0.0, 1.0)) * 0.1;
+    float deepMask = clamp((lowerLeft * 0.62 + sideShadow * 0.34 + outsideShadow) * u_deep, 0.0, 0.88);
+
+    float redHeat = clamp(body * (0.28 + breath * 0.2) + slowNoise * 0.06, 0.0, 0.48);
+    vec3 color = AHA_RED;
+    color = mix(color, AHA_DEEP, deepMask);
+    color = mix(color, AHA_RED, redHeat);
+    color = mix(color, AHA_ORANGE, warmMask);
+    return mix(AHA_RED, color, clamp(u_energy, 0.75, 1.25));
   }
 
   void main() {
-    vec2 uv = v_uv;
-    float t = u_time;
-    vec3 color = u_mode == 1 ? softPlasma(uv, t) : shaderFlow(uv, t);
-    color = pow(color, vec3(0.96));
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(flame(v_uv, u_time), 1.0);
   }
 `;
 
@@ -892,31 +766,20 @@ function createShaderProgram(gl) {
     }
   `);
   const fragment = compileShader(gl, gl.FRAGMENT_SHADER, shaderFragmentSource);
-
   if (!vertex || !fragment) return null;
 
   const program = gl.createProgram();
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
-
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    return null;
-  }
-
-  return program;
+  return gl.getProgramParameter(program, gl.LINK_STATUS) ? program : null;
 }
 
 function compileShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
-
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    return null;
-  }
-
-  return shader;
+  return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
 }
 
 function drawShadersOnce(now = performance.now()) {
@@ -925,8 +788,8 @@ function drawShadersOnce(now = performance.now()) {
 
 function drawShaderItem(item, surface, now) {
   const rect = surface.getBoundingClientRect();
-  const renderScale = clamp(state.renderScale, 0.35, 1);
-  const dpr = Math.min(window.devicePixelRatio || 1, 1);
+  const renderScale = 1;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   const width = Math.max(1, Math.round(rect.width * renderScale * dpr));
   const height = Math.max(1, Math.round(rect.height * renderScale * dpr));
 
@@ -944,37 +807,40 @@ function drawShaderItem(item, surface, now) {
 
   gl.uniform2f(item.uniforms.resolution, width, height);
   gl.uniform1f(item.uniforms.time, (now - shaderRuntime.origin) / 1000);
-  gl.uniform1i(item.uniforms.mode, state.mode === "softplasma" ? 1 : 0);
-  gl.uniform1f(item.uniforms.speed, state.shaderSpeed);
-  gl.uniform1f(item.uniforms.rotation, state.shaderRotation);
+  gl.uniform1f(item.uniforms.cycle, state.duration);
+  gl.uniform1f(item.uniforms.speed, state.evolutionSpeed);
+  gl.uniform1f(item.uniforms.scale, state.flameScale);
+  gl.uniform1f(item.uniforms.rotation, state.flameRotation);
+  gl.uniform1f(item.uniforms.flameX, state.flameX);
+  gl.uniform1f(item.uniforms.flameY, state.flameY);
+  gl.uniform1f(item.uniforms.flameWidth, state.flameWidth);
+  gl.uniform1f(item.uniforms.flameHeight, state.flameHeight);
+  gl.uniform1f(item.uniforms.flameStrength, state.flameStrength);
+  gl.uniform1f(item.uniforms.warm, state.warmLight);
+  gl.uniform1f(item.uniforms.deep, state.deepPressure);
   gl.uniform1f(item.uniforms.turbulence, state.turbulence);
-  gl.uniform1f(item.uniforms.warp, state.warpStrength);
-  gl.uniform1f(item.uniforms.closeness, state.colorCloseness);
-  gl.uniform1f(item.uniforms.warm, state.warmEvent * state.orangeIntensity);
-  gl.uniform1f(item.uniforms.deep, state.deepPull * state.deepStrength);
-  gl.uniform1f(item.uniforms.reveal, state.revealStrength);
-  gl.uniform1f(item.uniforms.energy, state.motionEnergy);
-  gl.uniform1f(item.uniforms.size, state.effectSize);
-  gl.uniform1f(item.uniforms.surface, surfaceWeight(surface.dataset.surface));
+  gl.uniform1f(item.uniforms.taperPower, state.taperPower);
+  gl.uniform1f(item.uniforms.tipRoundness, state.tipRoundness);
+  gl.uniform1f(item.uniforms.warmSpread, state.warmSpread);
+  gl.uniform1f(item.uniforms.shadowReach, state.shadowReach);
+  gl.uniform1f(item.uniforms.edgeSoftness, state.edgeSoftness);
+  gl.uniform1f(item.uniforms.noiseScale, state.noiseScale);
+  gl.uniform1f(item.uniforms.rise, state.rise);
+  gl.uniform1f(item.uniforms.sway, state.sway);
+  gl.uniform1f(item.uniforms.spineWobble, state.spineWobble);
+  gl.uniform1f(item.uniforms.tongue, state.tongue);
+  gl.uniform1f(item.uniforms.tongueWidth, state.tongueWidth);
+  gl.uniform1f(item.uniforms.energy, state.colorIntensity);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
-}
-
-function surfaceWeight(surfaceName) {
-  if (surfaceName === "button") return 0.72;
-  if (surfaceName === "card") return 0.86;
-  if (surfaceName === "logo") return 1.08;
-  return 1;
 }
 
 function syncShaderLoop() {
   const shouldRun = shaderRuntime.items.size > 0 && !state.paused && !state.reducedMotion && !document.hidden;
-
   if (!shouldRun) {
     if (shaderRuntime.raf) cancelAnimationFrame(shaderRuntime.raf);
     shaderRuntime.raf = 0;
     return;
   }
-
   if (shaderRuntime.raf) return;
 
   const tick = (now) => {
@@ -982,108 +848,60 @@ function syncShaderLoop() {
     drawShadersOnce(now);
     syncShaderLoop();
   };
-
   shaderRuntime.raf = requestAnimationFrame(tick);
 }
 
 function buildCssExport() {
-  const computed = getComputedStyle(prototype);
-  const cssVar = (name) => computed.getPropertyValue(name).trim();
-  const derivedProperties = [
-    "--lg-orange-alpha",
-    "--lg-orange-alpha-soft",
-    "--lg-pulse-alpha",
-    "--lg-pulse-alpha-soft",
-    "--lg-deep-alpha",
-    "--lg-blur",
-    "--lg-field-blur",
-    "--lg-field-size",
-    "--lg-field-scale",
-    "--lg-field-scale-deep",
-    "--lg-red-field-opacity",
-    "--lg-red-alt-opacity",
-    "--lg-warm-peak",
-    "--lg-warm-peak-soft",
-    "--lg-warm-ambient",
-    "--lg-warm-reveal-opacity",
-    "--lg-warm-reveal-shoulder",
-    "--lg-deep-field-opacity",
-    "--lg-deep-field-opacity-soft",
-    "--lg-deep-reveal-opacity",
-    "--lg-deep-reveal-shoulder",
-    "--lg-drift-x",
-    "--lg-drift-y",
-    "--lg-drift-x-neg",
-    "--lg-drift-y-neg",
-    "--lg-mesh-scale",
-    "--lg-mesh-tilt",
-    "--lg-shader-speed",
-    "--lg-shader-rotation",
-    "--lg-shader-turbulence",
-    "--lg-shader-warp",
-    "--lg-color-closeness",
-    "--lg-warm-event",
-    "--lg-deep-pull",
-    "--lg-shader-blur",
-    "--lg-render-scale",
-  ];
-  const derivedCss = derivedProperties.map((name) => `  ${name}: ${cssVar(name)};`).join("\n");
-  const shaderNote = shaderModes.has(state.mode) ? "/* Shader modes require the included JS WebGL renderer. */\n" : "";
-
-  return `${shaderNote}.living-gradient[data-mode="${state.mode}"] {
-  --lg-duration: ${cssVar("--lg-duration")};
-  --lg-authored-duration: ${state.duration}s;
-  --lg-motion-speed: ${state.motionSpeed.toFixed(2)};
-  --lg-motion-energy: ${state.motionEnergy.toFixed(2)};
-  --lg-effect-size: ${state.effectSize.toFixed(2)};
-  --lg-orange-intensity: ${state.orangeIntensity.toFixed(2)};
-  --lg-red-dominance: ${state.redDominance.toFixed(2)};
-  --lg-deep-strength: ${state.deepStrength.toFixed(2)};
-  --lg-brightness: ${state.brightness.toFixed(2)};
-  --lg-saturation: ${state.saturation.toFixed(2)};
-  --lg-drift-distance: ${state.driftDistance};
-  --lg-bloom-x: ${state.bloomX}%;
-  --lg-bloom-y: ${state.bloomY}%;
-  --lg-scale: ${state.scale.toFixed(2)};
-  --lg-softness: ${state.softness};
-  --lg-rest: ${(state.rest / 100).toFixed(2)};
-  --lg-phase: ${state.phase}s;
-  --lg-reveal-strength: ${state.revealStrength.toFixed(2)};
-  --lg-reveal-window: ${state.revealWindow.toFixed(2)};
-  --lg-reveal-phase: ${state.revealPhase}s;
-  --lg-warm-window: ${state.warmWindow.toFixed(2)};
-  --lg-field-spread: ${state.fieldSpread.toFixed(2)};
-  --lg-mesh-tension: ${state.meshTension.toFixed(2)};
-  --lg-mesh-blur: ${state.meshBlur}px;
-  --lg-deep-drift: ${state.deepDrift}%;
-  --lg-surface-blend: ${state.surfaceBlend.toFixed(2)};
-  --lg-shader-speed: ${state.shaderSpeed.toFixed(2)};
-  --lg-shader-rotation: ${state.shaderRotation}deg;
-  --lg-shader-turbulence: ${state.turbulence.toFixed(2)};
-  --lg-shader-warp: ${state.warpStrength.toFixed(2)};
-  --lg-color-closeness: ${state.colorCloseness.toFixed(2)};
-  --lg-warm-event: ${state.warmEvent.toFixed(2)};
-  --lg-deep-pull: ${state.deepPull.toFixed(2)};
-  --lg-shader-blur: ${state.shaderBlur}px;
-  --lg-render-scale: ${state.renderScale.toFixed(2)};
-${derivedCss}
+  return `/* Flame shader requires this prototype's WebGL renderer. */
+.living-gradient[data-mode="flame"] {
+${flameCustomProperties().map(([name, value]) => `  ${name}: ${value};`).join("\n")}
 }`;
+}
+
+function flameCustomProperties() {
+  return [
+    ["--lg-duration", `${state.duration.toFixed(2)}s`],
+    ["--lg-evolution-speed", state.evolutionSpeed.toFixed(2)],
+    ["--lg-flame-scale", state.flameScale.toFixed(2)],
+    ["--lg-flame-rotation", `${Math.round(state.flameRotation)}deg`],
+    ["--lg-flame-x", `${Math.round(state.flameX * 100)}%`],
+    ["--lg-flame-y", `${Math.round(state.flameY * 100)}%`],
+    ["--lg-flame-width", state.flameWidth.toFixed(2)],
+    ["--lg-flame-height", state.flameHeight.toFixed(2)],
+    ["--lg-flame-strength", state.flameStrength.toFixed(2)],
+    ["--lg-taper-power", state.taperPower.toFixed(2)],
+    ["--lg-tip-roundness", state.tipRoundness.toFixed(2)],
+    ["--lg-warm-light", state.warmLight.toFixed(2)],
+    ["--lg-warm-spread", state.warmSpread.toFixed(2)],
+    ["--lg-deep-pressure", state.deepPressure.toFixed(2)],
+    ["--lg-shadow-reach", state.shadowReach.toFixed(2)],
+    ["--lg-organic-edge", state.turbulence.toFixed(2)],
+    ["--lg-edge-softness", state.edgeSoftness.toFixed(2)],
+    ["--lg-noise-scale", state.noiseScale.toFixed(2)],
+    ["--lg-rise", state.rise.toFixed(2)],
+    ["--lg-sway", state.sway.toFixed(2)],
+    ["--lg-spine-wobble", state.spineWobble.toFixed(2)],
+    ["--lg-inner-tongue", state.tongue.toFixed(2)],
+    ["--lg-tongue-width", state.tongueWidth.toFixed(2)],
+    ["--lg-color-intensity", state.colorIntensity.toFixed(2)],
+    ["--lg-shader-blur", `${Math.round(state.shaderBlur)}px`],
+  ];
 }
 
 function buildConfigExport() {
   return JSON.stringify({
-    schema: "aha-living-gradient-playground/v17",
+    schema: CONFIG_SCHEMA,
     updated: "2026-06-29",
+    visualMode: "flame",
+    preset: state.preset,
     state,
   }, null, 2);
 }
 
 function render() {
   if (isRendering) return;
-
   state = normalizeState(state);
   updateDerivedVariables();
-  applyMode(state.mode);
   applyFlags();
   applySurfaceToggles();
   updateShaderRuntime();
@@ -1093,12 +911,8 @@ function render() {
 
 async function copyText(text, successMessage) {
   copyStatus.textContent = "Copying...";
-
   try {
-    if (!navigator.clipboard?.writeText) {
-      throw new Error("Clipboard API unavailable");
-    }
-
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
     await navigator.clipboard.writeText(text);
     copyStatus.textContent = successMessage;
   } catch {
@@ -1116,16 +930,11 @@ function getSupportedMp4MimeType() {
 }
 
 function getExportPlan() {
-  const activeMode = getActiveMode();
-  const isShader = shaderModes.has(state.mode);
-  const seconds = isShader
-    ? clamp(activeMode.duration / state.shaderSpeed, 4, 80)
-    : clamp(state.duration / state.motionSpeed, 2.5, 80);
+  const seconds = clamp(state.duration / Math.max(state.evolutionSpeed, 0.1), 8, 80);
   const roundedSeconds = Number(seconds.toFixed(2));
-
   return {
-    mode: state.mode,
-    label: activeMode.label,
+    mode: "flame",
+    label: state.preset === "Custom" ? "Custom Flame" : `Preset ${state.preset} Flame`,
     seconds: roundedSeconds,
     frames: Math.ceil(roundedSeconds * EXPORT_FPS),
     fps: EXPORT_FPS,
@@ -1137,7 +946,6 @@ function getExportPlan() {
 
 async function exportCurrentGradientMp4() {
   const plan = getExportPlan();
-
   if (!plan.mimeType || !HTMLCanvasElement.prototype.captureStream) {
     copyStatus.textContent = "MP4 export is not available in this browser. Use a browser with canvas capture and MP4 MediaRecorder support.";
     return;
@@ -1147,7 +955,6 @@ async function exportCurrentGradientMp4() {
   canvas.width = plan.width;
   canvas.height = plan.height;
   const context = canvas.getContext("2d", { alpha: false });
-
   if (!context) {
     copyStatus.textContent = "MP4 export could not start because the canvas renderer is unavailable.";
     return;
@@ -1177,9 +984,8 @@ async function exportCurrentGradientMp4() {
     await renderExportFrames(context, plan);
     recorder.stop();
     await finished;
-
     const blob = new Blob(chunks, { type: plan.mimeType });
-    const filename = `aha-living-gradient-${plan.mode}-${plan.seconds.toFixed(2)}s-loop.mp4`;
+    const filename = `aha-living-gradient-flame-${plan.seconds.toFixed(2)}s-loop.mp4`;
     downloadBlob(blob, filename);
     copyStatus.textContent = `Exported ${filename}.`;
   } catch (error) {
@@ -1194,27 +1000,21 @@ async function exportCurrentGradientMp4() {
 function renderExportFrames(context, plan) {
   const start = performance.now();
   let lastFrame = -1;
-
   return new Promise((resolve) => {
     const tick = (now) => {
       const elapsed = (now - start) / 1000;
       const frame = Math.min(Math.floor(elapsed * plan.fps), plan.frames - 1);
-
       if (frame !== lastFrame) {
-        const progress = (frame % plan.frames) / plan.frames;
-        drawExportFrame(context, progress, plan);
+        drawExportFrame(context, (frame % plan.frames) / plan.frames, plan);
         lastFrame = frame;
       }
-
       if (elapsed < plan.seconds) {
         requestAnimationFrame(tick);
         return;
       }
-
       drawExportFrame(context, 0, plan);
       resolve();
     };
-
     drawExportFrame(context, 0, plan);
     requestAnimationFrame(tick);
   });
@@ -1223,142 +1023,85 @@ function renderExportFrames(context, plan) {
 function drawExportFrame(context, progress, plan) {
   const width = plan.width;
   const height = plan.height;
-  const metrics = getDerivedMetrics();
-  const phase = (progress + state.revealPhase / Math.max(plan.seconds, 0.01)) % 1;
-  const mode = state.mode;
-  const shaderLike = shaderModes.has(mode);
+  const breath = breathPulse(progress, 1, 0);
+  const sway = wave(progress, 0.18, 1) * state.sway;
+  const rise = wave(progress, 0.42, 2) * state.rise;
+  const field = state.flameScale;
+  const baseRotation = state.flameRotation * Math.PI / 180;
 
   context.save();
   context.clearRect(0, 0, width, height);
-  context.filter = `brightness(${state.brightness}) saturate(${state.saturation})`;
   context.fillStyle = "#e2001e";
   context.fillRect(0, 0, width, height);
-
-  const redWave = wave(phase, 0.02, mode === "current" ? 1 : 0.8);
-  const redAltWave = wave(phase, 0.32, mode === "pulse" ? 1.15 : 0.9);
-  const deepWave = wave(phase, 0.58, mode === "cloudmesh" ? 1.15 : 0.82);
-  const warmWave = pulseWave(phase, mode === "pulse" ? 2 : 1, mode === "emberveil" ? 0.22 : 0.1);
-  const topRightX = clamp(0.78 + (state.bloomX - 88) / 360, 0.35, 1.18);
-  const topRightY = clamp(0.18 + (state.bloomY - 6) / 360, -0.16, 0.54);
-  const drift = state.driftDistance / 280;
-  const field = metrics.fieldSize / 132;
-  const blur = clamp(metrics.blur * (shaderLike ? 0.72 : 1), 8, 78);
+  context.filter = state.shaderBlur > 0 ? `blur(${Math.round(state.shaderBlur)}px)` : "none";
 
   drawExportLayer(context, width, height, {
-    x: 0.38 + redWave * drift,
-    y: 0.52 + wave(phase, 0.18, 0.8) * drift * 0.45,
-    rx: 0.86 * field,
-    ry: 0.78 * field,
-    rotation: redWave * 0.12,
-    alpha: metrics.redFieldOpacity,
-    blur,
+    ...rotatedExportOffset(sway * 0.06, rise * 0.025, baseRotation),
+    rx: state.flameWidth * 0.74 * field,
+    ry: state.flameHeight * 0.82 * field,
+    rotation: baseRotation + sway * 0.14,
+    alpha: clamp(0.68 + state.flameStrength * 0.18, 0, 0.94),
     stops: redStops(),
   });
 
   drawExportLayer(context, width, height, {
-    x: 0.66 - redAltWave * drift * 0.9,
-    y: 0.62 + wave(phase, 0.44, 0.9) * drift * 0.5,
-    rx: 0.7 * field,
-    ry: 0.76 * field,
-    rotation: redAltWave * -0.18,
-    alpha: metrics.redAltOpacity * (shaderLike ? 0.7 : 0.92),
-    blur,
-    stops: redAltStops(),
-  });
-
-  drawExportLayer(context, width, height, {
-    x: 0.42 + deepWave * drift * 0.8,
-    y: 0.86 - Math.abs(deepWave) * 0.12,
-    rx: 0.88 * field * metrics.deepFieldScale,
-    ry: 0.92 * field * metrics.deepFieldScale,
-    rotation: deepWave * 0.16,
-    alpha: clamp(metrics.deepRevealShoulder + warmWave * 0.18, 0, 1),
-    blur,
+    ...rotatedExportOffset(-state.flameWidth * 0.34 + sway * 0.025, state.flameHeight * 0.22, baseRotation),
+    rx: state.flameWidth * 0.7 * field,
+    ry: state.flameHeight * 0.56 * field,
+    rotation: baseRotation - 0.08 + sway * 0.1,
+    alpha: clamp(state.deepPressure * 0.52, 0, 0.86),
     stops: deepStops(),
   });
 
   drawExportLayer(context, width, height, {
-    x: topRightX - warmWave * 0.1 + wave(phase, 0.72, 0.7) * 0.03,
-    y: topRightY + warmWave * 0.04,
-    rx: (shaderLike ? 0.58 : 0.72) * field,
-    ry: (shaderLike ? 0.48 : 0.56) * field,
-    rotation: wave(phase, 0.14, 1) * 0.24,
-    alpha: clamp(metrics.warmAmbient + warmWave * (metrics.warmRevealOpacity - metrics.warmAmbient), 0, shaderLike ? 0.5 : 0.74),
-    blur: blur + 18,
+    ...rotatedExportOffset(state.flameWidth * 0.28 + sway * 0.04, -state.flameHeight * 0.32 - breath * 0.04, baseRotation),
+    rx: state.flameWidth * 0.54 * field,
+    ry: state.flameHeight * 0.62 * field,
+    rotation: baseRotation + 0.18 + sway * 0.16,
+    alpha: clamp((0.34 + breath * 0.22) * state.warmLight, 0, 0.86),
     stops: warmStops(),
   });
 
-  if (mode === "cloudmesh" || shaderLike) {
-    drawExportClouds(context, width, height, phase, metrics, blur, field, shaderLike);
-  }
+  drawExportLayer(context, width, height, {
+    ...rotatedExportOffset(sway * 0.02, -state.flameHeight * 0.08, baseRotation),
+    rx: state.flameWidth * 0.28 * field,
+    ry: state.flameHeight * 0.76 * field,
+    rotation: baseRotation - 0.18 + sway * 0.22,
+    alpha: clamp((0.2 + breath * 0.16) * state.warmLight * state.tongue, 0, 0.46),
+    stops: warmStops(),
+  });
 
+  context.filter = "none";
   context.restore();
 }
 
-function drawExportClouds(context, width, height, phase, metrics, blur, field, shaderLike) {
-  const cloudAlpha = shaderLike ? 0.28 : 0.42;
-  const points = [
-    { x: 0.16, y: 0.22, offset: 0.1, stops: redAltStops() },
-    { x: 0.82, y: 0.2, offset: 0.34, stops: warmStops() },
-    { x: 0.72, y: 0.82, offset: 0.58, stops: deepStops() },
-    { x: 0.2, y: 0.78, offset: 0.82, stops: redStops() },
-  ];
-
-  points.forEach((point, index) => {
-    const motion = wave(phase, point.offset, 1 + index * 0.12);
-    drawExportLayer(context, width, height, {
-      x: point.x + motion * 0.06,
-      y: point.y + wave(phase, point.offset + 0.22, 1) * 0.05,
-      rx: (0.38 + index * 0.04) * field,
-      ry: (0.36 + index * 0.05) * field,
-      rotation: motion * 0.4,
-      alpha: cloudAlpha * (index === 1 ? metrics.warmRevealShoulder : 1),
-      blur: blur + 8,
-      stops: point.stops,
-    });
-  });
+function rotatedExportOffset(x, y, rotation) {
+  const c = Math.cos(rotation);
+  const s = Math.sin(rotation);
+  return {
+    x: state.flameX + c * x - s * y,
+    y: state.flameY + s * x + c * y,
+  };
 }
 
 function drawExportLayer(context, width, height, layer) {
   context.save();
   context.globalAlpha = clamp(layer.alpha, 0, 1);
-  context.filter = `blur(${layer.blur}px) brightness(${state.brightness}) saturate(${state.saturation})`;
   context.translate(layer.x * width, layer.y * height);
   context.rotate(layer.rotation);
   context.scale(layer.rx * width, layer.ry * height);
-
   const gradient = context.createRadialGradient(0, 0, 0, 0, 0, 1);
-  layer.stops.forEach((stop) => {
-    gradient.addColorStop(stop.offset, stop.color);
-  });
-
+  layer.stops.forEach((stop) => gradient.addColorStop(stop.offset, stop.color));
   context.fillStyle = gradient;
   context.fillRect(-1.2, -1.2, 2.4, 2.4);
   context.restore();
 }
 
-function wave(progress, offset = 0, cycles = 1) {
-  return Math.sin(((progress + offset) * cycles) * TAU);
-}
-
-function pulseWave(progress, cycles = 1, offset = 0) {
-  return 0.5 - Math.cos(((progress + offset) * cycles) * TAU) * 0.5;
-}
-
 function redStops() {
   return [
-    { offset: 0, color: "rgba(236, 0, 32, 1)" },
-    { offset: 0.34, color: "rgba(226, 0, 30, 0.9)" },
-    { offset: 0.68, color: "rgba(226, 0, 30, 0.22)" },
-    { offset: 1, color: "rgba(226, 0, 30, 0)" },
-  ];
-}
-
-function redAltStops() {
-  return [
-    { offset: 0, color: "rgba(236, 0, 32, 0.82)" },
-    { offset: 0.42, color: "rgba(226, 0, 30, 0.44)" },
-    { offset: 0.72, color: "rgba(226, 0, 30, 0.14)" },
+    { offset: 0, color: "rgba(226, 0, 30, 1)" },
+    { offset: 0.48, color: "rgba(226, 0, 30, 0.9)" },
+    { offset: 0.82, color: "rgba(226, 0, 30, 0.2)" },
     { offset: 1, color: "rgba(226, 0, 30, 0)" },
   ];
 }
@@ -1366,19 +1109,27 @@ function redAltStops() {
 function deepStops() {
   return [
     { offset: 0, color: "rgba(82, 2, 8, 1)" },
-    { offset: 0.42, color: "rgba(136, 17, 18, 0.78)" },
-    { offset: 0.72, color: "rgba(136, 17, 18, 0.26)" },
-    { offset: 1, color: "rgba(136, 17, 18, 0)" },
+    { offset: 0.44, color: "rgba(82, 2, 8, 0.78)" },
+    { offset: 0.78, color: "rgba(82, 2, 8, 0.24)" },
+    { offset: 1, color: "rgba(82, 2, 8, 0)" },
   ];
 }
 
 function warmStops() {
   return [
     { offset: 0, color: "rgba(240, 108, 35, 1)" },
-    { offset: 0.36, color: "rgba(240, 108, 35, 0.62)" },
-    { offset: 0.72, color: "rgba(240, 108, 35, 0.18)" },
+    { offset: 0.48, color: "rgba(240, 108, 35, 0.88)" },
+    { offset: 0.86, color: "rgba(240, 108, 35, 0.28)" },
     { offset: 1, color: "rgba(240, 108, 35, 0)" },
   ];
+}
+
+function wave(progress, offset = 0, cycles = 1) {
+  return Math.sin(((progress + offset) * cycles) * TAU);
+}
+
+function breathPulse(progress, cycles = 1, offset = 0) {
+  return 0.5 - Math.cos(((progress + offset) * cycles) * TAU) * 0.5;
 }
 
 function downloadBlob(blob, filename) {
@@ -1406,11 +1157,9 @@ function serializeState(value) {
 }
 
 function markStateDirty() {
-  if (serializeState(state) === savedStateSnapshot) {
-    copyStatus.textContent = "Current settings match the saved version.";
-    return;
-  }
-  copyStatus.textContent = "Unsaved changes. Click Save Settings to keep them after reload.";
+  copyStatus.textContent = serializeState(state) === savedStateSnapshot
+    ? "Current settings match the saved version."
+    : "Unsaved changes. Click Save Settings to keep them after reload.";
 }
 
 function saveCurrentState() {
@@ -1425,24 +1174,19 @@ function saveCurrentState() {
 
 function normalizeState(candidate) {
   const next = structuredClone(defaultState);
-  if (modes.some((mode) => mode.value === candidate?.mode)) {
-    next.mode = candidate.mode;
-  }
+  const preset = presetById.has(candidate?.preset) ? candidate.preset : "A";
+  next.preset = candidate?.preset === "Custom" ? "Custom" : preset;
 
   controls.forEach((control) => {
     const value = readCandidateValue(candidate, control.key);
     if (value === undefined) return;
-
     if (control.type === "range") {
       setNestedValue(next, control.key, clamp(Number(value), control.min, control.max));
       return;
     }
-
     if (control.type === "checkbox") {
       setNestedValue(next, control.key, Boolean(value));
-      return;
     }
-
   });
 
   return next;
@@ -1451,20 +1195,8 @@ function normalizeState(candidate) {
 function readCandidateValue(candidate, key) {
   if (!candidate) return undefined;
   if (!key.includes(".")) return candidate[key];
-
   const [root, child] = key.split(".");
   return candidate[root]?.[child];
-}
-
-function setNestedValue(target, key, value) {
-  if (!key.includes(".")) {
-    target[key] = value;
-    return;
-  }
-
-  const [root, child] = key.split(".");
-  if (!target[root]) target[root] = {};
-  target[root][child] = value;
 }
 
 function resetConfig() {
@@ -1476,32 +1208,32 @@ function resetConfig() {
   }
   savedStateSnapshot = serializeState(state);
   copyStatus.textContent = "Reset to authored defaults.";
+  renderPanel();
   render();
 }
 
 function initReducedMotion() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (prefersReducedMotion.matches) {
-    state.reducedMotion = true;
-  }
+  if (prefersReducedMotion.matches) state.reducedMotion = true;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function formatValue(key, value) {
+  return formatters[key] ? formatters[key](Number(value)) : String(value);
 }
 
 saveConfigButton.addEventListener("click", saveCurrentState);
 copyCssButton.addEventListener("click", () => copyText(buildCssExport(), "Copied current CSS custom properties."));
-copyConfigButton.addEventListener("click", () => {
-  const config = buildConfigExport();
-  cssOutput.value = config;
-  copyText(config, "Copied the current parameter config.");
-});
+copyConfigButton.addEventListener("click", () => copyText(buildConfigExport(), "Copied current parameter config."));
 exportMp4Button.addEventListener("click", exportCurrentGradientMp4);
 resetButton.addEventListener("click", resetConfig);
-window.addEventListener("resize", () => {
-  drawShadersOnce();
-  syncShaderLoop();
-});
+
 document.addEventListener("visibilitychange", syncShaderLoop);
+window.addEventListener("resize", () => drawShadersOnce());
 
 initReducedMotion();
-ensureGradientFields();
 renderPanel();
 render();

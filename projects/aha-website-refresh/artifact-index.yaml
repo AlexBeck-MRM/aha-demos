@@ -81,14 +81,14 @@ artifacts:
       - Uses linked Figma node `3qEMU5hYtAJ3S7vWGijJhQ / 7046:115102` as layout reference only.
       - Stores local Figma-exported logo assets in `assets/` so the prototype does not depend on expiring MCP asset URLs.
       - Logo preview uses local AHA logo SVG masks with `.living-gradient` fills and logo-specific field geometry so the motion effect remains visible inside the marks.
-      - Tests AHA-red gradient motion across logo, button, card, and background surfaces with CSS soft-field modes plus two native WebGL shader modes.
-      - Current mode API is `data-mode="breath|current|pulse|cloudmesh|shaderflow|softplasma|heartlight|emberveil"`.
-      - Effect overview cards and mode-specific parameter groups are generated from the mode profiles in `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the right panel hides controls that do not affect the selected effect.
-      - Saved settings currently use schema/storage `v16`, with CSS modes exposing warm-field timing/geometry controls and shader modes exposing only active WebGL controls for speed, rotation, energy, field size, turbulence, warp, colour closeness, warm event, deep pull, reveal, blur, and render scale.
-      - Live values persist in browser storage only through Save Settings and export through Copy CSS / Copy Config.
+      - Tests one AHA-red flame shader across logo, button, card, and background surfaces.
+      - Current mode API is `data-mode="flame"` with presets `A|B|C|D` controlling the same flame parameters.
+      - Preset cards and grouped controls are generated from `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel exposes only flame scale, position, shape, texture, colour, blur, surface, and motion/contrast controls.
+      - Saved settings currently use schema/storage `v25`; legacy CSS breath modes, Shader Flow, and old multi-effect plumbing were removed from the active contract.
+      - Live values persist in browser storage only through Save Settings and export through Copy CSS / Copy Config; Export MP4 renders a deterministic canvas loop for the currently selected mode when the browser supports MP4 MediaRecorder.
       - The right-panel Save Settings action is the explicit browser-storage write path; parameter edits live-apply immediately and reload only from the last saved settings.
-      - The v16 baseline keeps orange secondary and top-right biased, with slower CSS warm-light ramps and two additional red/deep-red/orange exploration modes: Heartlight Beam and Ember Veil.
-      - Shader modes require the included no-dependency WebGL renderer and fall back to `cloudmesh` when WebGL is unavailable.
+      - The v25 baseline keeps every living-gradient surface on an opaque middle-red base and mixes only middle red, deep red, and orange inside the animated artwork, with restored top/right orange flame light, flame rotation control, scale controls up to `5x`, and shader blur defaulting to `0px` with a maximum of `180px`.
+      - The flame shader requires the included no-dependency WebGL renderer and falls back to a static three-colour flame composition when WebGL or motion is unavailable.
       - Header uses static local logo assets for Figma fidelity; the preview logos use clipped living-gradient fills for motion testing.
 
   - id: condition-guide-navigation-boards

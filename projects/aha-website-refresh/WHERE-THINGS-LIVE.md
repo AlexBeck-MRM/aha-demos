@@ -23,10 +23,10 @@
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/`
-  - mode API: `breath`, `current`, `pulse`, `cloudmesh`, `shaderflow`, `softplasma`, `heartlight`, `emberveil`
-  - effect overview cards and mode-specific parameter groups are generated from the mode profiles in `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel only shows controls that affect the selected effect
-  - use Save Settings to persist the current panel state for reload, Copy CSS for reusable custom properties, or Copy Config for the current parameter state
-  - shader modes use the included no-dependency WebGL renderer, include rotation plus active shader controls, and fall back to `cloudmesh` when WebGL is unavailable
+  - mode API: `flame`; presets `A`, `B`, `C`, and `D` drive the same flame shader sliders
+  - preset cards and flame-specific parameter groups are generated from `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel only shows controls that affect the flame simulation, including expanded shape, texture, colour, and optional blur controls
+  - use Save Settings to persist the current panel state for reload, Copy CSS for reusable custom properties, Copy Config for the current parameter state, or Export MP4 for a seamless canvas-rendered loop when the browser supports MP4 MediaRecorder
+  - v25 schema/storage keeps the gradient artwork on an opaque middle-red base, with deep red and restored top/right orange flame light layered above it; flame rotation is adjustable, scale controls can reach `5x`, shader blur defaults to `0px` and can be raised up to `180px`; the flame shader uses the included no-dependency WebGL renderer and falls back to a static three-colour flame composition when WebGL or motion is unavailable
 - High Blood Pressure detail page:
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/medicines-that-can-affect-blood-pressure.html`
 - Condition guide navigation boards:
