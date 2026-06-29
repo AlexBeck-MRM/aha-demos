@@ -109,8 +109,8 @@ input {
 
 .partners {
   display: flex;
-  align-self: start;
-  align-items: flex-start;
+  align-self: center;
+  align-items: center;
   justify-content: flex-start;
   gap: 24px;
 }
@@ -130,6 +130,7 @@ input {
   width: 69px;
   height: 45px;
   object-position: left top;
+  transform: translateY(-2px);
 }
 
 .project-title {

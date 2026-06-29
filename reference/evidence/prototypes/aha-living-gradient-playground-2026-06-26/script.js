@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v30";
-const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v29", "aha-living-gradient-playground:v28", "aha-living-gradient-playground:v27", "aha-living-gradient-playground:v26"];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v30";
+const STORAGE_KEY = "aha-living-gradient-playground:v31";
+const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v30", "aha-living-gradient-playground:v29", "aha-living-gradient-playground:v28", "aha-living-gradient-playground:v27", "aha-living-gradient-playground:v26"];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v31";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -144,6 +144,34 @@ const presets = [
 
 const presetById = new Map(presets.map((preset) => [preset.id, preset]));
 
+const authoredDefaultValues = {
+  duration: 22,
+  evolutionSpeed: 1.93,
+  flameScale: 1.9,
+  flameRotation: -32,
+  flameX: 1.27,
+  flameY: 0.24,
+  flameWidth: 1.42,
+  flameHeight: 1.29,
+  flameStrength: 1.33,
+  taperPower: 1.53,
+  edgeSoftness: 0.67,
+  warmLight: 1.14,
+  warmSpread: 0.56,
+  deepPressure: 1.22,
+  turbulence: 0.95,
+  noiseScale: 1.39,
+  rise: 0.92,
+  sway: 1.14,
+  colorIntensity: 1.18,
+  shaderBlur: 24,
+  logoShaderScale: 0.95,
+  logoShaderX: -0.02,
+  logoShaderY: 0,
+  logoShaderRotation: -9,
+  logoExportScale: 0.5,
+};
+
 const controlGroups = [
   {
     id: "flame-shape",
@@ -184,31 +212,31 @@ const controlGroups = [
 ];
 
 const controlDefinitions = {
-  duration: { key: "duration", label: "Cycle", type: "range", min: 6, max: 36, step: 1, default: 16, unit: "s" },
-  evolutionSpeed: { key: "evolutionSpeed", label: "Evolution speed", type: "range", min: 0.4, max: 4, step: 0.01, default: 1.35, unit: "x" },
-  flameScale: { key: "flameScale", label: "Overall scale", type: "range", min: 0.25, max: 5, step: 0.01, default: 1.08 },
-  flameRotation: { key: "flameRotation", label: "Rotation", type: "range", min: -180, max: 180, step: 1, default: 0, unit: "deg" },
-  flameX: { key: "flameX", label: "Horizontal position", type: "range", min: -1, max: 2, step: 0.01, default: 0.55 },
-  flameY: { key: "flameY", label: "Vertical position", type: "range", min: -1, max: 2, step: 0.01, default: 0.5 },
-  flameWidth: { key: "flameWidth", label: "Plume width", type: "range", min: 0.08, max: 5, step: 0.01, default: 0.58 },
-  flameHeight: { key: "flameHeight", label: "Plume height", type: "range", min: 0.16, max: 5, step: 0.01, default: 1.14 },
-  flameStrength: { key: "flameStrength", label: "Red plume strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.16 },
-  taperPower: { key: "taperPower", label: "Taper", type: "range", min: 0.45, max: 2.6, step: 0.01, default: 1.28 },
-  warmLight: { key: "warmLight", label: "Orange plume strength", type: "range", min: 0, max: 1.65, step: 0.01, default: 1.24 },
-  warmSpread: { key: "warmSpread", label: "Orange plume size", type: "range", min: 0, max: 1.6, step: 0.01, default: 0.92 },
-  deepPressure: { key: "deepPressure", label: "Background depth", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.14 },
-  turbulence: { key: "turbulence", label: "Organic edge", type: "range", min: 0, max: 1.8, step: 0.01, default: 0.9 },
-  edgeSoftness: { key: "edgeSoftness", label: "Edge softness", type: "range", min: 0.04, max: 0.9, step: 0.01, default: 0.32 },
-  noiseScale: { key: "noiseScale", label: "Noise scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: 1 },
-  rise: { key: "rise", label: "Rising pull", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.68 },
-  sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 4, step: 0.01, default: 0.96 },
-  colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: 1.1 },
-  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: 0, unit: "px" },
-  logoShaderScale: { key: "logoShaderScale", label: "Logo animation scale", type: "range", min: 0.05, max: 5, step: 0.01, default: 1 },
-  logoShaderX: { key: "logoShaderX", label: "Logo animation X", type: "range", min: -1, max: 1, step: 0.01, default: 0 },
-  logoShaderY: { key: "logoShaderY", label: "Logo animation Y", type: "range", min: -1, max: 1, step: 0.01, default: 0 },
-  logoShaderRotation: { key: "logoShaderRotation", label: "Logo rotation offset", type: "range", min: -180, max: 180, step: 1, default: 0, unit: "deg" },
-  logoExportScale: { key: "logoExportScale", label: "Logo export size", type: "range", min: 0.25, max: 0.95, step: 0.01, default: 0.74 },
+  duration: { key: "duration", label: "Cycle", type: "range", min: 6, max: 36, step: 1, default: authoredDefaultValues.duration, unit: "s" },
+  evolutionSpeed: { key: "evolutionSpeed", label: "Evolution speed", type: "range", min: 0.4, max: 4, step: 0.01, default: authoredDefaultValues.evolutionSpeed, unit: "x" },
+  flameScale: { key: "flameScale", label: "Overall scale", type: "range", min: 0.25, max: 5, step: 0.01, default: authoredDefaultValues.flameScale },
+  flameRotation: { key: "flameRotation", label: "Rotation", type: "range", min: -180, max: 180, step: 1, default: authoredDefaultValues.flameRotation, unit: "deg" },
+  flameX: { key: "flameX", label: "Horizontal position", type: "range", min: -1, max: 2, step: 0.01, default: authoredDefaultValues.flameX },
+  flameY: { key: "flameY", label: "Vertical position", type: "range", min: -1, max: 2, step: 0.01, default: authoredDefaultValues.flameY },
+  flameWidth: { key: "flameWidth", label: "Plume width", type: "range", min: 0.08, max: 5, step: 0.01, default: authoredDefaultValues.flameWidth },
+  flameHeight: { key: "flameHeight", label: "Plume height", type: "range", min: 0.16, max: 5, step: 0.01, default: authoredDefaultValues.flameHeight },
+  flameStrength: { key: "flameStrength", label: "Red plume strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: authoredDefaultValues.flameStrength },
+  taperPower: { key: "taperPower", label: "Taper", type: "range", min: 0.45, max: 2.6, step: 0.01, default: authoredDefaultValues.taperPower },
+  warmLight: { key: "warmLight", label: "Orange plume strength", type: "range", min: 0, max: 1.65, step: 0.01, default: authoredDefaultValues.warmLight },
+  warmSpread: { key: "warmSpread", label: "Orange plume size", type: "range", min: 0, max: 1.6, step: 0.01, default: authoredDefaultValues.warmSpread },
+  deepPressure: { key: "deepPressure", label: "Background depth", type: "range", min: 0.35, max: 1.65, step: 0.01, default: authoredDefaultValues.deepPressure },
+  turbulence: { key: "turbulence", label: "Organic edge", type: "range", min: 0, max: 1.8, step: 0.01, default: authoredDefaultValues.turbulence },
+  edgeSoftness: { key: "edgeSoftness", label: "Edge softness", type: "range", min: 0.04, max: 0.9, step: 0.01, default: authoredDefaultValues.edgeSoftness },
+  noiseScale: { key: "noiseScale", label: "Noise scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: authoredDefaultValues.noiseScale },
+  rise: { key: "rise", label: "Rising pull", type: "range", min: 0, max: 1.4, step: 0.01, default: authoredDefaultValues.rise },
+  sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 4, step: 0.01, default: authoredDefaultValues.sway },
+  colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: authoredDefaultValues.colorIntensity },
+  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: authoredDefaultValues.shaderBlur, unit: "px" },
+  logoShaderScale: { key: "logoShaderScale", label: "Logo animation scale", type: "range", min: 0.05, max: 5, step: 0.01, default: authoredDefaultValues.logoShaderScale },
+  logoShaderX: { key: "logoShaderX", label: "Logo animation X", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.logoShaderX },
+  logoShaderY: { key: "logoShaderY", label: "Logo animation Y", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.logoShaderY },
+  logoShaderRotation: { key: "logoShaderRotation", label: "Logo rotation offset", type: "range", min: -180, max: 180, step: 1, default: authoredDefaultValues.logoShaderRotation, unit: "deg" },
+  logoExportScale: { key: "logoExportScale", label: "Logo export size", type: "range", min: 0.25, max: 0.95, step: 0.01, default: authoredDefaultValues.logoExportScale },
   "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
   "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
   "surfaces.button": { key: "surfaces.button", label: "Button", type: "checkbox", default: true },
@@ -264,13 +292,8 @@ const formatters = {
 
 function createDefaultState() {
   return {
-    preset: "A",
-    ...structuredClone(presetById.get("A").values),
-    logoShaderScale: controlDefinitions.logoShaderScale.default,
-    logoShaderX: controlDefinitions.logoShaderX.default,
-    logoShaderY: controlDefinitions.logoShaderY.default,
-    logoShaderRotation: controlDefinitions.logoShaderRotation.default,
-    logoExportScale: controlDefinitions.logoExportScale.default,
+    preset: "Custom",
+    ...structuredClone(authoredDefaultValues),
     surfaces: {
       all: true,
       logo: true,
@@ -1263,12 +1286,13 @@ function loadSavedState() {
 }
 
 function migrateLegacyState(candidate) {
-  const next = { ...candidate };
-  delete next.logoShaderScale;
-  delete next.logoShaderX;
-  delete next.logoShaderY;
-  delete next.logoShaderRotation;
-  if (typeof next.sway === "number") next.sway = clamp(next.sway * 4, 0, controlDefinitions.sway.max);
+  const next = {
+    preset: "Custom",
+    surfaces: candidate?.surfaces,
+    reducedMotion: candidate?.reducedMotion,
+    contrastSafe: candidate?.contrastSafe,
+    paused: candidate?.paused,
+  };
   return next;
 }
 
