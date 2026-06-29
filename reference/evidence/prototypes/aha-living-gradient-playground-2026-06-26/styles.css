@@ -65,26 +65,37 @@ input {
   --parameterizer-widget: #ffffff;
   --parameterizer-widget-hover: #f7f6f5;
   --parameterizer-accent: #e2001e;
-  --lg-duration: 16s;
-  --lg-evolution-speed: 1.35;
-  --lg-flame-scale: 1.08;
-  --lg-flame-rotation: 0deg;
-  --lg-flame-x: 55%;
-  --lg-flame-y: 50%;
-  --lg-flame-width: 0.58;
-  --lg-flame-height: 1.14;
-  --lg-flame-strength: 1.16;
-  --lg-taper-power: 1.28;
-  --lg-edge-softness: 0.32;
-  --lg-warm-light: 1.24;
-  --lg-warm-spread: 0.92;
-  --lg-deep-pressure: 1.14;
-  --lg-organic-edge: 0.9;
-  --lg-noise-scale: 1;
-  --lg-rise: 0.68;
-  --lg-sway: 0.24;
-  --lg-color-intensity: 1.1;
-  --lg-shader-blur: 0px;
+  --lg-duration: 22s;
+  --lg-evolution-speed: 1.93;
+  --lg-flame-scale: 1.9;
+  --lg-flame-rotation: -32deg;
+  --lg-flame-x: 127%;
+  --lg-flame-y: 24%;
+  --lg-flame-width: 1.42;
+  --lg-flame-height: 1.29;
+  --lg-flame-strength: 1.33;
+  --lg-red-plume-x: 0%;
+  --lg-red-plume-y: 0%;
+  --lg-taper-power: 1.53;
+  --lg-edge-softness: 0.67;
+  --lg-warm-light: 1.14;
+  --lg-warm-spread: 0.56;
+  --lg-orange-plume-x: 0%;
+  --lg-orange-plume-y: 0%;
+  --lg-orange-plume-height: 1;
+  --lg-orange-plume-softness: 1;
+  --lg-deep-pressure: 1.22;
+  --lg-organic-edge: 0.95;
+  --lg-noise-scale: 1.39;
+  --lg-rise: 0.92;
+  --lg-sway: 1.14;
+  --lg-color-intensity: 1.18;
+  --lg-shader-blur: 24px;
+  --lg-logo-shader-scale: 0.95;
+  --lg-logo-shader-x: -2%;
+  --lg-logo-shader-y: 0%;
+  --lg-logo-shader-rotation: -9deg;
+  --lg-logo-export-scale: 0.5;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
@@ -130,7 +141,7 @@ input {
   width: 69px;
   height: 45px;
   object-position: left top;
-  transform: translateY(-2px);
+  transform: translateY(3px);
 }
 
 .project-title {
@@ -232,14 +243,10 @@ input {
   opacity: 1;
 }
 
-.prototype.is-reduced-motion .lg-shader-canvas {
-  opacity: 0;
-}
-
 .prototype.is-reduced-motion .living-gradient[data-mode="flame"] {
   background:
-    radial-gradient(ellipse 24% 34% at var(--lg-flame-x) 34%, rgb(240 108 35 / 0.86), rgb(240 108 35 / 0) 72%),
-    radial-gradient(ellipse 58% 72% at var(--lg-flame-x) 50%, rgb(226 0 30 / 0.92), rgb(226 0 30 / 0) 74%),
+    radial-gradient(ellipse 24% 34% at calc(var(--lg-flame-x) + var(--lg-orange-plume-x)) calc(34% + var(--lg-orange-plume-y)), rgb(240 108 35 / 0.86), rgb(240 108 35 / 0) 72%),
+    radial-gradient(ellipse 58% 72% at calc(var(--lg-flame-x) + var(--lg-red-plume-x)) calc(50% + var(--lg-red-plume-y)), rgb(226 0 30 / 0.92), rgb(226 0 30 / 0) 74%),
     var(--aha-deep-red);
 }
 
@@ -557,12 +564,25 @@ input {
 
 .parameterizer-folder-title::before {
   content: ">";
+  flex: 0 0 auto;
   width: 10px;
   color: var(--parameterizer-muted);
 }
 
 .parameterizer-folder[open] > .parameterizer-folder-title::before {
   transform: rotate(90deg);
+}
+
+.parameterizer-folder-icon {
+  flex: 0 0 auto;
+  width: 13px;
+  height: 13px;
+  color: var(--parameterizer-muted);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .parameterizer-folder-body {

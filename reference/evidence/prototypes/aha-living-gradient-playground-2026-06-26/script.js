@@ -20,6 +20,7 @@ const EXPORT_HEIGHT = 1080;
 const EXPORT_FPS = 30;
 const LOGO_MASK_URL = "assets/aha-logo-mask-large.svg";
 const LOGO_MASK_ASPECT = 124 / 149;
+const REDUCED_MOTION_STATIC_PHASE = 0.34;
 const MP4_MIME_TYPES = [
   "video/mp4;codecs=avc1.42E01E",
   "video/mp4;codecs=avc1",
@@ -31,113 +32,137 @@ const presets = [
   {
     id: "A",
     label: "A",
-    name: "Calm Vertical",
-    summary: "A centered slow flame with restrained light and steady shadow.",
+    name: "Current Balance",
+    summary: "The current approved flame balance with strong blur and a top-right orange plume.",
     values: {
-      duration: 16,
-      evolutionSpeed: 1.35,
-      flameScale: 1.08,
-      flameRotation: 0,
-      flameX: 0.55,
-      flameY: 0.5,
-      flameWidth: 0.58,
-      flameHeight: 1.14,
-      flameStrength: 1.16,
-      taperPower: 1.28,
-      edgeSoftness: 0.32,
-      warmLight: 1.24,
-      warmSpread: 0.92,
-      deepPressure: 1.14,
-      turbulence: 0.9,
-      noiseScale: 1,
-      rise: 0.68,
-      sway: 0.96,
-      colorIntensity: 1.1,
-      shaderBlur: 0,
+      duration: 22,
+      evolutionSpeed: 1.93,
+      flameScale: 1.9,
+      flameRotation: -32,
+      flameX: 1.27,
+      flameY: 0.24,
+      flameWidth: 1.42,
+      flameHeight: 1.29,
+      flameStrength: 1.33,
+      redPlumeX: 0,
+      redPlumeY: 0,
+      taperPower: 1.53,
+      edgeSoftness: 0.67,
+      warmLight: 1.14,
+      warmSpread: 0.56,
+      orangePlumeX: 0,
+      orangePlumeY: 0,
+      orangePlumeHeight: 1,
+      orangePlumeSoftness: 1,
+      deepPressure: 1.22,
+      turbulence: 0.95,
+      noiseScale: 1.39,
+      rise: 0.92,
+      sway: 1.14,
+      colorIntensity: 1.18,
+      shaderBlur: 24,
     },
   },
   {
     id: "B",
     label: "B",
-    name: "Upper Light",
-    summary: "More orange energy gathers near the top-right without washing the red.",
+    name: "Softer Light",
+    summary: "A nearby version with a gentler orange plume and slightly calmer movement.",
     values: {
-      duration: 14,
-      evolutionSpeed: 1.5,
-      flameScale: 1.12,
-      flameRotation: -4,
-      flameX: 0.63,
-      flameY: 0.48,
-      flameWidth: 0.66,
-      flameHeight: 1.05,
-      flameStrength: 1.24,
-      taperPower: 1.18,
-      edgeSoftness: 0.3,
-      warmLight: 1.3,
-      warmSpread: 1.08,
-      deepPressure: 1,
-      turbulence: 1.02,
-      noiseScale: 1.08,
-      rise: 0.78,
-      sway: 1.36,
-      colorIntensity: 1.12,
-      shaderBlur: 0,
+      duration: 24,
+      evolutionSpeed: 1.72,
+      flameScale: 1.82,
+      flameRotation: -29,
+      flameX: 1.2,
+      flameY: 0.27,
+      flameWidth: 1.35,
+      flameHeight: 1.24,
+      flameStrength: 1.29,
+      redPlumeX: -0.03,
+      redPlumeY: 0.02,
+      taperPower: 1.47,
+      edgeSoftness: 0.72,
+      warmLight: 1.02,
+      warmSpread: 0.5,
+      orangePlumeX: -0.04,
+      orangePlumeY: 0.03,
+      orangePlumeHeight: 0.92,
+      orangePlumeSoftness: 1.22,
+      deepPressure: 1.18,
+      turbulence: 0.88,
+      noiseScale: 1.28,
+      rise: 0.82,
+      sway: 0.96,
+      colorIntensity: 1.16,
+      shaderBlur: 24,
     },
   },
   {
     id: "C",
     label: "C",
-    name: "Shadow Breath",
-    summary: "Deep red carries more weight while orange stays narrow and alive.",
+    name: "Deeper Shadow",
+    summary: "A close darker option with more deep-red pressure and a narrower orange core.",
     values: {
-      duration: 18,
-      evolutionSpeed: 1.25,
-      flameScale: 1.1,
-      flameRotation: 3,
-      flameX: 0.52,
-      flameY: 0.54,
-      flameWidth: 0.6,
-      flameHeight: 1.18,
-      flameStrength: 1.18,
-      taperPower: 1.38,
-      edgeSoftness: 0.28,
-      warmLight: 1.08,
-      warmSpread: 0.78,
-      deepPressure: 1.36,
-      turbulence: 1.12,
-      noiseScale: 1.16,
-      rise: 0.58,
-      sway: 0.88,
-      colorIntensity: 1.12,
-      shaderBlur: 0,
+      duration: 22,
+      evolutionSpeed: 1.86,
+      flameScale: 1.96,
+      flameRotation: -34,
+      flameX: 1.31,
+      flameY: 0.22,
+      flameWidth: 1.48,
+      flameHeight: 1.33,
+      flameStrength: 1.39,
+      redPlumeX: 0.04,
+      redPlumeY: -0.02,
+      taperPower: 1.62,
+      edgeSoftness: 0.62,
+      warmLight: 1.04,
+      warmSpread: 0.46,
+      orangePlumeX: 0.04,
+      orangePlumeY: -0.04,
+      orangePlumeHeight: 0.9,
+      orangePlumeSoftness: 0.9,
+      deepPressure: 1.34,
+      turbulence: 1,
+      noiseScale: 1.44,
+      rise: 0.96,
+      sway: 1.2,
+      colorIntensity: 1.2,
+      shaderBlur: 22,
     },
   },
   {
     id: "D",
     label: "D",
-    name: "Wide Field",
-    summary: "A broader flame field for large backgrounds and cropped surfaces.",
+    name: "Wider Plume",
+    summary: "A nearby broader crop that keeps the same direction but shows more red body.",
     values: {
-      duration: 16,
-      evolutionSpeed: 1.4,
-      flameScale: 1.24,
-      flameRotation: -8,
-      flameX: 0.6,
-      flameY: 0.5,
-      flameWidth: 0.86,
-      flameHeight: 1.02,
-      flameStrength: 1.14,
-      taperPower: 1.05,
-      edgeSoftness: 0.38,
+      duration: 20,
+      evolutionSpeed: 2.05,
+      flameScale: 2.08,
+      flameRotation: -36,
+      flameX: 1.34,
+      flameY: 0.23,
+      flameWidth: 1.62,
+      flameHeight: 1.36,
+      flameStrength: 1.31,
+      redPlumeX: -0.06,
+      redPlumeY: 0.03,
+      taperPower: 1.42,
+      edgeSoftness: 0.7,
       warmLight: 1.18,
-      warmSpread: 0.96,
-      deepPressure: 1.12,
-      turbulence: 0.82,
-      noiseScale: 0.9,
-      rise: 0.64,
-      sway: 1.12,
-      colorIntensity: 1.1,
-      shaderBlur: 0,
+      warmSpread: 0.66,
+      orangePlumeX: -0.02,
+      orangePlumeY: 0.02,
+      orangePlumeHeight: 1.12,
+      orangePlumeSoftness: 1.08,
+      deepPressure: 1.2,
+      turbulence: 1.08,
+      noiseScale: 1.5,
+      rise: 0.9,
+      sway: 1.32,
+      colorIntensity: 1.18,
+      shaderBlur: 26,
     },
   },
 ];
@@ -154,10 +179,16 @@ const authoredDefaultValues = {
   flameWidth: 1.42,
   flameHeight: 1.29,
   flameStrength: 1.33,
+  redPlumeX: 0,
+  redPlumeY: 0,
   taperPower: 1.53,
   edgeSoftness: 0.67,
   warmLight: 1.14,
   warmSpread: 0.56,
+  orangePlumeX: 0,
+  orangePlumeY: 0,
+  orangePlumeHeight: 1,
+  orangePlumeSoftness: 1,
   deepPressure: 1.22,
   turbulence: 0.95,
   noiseScale: 1.39,
@@ -174,38 +205,58 @@ const authoredDefaultValues = {
 
 const controlGroups = [
   {
-    id: "flame-shape",
-    title: "Flame Shape",
+    id: "composition",
+    title: "Composition",
+    icon: "target",
     open: true,
-    keys: ["flameScale", "flameRotation", "flameX", "flameY", "flameWidth", "flameHeight", "flameStrength", "taperPower"],
+    keys: ["flameScale", "flameRotation", "flameX", "flameY", "shaderBlur"],
+  },
+  {
+    id: "red-plume",
+    title: "Red Plume",
+    icon: "plume",
+    open: true,
+    keys: ["flameWidth", "flameHeight", "flameStrength", "redPlumeX", "redPlumeY", "taperPower"],
+  },
+  {
+    id: "orange-plume",
+    title: "Orange Plume",
+    icon: "beam",
+    open: true,
+    keys: ["warmLight", "warmSpread", "orangePlumeX", "orangePlumeY", "orangePlumeHeight", "orangePlumeSoftness"],
   },
   {
     id: "texture",
     title: "Motion & Texture",
+    icon: "wave",
     open: true,
     keys: ["duration", "evolutionSpeed", "rise", "sway", "turbulence", "noiseScale", "edgeSoftness"],
   },
   {
     id: "colour",
-    title: "Colour",
+    title: "Colour & Depth",
+    icon: "swatch",
     open: true,
-    keys: ["warmLight", "warmSpread", "deepPressure", "colorIntensity", "shaderBlur"],
+    keys: ["deepPressure", "colorIntensity"],
   },
   {
     id: "logo-mapping",
     title: "Logo Mapping",
+    icon: "logo",
     open: true,
     keys: ["logoShaderScale", "logoShaderX", "logoShaderY", "logoShaderRotation", "logoExportScale"],
   },
   {
     id: "surfaces",
     title: "Surfaces",
+    icon: "grid",
     open: false,
     keys: ["surfaces.all", "surfaces.logo", "surfaces.button", "surfaces.card", "surfaces.background"],
   },
   {
     id: "accessibility",
     title: "Motion & Contrast",
+    icon: "pause",
     open: false,
     keys: ["reducedMotion", "contrastSafe", "paused"],
   },
@@ -216,14 +267,20 @@ const controlDefinitions = {
   evolutionSpeed: { key: "evolutionSpeed", label: "Evolution speed", type: "range", min: 0.4, max: 4, step: 0.01, default: authoredDefaultValues.evolutionSpeed, unit: "x" },
   flameScale: { key: "flameScale", label: "Overall scale", type: "range", min: 0.25, max: 5, step: 0.01, default: authoredDefaultValues.flameScale },
   flameRotation: { key: "flameRotation", label: "Rotation", type: "range", min: -180, max: 180, step: 1, default: authoredDefaultValues.flameRotation, unit: "deg" },
-  flameX: { key: "flameX", label: "Horizontal position", type: "range", min: -1, max: 2, step: 0.01, default: authoredDefaultValues.flameX },
-  flameY: { key: "flameY", label: "Vertical position", type: "range", min: -1, max: 2, step: 0.01, default: authoredDefaultValues.flameY },
-  flameWidth: { key: "flameWidth", label: "Plume width", type: "range", min: 0.08, max: 5, step: 0.01, default: authoredDefaultValues.flameWidth },
-  flameHeight: { key: "flameHeight", label: "Plume height", type: "range", min: 0.16, max: 5, step: 0.01, default: authoredDefaultValues.flameHeight },
-  flameStrength: { key: "flameStrength", label: "Red plume strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: authoredDefaultValues.flameStrength },
-  taperPower: { key: "taperPower", label: "Taper", type: "range", min: 0.45, max: 2.6, step: 0.01, default: authoredDefaultValues.taperPower },
-  warmLight: { key: "warmLight", label: "Orange plume strength", type: "range", min: 0, max: 1.65, step: 0.01, default: authoredDefaultValues.warmLight },
-  warmSpread: { key: "warmSpread", label: "Orange plume size", type: "range", min: 0, max: 1.6, step: 0.01, default: authoredDefaultValues.warmSpread },
+  flameX: { key: "flameX", label: "Scene X", type: "range", min: -1, max: 2, step: 0.01, default: authoredDefaultValues.flameX },
+  flameY: { key: "flameY", label: "Scene Y", type: "range", min: -1, max: 2, step: 0.01, default: authoredDefaultValues.flameY },
+  flameWidth: { key: "flameWidth", label: "Red width", type: "range", min: 0.08, max: 5, step: 0.01, default: authoredDefaultValues.flameWidth },
+  flameHeight: { key: "flameHeight", label: "Red height", type: "range", min: 0.16, max: 5, step: 0.01, default: authoredDefaultValues.flameHeight },
+  flameStrength: { key: "flameStrength", label: "Red strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: authoredDefaultValues.flameStrength },
+  redPlumeX: { key: "redPlumeX", label: "Red X offset", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.redPlumeX },
+  redPlumeY: { key: "redPlumeY", label: "Red Y offset", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.redPlumeY },
+  taperPower: { key: "taperPower", label: "Red taper", type: "range", min: 0.45, max: 2.6, step: 0.01, default: authoredDefaultValues.taperPower },
+  warmLight: { key: "warmLight", label: "Orange strength", type: "range", min: 0, max: 1.65, step: 0.01, default: authoredDefaultValues.warmLight },
+  warmSpread: { key: "warmSpread", label: "Orange width", type: "range", min: 0, max: 1.6, step: 0.01, default: authoredDefaultValues.warmSpread },
+  orangePlumeX: { key: "orangePlumeX", label: "Orange X offset", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.orangePlumeX },
+  orangePlumeY: { key: "orangePlumeY", label: "Orange Y offset", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.orangePlumeY },
+  orangePlumeHeight: { key: "orangePlumeHeight", label: "Orange height", type: "range", min: 0.2, max: 2.4, step: 0.01, default: authoredDefaultValues.orangePlumeHeight },
+  orangePlumeSoftness: { key: "orangePlumeSoftness", label: "Orange softness", type: "range", min: 0.35, max: 2.5, step: 0.01, default: authoredDefaultValues.orangePlumeSoftness },
   deepPressure: { key: "deepPressure", label: "Background depth", type: "range", min: 0.35, max: 1.65, step: 0.01, default: authoredDefaultValues.deepPressure },
   turbulence: { key: "turbulence", label: "Organic edge", type: "range", min: 0, max: 1.8, step: 0.01, default: authoredDefaultValues.turbulence },
   edgeSoftness: { key: "edgeSoftness", label: "Edge softness", type: "range", min: 0.04, max: 0.9, step: 0.01, default: authoredDefaultValues.edgeSoftness },
@@ -272,9 +329,15 @@ const formatters = {
   flameWidth: (value) => value.toFixed(2),
   flameHeight: (value) => value.toFixed(2),
   flameStrength: (value) => value.toFixed(2),
+  redPlumeX: (value) => `${Math.round(value * 100)}%`,
+  redPlumeY: (value) => `${Math.round(value * 100)}%`,
   taperPower: (value) => value.toFixed(2),
   warmLight: (value) => value.toFixed(2),
   warmSpread: (value) => value.toFixed(2),
+  orangePlumeX: (value) => `${Math.round(value * 100)}%`,
+  orangePlumeY: (value) => `${Math.round(value * 100)}%`,
+  orangePlumeHeight: (value) => value.toFixed(2),
+  orangePlumeSoftness: (value) => value.toFixed(2),
   deepPressure: (value) => value.toFixed(2),
   turbulence: (value) => value.toFixed(2),
   edgeSoftness: (value) => value.toFixed(2),
@@ -292,8 +355,13 @@ const formatters = {
 
 function createDefaultState() {
   return {
-    preset: "Custom",
-    ...structuredClone(authoredDefaultValues),
+    preset: "A",
+    ...structuredClone(presetById.get("A").values),
+    logoShaderScale: authoredDefaultValues.logoShaderScale,
+    logoShaderX: authoredDefaultValues.logoShaderX,
+    logoShaderY: authoredDefaultValues.logoShaderY,
+    logoShaderRotation: authoredDefaultValues.logoShaderRotation,
+    logoExportScale: authoredDefaultValues.logoExportScale,
     surfaces: {
       all: true,
       logo: true,
@@ -311,7 +379,7 @@ function renderPanel() {
   controlsRoot.innerHTML = `${renderExplanation()}${renderPresetOverview()}${controlGroups.map((group) => {
     const rows = group.keys.map((key) => controlDefinitions[key]).filter(Boolean).map(renderControl).join("");
     return `<details class="parameterizer-folder" ${group.open ? "open" : ""}>
-      <summary class="parameterizer-folder-title">${group.title}</summary>
+      <summary class="parameterizer-folder-title">${renderGroupIcon(group.icon)}<span>${group.title}</span></summary>
       <div class="parameterizer-folder-body">${rows}</div>
     </details>`;
   }).join("")}`;
@@ -319,10 +387,25 @@ function renderPanel() {
   bindControls();
 }
 
+function renderGroupIcon(icon) {
+  const paths = {
+    target: '<circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>',
+    plume: '<path d="M6 17c5 1 10-2 12-8-4 1-7-1-9-4 0 5-4 6-5 9-.5 1.7.3 2.6 2 3Z"></path>',
+    beam: '<path d="M4 15 18 5l2 2-10 14-2-5-4-1Z"></path>',
+    wave: '<path d="M3 12c2.2-4 4.7-4 7 0s4.8 4 7 0c1.1-2 2.2-3 4-3"></path>',
+    swatch: '<path d="M5 5h14v14H5z"></path><path d="M5 15h14"></path>',
+    logo: '<path d="M12 5c4 0 7 3 7 7 0 5-7 8-7 8s-7-3-7-8c0-4 3-7 7-7Z"></path><path d="M12 8v8"></path>',
+    grid: '<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"></path>',
+    pause: '<path d="M8 5v14M16 5v14"></path>',
+  };
+  const path = paths[icon] ?? paths.target;
+  return `<svg class="parameterizer-folder-icon" viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
+}
+
 function renderExplanation() {
   return `<section class="shader-explainer" aria-label="Shader explanation">
     <div class="effect-overview-title">What this is showing</div>
-    <p>This demo is now one flame shader. A-D are presets that move the same sliders into different compositions.</p>
+    <p>This demo is now one flame shader. A-D are close presets around the current flame direction, not separate effects.</p>
     <p>The shader starts with a deep-red field, builds one responsive red plume from layered noise, then places a smaller orange plume inside it. No white or extra red is used inside the animated artwork.</p>
     <p>Logo Mapping remaps that same flame inside the logo mask only, so the logo can show shadow and orange together without changing the larger background, card, or button surfaces.</p>
   </section>`;
@@ -480,9 +563,15 @@ function updateDerivedVariables() {
   prototype.style.setProperty("--lg-flame-width", state.flameWidth.toFixed(2));
   prototype.style.setProperty("--lg-flame-height", state.flameHeight.toFixed(2));
   prototype.style.setProperty("--lg-flame-strength", state.flameStrength.toFixed(2));
+  prototype.style.setProperty("--lg-red-plume-x", `${Math.round(state.redPlumeX * 100)}%`);
+  prototype.style.setProperty("--lg-red-plume-y", `${Math.round(state.redPlumeY * 100)}%`);
   prototype.style.setProperty("--lg-taper-power", state.taperPower.toFixed(2));
   prototype.style.setProperty("--lg-warm-light", state.warmLight.toFixed(2));
   prototype.style.setProperty("--lg-warm-spread", state.warmSpread.toFixed(2));
+  prototype.style.setProperty("--lg-orange-plume-x", `${Math.round(state.orangePlumeX * 100)}%`);
+  prototype.style.setProperty("--lg-orange-plume-y", `${Math.round(state.orangePlumeY * 100)}%`);
+  prototype.style.setProperty("--lg-orange-plume-height", state.orangePlumeHeight.toFixed(2));
+  prototype.style.setProperty("--lg-orange-plume-softness", state.orangePlumeSoftness.toFixed(2));
   prototype.style.setProperty("--lg-deep-pressure", state.deepPressure.toFixed(2));
   prototype.style.setProperty("--lg-organic-edge", state.turbulence.toFixed(2));
   prototype.style.setProperty("--lg-edge-softness", state.edgeSoftness.toFixed(2));
@@ -533,7 +622,7 @@ function canUseWebGL() {
 }
 
 function updateShaderRuntime() {
-  const active = canUseWebGL() && !state.reducedMotion;
+  const active = canUseWebGL();
   const globalEnabled = state.surfaces.all;
 
   gradients.forEach((surface) => {
@@ -618,9 +707,15 @@ const shaderFragmentSource = `
   uniform float u_flame_width;
   uniform float u_flame_height;
   uniform float u_flame_strength;
+  uniform float u_red_plume_x;
+  uniform float u_red_plume_y;
   uniform float u_taper_power;
   uniform float u_warm;
   uniform float u_warm_spread;
+  uniform float u_orange_plume_x;
+  uniform float u_orange_plume_y;
+  uniform float u_orange_plume_height;
+  uniform float u_orange_plume_softness;
   uniform float u_deep;
   uniform float u_turbulence;
   uniform float u_edge_softness;
@@ -682,13 +777,14 @@ const shaderFragmentSource = `
     float drift = (fbm(vec2(riseTime * 0.24, 0.37)) - 0.5) * 0.18 * u_sway;
     p.x -= drift;
 
-    float vertical = clamp((p.y / max(u_flame_height, 0.01)) + 0.56, 0.0, 1.0);
+    vec2 redP = p - vec2(u_red_plume_x, u_red_plume_y);
+    float vertical = clamp((redP.y / max(u_flame_height, 0.01)) + 0.56, 0.0, 1.0);
     float activeHeight = smoothstep(0.02, 0.18, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
     float taper = mix(max(u_flame_width, 0.01), max(u_flame_width, 0.01) * 0.13, pow(vertical, max(u_taper_power, 0.01)));
     float noiseScale = max(u_noise_scale, 0.01);
     float spineNoise = fbm(vec2(vertical * 1.8 * noiseScale - riseTime * 0.72, riseTime * 0.82));
     float spine = (spineNoise - 0.5) * taper * 0.7 * u_sway;
-    float x = p.x - spine;
+    float x = redP.x - spine;
     float edge = abs(x) / max(taper, 0.001);
     float largeNoise = fbm(vec2(x * 2.0 * noiseScale + riseTime * 0.16, vertical * 2.35 * noiseScale - riseTime));
     float fineNoise = fbm(vec2(x * 4.6 * noiseScale + riseTime * 0.52, vertical * 4.4 * noiseScale - riseTime * 1.8));
@@ -701,12 +797,17 @@ const shaderFragmentSource = `
     redPlume *= mix(1.08, 0.84, clamp((u_deep - 0.35) / 1.3, 0.0, 1.0));
     redPlume = clamp(redPlume, 0.0, 0.96);
 
-    float orangeNoise = fbm(vec2(x * 2.8 * noiseScale + riseTime * 0.36, vertical * 3.2 * noiseScale - riseTime * 1.28));
-    float orangeCenter = spine + taper * (0.18 + (orangeNoise - 0.5) * 0.36);
+    vec2 orangeP = p - vec2(u_orange_plume_x, u_orange_plume_y);
+    float orangeVertical = clamp((orangeP.y / max(u_flame_height * u_orange_plume_height, 0.01)) + 0.56, 0.0, 1.0);
+    float orangeX = orangeP.x - spine;
+    float orangeNoise = fbm(vec2(orangeX * 2.8 * noiseScale + riseTime * 0.36, orangeVertical * 3.2 * noiseScale - riseTime * 1.28));
+    float orangeCenter = taper * (0.18 + (orangeNoise - 0.5) * 0.36);
     float orangeWidth = max(taper * mix(0.16, 0.48, clamp(u_warm_spread / 1.6, 0.0, 1.0)), 0.006);
-    float orangeEdge = abs(p.x - orangeCenter) / orangeWidth;
-    float orangeBand = smoothstep(0.34, 0.82, vertical) * (1.0 - smoothstep(0.98, 1.0, vertical));
-    float orangePlume = (1.0 - smoothstep(0.42, 1.18 + u_edge_softness * 0.42, orangeEdge - (orangeNoise - 0.5) * 0.2 * u_turbulence));
+    float orangeEdge = abs(orangeX - orangeCenter) / orangeWidth;
+    float orangeBandSize = clamp(0.24 * u_orange_plume_height, 0.08, 0.48);
+    float orangeBand = 1.0 - smoothstep(0.82, 1.08, abs(orangeVertical - 0.62) / orangeBandSize);
+    float orangeSoftness = max(u_orange_plume_softness, 0.01);
+    float orangePlume = (1.0 - smoothstep(0.42 - (orangeSoftness - 1.0) * 0.08, 1.18 + u_edge_softness * 0.42 * orangeSoftness, orangeEdge - (orangeNoise - 0.5) * 0.2 * u_turbulence));
     orangePlume *= redPlume * orangeBand * u_warm * mix(0.78, 1.18, breath);
     orangePlume = clamp(orangePlume, 0.0, 0.92);
 
@@ -765,7 +866,12 @@ function drawShaderItem(item, surface, now) {
     item.canvas.height = height;
   }
 
-  drawShaderRenderer(item, (now - shaderRuntime.origin) / 1000, width, height, getSurfaceShaderOverrides(surface));
+  drawShaderRenderer(item, getShaderTime(now), width, height, getSurfaceShaderOverrides(surface));
+}
+
+function getShaderTime(now = performance.now()) {
+  if (!state.reducedMotion) return (now - shaderRuntime.origin) / 1000;
+  return (state.duration * REDUCED_MOTION_STATIC_PHASE) / Math.max(state.evolutionSpeed, 0.01);
 }
 
 function createShaderRenderer(gl, canvas, program, buffer) {
@@ -789,9 +895,15 @@ function createShaderRenderer(gl, canvas, program, buffer) {
       flameWidth: gl.getUniformLocation(program, "u_flame_width"),
       flameHeight: gl.getUniformLocation(program, "u_flame_height"),
       flameStrength: gl.getUniformLocation(program, "u_flame_strength"),
+      redPlumeX: gl.getUniformLocation(program, "u_red_plume_x"),
+      redPlumeY: gl.getUniformLocation(program, "u_red_plume_y"),
       taperPower: gl.getUniformLocation(program, "u_taper_power"),
       warm: gl.getUniformLocation(program, "u_warm"),
       warmSpread: gl.getUniformLocation(program, "u_warm_spread"),
+      orangePlumeX: gl.getUniformLocation(program, "u_orange_plume_x"),
+      orangePlumeY: gl.getUniformLocation(program, "u_orange_plume_y"),
+      orangePlumeHeight: gl.getUniformLocation(program, "u_orange_plume_height"),
+      orangePlumeSoftness: gl.getUniformLocation(program, "u_orange_plume_softness"),
       deep: gl.getUniformLocation(program, "u_deep"),
       turbulence: gl.getUniformLocation(program, "u_turbulence"),
       edgeSoftness: gl.getUniformLocation(program, "u_edge_softness"),
@@ -827,11 +939,17 @@ function getShaderParameters(overrides = null) {
     flameWidth: state.flameWidth,
     flameHeight: state.flameHeight,
     flameStrength: state.flameStrength,
+    redPlumeX: state.redPlumeX,
+    redPlumeY: state.redPlumeY,
     warm: state.warmLight,
     deep: state.deepPressure,
     turbulence: state.turbulence,
     taperPower: state.taperPower,
     warmSpread: state.warmSpread,
+    orangePlumeX: state.orangePlumeX,
+    orangePlumeY: state.orangePlumeY,
+    orangePlumeHeight: state.orangePlumeHeight,
+    orangePlumeSoftness: state.orangePlumeSoftness,
     edgeSoftness: state.edgeSoftness,
     noiseScale: state.noiseScale,
     rise: state.rise,
@@ -861,11 +979,17 @@ function drawShaderRenderer(item, shaderTime, width = item.canvas.width, height 
   gl.uniform1f(item.uniforms.flameWidth, params.flameWidth);
   gl.uniform1f(item.uniforms.flameHeight, params.flameHeight);
   gl.uniform1f(item.uniforms.flameStrength, params.flameStrength);
+  gl.uniform1f(item.uniforms.redPlumeX, params.redPlumeX);
+  gl.uniform1f(item.uniforms.redPlumeY, params.redPlumeY);
   gl.uniform1f(item.uniforms.warm, params.warm);
   gl.uniform1f(item.uniforms.deep, params.deep);
   gl.uniform1f(item.uniforms.turbulence, params.turbulence);
   gl.uniform1f(item.uniforms.taperPower, params.taperPower);
   gl.uniform1f(item.uniforms.warmSpread, params.warmSpread);
+  gl.uniform1f(item.uniforms.orangePlumeX, params.orangePlumeX);
+  gl.uniform1f(item.uniforms.orangePlumeY, params.orangePlumeY);
+  gl.uniform1f(item.uniforms.orangePlumeHeight, params.orangePlumeHeight);
+  gl.uniform1f(item.uniforms.orangePlumeSoftness, params.orangePlumeSoftness);
   gl.uniform1f(item.uniforms.edgeSoftness, params.edgeSoftness);
   gl.uniform1f(item.uniforms.noiseScale, params.noiseScale);
   gl.uniform1f(item.uniforms.rise, params.rise);
@@ -913,9 +1037,15 @@ function flameCustomProperties() {
     ["--lg-flame-width", state.flameWidth.toFixed(2)],
     ["--lg-flame-height", state.flameHeight.toFixed(2)],
     ["--lg-flame-strength", state.flameStrength.toFixed(2)],
+    ["--lg-red-plume-x", `${Math.round(state.redPlumeX * 100)}%`],
+    ["--lg-red-plume-y", `${Math.round(state.redPlumeY * 100)}%`],
     ["--lg-taper-power", state.taperPower.toFixed(2)],
     ["--lg-warm-light", state.warmLight.toFixed(2)],
     ["--lg-warm-spread", state.warmSpread.toFixed(2)],
+    ["--lg-orange-plume-x", `${Math.round(state.orangePlumeX * 100)}%`],
+    ["--lg-orange-plume-y", `${Math.round(state.orangePlumeY * 100)}%`],
+    ["--lg-orange-plume-height", state.orangePlumeHeight.toFixed(2)],
+    ["--lg-orange-plume-softness", state.orangePlumeSoftness.toFixed(2)],
     ["--lg-deep-pressure", state.deepPressure.toFixed(2)],
     ["--lg-organic-edge", state.turbulence.toFixed(2)],
     ["--lg-edge-softness", state.edgeSoftness.toFixed(2)],
@@ -1287,7 +1417,7 @@ function loadSavedState() {
 
 function migrateLegacyState(candidate) {
   const next = {
-    preset: "Custom",
+    preset: "A",
     surfaces: candidate?.surfaces,
     reducedMotion: candidate?.reducedMotion,
     contrastSafe: candidate?.contrastSafe,
