@@ -18,6 +18,15 @@
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/styles.css`
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/script.js`
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/high-blood-pressure-condition-guide-content.md`
+- AHA living gradient playground:
+  - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+  - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+  - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+  - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/`
+  - mode API: `breath`, `current`, `pulse`, `cloudmesh`, `shaderflow`, `softplasma`, `heartlight`, `emberveil`
+  - effect overview cards and mode-specific parameter groups are generated from the mode profiles in `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel only shows controls that affect the selected effect
+  - use Save Settings to persist the current panel state for reload, Copy CSS for reusable custom properties, or Copy Config for the current parameter state
+  - shader modes use the included no-dependency WebGL renderer, include rotation plus active shader controls, and fall back to `cloudmesh` when WebGL is unavailable
 - High Blood Pressure detail page:
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/medicines-that-can-affect-blood-pressure.html`
 - Condition guide navigation boards:

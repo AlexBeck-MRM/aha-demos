@@ -3236,3 +3236,542 @@ decision_refs:
 ### Next
 - copy the component into the consuming React app before production use
 - run that app's typecheck, lint, tests, build, and browser QA once the component is wired into a real page
+
+## 2026-06-26
+### Task
+- add AHA living gradient playground prototype
+- use linked Figma node as layout reference only
+- keep the prototype repo-local and no-Figma-write
+
+### Change
+- add static `index.html`, `styles.css`, and `script.js` prototype under `reference/evidence/prototypes/`
+- implement one `.living-gradient` class with `data-mode="sinus"`, `data-mode="ember"`, and `data-mode="sweep"`
+- add controls for mode, rhythm, colour, movement, surface toggles, reduced motion, contrast-safe mode, pause, and CSS export
+- use a neutral replaceable logo mask instead of recreating a protected AHA mark
+- keep small-surface warmth lower than the large background so red remains dominant
+- add the prototype to artifact lookup files
+- remove Finder `.DS_Store` metadata files that blocked brain verification
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+- `design/generated/review/.DS_Store`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/.DS_Store`
+- `design/generated/review/2026-06-24-one-colour-topic-icons/cutouts-v2/.DS_Store`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright desktop and mobile flow passed for mode switching, sliders, surface toggles, pause, reduced motion, contrast-safe mode, CSS export, no console errors, no horizontal overflow, and mobile card-label clearance
+- visual QA compared the Figma reference screenshot with desktop and mobile browser screenshots in `output/playwright/aha-living-gradient-playground/`
+
+### Next
+- use `http://localhost:4173/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/` while the local server is running
+- decide separately if this local prototype should be recreated or linked back into Figma
+
+## 2026-06-26
+### Task
+- rebuild the AHA living gradient playground motion system to avoid hard edges and static-gradient overlays
+
+### Change
+- replace `sinus`, `ember`, and `sweep` with soft-field modes: `breath`, `current`, `pulse`, `orbit`, and `undertow`
+- assemble each `.living-gradient` from injected moving red, deep-red, warm, and veil fields instead of a static linear-gradient base
+- keep orange intermittent and red-dominant, with all visible field layers moving in each mode
+- move the prototype font stack to LubDub first and reduce heavy UI text weights
+- update artifact lookup notes for the new mode API
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright desktop and mobile flow passed for all five modes, slider CSS updates, surface toggles, pause, reduced motion, contrast-safe mode, Copy CSS, no console errors, no horizontal overflow, and background-surface field coverage
+- browser QA confirmed `.background-surface` has no static `background-image`, covers the panel, and uses five animated radial fields
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- review the motion feel in-browser and tune individual mode timings if a specific rhythm becomes the preferred direction
+
+## 2026-06-26
+### Task
+- action the prepared plans for stronger living-gradient modes and durable Parameterizer controls
+
+### Change
+- add `sweepfield` as a soft CSS-field interpretation of the animated gradient sweep reference
+- add `meshflow` as a slowed, blurred, CSS-only interpretation of the smitpatelx / Stripe-style shader reference
+- keep all live gradient colour fields limited to AHA orange, AHA red, and deep red
+- keep live gradient surfaces built from moving blurred fields, with flat red only as pre-JS, disabled-surface, or reduced-motion fallback
+- replace the ad hoc control markup with a single `controlSchema` in the prototype script
+- add broader parameter ranges and effect-shape controls for duration, warmth, red/deep balance, drift, bloom origin, field size, sweep travel, mesh bend, mesh blur, deep drift, and surface blend
+- add Copy Config and reload persistence alongside Copy CSS
+- restyle the right panel into a compact fixed-width Parameterizer tool palette with stable row geometry
+- update lookup files with the current seven-mode API and control-source path
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright desktop and mobile pass confirmed seven modes, generated controls, expanded ranges, live CSS variable updates, reload persistence, Copy Config, reset, no console errors, no horizontal overflow, fixed panel geometry, and mobile row geometry
+- Playwright pixel check on the `meshflow` background found no white, visible orange, and no hard-edge colour jump in the gradient area
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- review `sweepfield` and `meshflow` in the browser at real speed and decide which mode should become the preferred default
+
+## 2026-06-26
+### Task
+- add an Alex Harri-inspired WebGL gradient-map mode without adding WebGL
+
+### Change
+- add `mapflow` / Gradient Map Flow as an eighth `.living-gradient` mode
+- interpret the article's dynamic JavaScript gradient-map idea as a JS-authored AHA colour ramp exposed through `--lg-map-gradient`
+- keep the implementation CSS-only and performance-focused by animating oversized blurred fields with transforms and opacity
+- use only AHA orange, AHA red, and deep red in the animated gradient fields
+- include `--lg-map-opacity` and `--lg-map-gradient` in Copy CSS exports for the selected mode
+- update artifact lookup files with the current eight-mode API
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright confirmed `mapflow` appears in the mode selector, applies `52s` duration, animates `lg-map-a` and `lg-map-b`, exports `--lg-map-gradient`, persists through reload, and has no console errors or horizontal overflow
+- Playwright pixel check on the `mapflow` background found no white, visible orange, and no hard-edge colour jump in the sampled gradient area
+
+### Next
+- compare `mapflow` against `meshflow` at real speed and decide whether the generated gradient-map direction is worth keeping as a preferred exploration path
+
+## 2026-06-26
+### Task
+- continue the living-gradient playground after the multi-agent audit
+
+### Change
+- add `cloudmesh` / Radial Cloud Mesh as a ninth `.living-gradient` mode based on a slowed, blurred CSS radial mesh effect
+- move the desktop composition closer to the linked Figma node with the 511px right rail, 16px preview inset, 8px preview gaps, rounded preview panels, and lighter UI type
+- replace the placeholder/text logo treatment with local Figma-exported logo assets for the MRM header mark, AHA header mark, and logo preview SVG
+- replace the static logo preview image with local SVG clipping masks so the `.living-gradient` field animates inside the large and small AHA marks
+- bump the saved settings key and config schema to `v6` so richer defaults replace stale washed-out browser values
+- strengthen the authored defaults toward the Figma gradient: stronger AHA red, more deep-red pull, brighter/saturated output, and a clearer orange warmth window
+- quiet the Parameterizer rail so it keeps functional controls without visually overpowering the Figma-style prototype composition
+- animate the visible red-alt and veil layers in newer modes so `sweepfield`, `meshflow`, `mapflow`, and `cloudmesh` do not leave soft fields sitting still behind animated layers
+- expand Copy CSS output to include derived runtime variables used by the field system, including field scale/size, warm/deep/red opacity, drift vectors, mesh scale/tilt, and map gradient values
+- update artifact lookup notes with the current nine-mode API
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/logo-mrm.svg`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/logo-aha-header.png`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/logo-preview.svg`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/aha-logo-mask-large.svg`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/aha-logo-mask-small.svg`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed the Figma-sized desktop layout uses a 511px rail, 16px preview inset, 8px preview gaps, 20px panel radii, no horizontal overflow, no console errors, and mobile renders without horizontal overflow
+- Playwright confirmed local logo assets load, the MRM header mark renders at 64x21, the AHA header mark renders at 69x45, and the Figma preview SVG fills the logo preview panel
+- Playwright confirmed the AHA preview marks are masked `.living-gradient` surfaces with injected moving fields, not flat static SVG fills
+- Playwright confirmed v6 defaults load with richer red, deeper pull, higher saturation, no white leakage, no console errors, and no desktop/mobile horizontal overflow
+- Playwright confirmed newer modes animate their visible red-alt and veil layers, and Copy CSS includes derived field variables for `cloudmesh`
+- inset pixel sampling on the `cloudmesh` background found no white leakage, visible orange warmth, and no hard-edge jump inside the gradient field
+
+### Next
+- compare the Figma-matched desktop layout and `cloudmesh` orange visibility in the browser before deciding whether to keep the light Parameterizer rail treatment
+
+## 2026-06-26
+### Task
+- action the AHA gradient punch and logo-fill plan
+
+### Change
+- bump saved settings and config schema to `v7` so older washed-out browser settings do not override the authored look
+- strengthen the default AHA red, deep-red pull, orange warmth event, brightness, saturation, field spread, and surface blend values
+- tune the clipped logo previews with logo-specific blur, field sizing, and field placement so the moving gradient remains visible inside the AHA marks
+- keep the header logos static for Figma fidelity while the preview logos stay masked `.living-gradient` surfaces
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser QA confirmed v7 defaults render with `--lg-orange-intensity: 0.74`, `--lg-red-dominance: 0.98`, `--lg-deep-strength: 0.90`, `--lg-brightness: 1.08`, and `--lg-saturation: 1.24`
+- Browser QA confirmed the large and small logo previews use local SVG masks, contain 15 injected gradient fields, and animate visible fields inside the clipped AHA marks
+- Browser interaction QA confirmed mode switching to `cloudmesh` updates the selected mode, animates `lg-cloud-b` inside the logo mask, and updates Copy CSS for the selected mode
+- Browser mobile smoke check at `390 x 844` found no horizontal overflow and confirmed the masked logo still contains the moving field system
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- review the v7 default state in the browser and decide whether this punch level should become the preferred baseline
+
+## 2026-06-26
+### Task
+- compare every living-gradient mode against the original gradient colour reference and adjust the modes to keep the same colour vibe
+
+### Change
+- use the supplied CleanShot reference image as the colour target for the background preview
+- capture actual browser screenshots for every mode and crop the `.background-surface` panel for comparison
+- bump saved settings and config schema to `v8` so the browser loads the current colour baseline instead of older v7 values
+- lower default brightness/saturation from the punch pass to better match the reference image instead of over-saturating the red
+- add moving background-only red and deep-red anchor fields so every mode keeps the center-red and lower-depth structure
+- add a moving warm-corner veil above the background anchors so the orange remains present without washing the whole surface
+- keep the colour adjustment CSS-only, built from moving soft fields and pseudo-elements rather than a static gradient overlay
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+- `output/playwright/aha-living-gradient-playground/mode-colour-comparison-final2-full/`
+- `output/playwright/aha-living-gradient-playground/mode-colour-comparison-final2-crops/`
+
+### Validation
+- Browser screenshots captured all nine modes at `1440 x 924` and cropped the background preview from the measured `.background-surface` rect
+- final comparison sheet: `output/playwright/aha-living-gradient-playground/mode-colour-comparison-final2-crops/contact-sheet.png`
+- final comparison stats: `output/playwright/aha-living-gradient-playground/mode-colour-comparison-final2-crops/stats.json`
+- Browser console check reported no warnings or errors during the capture pass
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- review the final contact sheet and decide whether the quieter modes should receive a stronger orange event at a different sampled phase
+
+## 2026-06-26
+### Task
+- give each living-gradient effect its own bespoke parameter set and make the effect overview selectable through stacked cards
+
+### Change
+- bump saved settings and config schema to `v9`
+- replace the dropdown mode selector with a selectable card overview that stacks effects vertically and scrolls them horizontally in the desktop rail
+- move parameter generation from one flat global schema to per-mode profiles so each effect exposes a tailored set of motion, colour, depth, and softness controls
+- keep shared surface toggles, reduced-motion, contrast-safe mode, pause, Copy CSS, Copy Config, and reset controls
+- update lookup notes so the durable artifact points to the mode-profile parameter system
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser QA confirmed the prototype loads at the expected localhost route with no console warnings or errors
+- Browser QA confirmed the effect overview renders 9 selectable cards, with desktop cards arranged as vertical stacks that can scroll horizontally inside the rail
+- Browser interaction QA confirmed selecting `cloudmesh` and `current` changes the active card, readout, `data-mode`, default cycle duration, and visible parameter set
+- Browser interaction QA confirmed changing the `current` drift slider updates `--lg-drift-distance` and the Copy CSS export
+- Browser responsive QA confirmed no horizontal overflow on desktop or `390 x 844` mobile, with mobile cards collapsing to a single readable vertical stack
+- Browser state was reset to the authored `breath` default after QA
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- decide whether any single mode should receive an additional bespoke-only parameter after hands-on review
+
+## 2026-06-26
+### Task
+- action the living-gradient consolidation and pipeline cleanup plan
+
+### Change
+- consolidate the public mode API from nine effects to five: `breath`, `current`, `pulse`, `undertow`, and `cloudmesh`
+- remove `orbit`, `sweepfield`, `meshflow`, and `mapflow` from the card selector, mode profiles, CSS selectors, extra fields, and keyframes
+- bump saved settings and config schema to `v10` so older browser storage does not restore removed modes
+- replace always-injected field layers with mode-aware field injection: standard modes use five soft fields, while `cloudmesh` adds four cloud fields
+- remove old unused control-system CSS, placeholder logo-mask styles, unused mode variables, dead select-control JS, and unreferenced animation blocks
+- wire the `cloudmesh` field-bend parameter into cloud field keyframes so the bespoke control has a visible effect
+- update artifact lookup notes and cleanup candidates to reflect the five-mode current artifact and superseded screenshot sets
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/cleanup-candidates.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser QA confirmed the prototype loads at the expected localhost route with no console warnings or page errors
+- Browser QA confirmed the effect overview now renders five selectable cards only: `breath`, `current`, `pulse`, `undertow`, and `cloudmesh`
+- Browser QA confirmed the default state is `breath` with a `16s` cycle and five injected soft field layers on each `.living-gradient` surface
+- Browser interaction QA confirmed `cloudmesh` switches every surface to nine injected fields, exposes its bespoke `meshBlur` and `meshTension` controls, and exports the selected mode plus mesh custom properties through Copy CSS
+- Browser interaction QA confirmed switching from `cloudmesh` back to `current` removes the cloud-only fields and restores the five-field base system
+- Browser responsive QA confirmed no horizontal overflow on desktop or `390 x 844` mobile
+- Screenshot evidence saved to `output/playwright/aha-living-gradient-playground/consolidation-v10/`
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- review the five-mode set in-browser and decide whether one should become the named preferred direction
+
+## 2026-06-26
+### Task
+- fix the faint button preview and clipped AHA logo mask in the living-gradient playground
+
+### Change
+- add surface-specific `.donate-button.living-gradient` overrides after the generic `.living-gradient` rule so the button keeps its intended tighter local blur instead of inheriting the global field blur
+- strengthen the button preview with explicit red, warm, deep, and field-position settings while keeping the moving field effect
+- add a matching `.donation-card.living-gradient` override so card-local blur settings are not accidentally overwritten by the generic gradient rule
+- expand both AHA logo mask SVG viewBoxes so the left side of the mark is no longer clipped by the mask viewport
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/aha-logo-mask-large.svg`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/aha-logo-mask-small.svg`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser/Playwright QA confirmed the button now computes `--lg-local-blur: 14px` instead of inheriting the global `62px` field blur
+- Browser/Playwright screenshots confirmed the button is visibly stronger and both logo previews render without side clipping
+- Browser/Playwright QA found no console warnings or errors and no horizontal overflow at desktop or `390 x 844` mobile
+
+### Next
+- review whether the stronger button should be pushed further toward the card/background saturation level
+
+## 2026-06-27
+### Task
+- make every living-gradient effect more pronounced without adding hard edges
+
+### Change
+- bump saved settings and config schema to `v12` so the browser loads the new authored contrast baseline instead of older local slider values
+- increase the default red coverage, deep pressure, brightness, and saturation while lowering the default field scale and soft falloff
+- tighten the derived field-size, field-scale, and blur formulas so the colour masses are smaller and the gradients do not flatten into one broad wash
+- tune the background preview with a stronger deep-red lower field and a smaller off-axis warm field so the red-led gradient has more contrast while orange remains intermittent
+- keep the implementation CSS-driven with moving soft fields only; no hard bands, canvas, WebGL, or static visible gradient overlay added
+- update the artifact index note to the current `v12` schema/storage baseline
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser QA confirmed the in-app route loads with five effect cards, no console warnings or errors, and no horizontal overflow
+- Browser QA confirmed the new defaults compute `--lg-field-size: 174%`, `--lg-field-blur: 36px`, and `--lg-saturation: 1.24`
+- Playwright QA captured all five modes and confirmed each mode activates correctly with no console warnings or horizontal overflow
+- Background crop sampling improved the softer modes from roughly `15-19` luminance range to `26-29`, while `cloudmesh` reached `47`
+- Mobile QA at `390 x 844` confirmed five cards, no horizontal overflow, and the same tighter `174%` field-size baseline
+
+### Next
+- review the v12 contrast baseline in motion and decide whether the orange event should be sampled at a stronger phase for the default screenshot state
+
+## 2026-06-27
+### Task
+- add a deliberate tri-colour reveal moment to every current living-gradient mode
+
+### Change
+- bump saved settings and config schema to `v13`
+- add `Reveal strength`, `Reveal window`, and `Reveal phase` controls to each mode profile
+- derive and export reveal variables for warm and deep field peaks so Copy CSS and Copy Config include the new reveal state
+- update all five mode keyframes so red, orange, and deep red become visible together during the authored reveal point, then return to a red-led rest state
+- tune background, button, card, and logo surfaces so the reveal is clearest on the background and tighter on smaller UI surfaces
+- update reduced-motion stills so the composition stays calm and readable while still showing a red-led field mix
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser QA at `http://127.0.0.1:4173/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/` confirmed all five modes render and expose the reveal controls
+- Playwright captured representative reveal samples for `breath`, `current`, `pulse`, `undertow`, and `cloudmesh` in `output/playwright/aha-living-gradient-playground/tri-colour-reveal-v13-balanced/`
+- Playwright confirmed Copy CSS includes `--lg-reveal-strength`, `--lg-reveal-window`, `--lg-reveal-phase`, `--lg-warm-reveal-opacity`, and `--lg-deep-reveal-opacity`
+- Playwright confirmed the large logo masks still contain moving gradient fields, button/card text stays readable, no console errors were reported, and desktop/mobile have no horizontal overflow
+- Playwright confirmed pause freezes the tested warm/background layers and reduced-motion removes animation
+- `find design/generated/review -name .DS_Store -delete` completed
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- compare sampled reveal screenshots against the original red/orange/deep reference and adjust per-mode peaks if any reveal feels too flat
+
+## 2026-06-27
+### Task
+- add practical controls for faster, more dynamic living-gradient motion across every current effect
+
+### Change
+- bump saved settings and config schema to `v14`
+- add a shared `Motion System` control group above the mode-specific controls
+- add `Motion speed`, `Motion energy`, and `Colour field size` controls that apply to every mode
+- map motion speed into the effective `--lg-duration` so all layer animations can be sped up or slowed down together
+- map motion energy into drift vectors and mesh movement so the effects can become more active without adding hard edges
+- map colour field size into the field sizing and blur formula so the user can make the gradient colours feel closer/tighter or broader/softer
+- include the new motion variables in Copy CSS and Copy Config
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- Browser QA confirmed `Motion System` appears above the mode-specific controls for all five modes
+- Browser QA confirmed default `Motion speed` changes the authored `16s` breath cycle to computed `--lg-duration: 11.03s`
+- Browser QA confirmed boosted settings update the live CSS variables: `Motion speed 2.40x` sets `--lg-duration: 6.67s`, `Motion energy 2.10x` raises drift to `36%`, and `Colour field size 0.52` compresses the fields to `92%`
+- Browser QA confirmed Copy CSS includes `--lg-motion-speed`, `--lg-motion-energy`, `--lg-effect-size`, and `--lg-authored-duration`
+- Browser QA confirmed Copy Config uses schema `aha-living-gradient-playground/v14` and includes the new motion-system state values
+- Playwright captured desktop and mobile screenshots in `output/playwright/aha-living-gradient-playground/motion-system-v14/`
+- Browser QA reported no console errors and no desktop/mobile horizontal overflow
+
+### Next
+- tune the default `Motion speed`, `Motion energy`, and `Colour field size` values in browser if the new baseline feels too active or still too calm
+
+## 2026-06-27
+### Task
+- rebuild the living-gradient simulations with sharper CSS field tuning and two real shader-based modes
+
+### Change
+- bump saved settings and config schema to `v15`
+- remove `undertow` from the selectable mode API and fold the deep-pull behavior into the remaining CSS modes
+- keep CSS soft-field modes `breath`, `current`, `pulse`, and `cloudmesh`, with tighter default field scale, lower blur, stronger orange reveal, and less full-opacity red coverage
+- add native no-dependency WebGL modes `shaderflow` and `softplasma`
+- add shader-specific controls for speed, turbulence, warp strength, colour closeness, warm event, deep pull, shader blur, and render scale
+- render shader modes through one lightweight canvas per active surface, with device pixel ratio capped at `1` and default render scale `0.65`
+- pause shader rendering when paused, reduced-motion, page-hidden, or not in a shader mode
+- add graceful shader fallback to `cloudmesh` when WebGL is unavailable
+- update Copy CSS and Copy Config so shader variables and the v15 schema are exported
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed after shader edits
+- Headed Chromium QA confirmed six selectable modes: `breath`, `current`, `pulse`, `cloudmesh`, `shaderflow`, and `softplasma`
+- Headed Chromium QA confirmed shader modes create one `.lg-shader-canvas` on the background surface and no `.lg-field` layers
+- Headed Chromium QA confirmed no console errors while switching through all six modes
+- Headed Chromium QA confirmed pause freezes the shader canvas, reduced-motion removes shader canvases and uses a calm static AHA-colour fallback, Copy CSS includes shader variables and a WebGL renderer note, and `Shader speed` live-applies to `--lg-shader-speed`
+- Mobile QA at `390 x 844` confirmed no horizontal overflow
+- Headless Chromium reported WebGL unavailable in this environment; fallback to `cloudmesh` was confirmed
+
+### Next
+- review the published shader modes in a normal browser and tune `Warm event`, `Deep pull`, and `Colour closeness` if the client wants stronger or calmer reveal moments
+
+## 2026-06-29
+### Task
+- refine the living-gradient playground so orange behaves like a gentle top-right light source instead of a visible circular blob
+
+### Change
+- bump saved settings and config schema to `v16`
+- retune `breath`, `current`, `pulse`, and `cloudmesh` with slower warm-light ramps, broader blur/falloff, and top-right-biased orange fields
+- add `Shader rotation` to shader mode controls and exports, correct the shader coordinate anchors, mute the middle red, and keep the light area in the top-right baseline
+- brighten and rebalance `softplasma` so it keeps more light while keeping orange sparse
+- add `heartlight` / Heartlight Beam and `emberveil` / Ember Veil as restrained red/deep-red/orange exploration modes
+- update the artifact index and quick map to the eight-mode `v16` API
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright confirmed eight modes: `breath`, `current`, `pulse`, `cloudmesh`, `shaderflow`, `softplasma`, `heartlight`, and `emberveil`
+- Playwright captured desktop screenshots for all eight modes and a mobile screenshot in `output/playwright/aha-living-gradient-playground/v16-refinement-final/`
+- Playwright confirmed no console warnings or errors, no mobile horizontal overflow, Copy Config schema `aha-living-gradient-playground/v16`, Copy CSS includes `--lg-shader-rotation`, pause applies to shader mode, and reduced motion removes shader canvases
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- review the v16 screenshots in motion and tune individual defaults if the orange should be even more restrained in the logo mask
+
+## 2026-06-29
+### Task
+- add explicit save-and-reload persistence to the living-gradient playground Parameterizer panel
+
+### Change
+- add a `Save Settings` action to the right-panel action row
+- keep parameter edits live-applied immediately while removing implicit save-on-render
+- save the current normalized state to the existing `aha-living-gradient-playground:v16` browser-storage key only when `Save Settings` is clicked
+- load saved settings automatically on next reload through the existing `loadSavedState()` path
+- keep Reset clearing browser storage and returning to authored defaults
+- update lookup notes with the explicit Save Settings reload path
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright confirmed changing `Motion speed` live-applies immediately and changes `--lg-duration`
+- Playwright confirmed unsaved parameter changes do not survive reload
+- Playwright confirmed clicking `Save Settings` writes `aha-living-gradient-playground:v16` and reload restores the saved value automatically
+- Playwright confirmed Reset clears browser storage and reload returns to authored defaults
+- Playwright confirmed the fixed panel shell remains `511px` wide with a `46px` header, `26px` desktop rows, four equal action buttons, no desktop horizontal overflow, no mobile horizontal overflow, and `32px` mobile rows
+- screenshots saved to `output/playwright/aha-living-gradient-playground/save-settings-v16/`
+- `npm run verify:brain` passed
+- `git diff --check` passed
+
+### Next
+- use `Save Settings` after tuning if the current right-panel state should become the next reload baseline in that browser
+
+## 2026-06-29
+### Task
+- make the living-gradient Parameterizer panel show only controls that affect the selected effect
+
+### Change
+- make shared Motion System controls mode-aware so shader modes no longer show CSS-only `Motion speed`
+- remove CSS-only timing/P3 controls from `shaderflow` and `softplasma`
+- expand CSS mode profiles with the warm-field geometry controls that already influence those effects
+- keep cloud-only mesh controls scoped to `cloudmesh`
+- wire shader-visible controls into WebGL math so `Motion energy`, `Colour field size`, `Warp strength`, `Colour closeness`, and `Reveal strength` all visibly affect shader modes
+- update lookup notes with the active-control contract
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- Playwright confirmed all eight modes render only their intended active controls: CSS modes keep CSS timing/field controls, `cloudmesh` alone shows mesh controls, and shader modes hide CSS-only timing, P3, and mesh controls
+- Playwright confirmed `Bloom X` live-applies in `breath` and `Motion energy` live-applies in `shaderflow`
+- Playwright confirmed no console warnings or errors and no desktop/mobile horizontal overflow
+- `npm run verify:brain` passed
+- `git diff --check` passed
