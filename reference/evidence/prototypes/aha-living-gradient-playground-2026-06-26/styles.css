@@ -54,48 +54,48 @@ input {
   --lg-duration: 16.36s;
   --lg-authored-duration: 18s;
   --lg-motion-speed: 1.1;
-  --lg-motion-energy: 0.94;
-  --lg-effect-size: 0.88;
-  --lg-orange-intensity: 0.78;
-  --lg-red-dominance: 0.92;
-  --lg-deep-strength: 1.08;
-  --lg-brightness: 1.08;
-  --lg-saturation: 1.08;
+  --lg-motion-energy: 1.02;
+  --lg-effect-size: 0.76;
+  --lg-orange-intensity: 0.92;
+  --lg-red-dominance: 1.08;
+  --lg-deep-strength: 1.18;
+  --lg-brightness: 1.1;
+  --lg-saturation: 1.24;
   --lg-drift-distance: 17;
   --lg-bloom-x: 88%;
   --lg-bloom-y: 6%;
-  --lg-scale: 0.94;
-  --lg-softness: 92;
+  --lg-scale: 0.82;
+  --lg-softness: 64;
   --lg-rest: 0.34;
   --lg-phase: 0s;
-  --lg-orange-alpha: 0.337;
-  --lg-orange-alpha-soft: 0.283;
+  --lg-orange-alpha: 0.495;
+  --lg-orange-alpha-soft: 0.416;
   --lg-warm-color: rgb(230 31 30);
   --lg-warm-color-soft: rgb(228 18 30);
-  --lg-pulse-alpha: 0.337;
-  --lg-pulse-alpha-soft: 0.283;
+  --lg-pulse-alpha: 0.495;
+  --lg-pulse-alpha-soft: 0.416;
   --lg-deep-alpha: 1;
   --lg-red-stop: 53.6%;
-  --lg-blur: 54px;
-  --lg-field-blur: 54px;
-  --lg-field-size: 132%;
-  --lg-field-scale: 1.18;
-  --lg-field-scale-deep: 1.49;
-  --lg-red-field-opacity: 0.86;
-  --lg-red-alt-opacity: 0.63;
-  --lg-warm-peak: 0.337;
-  --lg-warm-peak-soft: 0.283;
-  --lg-warm-ambient: 0.022;
-  --lg-warm-reveal-opacity: 0.611;
-  --lg-warm-reveal-shoulder: 0.381;
+  --lg-blur: 26px;
+  --lg-field-blur: 26px;
+  --lg-field-size: 103%;
+  --lg-field-scale: 1.01;
+  --lg-field-scale-deep: 1.2;
+  --lg-red-field-opacity: 0.98;
+  --lg-red-alt-opacity: 0.854;
+  --lg-warm-peak: 0.495;
+  --lg-warm-peak-soft: 0.416;
+  --lg-warm-ambient: 0.049;
+  --lg-warm-reveal-opacity: 0.769;
+  --lg-warm-reveal-shoulder: 0.502;
   --lg-deep-field-opacity: 1;
-  --lg-deep-field-opacity-soft: 0.82;
+  --lg-deep-field-opacity-soft: 0.86;
   --lg-deep-reveal-opacity: 1;
-  --lg-deep-reveal-shoulder: 0.893;
-  --lg-drift-x: 16%;
-  --lg-drift-y: -11%;
-  --lg-drift-x-neg: -16%;
-  --lg-drift-y-neg: 11%;
+  --lg-deep-reveal-shoulder: 0.96;
+  --lg-drift-x: 17%;
+  --lg-drift-y: -12%;
+  --lg-drift-x-neg: -17%;
+  --lg-drift-y-neg: 12%;
   --lg-mesh-scale: 1.32;
   --lg-mesh-tilt: 7deg;
   --lg-shader-speed: 1.22;
@@ -103,9 +103,9 @@ input {
   --lg-shader-turbulence: 1.08;
   --lg-shader-warp: 1.16;
   --lg-color-closeness: 0.72;
-  --lg-warm-event: 1.05;
-  --lg-deep-pull: 1.34;
-  --lg-shader-blur: 10px;
+  --lg-warm-event: 1.16;
+  --lg-deep-pull: 1.42;
+  --lg-shader-blur: 6px;
   --lg-render-scale: 0.65;
   min-height: 100vh;
   display: grid;
@@ -778,17 +778,17 @@ input[type="radio"] {
 }
 
 .lg-field-warm {
-  top: calc(var(--lg-bloom-y) - 55%);
-  left: calc(var(--lg-bloom-x) - 60%);
-  width: 122%;
-  height: 116%;
+  top: calc(var(--lg-bloom-y) - 46%);
+  left: calc(var(--lg-bloom-x) - 52%);
+  width: calc(var(--lg-field-size) * 1.42);
+  height: calc(var(--lg-field-size) * 0.82);
   opacity: var(--lg-warm-ambient);
   background:
     radial-gradient(
-      ellipse at 50% 50%,
+      ellipse at 62% 36%,
       rgb(240 108 35 / 1) 0%,
-      rgb(240 108 35 / 0.72) 34%,
-      rgb(240 108 35 / 0.28) 64%,
+      rgb(240 108 35 / 0.68) 30%,
+      rgb(240 108 35 / 0.2) 68%,
       rgb(240 108 35 / 0) 100%
     );
 }
@@ -1534,17 +1534,17 @@ input[type="radio"] {
   --lg-reveal-strength: 0.72;
   --lg-reveal-window: 0.46;
   --lg-reveal-phase: 0s;
-  --lg-warm-reveal-opacity: 0.611;
-  --lg-warm-reveal-shoulder: 0.381;
+  --lg-warm-reveal-opacity: 0.769;
+  --lg-warm-reveal-shoulder: 0.502;
   --lg-deep-reveal-opacity: 1;
-  --lg-deep-reveal-shoulder: 0.893;
-  --lg-warm-window: 0.42;
-  --lg-field-spread: 0.86;
-  --lg-field-size: 118%;
+  --lg-deep-reveal-shoulder: 0.96;
+  --lg-warm-window: 0.36;
+  --lg-field-spread: 0.72;
+  --lg-field-size: 103%;
   --lg-mesh-tension: 0.56;
   --lg-mesh-blur: 64px;
   --lg-deep-drift: 26%;
-  --lg-surface-blend: 1.16;
+  --lg-surface-blend: 1.24;
   --lg-mesh-scale: 1.32;
   --lg-mesh-tilt: 7deg;
   --lg-shader-speed: 1.22;
@@ -1552,9 +1552,9 @@ input[type="radio"] {
   --lg-shader-turbulence: 1.08;
   --lg-shader-warp: 1.16;
   --lg-color-closeness: 0.72;
-  --lg-warm-event: 1.05;
-  --lg-deep-pull: 1.34;
-  --lg-shader-blur: 10px;
+  --lg-warm-event: 1.16;
+  --lg-deep-pull: 1.42;
+  --lg-shader-blur: 6px;
   --lg-render-scale: 0.65;
 }
 
@@ -1834,7 +1834,7 @@ input[type="radio"] {
 
 .parameterizer-actions {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
 }
 
@@ -2093,10 +2093,10 @@ input[type="radio"] {
   .prototype[data-p3="true"] .lg-field-warm {
     background:
       radial-gradient(
-        ellipse at 66% 28%,
-        color(display-p3 0.8784 0.4549 0.2235 / 0.62) 0%,
-        color(display-p3 0.8784 0.4549 0.2235 / 0.34) 32%,
-        color(display-p3 0.8784 0.4549 0.2235 / 0.12) 68%,
+        ellipse at 62% 36%,
+        color(display-p3 0.8784 0.4549 0.2235 / 0.78) 0%,
+        color(display-p3 0.8784 0.4549 0.2235 / 0.44) 30%,
+        color(display-p3 0.8784 0.4549 0.2235 / 0.16) 68%,
         color(display-p3 0.8784 0.4549 0.2235 / 0) 100%
       );
   }

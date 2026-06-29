@@ -1,4 +1,4 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v16";
+const STORAGE_KEY = "aha-living-gradient-playground:v17";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -7,9 +7,20 @@ const cssOutput = document.querySelector("[data-css-output]");
 const saveConfigButton = document.querySelector("[data-save-config]");
 const copyCssButton = document.querySelector("[data-copy-css]");
 const copyConfigButton = document.querySelector("[data-copy-config]");
+const exportMp4Button = document.querySelector("[data-export-mp4]");
 const resetButton = document.querySelector("[data-reset-config]");
 const copyStatus = document.querySelector("[data-copy-status]");
 const modeReadout = document.querySelector("[data-mode-readout]");
+
+const EXPORT_SIZE = 1080;
+const EXPORT_FPS = 30;
+const MP4_MIME_TYPES = [
+  "video/mp4;codecs=avc1.42E01E",
+  "video/mp4;codecs=avc1",
+  "video/mp4;codecs=h264",
+  "video/mp4",
+];
+const TAU = Math.PI * 2;
 
 const fieldMarkup = {
   "lg-field-red": '<span class="lg-field lg-field-red" aria-hidden="true"></span>',
@@ -138,39 +149,39 @@ const modeDurations = Object.fromEntries(modes.map((mode) => [mode.value, mode.d
 const controlDefinitions = {
   duration: { key: "duration", label: "Cycle", type: "range", min: 4, max: 80, step: 1, default: 12, unit: "s" },
   motionSpeed: { key: "motionSpeed", label: "Motion speed", type: "range", min: 0.35, max: 4.5, step: 0.01, default: 1.1 },
-  motionEnergy: { key: "motionEnergy", label: "Motion energy", type: "range", min: 0.25, max: 3.2, step: 0.01, default: 0.94 },
-  effectSize: { key: "effectSize", label: "Colour field size", type: "range", min: 0.35, max: 1.35, step: 0.01, default: 0.88 },
+  motionEnergy: { key: "motionEnergy", label: "Motion energy", type: "range", min: 0.25, max: 3.2, step: 0.01, default: 1.02 },
+  effectSize: { key: "effectSize", label: "Colour field size", type: "range", min: 0.35, max: 1.35, step: 0.01, default: 0.76 },
   revealStrength: { key: "revealStrength", label: "Reveal strength", type: "range", min: 0, max: 1.65, step: 0.01, default: 0.72 },
   revealWindow: { key: "revealWindow", label: "Reveal window", type: "range", min: 0.05, max: 0.72, step: 0.01, default: 0.46 },
   revealPhase: { key: "revealPhase", label: "Reveal phase", type: "range", min: 0, max: 140, step: 0.25, default: 0, unit: "s" },
   pulseIntensity: { key: "pulseIntensity", label: "Pulse rise", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.32 },
   rest: { key: "rest", label: "Red rest", type: "range", min: 0, max: 95, step: 1, default: 34, unit: "%" },
   phase: { key: "phase", label: "Phase offset", type: "range", min: 0, max: 140, step: 0.25, default: 0, unit: "s" },
-  warmWindow: { key: "warmWindow", label: "Warm window", type: "range", min: 0.08, max: 1.35, step: 0.01, default: 0.42 },
-  orangeIntensity: { key: "orangeIntensity", label: "Orange bloom", type: "range", min: 0, max: 1.7, step: 0.01, default: 0.78 },
-  redDominance: { key: "redDominance", label: "Red coverage", type: "range", min: 0.2, max: 1.3, step: 0.01, default: 0.92 },
-  deepStrength: { key: "deepStrength", label: "Deep pressure", type: "range", min: 0, max: 1.35, step: 0.01, default: 1.08 },
-  brightness: { key: "brightness", label: "Brightness", type: "range", min: 0.55, max: 1.55, step: 0.01, default: 1.08 },
-  saturation: { key: "saturation", label: "Saturation", type: "range", min: 0.45, max: 1.85, step: 0.01, default: 1.08 },
+  warmWindow: { key: "warmWindow", label: "Warm window", type: "range", min: 0.08, max: 1.35, step: 0.01, default: 0.36 },
+  orangeIntensity: { key: "orangeIntensity", label: "Orange bloom", type: "range", min: 0, max: 1.7, step: 0.01, default: 0.92 },
+  redDominance: { key: "redDominance", label: "Red coverage", type: "range", min: 0.2, max: 1.3, step: 0.01, default: 1.08 },
+  deepStrength: { key: "deepStrength", label: "Deep pressure", type: "range", min: 0, max: 1.35, step: 0.01, default: 1.18 },
+  brightness: { key: "brightness", label: "Brightness", type: "range", min: 0.55, max: 1.55, step: 0.01, default: 1.1 },
+  saturation: { key: "saturation", label: "Saturation", type: "range", min: 0.45, max: 1.85, step: 0.01, default: 1.24 },
   p3: { key: "p3", label: "P3 colour", type: "checkbox", default: false },
   driftDistance: { key: "driftDistance", label: "Drift radius", type: "range", min: 0, max: 70, step: 1, default: 17, unit: "%" },
   bloomX: { key: "bloomX", label: "Bloom X", type: "range", min: -60, max: 160, step: 1, default: 88, unit: "%" },
   bloomY: { key: "bloomY", label: "Bloom Y", type: "range", min: -60, max: 160, step: 1, default: 6, unit: "%" },
-  scale: { key: "scale", label: "Field scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: 0.94 },
-  softness: { key: "softness", label: "Soft falloff", type: "range", min: 8, max: 180, step: 1, default: 92, unit: "%" },
-  fieldSpread: { key: "fieldSpread", label: "Field size", type: "range", min: 0.35, max: 2.2, step: 0.01, default: 0.86 },
+  scale: { key: "scale", label: "Field scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: 0.82 },
+  softness: { key: "softness", label: "Soft falloff", type: "range", min: 8, max: 180, step: 1, default: 64, unit: "%" },
+  fieldSpread: { key: "fieldSpread", label: "Field size", type: "range", min: 0.35, max: 2.2, step: 0.01, default: 0.72 },
   meshTension: { key: "meshTension", label: "Field bend", type: "range", min: 0, max: 1.5, step: 0.01, default: 0.56 },
   meshBlur: { key: "meshBlur", label: "Cloud blur", type: "range", min: 8, max: 180, step: 1, default: 64, unit: "px" },
   deepDrift: { key: "deepDrift", label: "Deep drift", type: "range", min: 0, max: 90, step: 1, default: 26, unit: "%" },
-  surfaceBlend: { key: "surfaceBlend", label: "Field blend", type: "range", min: 0.35, max: 1.55, step: 0.01, default: 1.16 },
+  surfaceBlend: { key: "surfaceBlend", label: "Field blend", type: "range", min: 0.35, max: 1.55, step: 0.01, default: 1.24 },
   shaderSpeed: { key: "shaderSpeed", label: "Shader speed", type: "range", min: 0.1, max: 3, step: 0.01, default: 1.22 },
   shaderRotation: { key: "shaderRotation", label: "Shader rotation", type: "range", min: -180, max: 180, step: 1, default: 0, unit: "deg" },
   turbulence: { key: "turbulence", label: "Turbulence", type: "range", min: 0, max: 2.4, step: 0.01, default: 1.08 },
   warpStrength: { key: "warpStrength", label: "Warp strength", type: "range", min: 0, max: 2.6, step: 0.01, default: 1.16 },
   colorCloseness: { key: "colorCloseness", label: "Colour closeness", type: "range", min: 0.35, max: 1.9, step: 0.01, default: 0.72 },
-  warmEvent: { key: "warmEvent", label: "Warm event", type: "range", min: 0, max: 1.8, step: 0.01, default: 1.05 },
-  deepPull: { key: "deepPull", label: "Deep pull", type: "range", min: 0, max: 1.8, step: 0.01, default: 1.34 },
-  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 24, step: 1, default: 10, unit: "px" },
+  warmEvent: { key: "warmEvent", label: "Warm event", type: "range", min: 0, max: 1.8, step: 0.01, default: 1.16 },
+  deepPull: { key: "deepPull", label: "Deep pull", type: "range", min: 0, max: 1.8, step: 0.01, default: 1.42 },
+  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 24, step: 1, default: 6, unit: "px" },
   renderScale: { key: "renderScale", label: "Render scale", type: "range", min: 0.35, max: 1, step: 0.01, default: 0.65 },
   "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
   "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
@@ -445,7 +456,7 @@ function setProperty(name, value) {
   prototype.style.setProperty(name, value);
 }
 
-function updateDerivedVariables() {
+function getDerivedMetrics() {
   const restFactor = clamp(1 - state.rest / 145, 0.38, 1);
   const duration = clamp(state.duration / state.motionSpeed, 2.5, 180);
   const motionEnergy = state.motionEnergy;
@@ -453,25 +464,54 @@ function updateDerivedVariables() {
   const orangePeak = clamp((0.2 + state.orangeIntensity * (0.72 + state.pulseIntensity * 0.84)) * state.warmWindow, 0, 0.88);
   const warmPeak = clamp(orangePeak * state.surfaceBlend, 0, 0.82);
   const warmPeakSoft = clamp(warmPeak * 0.84, 0, 0.68);
-  const warmAmbient = clamp(state.orangeIntensity * 0.048 * restFactor, 0, 0.08);
+  const warmAmbient = clamp(state.orangeIntensity * 0.07 * restFactor, 0, 0.11);
   const warmRevealOpacity = clamp(warmPeak + state.revealStrength * 0.38, 0, 1);
   const warmRevealShoulder = clamp(warmAmbient + warmRevealOpacity * state.revealWindow * 1.28, warmAmbient, 0.72);
-  const redFieldOpacity = clamp((0.66 + state.redDominance * 0.24) * state.surfaceBlend, 0.58, 0.94);
-  const redAltOpacity = clamp((0.26 + state.redDominance * 0.34) * state.surfaceBlend, 0.22, 0.78);
-  const deepAlpha = clamp((0.42 + state.deepStrength * 0.72) * state.surfaceBlend, 0.32, 1);
-  const deepAlphaSoft = clamp(deepAlpha * 0.82, 0.22, 0.9);
-  const deepRevealOpacity = clamp(deepAlpha + state.revealStrength * 0.2, 0.34, 1);
-  const deepRevealShoulder = clamp(deepAlphaSoft + state.revealWindow * 0.32, 0.2, 0.92);
-  const blur = Math.round(clamp(state.softness * 0.54 * clamp(0.72 + sizeFactor * 0.24, 0.74, 1.08), 6, 96));
-  const fieldSize = Math.round(clamp((112 + state.fieldSpread * 44) * sizeFactor, 82, 220));
-  const fieldScale = clamp((0.96 + state.scale * 0.24) * clamp(0.88 + sizeFactor * 0.12, 0.9, 1.04), 0.92, 1.58);
-  const deepFieldScale = clamp(fieldScale + state.deepStrength * 0.18, 1.18, 1.94);
+  const redFieldOpacity = clamp((0.68 + state.redDominance * 0.24) * state.surfaceBlend, 0.62, 0.98);
+  const redAltOpacity = clamp((0.3 + state.redDominance * 0.36) * state.surfaceBlend, 0.26, 0.86);
+  const deepAlpha = clamp((0.46 + state.deepStrength * 0.74) * state.surfaceBlend, 0.38, 1);
+  const deepAlphaSoft = clamp(deepAlpha * 0.86, 0.26, 0.94);
+  const deepRevealOpacity = clamp(deepAlpha + state.revealStrength * 0.22, 0.42, 1);
+  const deepRevealShoulder = clamp(deepAlphaSoft + state.revealWindow * 0.34, 0.24, 0.96);
+  const blur = Math.round(clamp(state.softness * 0.47 * clamp(0.7 + sizeFactor * 0.2, 0.72, 1.02), 6, 78));
+  const fieldSize = Math.round(clamp((108 + state.fieldSpread * 38) * sizeFactor, 78, 190));
+  const fieldScale = clamp((0.9 + state.scale * 0.22) * clamp(0.86 + sizeFactor * 0.1, 0.88, 1.01), 0.86, 1.42);
+  const deepFieldScale = clamp(fieldScale + state.deepStrength * 0.16, 1.08, 1.72);
   const driftX = Math.round(state.driftDistance * motionEnergy);
   const driftY = Math.round(state.driftDistance * -0.72);
   const driftYEnergy = Math.round(driftY * motionEnergy);
   const meshScale = clamp(1.1 + state.meshTension * 0.34 + (motionEnergy - 1) * 0.08, 1.04, 1.58);
   const meshTilt = Math.round((-14 + state.meshTension * 34) * clamp(motionEnergy, 0.55, 1.9));
-  setProperty("--lg-duration", `${duration.toFixed(2)}s`);
+  return {
+    duration,
+    motionEnergy,
+    sizeFactor,
+    orangePeak,
+    warmPeak,
+    warmPeakSoft,
+    warmAmbient,
+    warmRevealOpacity,
+    warmRevealShoulder,
+    redFieldOpacity,
+    redAltOpacity,
+    deepAlpha,
+    deepAlphaSoft,
+    deepRevealOpacity,
+    deepRevealShoulder,
+    blur,
+    fieldSize,
+    fieldScale,
+    deepFieldScale,
+    driftX,
+    driftYEnergy,
+    meshScale,
+    meshTilt,
+  };
+}
+
+function updateDerivedVariables() {
+  const metrics = getDerivedMetrics();
+  setProperty("--lg-duration", `${metrics.duration.toFixed(2)}s`);
   setProperty("--lg-authored-duration", `${state.duration}s`);
   setProperty("--lg-motion-speed", state.motionSpeed.toFixed(2));
   setProperty("--lg-motion-energy", state.motionEnergy.toFixed(2));
@@ -493,37 +533,37 @@ function updateDerivedVariables() {
   setProperty("--lg-reveal-phase", `${state.revealPhase}s`);
   setProperty("--lg-warm-window", state.warmWindow.toFixed(2));
   setProperty("--lg-field-spread", state.fieldSpread.toFixed(2));
-  setProperty("--lg-field-size", `${fieldSize}%`);
+  setProperty("--lg-field-size", `${metrics.fieldSize}%`);
   setProperty("--lg-mesh-tension", state.meshTension.toFixed(2));
   setProperty("--lg-mesh-blur", `${state.meshBlur}px`);
   setProperty("--lg-deep-drift", `${state.deepDrift}%`);
   setProperty("--lg-surface-blend", state.surfaceBlend.toFixed(2));
-  setProperty("--lg-orange-alpha", warmPeak.toFixed(3));
-  setProperty("--lg-orange-alpha-soft", warmPeakSoft.toFixed(3));
-  setProperty("--lg-pulse-alpha", warmPeak.toFixed(3));
-  setProperty("--lg-pulse-alpha-soft", warmPeakSoft.toFixed(3));
-  setProperty("--lg-deep-alpha", deepAlpha.toFixed(3));
-  setProperty("--lg-blur", `${blur}px`);
-  setProperty("--lg-field-blur", `${blur}px`);
-  setProperty("--lg-field-scale", fieldScale.toFixed(2));
-  setProperty("--lg-field-scale-deep", deepFieldScale.toFixed(2));
-  setProperty("--lg-red-field-opacity", redFieldOpacity.toFixed(3));
-  setProperty("--lg-red-alt-opacity", redAltOpacity.toFixed(3));
-  setProperty("--lg-warm-peak", warmPeak.toFixed(3));
-  setProperty("--lg-warm-peak-soft", warmPeakSoft.toFixed(3));
-  setProperty("--lg-warm-ambient", warmAmbient.toFixed(3));
-  setProperty("--lg-warm-reveal-opacity", warmRevealOpacity.toFixed(3));
-  setProperty("--lg-warm-reveal-shoulder", warmRevealShoulder.toFixed(3));
-  setProperty("--lg-deep-field-opacity", deepAlpha.toFixed(3));
-  setProperty("--lg-deep-field-opacity-soft", deepAlphaSoft.toFixed(3));
-  setProperty("--lg-deep-reveal-opacity", deepRevealOpacity.toFixed(3));
-  setProperty("--lg-deep-reveal-shoulder", deepRevealShoulder.toFixed(3));
-  setProperty("--lg-drift-x", `${driftX}%`);
-  setProperty("--lg-drift-y", `${driftYEnergy}%`);
-  setProperty("--lg-drift-x-neg", `${driftX * -1}%`);
-  setProperty("--lg-drift-y-neg", `${driftYEnergy * -1}%`);
-  setProperty("--lg-mesh-scale", meshScale.toFixed(2));
-  setProperty("--lg-mesh-tilt", `${meshTilt}deg`);
+  setProperty("--lg-orange-alpha", metrics.warmPeak.toFixed(3));
+  setProperty("--lg-orange-alpha-soft", metrics.warmPeakSoft.toFixed(3));
+  setProperty("--lg-pulse-alpha", metrics.warmPeak.toFixed(3));
+  setProperty("--lg-pulse-alpha-soft", metrics.warmPeakSoft.toFixed(3));
+  setProperty("--lg-deep-alpha", metrics.deepAlpha.toFixed(3));
+  setProperty("--lg-blur", `${metrics.blur}px`);
+  setProperty("--lg-field-blur", `${metrics.blur}px`);
+  setProperty("--lg-field-scale", metrics.fieldScale.toFixed(2));
+  setProperty("--lg-field-scale-deep", metrics.deepFieldScale.toFixed(2));
+  setProperty("--lg-red-field-opacity", metrics.redFieldOpacity.toFixed(3));
+  setProperty("--lg-red-alt-opacity", metrics.redAltOpacity.toFixed(3));
+  setProperty("--lg-warm-peak", metrics.warmPeak.toFixed(3));
+  setProperty("--lg-warm-peak-soft", metrics.warmPeakSoft.toFixed(3));
+  setProperty("--lg-warm-ambient", metrics.warmAmbient.toFixed(3));
+  setProperty("--lg-warm-reveal-opacity", metrics.warmRevealOpacity.toFixed(3));
+  setProperty("--lg-warm-reveal-shoulder", metrics.warmRevealShoulder.toFixed(3));
+  setProperty("--lg-deep-field-opacity", metrics.deepAlpha.toFixed(3));
+  setProperty("--lg-deep-field-opacity-soft", metrics.deepAlphaSoft.toFixed(3));
+  setProperty("--lg-deep-reveal-opacity", metrics.deepRevealOpacity.toFixed(3));
+  setProperty("--lg-deep-reveal-shoulder", metrics.deepRevealShoulder.toFixed(3));
+  setProperty("--lg-drift-x", `${metrics.driftX}%`);
+  setProperty("--lg-drift-y", `${metrics.driftYEnergy}%`);
+  setProperty("--lg-drift-x-neg", `${metrics.driftX * -1}%`);
+  setProperty("--lg-drift-y-neg", `${metrics.driftYEnergy * -1}%`);
+  setProperty("--lg-mesh-scale", metrics.meshScale.toFixed(2));
+  setProperty("--lg-mesh-tilt", `${metrics.meshTilt}deg`);
   setProperty("--lg-shader-speed", state.shaderSpeed.toFixed(2));
   setProperty("--lg-shader-rotation", `${state.shaderRotation}deg`);
   setProperty("--lg-shader-turbulence", state.turbulence.toFixed(2));
@@ -1032,7 +1072,7 @@ ${derivedCss}
 
 function buildConfigExport() {
   return JSON.stringify({
-    schema: "aha-living-gradient-playground/v16",
+    schema: "aha-living-gradient-playground/v17",
     updated: "2026-06-29",
     state,
   }, null, 2);
@@ -1068,6 +1108,288 @@ async function copyText(text, successMessage) {
     const copied = document.execCommand("copy");
     copyStatus.textContent = copied ? successMessage : "Select the export field to copy manually.";
   }
+}
+
+function getSupportedMp4MimeType() {
+  if (!window.MediaRecorder) return "";
+  return MP4_MIME_TYPES.find((type) => MediaRecorder.isTypeSupported(type)) ?? "";
+}
+
+function getExportPlan() {
+  const activeMode = getActiveMode();
+  const isShader = shaderModes.has(state.mode);
+  const seconds = isShader
+    ? clamp(activeMode.duration / state.shaderSpeed, 4, 80)
+    : clamp(state.duration / state.motionSpeed, 2.5, 80);
+  const roundedSeconds = Number(seconds.toFixed(2));
+
+  return {
+    mode: state.mode,
+    label: activeMode.label,
+    seconds: roundedSeconds,
+    frames: Math.ceil(roundedSeconds * EXPORT_FPS),
+    fps: EXPORT_FPS,
+    width: EXPORT_SIZE,
+    height: EXPORT_SIZE,
+    mimeType: getSupportedMp4MimeType(),
+  };
+}
+
+async function exportCurrentGradientMp4() {
+  const plan = getExportPlan();
+
+  if (!plan.mimeType || !HTMLCanvasElement.prototype.captureStream) {
+    copyStatus.textContent = "MP4 export is not available in this browser. Use a browser with canvas capture and MP4 MediaRecorder support.";
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = plan.width;
+  canvas.height = plan.height;
+  const context = canvas.getContext("2d", { alpha: false });
+
+  if (!context) {
+    copyStatus.textContent = "MP4 export could not start because the canvas renderer is unavailable.";
+    return;
+  }
+
+  const stream = canvas.captureStream(plan.fps);
+  const chunks = [];
+  const recorder = new MediaRecorder(stream, {
+    mimeType: plan.mimeType,
+    videoBitsPerSecond: 10_000_000,
+  });
+
+  exportMp4Button.disabled = true;
+  copyStatus.textContent = `Exporting ${plan.label} MP4 loop (${plan.seconds}s)...`;
+
+  recorder.addEventListener("dataavailable", (event) => {
+    if (event.data.size > 0) chunks.push(event.data);
+  });
+
+  const finished = new Promise((resolve, reject) => {
+    recorder.addEventListener("stop", resolve, { once: true });
+    recorder.addEventListener("error", () => reject(new Error("MediaRecorder failed during MP4 export.")), { once: true });
+  });
+
+  try {
+    recorder.start(250);
+    await renderExportFrames(context, plan);
+    recorder.stop();
+    await finished;
+
+    const blob = new Blob(chunks, { type: plan.mimeType });
+    const filename = `aha-living-gradient-${plan.mode}-${plan.seconds.toFixed(2)}s-loop.mp4`;
+    downloadBlob(blob, filename);
+    copyStatus.textContent = `Exported ${filename}.`;
+  } catch (error) {
+    if (recorder.state !== "inactive") recorder.stop();
+    copyStatus.textContent = error.message || "MP4 export failed.";
+  } finally {
+    stream.getTracks().forEach((track) => track.stop());
+    exportMp4Button.disabled = false;
+  }
+}
+
+function renderExportFrames(context, plan) {
+  const start = performance.now();
+  let lastFrame = -1;
+
+  return new Promise((resolve) => {
+    const tick = (now) => {
+      const elapsed = (now - start) / 1000;
+      const frame = Math.min(Math.floor(elapsed * plan.fps), plan.frames - 1);
+
+      if (frame !== lastFrame) {
+        const progress = (frame % plan.frames) / plan.frames;
+        drawExportFrame(context, progress, plan);
+        lastFrame = frame;
+      }
+
+      if (elapsed < plan.seconds) {
+        requestAnimationFrame(tick);
+        return;
+      }
+
+      drawExportFrame(context, 0, plan);
+      resolve();
+    };
+
+    drawExportFrame(context, 0, plan);
+    requestAnimationFrame(tick);
+  });
+}
+
+function drawExportFrame(context, progress, plan) {
+  const width = plan.width;
+  const height = plan.height;
+  const metrics = getDerivedMetrics();
+  const phase = (progress + state.revealPhase / Math.max(plan.seconds, 0.01)) % 1;
+  const mode = state.mode;
+  const shaderLike = shaderModes.has(mode);
+
+  context.save();
+  context.clearRect(0, 0, width, height);
+  context.filter = `brightness(${state.brightness}) saturate(${state.saturation})`;
+  context.fillStyle = "#e2001e";
+  context.fillRect(0, 0, width, height);
+
+  const redWave = wave(phase, 0.02, mode === "current" ? 1 : 0.8);
+  const redAltWave = wave(phase, 0.32, mode === "pulse" ? 1.15 : 0.9);
+  const deepWave = wave(phase, 0.58, mode === "cloudmesh" ? 1.15 : 0.82);
+  const warmWave = pulseWave(phase, mode === "pulse" ? 2 : 1, mode === "emberveil" ? 0.22 : 0.1);
+  const topRightX = clamp(0.78 + (state.bloomX - 88) / 360, 0.35, 1.18);
+  const topRightY = clamp(0.18 + (state.bloomY - 6) / 360, -0.16, 0.54);
+  const drift = state.driftDistance / 280;
+  const field = metrics.fieldSize / 132;
+  const blur = clamp(metrics.blur * (shaderLike ? 0.72 : 1), 8, 78);
+
+  drawExportLayer(context, width, height, {
+    x: 0.38 + redWave * drift,
+    y: 0.52 + wave(phase, 0.18, 0.8) * drift * 0.45,
+    rx: 0.86 * field,
+    ry: 0.78 * field,
+    rotation: redWave * 0.12,
+    alpha: metrics.redFieldOpacity,
+    blur,
+    stops: redStops(),
+  });
+
+  drawExportLayer(context, width, height, {
+    x: 0.66 - redAltWave * drift * 0.9,
+    y: 0.62 + wave(phase, 0.44, 0.9) * drift * 0.5,
+    rx: 0.7 * field,
+    ry: 0.76 * field,
+    rotation: redAltWave * -0.18,
+    alpha: metrics.redAltOpacity * (shaderLike ? 0.7 : 0.92),
+    blur,
+    stops: redAltStops(),
+  });
+
+  drawExportLayer(context, width, height, {
+    x: 0.42 + deepWave * drift * 0.8,
+    y: 0.86 - Math.abs(deepWave) * 0.12,
+    rx: 0.88 * field * metrics.deepFieldScale,
+    ry: 0.92 * field * metrics.deepFieldScale,
+    rotation: deepWave * 0.16,
+    alpha: clamp(metrics.deepRevealShoulder + warmWave * 0.18, 0, 1),
+    blur,
+    stops: deepStops(),
+  });
+
+  drawExportLayer(context, width, height, {
+    x: topRightX - warmWave * 0.1 + wave(phase, 0.72, 0.7) * 0.03,
+    y: topRightY + warmWave * 0.04,
+    rx: (shaderLike ? 0.58 : 0.72) * field,
+    ry: (shaderLike ? 0.48 : 0.56) * field,
+    rotation: wave(phase, 0.14, 1) * 0.24,
+    alpha: clamp(metrics.warmAmbient + warmWave * (metrics.warmRevealOpacity - metrics.warmAmbient), 0, shaderLike ? 0.5 : 0.74),
+    blur: blur + 18,
+    stops: warmStops(),
+  });
+
+  if (mode === "cloudmesh" || shaderLike) {
+    drawExportClouds(context, width, height, phase, metrics, blur, field, shaderLike);
+  }
+
+  context.restore();
+}
+
+function drawExportClouds(context, width, height, phase, metrics, blur, field, shaderLike) {
+  const cloudAlpha = shaderLike ? 0.28 : 0.42;
+  const points = [
+    { x: 0.16, y: 0.22, offset: 0.1, stops: redAltStops() },
+    { x: 0.82, y: 0.2, offset: 0.34, stops: warmStops() },
+    { x: 0.72, y: 0.82, offset: 0.58, stops: deepStops() },
+    { x: 0.2, y: 0.78, offset: 0.82, stops: redStops() },
+  ];
+
+  points.forEach((point, index) => {
+    const motion = wave(phase, point.offset, 1 + index * 0.12);
+    drawExportLayer(context, width, height, {
+      x: point.x + motion * 0.06,
+      y: point.y + wave(phase, point.offset + 0.22, 1) * 0.05,
+      rx: (0.38 + index * 0.04) * field,
+      ry: (0.36 + index * 0.05) * field,
+      rotation: motion * 0.4,
+      alpha: cloudAlpha * (index === 1 ? metrics.warmRevealShoulder : 1),
+      blur: blur + 8,
+      stops: point.stops,
+    });
+  });
+}
+
+function drawExportLayer(context, width, height, layer) {
+  context.save();
+  context.globalAlpha = clamp(layer.alpha, 0, 1);
+  context.filter = `blur(${layer.blur}px) brightness(${state.brightness}) saturate(${state.saturation})`;
+  context.translate(layer.x * width, layer.y * height);
+  context.rotate(layer.rotation);
+  context.scale(layer.rx * width, layer.ry * height);
+
+  const gradient = context.createRadialGradient(0, 0, 0, 0, 0, 1);
+  layer.stops.forEach((stop) => {
+    gradient.addColorStop(stop.offset, stop.color);
+  });
+
+  context.fillStyle = gradient;
+  context.fillRect(-1.2, -1.2, 2.4, 2.4);
+  context.restore();
+}
+
+function wave(progress, offset = 0, cycles = 1) {
+  return Math.sin(((progress + offset) * cycles) * TAU);
+}
+
+function pulseWave(progress, cycles = 1, offset = 0) {
+  return 0.5 - Math.cos(((progress + offset) * cycles) * TAU) * 0.5;
+}
+
+function redStops() {
+  return [
+    { offset: 0, color: "rgba(236, 0, 32, 1)" },
+    { offset: 0.34, color: "rgba(226, 0, 30, 0.9)" },
+    { offset: 0.68, color: "rgba(226, 0, 30, 0.22)" },
+    { offset: 1, color: "rgba(226, 0, 30, 0)" },
+  ];
+}
+
+function redAltStops() {
+  return [
+    { offset: 0, color: "rgba(236, 0, 32, 0.82)" },
+    { offset: 0.42, color: "rgba(226, 0, 30, 0.44)" },
+    { offset: 0.72, color: "rgba(226, 0, 30, 0.14)" },
+    { offset: 1, color: "rgba(226, 0, 30, 0)" },
+  ];
+}
+
+function deepStops() {
+  return [
+    { offset: 0, color: "rgba(82, 2, 8, 1)" },
+    { offset: 0.42, color: "rgba(136, 17, 18, 0.78)" },
+    { offset: 0.72, color: "rgba(136, 17, 18, 0.26)" },
+    { offset: 1, color: "rgba(136, 17, 18, 0)" },
+  ];
+}
+
+function warmStops() {
+  return [
+    { offset: 0, color: "rgba(240, 108, 35, 1)" },
+    { offset: 0.36, color: "rgba(240, 108, 35, 0.62)" },
+    { offset: 0.72, color: "rgba(240, 108, 35, 0.18)" },
+    { offset: 1, color: "rgba(240, 108, 35, 0)" },
+  ];
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function loadSavedState() {
@@ -1171,6 +1493,7 @@ copyConfigButton.addEventListener("click", () => {
   cssOutput.value = config;
   copyText(config, "Copied the current parameter config.");
 });
+exportMp4Button.addEventListener("click", exportCurrentGradientMp4);
 resetButton.addEventListener("click", resetConfig);
 window.addEventListener("resize", () => {
   drawShadersOnce();
