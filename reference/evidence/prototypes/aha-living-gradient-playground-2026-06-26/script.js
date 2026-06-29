@@ -1,5 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v25";
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v25";
+const STORAGE_KEY = "aha-living-gradient-playground:v30";
+const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v29", "aha-living-gradient-playground:v28", "aha-living-gradient-playground:v27", "aha-living-gradient-playground:v26"];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v30";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -9,13 +10,16 @@ const saveConfigButton = document.querySelector("[data-save-config]");
 const copyCssButton = document.querySelector("[data-copy-css]");
 const copyConfigButton = document.querySelector("[data-copy-config]");
 const exportMp4Button = document.querySelector("[data-export-mp4]");
+const exportLogoMp4Button = document.querySelector("[data-export-logo-mp4]");
 const resetButton = document.querySelector("[data-reset-config]");
 const copyStatus = document.querySelector("[data-copy-status]");
 const modeReadout = document.querySelector("[data-mode-readout]");
 
-const EXPORT_SIZE = 1080;
+const EXPORT_WIDTH = 1920;
+const EXPORT_HEIGHT = 1080;
 const EXPORT_FPS = 30;
-const TAU = Math.PI * 2;
+const LOGO_MASK_URL = "assets/aha-logo-mask-large.svg";
+const LOGO_MASK_ASPECT = 124 / 149;
 const MP4_MIME_TYPES = [
   "video/mp4;codecs=avc1.42E01E",
   "video/mp4;codecs=avc1",
@@ -40,19 +44,14 @@ const presets = [
       flameHeight: 1.14,
       flameStrength: 1.16,
       taperPower: 1.28,
-      tipRoundness: 0.55,
       edgeSoftness: 0.32,
       warmLight: 1.24,
       warmSpread: 0.92,
       deepPressure: 1.14,
-      shadowReach: 1,
       turbulence: 0.9,
       noiseScale: 1,
       rise: 0.68,
-      sway: 0.24,
-      spineWobble: 0.62,
-      tongue: 0.58,
-      tongueWidth: 1,
+      sway: 0.96,
       colorIntensity: 1.1,
       shaderBlur: 0,
     },
@@ -73,19 +72,14 @@ const presets = [
       flameHeight: 1.05,
       flameStrength: 1.24,
       taperPower: 1.18,
-      tipRoundness: 0.52,
       edgeSoftness: 0.3,
       warmLight: 1.3,
       warmSpread: 1.08,
       deepPressure: 1,
-      shadowReach: 0.88,
       turbulence: 1.02,
       noiseScale: 1.08,
       rise: 0.78,
-      sway: 0.34,
-      spineWobble: 0.74,
-      tongue: 0.76,
-      tongueWidth: 0.92,
+      sway: 1.36,
       colorIntensity: 1.12,
       shaderBlur: 0,
     },
@@ -106,19 +100,14 @@ const presets = [
       flameHeight: 1.18,
       flameStrength: 1.18,
       taperPower: 1.38,
-      tipRoundness: 0.64,
       edgeSoftness: 0.28,
       warmLight: 1.08,
       warmSpread: 0.78,
       deepPressure: 1.36,
-      shadowReach: 1.22,
       turbulence: 1.12,
       noiseScale: 1.16,
       rise: 0.58,
-      sway: 0.22,
-      spineWobble: 0.56,
-      tongue: 0.54,
-      tongueWidth: 1.08,
+      sway: 0.88,
       colorIntensity: 1.12,
       shaderBlur: 0,
     },
@@ -139,19 +128,14 @@ const presets = [
       flameHeight: 1.02,
       flameStrength: 1.14,
       taperPower: 1.05,
-      tipRoundness: 0.42,
       edgeSoftness: 0.38,
       warmLight: 1.18,
       warmSpread: 0.96,
       deepPressure: 1.12,
-      shadowReach: 0.96,
       turbulence: 0.82,
       noiseScale: 0.9,
       rise: 0.64,
-      sway: 0.28,
-      spineWobble: 0.52,
-      tongue: 0.46,
-      tongueWidth: 1.18,
+      sway: 1.12,
       colorIntensity: 1.1,
       shaderBlur: 0,
     },
@@ -165,19 +149,25 @@ const controlGroups = [
     id: "flame-shape",
     title: "Flame Shape",
     open: true,
-    keys: ["flameScale", "flameRotation", "flameX", "flameY", "flameWidth", "flameHeight", "flameStrength", "taperPower", "tipRoundness"],
+    keys: ["flameScale", "flameRotation", "flameX", "flameY", "flameWidth", "flameHeight", "flameStrength", "taperPower"],
   },
   {
     id: "texture",
     title: "Motion & Texture",
     open: true,
-    keys: ["duration", "evolutionSpeed", "rise", "sway", "spineWobble", "turbulence", "noiseScale", "edgeSoftness", "tongue", "tongueWidth"],
+    keys: ["duration", "evolutionSpeed", "rise", "sway", "turbulence", "noiseScale", "edgeSoftness"],
   },
   {
     id: "colour",
     title: "Colour",
     open: true,
-    keys: ["warmLight", "warmSpread", "deepPressure", "shadowReach", "colorIntensity", "shaderBlur"],
+    keys: ["warmLight", "warmSpread", "deepPressure", "colorIntensity", "shaderBlur"],
+  },
+  {
+    id: "logo-mapping",
+    title: "Logo Mapping",
+    open: true,
+    keys: ["logoShaderScale", "logoShaderX", "logoShaderY", "logoShaderRotation", "logoExportScale"],
   },
   {
     id: "surfaces",
@@ -202,23 +192,23 @@ const controlDefinitions = {
   flameY: { key: "flameY", label: "Vertical position", type: "range", min: -1, max: 2, step: 0.01, default: 0.5 },
   flameWidth: { key: "flameWidth", label: "Plume width", type: "range", min: 0.08, max: 5, step: 0.01, default: 0.58 },
   flameHeight: { key: "flameHeight", label: "Plume height", type: "range", min: 0.16, max: 5, step: 0.01, default: 1.14 },
-  flameStrength: { key: "flameStrength", label: "Flame strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.16 },
+  flameStrength: { key: "flameStrength", label: "Red plume strength", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.16 },
   taperPower: { key: "taperPower", label: "Taper", type: "range", min: 0.45, max: 2.6, step: 0.01, default: 1.28 },
-  tipRoundness: { key: "tipRoundness", label: "Tip roundness", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.55 },
-  warmLight: { key: "warmLight", label: "Warm light", type: "range", min: 0, max: 1.65, step: 0.01, default: 1.24 },
-  warmSpread: { key: "warmSpread", label: "Warm spread", type: "range", min: 0, max: 1.6, step: 0.01, default: 0.92 },
-  deepPressure: { key: "deepPressure", label: "Deep pressure", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.14 },
-  shadowReach: { key: "shadowReach", label: "Shadow reach", type: "range", min: 0, max: 1.8, step: 0.01, default: 1 },
+  warmLight: { key: "warmLight", label: "Orange plume strength", type: "range", min: 0, max: 1.65, step: 0.01, default: 1.24 },
+  warmSpread: { key: "warmSpread", label: "Orange plume size", type: "range", min: 0, max: 1.6, step: 0.01, default: 0.92 },
+  deepPressure: { key: "deepPressure", label: "Background depth", type: "range", min: 0.35, max: 1.65, step: 0.01, default: 1.14 },
   turbulence: { key: "turbulence", label: "Organic edge", type: "range", min: 0, max: 1.8, step: 0.01, default: 0.9 },
   edgeSoftness: { key: "edgeSoftness", label: "Edge softness", type: "range", min: 0.04, max: 0.9, step: 0.01, default: 0.32 },
   noiseScale: { key: "noiseScale", label: "Noise scale", type: "range", min: 0.45, max: 2.8, step: 0.01, default: 1 },
   rise: { key: "rise", label: "Rising pull", type: "range", min: 0, max: 1.4, step: 0.01, default: 0.68 },
-  sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 1, step: 0.01, default: 0.24 },
-  spineWobble: { key: "spineWobble", label: "Spine wobble", type: "range", min: 0, max: 1.6, step: 0.01, default: 0.62 },
-  tongue: { key: "tongue", label: "Inner tongue", type: "range", min: 0, max: 1.2, step: 0.01, default: 0.58 },
-  tongueWidth: { key: "tongueWidth", label: "Tongue width", type: "range", min: 0.25, max: 2, step: 0.01, default: 1 },
+  sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 4, step: 0.01, default: 0.96 },
   colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: 1.1 },
   shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: 0, unit: "px" },
+  logoShaderScale: { key: "logoShaderScale", label: "Logo animation scale", type: "range", min: 0.05, max: 5, step: 0.01, default: 1 },
+  logoShaderX: { key: "logoShaderX", label: "Logo animation X", type: "range", min: -1, max: 1, step: 0.01, default: 0 },
+  logoShaderY: { key: "logoShaderY", label: "Logo animation Y", type: "range", min: -1, max: 1, step: 0.01, default: 0 },
+  logoShaderRotation: { key: "logoShaderRotation", label: "Logo rotation offset", type: "range", min: -180, max: 180, step: 1, default: 0, unit: "deg" },
+  logoExportScale: { key: "logoExportScale", label: "Logo export size", type: "range", min: 0.25, max: 0.95, step: 0.01, default: 0.74 },
   "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
   "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
   "surfaces.button": { key: "surfaces.button", label: "Button", type: "checkbox", default: true },
@@ -255,27 +245,32 @@ const formatters = {
   flameHeight: (value) => value.toFixed(2),
   flameStrength: (value) => value.toFixed(2),
   taperPower: (value) => value.toFixed(2),
-  tipRoundness: (value) => value.toFixed(2),
   warmLight: (value) => value.toFixed(2),
   warmSpread: (value) => value.toFixed(2),
   deepPressure: (value) => value.toFixed(2),
-  shadowReach: (value) => value.toFixed(2),
   turbulence: (value) => value.toFixed(2),
   edgeSoftness: (value) => value.toFixed(2),
   noiseScale: (value) => value.toFixed(2),
   rise: (value) => value.toFixed(2),
   sway: (value) => value.toFixed(2),
-  spineWobble: (value) => value.toFixed(2),
-  tongue: (value) => value.toFixed(2),
-  tongueWidth: (value) => value.toFixed(2),
   colorIntensity: (value) => value.toFixed(2),
   shaderBlur: (value) => `${Math.round(value)}px`,
+  logoShaderScale: (value) => value.toFixed(2),
+  logoShaderX: (value) => `${Math.round(value * 100)}%`,
+  logoShaderY: (value) => `${Math.round(value * 100)}%`,
+  logoShaderRotation: (value) => `${Math.round(value)}deg`,
+  logoExportScale: (value) => `${Math.round(value * 100)}%`,
 };
 
 function createDefaultState() {
   return {
     preset: "A",
     ...structuredClone(presetById.get("A").values),
+    logoShaderScale: controlDefinitions.logoShaderScale.default,
+    logoShaderX: controlDefinitions.logoShaderX.default,
+    logoShaderY: controlDefinitions.logoShaderY.default,
+    logoShaderRotation: controlDefinitions.logoShaderRotation.default,
+    logoExportScale: controlDefinitions.logoExportScale.default,
     surfaces: {
       all: true,
       logo: true,
@@ -305,7 +300,8 @@ function renderExplanation() {
   return `<section class="shader-explainer" aria-label="Shader explanation">
     <div class="effect-overview-title">What this is showing</div>
     <p>This demo is now one flame shader. A-D are presets that move the same sliders into different compositions.</p>
-    <p>The shader starts with an opaque AHA red field, builds a responsive flame mask from layered noise, then mixes in deep red for shadow and orange for the rising light. No white or extra red is used inside the animated artwork.</p>
+    <p>The shader starts with a deep-red field, builds one responsive red plume from layered noise, then places a smaller orange plume inside it. No white or extra red is used inside the animated artwork.</p>
+    <p>Logo Mapping remaps that same flame inside the logo mask only, so the logo can show shadow and orange together without changing the larger background, card, or button surfaces.</p>
   </section>`;
 }
 
@@ -462,21 +458,21 @@ function updateDerivedVariables() {
   prototype.style.setProperty("--lg-flame-height", state.flameHeight.toFixed(2));
   prototype.style.setProperty("--lg-flame-strength", state.flameStrength.toFixed(2));
   prototype.style.setProperty("--lg-taper-power", state.taperPower.toFixed(2));
-  prototype.style.setProperty("--lg-tip-roundness", state.tipRoundness.toFixed(2));
   prototype.style.setProperty("--lg-warm-light", state.warmLight.toFixed(2));
   prototype.style.setProperty("--lg-warm-spread", state.warmSpread.toFixed(2));
   prototype.style.setProperty("--lg-deep-pressure", state.deepPressure.toFixed(2));
-  prototype.style.setProperty("--lg-shadow-reach", state.shadowReach.toFixed(2));
   prototype.style.setProperty("--lg-organic-edge", state.turbulence.toFixed(2));
   prototype.style.setProperty("--lg-edge-softness", state.edgeSoftness.toFixed(2));
   prototype.style.setProperty("--lg-noise-scale", state.noiseScale.toFixed(2));
   prototype.style.setProperty("--lg-rise", state.rise.toFixed(2));
   prototype.style.setProperty("--lg-sway", state.sway.toFixed(2));
-  prototype.style.setProperty("--lg-spine-wobble", state.spineWobble.toFixed(2));
-  prototype.style.setProperty("--lg-inner-tongue", state.tongue.toFixed(2));
-  prototype.style.setProperty("--lg-tongue-width", state.tongueWidth.toFixed(2));
   prototype.style.setProperty("--lg-color-intensity", state.colorIntensity.toFixed(2));
   prototype.style.setProperty("--lg-shader-blur", `${Math.round(state.shaderBlur)}px`);
+  prototype.style.setProperty("--lg-logo-shader-scale", state.logoShaderScale.toFixed(2));
+  prototype.style.setProperty("--lg-logo-shader-x", `${Math.round(state.logoShaderX * 100)}%`);
+  prototype.style.setProperty("--lg-logo-shader-y", `${Math.round(state.logoShaderY * 100)}%`);
+  prototype.style.setProperty("--lg-logo-shader-rotation", `${Math.round(state.logoShaderRotation)}deg`);
+  prototype.style.setProperty("--lg-logo-export-scale", state.logoExportScale.toFixed(2));
 }
 
 function applyFlags() {
@@ -573,43 +569,7 @@ function ensureShaderSurface(surface) {
     1, 1,
   ]), gl.STATIC_DRAW);
 
-  shaderRuntime.items.set(surface, {
-    canvas,
-    gl,
-    program,
-    buffer,
-    attribs: {
-      position: gl.getAttribLocation(program, "a_position"),
-    },
-    uniforms: {
-      resolution: gl.getUniformLocation(program, "u_resolution"),
-      time: gl.getUniformLocation(program, "u_time"),
-      cycle: gl.getUniformLocation(program, "u_cycle"),
-      speed: gl.getUniformLocation(program, "u_speed"),
-      scale: gl.getUniformLocation(program, "u_scale"),
-      rotation: gl.getUniformLocation(program, "u_rotation"),
-      flameX: gl.getUniformLocation(program, "u_flame_x"),
-      flameY: gl.getUniformLocation(program, "u_flame_y"),
-      flameWidth: gl.getUniformLocation(program, "u_flame_width"),
-      flameHeight: gl.getUniformLocation(program, "u_flame_height"),
-      flameStrength: gl.getUniformLocation(program, "u_flame_strength"),
-      taperPower: gl.getUniformLocation(program, "u_taper_power"),
-      tipRoundness: gl.getUniformLocation(program, "u_tip_roundness"),
-      warm: gl.getUniformLocation(program, "u_warm"),
-      warmSpread: gl.getUniformLocation(program, "u_warm_spread"),
-      deep: gl.getUniformLocation(program, "u_deep"),
-      shadowReach: gl.getUniformLocation(program, "u_shadow_reach"),
-      turbulence: gl.getUniformLocation(program, "u_turbulence"),
-      edgeSoftness: gl.getUniformLocation(program, "u_edge_softness"),
-      noiseScale: gl.getUniformLocation(program, "u_noise_scale"),
-      rise: gl.getUniformLocation(program, "u_rise"),
-      sway: gl.getUniformLocation(program, "u_sway"),
-      spineWobble: gl.getUniformLocation(program, "u_spine_wobble"),
-      tongue: gl.getUniformLocation(program, "u_tongue"),
-      tongueWidth: gl.getUniformLocation(program, "u_tongue_width"),
-      energy: gl.getUniformLocation(program, "u_energy"),
-    },
-  });
+  shaderRuntime.items.set(surface, createShaderRenderer(gl, canvas, program, buffer));
 }
 
 function destroyShaderSurface(surface) {
@@ -636,19 +596,14 @@ const shaderFragmentSource = `
   uniform float u_flame_height;
   uniform float u_flame_strength;
   uniform float u_taper_power;
-  uniform float u_tip_roundness;
   uniform float u_warm;
   uniform float u_warm_spread;
   uniform float u_deep;
-  uniform float u_shadow_reach;
   uniform float u_turbulence;
   uniform float u_edge_softness;
   uniform float u_noise_scale;
   uniform float u_rise;
   uniform float u_sway;
-  uniform float u_spine_wobble;
-  uniform float u_tongue;
-  uniform float u_tongue_width;
   uniform float u_energy;
 
   const vec3 AHA_ORANGE = vec3(0.941, 0.424, 0.137);
@@ -691,7 +646,7 @@ const shaderFragmentSource = `
   vec3 flame(vec2 uv, float t) {
     float aspect = 1.0;
     float breath = breathSignal(t);
-    float riseTime = t * 0.18 * max(u_speed, 0.08) * max(u_rise, 0.02);
+    float riseTime = t * 0.22 * max(u_speed, 0.08) * max(u_rise, 0.02);
     vec2 center = vec2(u_flame_x, u_flame_y);
     vec2 p = uv - center;
     p.x *= aspect;
@@ -701,53 +656,42 @@ const shaderFragmentSource = `
     p = vec2(c * p.x - s * p.y, s * p.x + c * p.y);
     p /= max(u_scale, 0.01);
 
+    float drift = (fbm(vec2(riseTime * 0.24, 0.37)) - 0.5) * 0.18 * u_sway;
+    p.x -= drift;
+
     float vertical = clamp((p.y / max(u_flame_height, 0.01)) + 0.56, 0.0, 1.0);
-    float activeHeight = smoothstep(0.0, 0.14, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
+    float activeHeight = smoothstep(0.02, 0.18, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
     float taper = mix(max(u_flame_width, 0.01), max(u_flame_width, 0.01) * 0.13, pow(vertical, max(u_taper_power, 0.01)));
     float noiseScale = max(u_noise_scale, 0.01);
-    float spineNoise = fbm(vec2(vertical * 2.2 * noiseScale - riseTime, riseTime * 1.15));
-    float spine = (spineNoise - 0.5) * taper * u_spine_wobble * u_sway;
+    float spineNoise = fbm(vec2(vertical * 1.8 * noiseScale - riseTime * 0.72, riseTime * 0.82));
+    float spine = (spineNoise - 0.5) * taper * 0.7 * u_sway;
     float x = p.x - spine;
     float edge = abs(x) / max(taper, 0.001);
-    float slowNoise = fbm(vec2(x * 2.4 * noiseScale, vertical * 2.1 * noiseScale - riseTime));
-    float edgeNoise = fbm(vec2(x * 5.6 * noiseScale + riseTime * 0.8, vertical * 5.8 * noiseScale - riseTime * 2.4));
-    float noisyEdge = edge - (slowNoise - 0.5) * 0.34 * u_turbulence - (edgeNoise - 0.5) * 0.14 * u_turbulence;
-    float edgeStart = clamp(0.78 - u_edge_softness * 0.42, 0.24, 0.95);
-    float edgeEnd = clamp(edgeStart + u_edge_softness, edgeStart + 0.04, 1.45);
-    float body = (1.0 - smoothstep(edgeStart, edgeEnd, noisyEdge)) * activeHeight * u_flame_strength;
-    float tipRound = 1.0 - smoothstep(0.0, 1.0, length(vec2(x / max(taper * 0.7, 0.001), (vertical - 0.88) / 0.18)));
-    body = clamp(max(body, tipRound * 0.38 * u_tip_roundness) * (1.0 - smoothstep(0.98, 1.0, vertical)), 0.0, 1.0);
+    float largeNoise = fbm(vec2(x * 2.0 * noiseScale + riseTime * 0.16, vertical * 2.35 * noiseScale - riseTime));
+    float fineNoise = fbm(vec2(x * 4.6 * noiseScale + riseTime * 0.52, vertical * 4.4 * noiseScale - riseTime * 1.8));
+    float organicEdge = edge - (largeNoise - 0.5) * 0.3 * u_turbulence - (fineNoise - 0.5) * 0.08 * u_turbulence;
 
-    float tongueCenter = spine + taper * 0.08 + (fbm(vec2(vertical * 4.2 * noiseScale - riseTime * 0.9, riseTime)) - 0.5) * taper * 0.42;
-    float tongueWidth = max(taper * (0.22 + (1.0 - vertical) * 0.24) * u_tongue_width, 0.006);
-    float tongueShape = 1.0 - smoothstep(0.32, 1.18, abs(p.x - tongueCenter) / tongueWidth);
-    float tongue = tongueShape * body * smoothstep(0.12, 0.76, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
+    float redStart = clamp(0.56 - u_edge_softness * 0.2, 0.24, 0.86);
+    float redEnd = clamp(redStart + 0.32 + u_edge_softness * 1.12, redStart + 0.08, 1.7);
+    float redPlume = (1.0 - smoothstep(redStart, redEnd, organicEdge)) * activeHeight;
+    redPlume *= u_flame_strength * mix(0.84, 1.08, breath);
+    redPlume *= mix(1.08, 0.84, clamp((u_deep - 0.35) / 1.3, 0.0, 1.0));
+    redPlume = clamp(redPlume, 0.0, 0.96);
 
-    float lightNoise = fbm(vec2(x * 3.1 * noiseScale + riseTime * 0.42, vertical * 3.8 * noiseScale - riseTime * 1.35));
-    float lightCenter = spine + taper * (0.32 + u_warm_spread * 0.08 + (lightNoise - 0.5) * 0.72);
-    float lightWidth = max(taper * (0.34 + u_warm_spread * 0.46) * (1.08 - vertical * 0.26), 0.006);
-    float upperBand = smoothstep(0.34, 0.76, vertical) * (1.0 - smoothstep(0.98, 1.0, vertical));
-    float upperLight = body * upperBand * (1.0 - smoothstep(0.28, 1.2 + u_edge_softness * 0.24, abs(p.x - lightCenter) / lightWidth));
-    upperLight *= mix(0.78, 1.2, lightNoise);
+    float orangeNoise = fbm(vec2(x * 2.8 * noiseScale + riseTime * 0.36, vertical * 3.2 * noiseScale - riseTime * 1.28));
+    float orangeCenter = spine + taper * (0.18 + (orangeNoise - 0.5) * 0.36);
+    float orangeWidth = max(taper * mix(0.16, 0.48, clamp(u_warm_spread / 1.6, 0.0, 1.0)), 0.006);
+    float orangeEdge = abs(p.x - orangeCenter) / orangeWidth;
+    float orangeBand = smoothstep(0.34, 0.82, vertical) * (1.0 - smoothstep(0.98, 1.0, vertical));
+    float orangePlume = (1.0 - smoothstep(0.42, 1.18 + u_edge_softness * 0.42, orangeEdge - (orangeNoise - 0.5) * 0.2 * u_turbulence));
+    orangePlume *= redPlume * orangeBand * u_warm * mix(0.78, 1.18, breath);
+    orangePlume = clamp(orangePlume, 0.0, 0.92);
 
-    float crownWidth = max(taper * (0.56 + u_warm_spread * 0.38), 0.006);
-    float crown = body * smoothstep(0.62, 0.9, vertical) * (1.0 - smoothstep(0.99, 1.0, vertical));
-    crown *= 1.0 - smoothstep(0.36, 1.18, abs(x - taper * 0.34) / crownWidth);
-
-    float warmPulse = mix(0.78, 1.18, breath);
-    float warmMask = clamp((upperLight * 0.94 + tongue * u_tongue * 0.68 + crown * 0.54) * u_warm * warmPulse, 0.0, 0.94);
-
-    float lowerLeft = smoothstep(0.68, 0.02, vertical) * smoothstep(taper * 0.7, -taper * u_shadow_reach, p.x);
-    float sideShadow = smoothstep(-0.02, -taper * u_shadow_reach, p.x) * (0.34 + (1.0 - vertical) * 0.32);
-    float outsideShadow = (1.0 - clamp(body, 0.0, 1.0)) * 0.1;
-    float deepMask = clamp((lowerLeft * 0.62 + sideShadow * 0.34 + outsideShadow) * u_deep, 0.0, 0.88);
-
-    float redHeat = clamp(body * (0.28 + breath * 0.2) + slowNoise * 0.06, 0.0, 0.48);
-    vec3 color = AHA_RED;
-    color = mix(color, AHA_DEEP, deepMask);
-    color = mix(color, AHA_RED, redHeat);
-    color = mix(color, AHA_ORANGE, warmMask);
-    return mix(AHA_RED, color, clamp(u_energy, 0.75, 1.25));
+    float intensity = clamp(u_energy, 0.75, 1.25);
+    vec3 color = AHA_DEEP;
+    color = mix(color, AHA_RED, redPlume);
+    color = mix(color, AHA_ORANGE, orangePlume);
+    return mix(AHA_DEEP, color, clamp(0.78 + (intensity - 0.75) * 0.44, 0.78, 1.0));
   }
 
   void main() {
@@ -787,7 +731,7 @@ function drawShadersOnce(now = performance.now()) {
 }
 
 function drawShaderItem(item, surface, now) {
-  const rect = surface.getBoundingClientRect();
+  const rect = item.canvas.getBoundingClientRect();
   const renderScale = 1;
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   const width = Math.max(1, Math.round(rect.width * renderScale * dpr));
@@ -798,6 +742,84 @@ function drawShaderItem(item, surface, now) {
     item.canvas.height = height;
   }
 
+  drawShaderRenderer(item, (now - shaderRuntime.origin) / 1000, width, height, getSurfaceShaderOverrides(surface));
+}
+
+function createShaderRenderer(gl, canvas, program, buffer) {
+  return {
+    canvas,
+    gl,
+    program,
+    buffer,
+    attribs: {
+      position: gl.getAttribLocation(program, "a_position"),
+    },
+    uniforms: {
+      resolution: gl.getUniformLocation(program, "u_resolution"),
+      time: gl.getUniformLocation(program, "u_time"),
+      cycle: gl.getUniformLocation(program, "u_cycle"),
+      speed: gl.getUniformLocation(program, "u_speed"),
+      scale: gl.getUniformLocation(program, "u_scale"),
+      rotation: gl.getUniformLocation(program, "u_rotation"),
+      flameX: gl.getUniformLocation(program, "u_flame_x"),
+      flameY: gl.getUniformLocation(program, "u_flame_y"),
+      flameWidth: gl.getUniformLocation(program, "u_flame_width"),
+      flameHeight: gl.getUniformLocation(program, "u_flame_height"),
+      flameStrength: gl.getUniformLocation(program, "u_flame_strength"),
+      taperPower: gl.getUniformLocation(program, "u_taper_power"),
+      warm: gl.getUniformLocation(program, "u_warm"),
+      warmSpread: gl.getUniformLocation(program, "u_warm_spread"),
+      deep: gl.getUniformLocation(program, "u_deep"),
+      turbulence: gl.getUniformLocation(program, "u_turbulence"),
+      edgeSoftness: gl.getUniformLocation(program, "u_edge_softness"),
+      noiseScale: gl.getUniformLocation(program, "u_noise_scale"),
+      rise: gl.getUniformLocation(program, "u_rise"),
+      sway: gl.getUniformLocation(program, "u_sway"),
+      energy: gl.getUniformLocation(program, "u_energy"),
+    },
+  };
+}
+
+function getSurfaceShaderOverrides(surface) {
+  return surface.dataset.surface === "logo" ? getLogoShaderOverrides() : null;
+}
+
+function getLogoShaderOverrides() {
+  return {
+    scale: state.flameScale * state.logoShaderScale,
+    flameX: state.flameX + state.logoShaderX,
+    flameY: state.flameY + state.logoShaderY,
+    rotation: state.flameRotation + state.logoShaderRotation,
+  };
+}
+
+function getShaderParameters(overrides = null) {
+  return {
+    cycle: state.duration,
+    speed: state.evolutionSpeed,
+    scale: state.flameScale,
+    rotation: state.flameRotation,
+    flameX: state.flameX,
+    flameY: state.flameY,
+    flameWidth: state.flameWidth,
+    flameHeight: state.flameHeight,
+    flameStrength: state.flameStrength,
+    warm: state.warmLight,
+    deep: state.deepPressure,
+    turbulence: state.turbulence,
+    taperPower: state.taperPower,
+    warmSpread: state.warmSpread,
+    edgeSoftness: state.edgeSoftness,
+    noiseScale: state.noiseScale,
+    rise: state.rise,
+    sway: state.sway,
+    energy: state.colorIntensity,
+    ...(overrides ?? {}),
+  };
+}
+
+function drawShaderRenderer(item, shaderTime, width = item.canvas.width, height = item.canvas.height, overrides = null) {
+  const params = getShaderParameters(overrides);
   const gl = item.gl;
   gl.viewport(0, 0, width, height);
   gl.useProgram(item.program);
@@ -806,31 +828,26 @@ function drawShaderItem(item, surface, now) {
   gl.vertexAttribPointer(item.attribs.position, 2, gl.FLOAT, false, 0, 0);
 
   gl.uniform2f(item.uniforms.resolution, width, height);
-  gl.uniform1f(item.uniforms.time, (now - shaderRuntime.origin) / 1000);
-  gl.uniform1f(item.uniforms.cycle, state.duration);
-  gl.uniform1f(item.uniforms.speed, state.evolutionSpeed);
-  gl.uniform1f(item.uniforms.scale, state.flameScale);
-  gl.uniform1f(item.uniforms.rotation, state.flameRotation);
-  gl.uniform1f(item.uniforms.flameX, state.flameX);
-  gl.uniform1f(item.uniforms.flameY, state.flameY);
-  gl.uniform1f(item.uniforms.flameWidth, state.flameWidth);
-  gl.uniform1f(item.uniforms.flameHeight, state.flameHeight);
-  gl.uniform1f(item.uniforms.flameStrength, state.flameStrength);
-  gl.uniform1f(item.uniforms.warm, state.warmLight);
-  gl.uniform1f(item.uniforms.deep, state.deepPressure);
-  gl.uniform1f(item.uniforms.turbulence, state.turbulence);
-  gl.uniform1f(item.uniforms.taperPower, state.taperPower);
-  gl.uniform1f(item.uniforms.tipRoundness, state.tipRoundness);
-  gl.uniform1f(item.uniforms.warmSpread, state.warmSpread);
-  gl.uniform1f(item.uniforms.shadowReach, state.shadowReach);
-  gl.uniform1f(item.uniforms.edgeSoftness, state.edgeSoftness);
-  gl.uniform1f(item.uniforms.noiseScale, state.noiseScale);
-  gl.uniform1f(item.uniforms.rise, state.rise);
-  gl.uniform1f(item.uniforms.sway, state.sway);
-  gl.uniform1f(item.uniforms.spineWobble, state.spineWobble);
-  gl.uniform1f(item.uniforms.tongue, state.tongue);
-  gl.uniform1f(item.uniforms.tongueWidth, state.tongueWidth);
-  gl.uniform1f(item.uniforms.energy, state.colorIntensity);
+  gl.uniform1f(item.uniforms.time, shaderTime);
+  gl.uniform1f(item.uniforms.cycle, params.cycle);
+  gl.uniform1f(item.uniforms.speed, params.speed);
+  gl.uniform1f(item.uniforms.scale, params.scale);
+  gl.uniform1f(item.uniforms.rotation, params.rotation);
+  gl.uniform1f(item.uniforms.flameX, params.flameX);
+  gl.uniform1f(item.uniforms.flameY, params.flameY);
+  gl.uniform1f(item.uniforms.flameWidth, params.flameWidth);
+  gl.uniform1f(item.uniforms.flameHeight, params.flameHeight);
+  gl.uniform1f(item.uniforms.flameStrength, params.flameStrength);
+  gl.uniform1f(item.uniforms.warm, params.warm);
+  gl.uniform1f(item.uniforms.deep, params.deep);
+  gl.uniform1f(item.uniforms.turbulence, params.turbulence);
+  gl.uniform1f(item.uniforms.taperPower, params.taperPower);
+  gl.uniform1f(item.uniforms.warmSpread, params.warmSpread);
+  gl.uniform1f(item.uniforms.edgeSoftness, params.edgeSoftness);
+  gl.uniform1f(item.uniforms.noiseScale, params.noiseScale);
+  gl.uniform1f(item.uniforms.rise, params.rise);
+  gl.uniform1f(item.uniforms.sway, params.sway);
+  gl.uniform1f(item.uniforms.energy, params.energy);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
 
@@ -855,6 +872,10 @@ function buildCssExport() {
   return `/* Flame shader requires this prototype's WebGL renderer. */
 .living-gradient[data-mode="flame"] {
 ${flameCustomProperties().map(([name, value]) => `  ${name}: ${value};`).join("\n")}
+}
+
+.living-gradient[data-mode="flame"][data-surface="logo"] {
+${logoCustomProperties().map(([name, value]) => `  ${name}: ${value};`).join("\n")}
 }`;
 }
 
@@ -870,21 +891,26 @@ function flameCustomProperties() {
     ["--lg-flame-height", state.flameHeight.toFixed(2)],
     ["--lg-flame-strength", state.flameStrength.toFixed(2)],
     ["--lg-taper-power", state.taperPower.toFixed(2)],
-    ["--lg-tip-roundness", state.tipRoundness.toFixed(2)],
     ["--lg-warm-light", state.warmLight.toFixed(2)],
     ["--lg-warm-spread", state.warmSpread.toFixed(2)],
     ["--lg-deep-pressure", state.deepPressure.toFixed(2)],
-    ["--lg-shadow-reach", state.shadowReach.toFixed(2)],
     ["--lg-organic-edge", state.turbulence.toFixed(2)],
     ["--lg-edge-softness", state.edgeSoftness.toFixed(2)],
     ["--lg-noise-scale", state.noiseScale.toFixed(2)],
     ["--lg-rise", state.rise.toFixed(2)],
     ["--lg-sway", state.sway.toFixed(2)],
-    ["--lg-spine-wobble", state.spineWobble.toFixed(2)],
-    ["--lg-inner-tongue", state.tongue.toFixed(2)],
-    ["--lg-tongue-width", state.tongueWidth.toFixed(2)],
     ["--lg-color-intensity", state.colorIntensity.toFixed(2)],
     ["--lg-shader-blur", `${Math.round(state.shaderBlur)}px`],
+  ];
+}
+
+function logoCustomProperties() {
+  return [
+    ["--lg-logo-shader-scale", state.logoShaderScale.toFixed(2)],
+    ["--lg-logo-shader-x", `${Math.round(state.logoShaderX * 100)}%`],
+    ["--lg-logo-shader-y", `${Math.round(state.logoShaderY * 100)}%`],
+    ["--lg-logo-shader-rotation", `${Math.round(state.logoShaderRotation)}deg`],
+    ["--lg-logo-export-scale", state.logoExportScale.toFixed(2)],
   ];
 }
 
@@ -929,45 +955,57 @@ function getSupportedMp4MimeType() {
   return MP4_MIME_TYPES.find((type) => MediaRecorder.isTypeSupported(type)) ?? "";
 }
 
-function getExportPlan() {
+function getExportPlan(target = "background") {
   const seconds = clamp(state.duration / Math.max(state.evolutionSpeed, 0.1), 8, 80);
   const roundedSeconds = Number(seconds.toFixed(2));
   return {
+    target,
     mode: "flame",
-    label: state.preset === "Custom" ? "Custom Flame" : `Preset ${state.preset} Flame`,
+    label: exportPlanLabel(target),
     seconds: roundedSeconds,
     frames: Math.ceil(roundedSeconds * EXPORT_FPS),
     fps: EXPORT_FPS,
-    width: EXPORT_SIZE,
-    height: EXPORT_SIZE,
+    width: EXPORT_WIDTH,
+    height: EXPORT_HEIGHT,
     mimeType: getSupportedMp4MimeType(),
+    startTime: (performance.now() - shaderRuntime.origin) / 1000,
   };
 }
 
-async function exportCurrentGradientMp4() {
-  const plan = getExportPlan();
+function exportPlanLabel(target) {
+  const presetLabel = state.preset === "Custom" ? "Custom Flame" : `Preset ${state.preset} Flame`;
+  return target === "logo" ? `${presetLabel} Logo` : `${presetLabel} Background`;
+}
+
+async function exportCurrentGradientMp4(target = "background") {
+  const plan = getExportPlan(target);
   if (!plan.mimeType || !HTMLCanvasElement.prototype.captureStream) {
     copyStatus.textContent = "MP4 export is not available in this browser. Use a browser with canvas capture and MP4 MediaRecorder support.";
     return;
   }
 
-  const canvas = document.createElement("canvas");
-  canvas.width = plan.width;
-  canvas.height = plan.height;
-  const context = canvas.getContext("2d", { alpha: false });
-  if (!context) {
-    copyStatus.textContent = "MP4 export could not start because the canvas renderer is unavailable.";
+  let renderer;
+  try {
+    renderer = target === "logo"
+      ? await createLogoExportShaderRenderer(plan.width, plan.height)
+      : createExportShaderRenderer(plan.width, plan.height);
+  } catch (error) {
+    copyStatus.textContent = error.message || "MP4 export could not start.";
+    return;
+  }
+  if (!renderer) {
+    copyStatus.textContent = "MP4 export could not start because the WebGL export renderer is unavailable.";
     return;
   }
 
-  const stream = canvas.captureStream(plan.fps);
+  const stream = renderer.canvas.captureStream(plan.fps);
   const chunks = [];
   const recorder = new MediaRecorder(stream, {
     mimeType: plan.mimeType,
     videoBitsPerSecond: 10_000_000,
   });
 
-  exportMp4Button.disabled = true;
+  setExportButtonsDisabled(true);
   copyStatus.textContent = `Exporting ${plan.label} MP4 loop (${plan.seconds}s)...`;
 
   recorder.addEventListener("dataavailable", (event) => {
@@ -981,11 +1019,13 @@ async function exportCurrentGradientMp4() {
 
   try {
     recorder.start(250);
-    await renderExportFrames(context, plan);
+    await renderExportFrames(renderer, plan);
     recorder.stop();
     await finished;
     const blob = new Blob(chunks, { type: plan.mimeType });
-    const filename = `aha-living-gradient-flame-${plan.seconds.toFixed(2)}s-loop.mp4`;
+    const filename = target === "logo"
+      ? `aha-living-gradient-logo-${plan.seconds.toFixed(2)}s-loop.mp4`
+      : `aha-living-gradient-background-${plan.seconds.toFixed(2)}s-loop.mp4`;
     downloadBlob(blob, filename);
     copyStatus.textContent = `Exported ${filename}.`;
   } catch (error) {
@@ -993,11 +1033,17 @@ async function exportCurrentGradientMp4() {
     copyStatus.textContent = error.message || "MP4 export failed.";
   } finally {
     stream.getTracks().forEach((track) => track.stop());
-    exportMp4Button.disabled = false;
+    cleanupExportShaderRenderer(renderer);
+    setExportButtonsDisabled(false);
   }
 }
 
-function renderExportFrames(context, plan) {
+function setExportButtonsDisabled(disabled) {
+  exportMp4Button.disabled = disabled;
+  if (exportLogoMp4Button) exportLogoMp4Button.disabled = disabled;
+}
+
+function renderExportFrames(renderer, plan) {
   const start = performance.now();
   let lastFrame = -1;
   return new Promise((resolve) => {
@@ -1005,131 +1051,190 @@ function renderExportFrames(context, plan) {
       const elapsed = (now - start) / 1000;
       const frame = Math.min(Math.floor(elapsed * plan.fps), plan.frames - 1);
       if (frame !== lastFrame) {
-        drawExportFrame(context, (frame % plan.frames) / plan.frames, plan);
+        drawExportFrame(renderer, frame / plan.fps, plan);
         lastFrame = frame;
       }
       if (elapsed < plan.seconds) {
         requestAnimationFrame(tick);
         return;
       }
-      drawExportFrame(context, 0, plan);
+      drawExportFrame(renderer, 0, plan);
       resolve();
     };
-    drawExportFrame(context, 0, plan);
+    drawExportFrame(renderer, 0, plan);
     requestAnimationFrame(tick);
   });
 }
 
-function drawExportFrame(context, progress, plan) {
-  const width = plan.width;
-  const height = plan.height;
-  const breath = breathPulse(progress, 1, 0);
-  const sway = wave(progress, 0.18, 1) * state.sway;
-  const rise = wave(progress, 0.42, 2) * state.rise;
-  const field = state.flameScale;
-  const baseRotation = state.flameRotation * Math.PI / 180;
-
-  context.save();
-  context.clearRect(0, 0, width, height);
-  context.fillStyle = "#e2001e";
-  context.fillRect(0, 0, width, height);
-  context.filter = state.shaderBlur > 0 ? `blur(${Math.round(state.shaderBlur)}px)` : "none";
-
-  drawExportLayer(context, width, height, {
-    ...rotatedExportOffset(sway * 0.06, rise * 0.025, baseRotation),
-    rx: state.flameWidth * 0.74 * field,
-    ry: state.flameHeight * 0.82 * field,
-    rotation: baseRotation + sway * 0.14,
-    alpha: clamp(0.68 + state.flameStrength * 0.18, 0, 0.94),
-    stops: redStops(),
-  });
-
-  drawExportLayer(context, width, height, {
-    ...rotatedExportOffset(-state.flameWidth * 0.34 + sway * 0.025, state.flameHeight * 0.22, baseRotation),
-    rx: state.flameWidth * 0.7 * field,
-    ry: state.flameHeight * 0.56 * field,
-    rotation: baseRotation - 0.08 + sway * 0.1,
-    alpha: clamp(state.deepPressure * 0.52, 0, 0.86),
-    stops: deepStops(),
-  });
-
-  drawExportLayer(context, width, height, {
-    ...rotatedExportOffset(state.flameWidth * 0.28 + sway * 0.04, -state.flameHeight * 0.32 - breath * 0.04, baseRotation),
-    rx: state.flameWidth * 0.54 * field,
-    ry: state.flameHeight * 0.62 * field,
-    rotation: baseRotation + 0.18 + sway * 0.16,
-    alpha: clamp((0.34 + breath * 0.22) * state.warmLight, 0, 0.86),
-    stops: warmStops(),
-  });
-
-  drawExportLayer(context, width, height, {
-    ...rotatedExportOffset(sway * 0.02, -state.flameHeight * 0.08, baseRotation),
-    rx: state.flameWidth * 0.28 * field,
-    ry: state.flameHeight * 0.76 * field,
-    rotation: baseRotation - 0.18 + sway * 0.22,
-    alpha: clamp((0.2 + breath * 0.16) * state.warmLight * state.tongue, 0, 0.46),
-    stops: warmStops(),
-  });
-
-  context.filter = "none";
-  context.restore();
+function drawExportFrame(renderer, elapsed, plan) {
+  drawShaderRenderer(
+    renderer.shader,
+    plan.startTime + elapsed,
+    renderer.sourceCanvas.width,
+    renderer.sourceCanvas.height,
+    renderer.shaderOverrides,
+  );
+  if (renderer.type === "logo") {
+    drawLogoExportFrame(renderer, plan);
+    return;
+  }
+  drawBackgroundExportFrame(renderer, plan);
 }
 
-function rotatedExportOffset(x, y, rotation) {
-  const c = Math.cos(rotation);
-  const s = Math.sin(rotation);
+function drawBackgroundExportFrame(renderer, plan) {
+  renderer.context.clearRect(0, 0, plan.width, plan.height);
+  renderer.context.filter = renderer.blur > 0 ? `blur(${renderer.blur}px)` : "none";
+  renderer.context.drawImage(renderer.sourceCanvas, -renderer.pad, -renderer.pad);
+  renderer.context.filter = "none";
+}
+
+function drawLogoExportFrame(renderer, plan) {
+  renderer.context.fillStyle = "#ffffff";
+  renderer.context.fillRect(0, 0, plan.width, plan.height);
+
+  renderer.logoContext.clearRect(0, 0, renderer.logoRect.width, renderer.logoRect.height);
+  renderer.logoContext.filter = renderer.blur > 0 ? `blur(${renderer.blur}px)` : "none";
+  renderer.logoContext.drawImage(renderer.sourceCanvas, -renderer.pad, -renderer.pad);
+  renderer.logoContext.filter = "none";
+  renderer.logoContext.globalCompositeOperation = "destination-in";
+  renderer.logoContext.drawImage(renderer.maskImage, 0, 0, renderer.logoRect.width, renderer.logoRect.height);
+  renderer.logoContext.globalCompositeOperation = "source-over";
+
+  renderer.context.drawImage(renderer.logoCanvas, renderer.logoRect.x, renderer.logoRect.y);
+}
+
+function createExportShaderRenderer(width, height) {
+  const blur = Math.max(0, Math.round(state.shaderBlur));
+  const pad = blur * 2;
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d", { alpha: false });
+  if (!context) return null;
+
+  const sourceCanvas = document.createElement("canvas");
+  sourceCanvas.width = width + pad * 2;
+  sourceCanvas.height = height + pad * 2;
+  const gl = sourceCanvas.getContext("webgl", {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    preserveDrawingBuffer: true,
+    powerPreference: "high-performance",
+  });
+  if (!gl) return null;
+
+  const program = createShaderProgram(gl);
+  if (!program) return null;
+
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    -1, -1,
+    1, -1,
+    -1, 1,
+    -1, 1,
+    1, -1,
+    1, 1,
+  ]), gl.STATIC_DRAW);
+
   return {
-    x: state.flameX + c * x - s * y,
-    y: state.flameY + s * x + c * y,
+    type: "background",
+    canvas,
+    context,
+    sourceCanvas,
+    pad,
+    blur,
+    shaderOverrides: null,
+    shader: createShaderRenderer(gl, sourceCanvas, program, buffer),
   };
 }
 
-function drawExportLayer(context, width, height, layer) {
-  context.save();
-  context.globalAlpha = clamp(layer.alpha, 0, 1);
-  context.translate(layer.x * width, layer.y * height);
-  context.rotate(layer.rotation);
-  context.scale(layer.rx * width, layer.ry * height);
-  const gradient = context.createRadialGradient(0, 0, 0, 0, 0, 1);
-  layer.stops.forEach((stop) => gradient.addColorStop(stop.offset, stop.color));
-  context.fillStyle = gradient;
-  context.fillRect(-1.2, -1.2, 2.4, 2.4);
-  context.restore();
+async function createLogoExportShaderRenderer(width, height) {
+  const maskImage = await loadImage(LOGO_MASK_URL);
+  const blur = Math.max(0, Math.round(state.shaderBlur));
+  const pad = blur * 2;
+  const logoRect = getLogoExportRect(width, height);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d", { alpha: false });
+  if (!context) return null;
+
+  const logoCanvas = document.createElement("canvas");
+  logoCanvas.width = logoRect.width;
+  logoCanvas.height = logoRect.height;
+  const logoContext = logoCanvas.getContext("2d");
+  if (!logoContext) return null;
+
+  const sourceCanvas = document.createElement("canvas");
+  sourceCanvas.width = logoRect.width + pad * 2;
+  sourceCanvas.height = logoRect.height + pad * 2;
+  const gl = sourceCanvas.getContext("webgl", {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    preserveDrawingBuffer: true,
+    powerPreference: "high-performance",
+  });
+  if (!gl) return null;
+
+  const program = createShaderProgram(gl);
+  if (!program) return null;
+
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    -1, -1,
+    1, -1,
+    -1, 1,
+    -1, 1,
+    1, -1,
+    1, 1,
+  ]), gl.STATIC_DRAW);
+
+  return {
+    type: "logo",
+    canvas,
+    context,
+    sourceCanvas,
+    logoCanvas,
+    logoContext,
+    logoRect,
+    maskImage,
+    pad,
+    blur,
+    shaderOverrides: getLogoShaderOverrides(),
+    shader: createShaderRenderer(gl, sourceCanvas, program, buffer),
+  };
 }
 
-function redStops() {
-  return [
-    { offset: 0, color: "rgba(226, 0, 30, 1)" },
-    { offset: 0.48, color: "rgba(226, 0, 30, 0.9)" },
-    { offset: 0.82, color: "rgba(226, 0, 30, 0.2)" },
-    { offset: 1, color: "rgba(226, 0, 30, 0)" },
-  ];
+function getLogoExportRect(width, height) {
+  const logoHeight = Math.round(height * state.logoExportScale);
+  const logoWidth = Math.round(logoHeight * LOGO_MASK_ASPECT);
+  return {
+    width: logoWidth,
+    height: logoHeight,
+    x: Math.round((width - logoWidth) / 2),
+    y: Math.round((height - logoHeight) / 2),
+  };
 }
 
-function deepStops() {
-  return [
-    { offset: 0, color: "rgba(82, 2, 8, 1)" },
-    { offset: 0.44, color: "rgba(82, 2, 8, 0.78)" },
-    { offset: 0.78, color: "rgba(82, 2, 8, 0.24)" },
-    { offset: 1, color: "rgba(82, 2, 8, 0)" },
-  ];
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.addEventListener("load", () => resolve(image), { once: true });
+    image.addEventListener("error", () => reject(new Error(`Could not load ${src}.`)), { once: true });
+    image.src = src;
+  });
 }
 
-function warmStops() {
-  return [
-    { offset: 0, color: "rgba(240, 108, 35, 1)" },
-    { offset: 0.48, color: "rgba(240, 108, 35, 0.88)" },
-    { offset: 0.86, color: "rgba(240, 108, 35, 0.28)" },
-    { offset: 1, color: "rgba(240, 108, 35, 0)" },
-  ];
-}
-
-function wave(progress, offset = 0, cycles = 1) {
-  return Math.sin(((progress + offset) * cycles) * TAU);
-}
-
-function breathPulse(progress, cycles = 1, offset = 0) {
-  return 0.5 - Math.cos(((progress + offset) * cycles) * TAU) * 0.5;
+function cleanupExportShaderRenderer(renderer) {
+  const { gl, buffer, program } = renderer.shader;
+  gl.deleteBuffer(buffer);
+  gl.deleteProgram(program);
 }
 
 function downloadBlob(blob, filename) {
@@ -1146,10 +1251,25 @@ function downloadBlob(blob, filename) {
 function loadSavedState() {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : defaultState;
+    if (saved) return JSON.parse(saved);
+    for (const legacyKey of LEGACY_STORAGE_KEYS) {
+      const legacySaved = window.localStorage.getItem(legacyKey);
+      if (legacySaved) return migrateLegacyState(JSON.parse(legacySaved));
+    }
+    return defaultState;
   } catch {
     return defaultState;
   }
+}
+
+function migrateLegacyState(candidate) {
+  const next = { ...candidate };
+  delete next.logoShaderScale;
+  delete next.logoShaderX;
+  delete next.logoShaderY;
+  delete next.logoShaderRotation;
+  if (typeof next.sway === "number") next.sway = clamp(next.sway * 4, 0, controlDefinitions.sway.max);
+  return next;
 }
 
 function serializeState(value) {
@@ -1203,6 +1323,7 @@ function resetConfig() {
   state = structuredClone(defaultState);
   try {
     window.localStorage.removeItem(STORAGE_KEY);
+    LEGACY_STORAGE_KEYS.forEach((legacyKey) => window.localStorage.removeItem(legacyKey));
   } catch {
     // Storage removal is a convenience; the in-memory reset still applies.
   }
@@ -1228,7 +1349,8 @@ function formatValue(key, value) {
 saveConfigButton.addEventListener("click", saveCurrentState);
 copyCssButton.addEventListener("click", () => copyText(buildCssExport(), "Copied current CSS custom properties."));
 copyConfigButton.addEventListener("click", () => copyText(buildConfigExport(), "Copied current parameter config."));
-exportMp4Button.addEventListener("click", exportCurrentGradientMp4);
+exportMp4Button.addEventListener("click", () => exportCurrentGradientMp4("background"));
+if (exportLogoMp4Button) exportLogoMp4Button.addEventListener("click", () => exportCurrentGradientMp4("logo"));
 resetButton.addEventListener("click", resetConfig);
 
 document.addEventListener("visibilitychange", syncShaderLoop);
