@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+name: Validate GitHub Pages source
 
 on:
   push:
@@ -8,21 +8,19 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: pages-source-validation
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build static Pages artifact
+      - name: Validate static Pages source
         run: |
           set -euo pipefail
           rm -rf .pages-site
@@ -36,24 +34,5 @@ jobs:
           find .pages-site -type l -print -quit | (! read -r _)
           test -f .pages-site/index.html
           test -f .pages-site/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html
-
-      - name: Upload static site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .pages-site
-
-      - name: Configure Pages
-        if: ${{ github.event.repository.visibility == 'public' }}
-        uses: actions/configure-pages@v5
-
-      - name: Deploy
-        if: ${{ github.event.repository.visibility == 'public' }}
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Skip deploy for unsupported repository visibility
-        if: ${{ github.event.repository.visibility != 'public' }}
-        env:
-          REPOSITORY_VISIBILITY: ${{ github.event.repository.visibility }}
-        run: |
-          echo "::notice::Static demo artifact was built, but GitHub Pages deploy was skipped because this repository is ${REPOSITORY_VISIBILITY}. Make the repository public or enable a plan that supports Pages for private repositories to publish it."
+          test -f .pages-site/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html
+          echo "::notice::GitHub Pages is published from the main branch root. This workflow validates the same static source paths before Pages builds."
