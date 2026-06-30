@@ -21,6 +21,12 @@ Local preview URLs:
 - `http://127.0.0.1:4173/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/`
 - `http://127.0.0.1:4173/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/`
 
+Living gradient lab notes:
+- `npm run play` serves the lab with a local save endpoint, so `Save Settings` writes the current Preset A/default values back into the codebase.
+- Background MP4 export uses the 4:3 shader viewport.
+- Logo MP4 export records the large logo only, uses the live logo shader mapping, exports at least 20 seconds, and aligns the cut to complete shader cycles for cleaner looping.
+- MP4 exports are tagged with sRGB-compatible colour metadata for more stable imports into Figma.
+
 ## Source priority
 
 Codex should retrieve in this order:

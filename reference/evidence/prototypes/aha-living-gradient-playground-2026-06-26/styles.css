@@ -9,7 +9,10 @@
   --white: #ffffff;
   --aha-red: #e2001e;
   --aha-deep-red: #520208;
-  --aha-orange: #f06c23;
+  --aha-orange: #ffc139;
+  --aha-red-rgb: 226 0 30;
+  --aha-deep-red-rgb: 82 2 8;
+  --aha-orange-rgb: 255 193 57;
   --shadow: 0 18px 48px rgb(76 22 24 / 0.14);
 }
 
@@ -95,7 +98,7 @@ input {
   --lg-logo-shader-x: -2%;
   --lg-logo-shader-y: 0%;
   --lg-logo-shader-rotation: -9deg;
-  --lg-logo-export-scale: 0.5;
+  --lg-logo-export-scale: 0.82;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
@@ -245,8 +248,8 @@ input {
 
 .prototype.is-reduced-motion .living-gradient[data-mode="flame"] {
   background:
-    radial-gradient(ellipse 24% 34% at calc(var(--lg-flame-x) + var(--lg-orange-plume-x)) calc(34% + var(--lg-orange-plume-y)), rgb(240 108 35 / 0.86), rgb(240 108 35 / 0) 72%),
-    radial-gradient(ellipse 58% 72% at calc(var(--lg-flame-x) + var(--lg-red-plume-x)) calc(50% + var(--lg-red-plume-y)), rgb(226 0 30 / 0.92), rgb(226 0 30 / 0) 74%),
+    radial-gradient(ellipse 24% 34% at calc(var(--lg-flame-x) + var(--lg-orange-plume-x)) calc(34% + var(--lg-orange-plume-y)), rgb(var(--aha-orange-rgb) / 0.86), rgb(var(--aha-orange-rgb) / 0) 72%),
+    radial-gradient(ellipse 58% 72% at calc(var(--lg-flame-x) + var(--lg-red-plume-x)) calc(50% + var(--lg-red-plume-y)), rgb(var(--aha-red-rgb) / 0.92), rgb(var(--aha-red-rgb) / 0) 74%),
     var(--aha-deep-red);
 }
 
@@ -632,6 +635,26 @@ input {
   height: 14px;
   justify-self: start;
   accent-color: var(--parameterizer-accent);
+}
+
+.parameterizer-color {
+  width: 42px;
+  height: 20px;
+  justify-self: start;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 5px;
+  padding: 0;
+  background: var(--parameterizer-widget);
+  cursor: pointer;
+}
+
+.parameterizer-color::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.parameterizer-color::-webkit-color-swatch {
+  border: 0;
+  border-radius: 3px;
 }
 
 .parameterizer-value {

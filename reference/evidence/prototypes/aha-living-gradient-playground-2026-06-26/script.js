@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v32";
-const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v30", "aha-living-gradient-playground:v29", "aha-living-gradient-playground:v28", "aha-living-gradient-playground:v27", "aha-living-gradient-playground:v26"];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v32";
+const STORAGE_KEY = "aha-living-gradient-playground:v35";
+const LEGACY_STORAGE_KEYS = [];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v35";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -17,9 +17,24 @@ const modeReadout = document.querySelector("[data-mode-readout]");
 
 const EXPORT_WIDTH = 1440;
 const EXPORT_HEIGHT = 1080;
+const LOGO_EXPORT_WIDTH = 1080;
+const LOGO_EXPORT_HEIGHT = 1080;
 const EXPORT_FPS = 30;
-const LOGO_MASK_URL = "assets/aha-logo-mask-large.svg";
-const LOGO_MASK_ASPECT = 124 / 149;
+const LOGO_EXPORT_SELECTOR = ".aha-logo-effect-large";
+const LOGO_EXPORT_MASK_URL = "assets/aha-logo-mask-large.svg";
+const LOGO_EXPORT_FALLBACK_ASPECT = 124 / 149;
+const BACKGROUND_EXPORT_MIN_SECONDS = 8;
+const LOGO_EXPORT_MIN_SECONDS = 20;
+const EXPORT_MAX_SECONDS = 160;
+const EXPORT_COLOR_SPACE = "srgb";
+const EXPORT_COLOR_PROFILE = "sRGB IEC61966-2.1";
+const EXPORT_MP4_COLOR_METADATA = {
+  format: "nclx",
+  colorPrimaries: 1,
+  transferCharacteristics: 13,
+  matrixCoefficients: 1,
+  fullRange: false,
+};
 const REDUCED_MOTION_STATIC_PHASE = 0.34;
 const MP4_MIME_TYPES = [
   "video/mp4;codecs=avc1.42E01E",
@@ -33,7 +48,7 @@ const presets = [
     id: "A",
     label: "A",
     name: "Current Balance",
-    summary: "The current approved flame balance with strong blur and a top-right orange plume.",
+    summary: "The approved flame balance with strong blur and a restrained warm plume.",
     values: {
       duration: 22,
       evolutionSpeed: 1.93,
@@ -61,6 +76,9 @@ const presets = [
       sway: 1.14,
       colorIntensity: 1.18,
       shaderBlur: 24,
+      deepColor: "#520208",
+      redColor: "#e2001e",
+      orangeColor: "#ffc139",
     },
   },
   {
@@ -95,6 +113,9 @@ const presets = [
       sway: 0.96,
       colorIntensity: 1.16,
       shaderBlur: 24,
+      deepColor: "#520208",
+      redColor: "#e2001e",
+      orangeColor: "#ffc139",
     },
   },
   {
@@ -129,6 +150,9 @@ const presets = [
       sway: 1.2,
       colorIntensity: 1.2,
       shaderBlur: 22,
+      deepColor: "#520208",
+      redColor: "#e2001e",
+      orangeColor: "#ffc139",
     },
   },
   {
@@ -163,11 +187,71 @@ const presets = [
       sway: 1.32,
       colorIntensity: 1.18,
       shaderBlur: 26,
+      deepColor: "#520208",
+      redColor: "#e2001e",
+      orangeColor: "#ffc139",
     },
   },
 ];
 
 const presetById = new Map(presets.map((preset) => [preset.id, preset]));
+
+function applyCanvasColorSpace(canvas) {
+  if (!canvas) return;
+  if ("colorSpace" in canvas) {
+    try {
+      canvas.colorSpace = EXPORT_COLOR_SPACE;
+    } catch {
+      // Canvas colorSpace is advisory and not supported by every browser.
+    }
+  }
+}
+
+function applyWebGLColorSpace(gl) {
+  if (!gl) return;
+  if ("drawingBufferColorSpace" in gl) {
+    try {
+      gl.drawingBufferColorSpace = EXPORT_COLOR_SPACE;
+    } catch {
+      // Unsupported WebGL color-space setters should not block rendering.
+    }
+  }
+  if ("unpackColorSpace" in gl) {
+    try {
+      gl.unpackColorSpace = EXPORT_COLOR_SPACE;
+    } catch {
+      // Unsupported WebGL color-space setters should not block rendering.
+    }
+  }
+}
+
+function get2dContext(canvas, options = {}) {
+  applyCanvasColorSpace(canvas);
+  const contextOptions = {
+    alpha: options.alpha ?? true,
+    colorSpace: EXPORT_COLOR_SPACE,
+  };
+  if (options.willReadFrequently !== undefined) {
+    contextOptions.willReadFrequently = Boolean(options.willReadFrequently);
+  }
+  try {
+    return canvas.getContext("2d", contextOptions) ?? canvas.getContext("2d", { alpha: contextOptions.alpha });
+  } catch {
+    return canvas.getContext("2d", { alpha: contextOptions.alpha });
+  }
+}
+
+function getWebGLContext(canvas, options = {}) {
+  applyCanvasColorSpace(canvas);
+  let gl = null;
+  try {
+    gl = canvas.getContext("webgl", options);
+  } catch {
+    gl = null;
+  }
+  applyWebGLColorSpace(gl);
+  return gl;
+}
 
 const authoredDefaultValues = {
   duration: 22,
@@ -196,11 +280,14 @@ const authoredDefaultValues = {
   sway: 1.14,
   colorIntensity: 1.18,
   shaderBlur: 24,
+  deepColor: "#520208",
+  redColor: "#e2001e",
+  orangeColor: "#ffc139",
   logoShaderScale: 0.95,
   logoShaderX: -0.02,
   logoShaderY: 0,
   logoShaderRotation: -9,
-  logoExportScale: 0.5,
+  logoExportScale: 0.82,
 };
 
 const controlGroups = [
@@ -237,7 +324,7 @@ const controlGroups = [
     title: "Colour & Depth",
     icon: "swatch",
     open: true,
-    keys: ["deepPressure", "colorIntensity"],
+    keys: ["deepColor", "redColor", "orangeColor", "deepPressure", "colorIntensity"],
   },
   {
     id: "logo-mapping",
@@ -289,6 +376,9 @@ const controlDefinitions = {
   sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 4, step: 0.01, default: authoredDefaultValues.sway },
   colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: authoredDefaultValues.colorIntensity },
   shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: authoredDefaultValues.shaderBlur, unit: "px" },
+  deepColor: { key: "deepColor", label: "Deep red", type: "color", default: authoredDefaultValues.deepColor },
+  redColor: { key: "redColor", label: "Middle red", type: "color", default: authoredDefaultValues.redColor },
+  orangeColor: { key: "orangeColor", label: "Orange light", type: "color", default: authoredDefaultValues.orangeColor },
   logoShaderScale: { key: "logoShaderScale", label: "Logo animation scale", type: "range", min: 0.05, max: 5, step: 0.01, default: authoredDefaultValues.logoShaderScale },
   logoShaderX: { key: "logoShaderX", label: "Logo animation X", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.logoShaderX },
   logoShaderY: { key: "logoShaderY", label: "Logo animation Y", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.logoShaderY },
@@ -346,6 +436,9 @@ const formatters = {
   sway: (value) => value.toFixed(2),
   colorIntensity: (value) => value.toFixed(2),
   shaderBlur: (value) => `${Math.round(value)}px`,
+  deepColor: (value) => value,
+  redColor: (value) => value,
+  orangeColor: (value) => value,
   logoShaderScale: (value) => value.toFixed(2),
   logoShaderX: (value) => `${Math.round(value * 100)}%`,
   logoShaderY: (value) => `${Math.round(value * 100)}%`,
@@ -406,8 +499,8 @@ function renderExplanation() {
   return `<section class="shader-explainer" aria-label="Shader explanation">
     <div class="effect-overview-title">What this is showing</div>
     <p>This demo is now one flame shader. A-D are close presets around the current flame direction, not separate effects.</p>
-    <p>The shader starts with a deep-red field, builds one responsive red plume from layered noise, then places a smaller orange plume inside it. No white or extra red is used inside the animated artwork.</p>
-    <p>The background preview uses the same 4:3 shader window as the background export. Logo Mapping intentionally remaps the flame inside the logo mask only, so the logo can show shadow and orange together without changing the larger background, card, or button surfaces.</p>
+    <p>The shader starts with a deep-red field, builds one responsive red plume through the middle, then lets a smaller orange plume peek from the upper-right. No white or extra red is used inside the animated artwork.</p>
+    <p>The background preview uses the same 4:3 shader window as the background export. Logo Mapping intentionally remaps the flame inside the logo mask only, and Logo MP4 exports the large preview logo from that same live shader surface.</p>
   </section>`;
 }
 
@@ -439,6 +532,14 @@ function renderControl(control) {
     </label>`;
   }
 
+  if (control.type === "color") {
+    return `<label class="parameterizer-row parameterizer-row-color" for="${id}">
+      <span class="parameterizer-label" title="${control.label}">${control.label}</span>
+      <input class="parameterizer-control parameterizer-color" id="${id}" type="color" value="${value}" data-control-key="${control.key}">
+      <output class="parameterizer-value" data-value-for="${control.key}">${formatValue(control.key, value)}</output>
+    </label>`;
+  }
+
   return `<label class="parameterizer-row" for="${id}">
     <span class="parameterizer-label" title="${control.label}">${control.label}</span>
     <input class="parameterizer-control parameterizer-range" id="${id}" type="range" min="${control.min}" max="${control.max}" step="${control.step}" value="${value}" data-control-key="${control.key}">
@@ -465,6 +566,7 @@ function bindControls() {
 
       if (definition.type === "range") value = Number(value);
       if (definition.type === "checkbox") value = event.currentTarget.checked;
+      if (definition.type === "color") value = normalizeHexColor(value, definition.default);
 
       setStateValue(key, value);
       if (!key.startsWith("surfaces.") && key !== "reducedMotion" && key !== "contrastSafe" && key !== "paused") {
@@ -489,8 +591,15 @@ function applyPreset(presetId) {
 
 function getMatchingPresetId() {
   return presets.find((preset) => Object.entries(preset.values).every(([key, value]) => {
-    return Math.abs(Number(getStateValue(key)) - Number(value)) < 0.001;
+    return valuesMatch(getStateValue(key), value);
   }))?.id;
+}
+
+function valuesMatch(current, expected) {
+  if (typeof expected === "string") {
+    return String(current).toLowerCase() === expected.toLowerCase();
+  }
+  return Math.abs(Number(current) - Number(expected)) < 0.001;
 }
 
 function getStateValue(key) {
@@ -554,6 +663,15 @@ function syncSurfaceDisabledState() {
 }
 
 function updateDerivedVariables() {
+  const deepRgb = hexToRgb255(state.deepColor);
+  const redRgb = hexToRgb255(state.redColor);
+  const orangeRgb = hexToRgb255(state.orangeColor);
+  prototype.style.setProperty("--aha-deep-red", state.deepColor);
+  prototype.style.setProperty("--aha-red", state.redColor);
+  prototype.style.setProperty("--aha-orange", state.orangeColor);
+  prototype.style.setProperty("--aha-deep-red-rgb", `${deepRgb.r} ${deepRgb.g} ${deepRgb.b}`);
+  prototype.style.setProperty("--aha-red-rgb", `${redRgb.r} ${redRgb.g} ${redRgb.b}`);
+  prototype.style.setProperty("--aha-orange-rgb", `${orangeRgb.r} ${orangeRgb.g} ${orangeRgb.b}`);
   prototype.style.setProperty("--lg-duration", `${state.duration.toFixed(2)}s`);
   prototype.style.setProperty("--lg-evolution-speed", state.evolutionSpeed.toFixed(2));
   prototype.style.setProperty("--lg-flame-scale", state.flameScale.toFixed(2));
@@ -610,7 +728,7 @@ function applySurfaceToggles() {
 function canUseWebGL() {
   if (shaderRuntime.webglAvailable !== null) return shaderRuntime.webglAvailable;
   const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl", {
+  const gl = getWebGLContext(canvas, {
     alpha: false,
     antialias: false,
     depth: false,
@@ -648,12 +766,12 @@ function ensureShaderSurface(surface) {
   canvas.setAttribute("aria-hidden", "true");
   surface.insertAdjacentElement("afterbegin", canvas);
 
-  const gl = canvas.getContext("webgl", {
+  const gl = getWebGLContext(canvas, {
     alpha: false,
     antialias: false,
     depth: false,
     stencil: false,
-    preserveDrawingBuffer: false,
+    preserveDrawingBuffer: true,
     powerPreference: "low-power",
   });
 
@@ -723,10 +841,9 @@ const shaderFragmentSource = `
   uniform float u_rise;
   uniform float u_sway;
   uniform float u_energy;
-
-  const vec3 AHA_ORANGE = vec3(0.941, 0.424, 0.137);
-  const vec3 AHA_RED = vec3(0.886, 0.0, 0.118);
-  const vec3 AHA_DEEP = vec3(0.322, 0.008, 0.031);
+  uniform vec3 u_deep_color;
+  uniform vec3 u_red_color;
+  uniform vec3 u_orange_color;
 
   float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -764,7 +881,11 @@ const shaderFragmentSource = `
   vec3 flame(vec2 uv, float t) {
     float aspect = 1.0;
     float breath = breathSignal(t);
-    float riseTime = t * 0.22 * max(u_speed, 0.08) * max(u_rise, 0.02);
+    float loopPhase = fract(t * max(u_speed, 0.01) / max(u_cycle, 1.0));
+    float loopAngle = loopPhase * 6.28318530718;
+    float loopSin = sin(loopAngle);
+    float loopCos = cos(loopAngle);
+    float loopRadius = (0.35 + max(u_rise, 0.02) * 0.45) * max(u_speed, 0.08);
     vec2 center = vec2(u_flame_x, u_flame_y);
     vec2 p = uv - center;
     p.x *= aspect;
@@ -774,7 +895,7 @@ const shaderFragmentSource = `
     p = vec2(c * p.x - s * p.y, s * p.x + c * p.y);
     p /= max(u_scale, 0.01);
 
-    float drift = (fbm(vec2(riseTime * 0.24, 0.37)) - 0.5) * 0.18 * u_sway;
+    float drift = (fbm(vec2(loopSin * 0.36 * loopRadius, loopCos * 0.36 * loopRadius + 0.37)) - 0.5) * 0.18 * u_sway;
     p.x -= drift;
 
     vec2 redP = p - vec2(u_red_plume_x, u_red_plume_y);
@@ -782,12 +903,12 @@ const shaderFragmentSource = `
     float activeHeight = smoothstep(0.02, 0.18, vertical) * (1.0 - smoothstep(0.97, 1.0, vertical));
     float taper = mix(max(u_flame_width, 0.01), max(u_flame_width, 0.01) * 0.13, pow(vertical, max(u_taper_power, 0.01)));
     float noiseScale = max(u_noise_scale, 0.01);
-    float spineNoise = fbm(vec2(vertical * 1.8 * noiseScale - riseTime * 0.72, riseTime * 0.82));
+    float spineNoise = fbm(vec2(vertical * 1.8 * noiseScale + loopSin * 0.8 * loopRadius, loopCos * 0.8 * loopRadius));
     float spine = (spineNoise - 0.5) * taper * 0.7 * u_sway;
     float x = redP.x - spine;
     float edge = abs(x) / max(taper, 0.001);
-    float largeNoise = fbm(vec2(x * 2.0 * noiseScale + riseTime * 0.16, vertical * 2.35 * noiseScale - riseTime));
-    float fineNoise = fbm(vec2(x * 4.6 * noiseScale + riseTime * 0.52, vertical * 4.4 * noiseScale - riseTime * 1.8));
+    float largeNoise = fbm(vec2(x * 2.0 * noiseScale + loopSin * 0.32 * loopRadius, vertical * 2.35 * noiseScale + loopCos * 0.6 * loopRadius));
+    float fineNoise = fbm(vec2(x * 4.6 * noiseScale + loopSin * 0.75 * loopRadius, vertical * 4.4 * noiseScale + loopCos * 0.9 * loopRadius));
     float organicEdge = edge - (largeNoise - 0.5) * 0.3 * u_turbulence - (fineNoise - 0.5) * 0.08 * u_turbulence;
 
     float redStart = clamp(0.56 - u_edge_softness * 0.2, 0.24, 0.86);
@@ -800,7 +921,7 @@ const shaderFragmentSource = `
     vec2 orangeP = p - vec2(u_orange_plume_x, u_orange_plume_y);
     float orangeVertical = clamp((orangeP.y / max(u_flame_height * u_orange_plume_height, 0.01)) + 0.56, 0.0, 1.0);
     float orangeX = orangeP.x - spine;
-    float orangeNoise = fbm(vec2(orangeX * 2.8 * noiseScale + riseTime * 0.36, orangeVertical * 3.2 * noiseScale - riseTime * 1.28));
+    float orangeNoise = fbm(vec2(orangeX * 2.8 * noiseScale + loopSin * 0.56 * loopRadius, orangeVertical * 3.2 * noiseScale + loopCos * 0.72 * loopRadius));
     float orangeCenter = taper * (0.18 + (orangeNoise - 0.5) * 0.36);
     float orangeWidth = max(taper * mix(0.16, 0.48, clamp(u_warm_spread / 1.6, 0.0, 1.0)), 0.006);
     float orangeEdge = abs(orangeX - orangeCenter) / orangeWidth;
@@ -812,10 +933,10 @@ const shaderFragmentSource = `
     orangePlume = clamp(orangePlume, 0.0, 0.92);
 
     float intensity = clamp(u_energy, 0.75, 1.25);
-    vec3 color = AHA_DEEP;
-    color = mix(color, AHA_RED, redPlume);
-    color = mix(color, AHA_ORANGE, orangePlume);
-    return mix(AHA_DEEP, color, clamp(0.78 + (intensity - 0.75) * 0.44, 0.78, 1.0));
+    vec3 color = u_deep_color;
+    color = mix(color, u_red_color, redPlume);
+    color = mix(color, u_orange_color, orangePlume);
+    return mix(u_deep_color, color, clamp(0.78 + (intensity - 0.75) * 0.44, 0.78, 1.0));
   }
 
   void main() {
@@ -905,6 +1026,10 @@ function drawShadersOnce(now = performance.now()) {
 }
 
 function drawShaderItem(item, surface, now) {
+  drawShaderItemAtTime(item, surface, getShaderTime(now));
+}
+
+function drawShaderItemAtTime(item, surface, shaderTime) {
   const rect = item.canvas.getBoundingClientRect();
   const renderScale = 1;
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -916,7 +1041,7 @@ function drawShaderItem(item, surface, now) {
     item.canvas.height = height;
   }
 
-  drawShaderRenderer(item, getShaderTime(now), width, height, getSurfaceShaderOverrides(surface));
+  drawShaderRenderer(item, shaderTime, width, height, getSurfaceShaderOverrides(surface));
 }
 
 function getShaderTime(now = performance.now()) {
@@ -961,6 +1086,9 @@ function createShaderRenderer(gl, canvas, program, buffer) {
       rise: gl.getUniformLocation(program, "u_rise"),
       sway: gl.getUniformLocation(program, "u_sway"),
       energy: gl.getUniformLocation(program, "u_energy"),
+      deepColor: gl.getUniformLocation(program, "u_deep_color"),
+      redColor: gl.getUniformLocation(program, "u_red_color"),
+      orangeColor: gl.getUniformLocation(program, "u_orange_color"),
     },
   };
 }
@@ -1005,6 +1133,9 @@ function getShaderParameters(overrides = null) {
     rise: state.rise,
     sway: state.sway,
     energy: state.colorIntensity,
+    deepColor: hexToRgbUnit(state.deepColor),
+    redColor: hexToRgbUnit(state.redColor),
+    orangeColor: hexToRgbUnit(state.orangeColor),
     ...(overrides ?? {}),
   };
 }
@@ -1012,6 +1143,7 @@ function getShaderParameters(overrides = null) {
 function drawShaderRenderer(item, shaderTime, width = item.canvas.width, height = item.canvas.height, overrides = null) {
   const params = getShaderParameters(overrides);
   const gl = item.gl;
+  applyWebGLColorSpace(gl);
   gl.viewport(0, 0, width, height);
   gl.useProgram(item.program);
   gl.bindBuffer(gl.ARRAY_BUFFER, item.buffer);
@@ -1045,6 +1177,9 @@ function drawShaderRenderer(item, shaderTime, width = item.canvas.width, height 
   gl.uniform1f(item.uniforms.rise, params.rise);
   gl.uniform1f(item.uniforms.sway, params.sway);
   gl.uniform1f(item.uniforms.energy, params.energy);
+  gl.uniform3fv(item.uniforms.deepColor, params.deepColor);
+  gl.uniform3fv(item.uniforms.redColor, params.redColor);
+  gl.uniform3fv(item.uniforms.orangeColor, params.orangeColor);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
 
@@ -1078,6 +1213,9 @@ ${logoCustomProperties().map(([name, value]) => `  ${name}: ${value};`).join("\n
 
 function flameCustomProperties() {
   return [
+    ["--aha-deep-red", state.deepColor],
+    ["--aha-red", state.redColor],
+    ["--aha-orange", state.orangeColor],
     ["--lg-duration", `${state.duration.toFixed(2)}s`],
     ["--lg-evolution-speed", state.evolutionSpeed.toFixed(2)],
     ["--lg-flame-scale", state.flameScale.toFixed(2)],
@@ -1122,6 +1260,10 @@ function buildConfigExport() {
     schema: CONFIG_SCHEMA,
     updated: "2026-06-30",
     visualMode: "flame",
+    exportColorSpace: EXPORT_COLOR_SPACE,
+    exportColorProfile: EXPORT_COLOR_PROFILE,
+    exportColorManagement: "Browser export canvases and WebGL buffers are forced to sRGB where supported before MediaRecorder capture.",
+    mp4ColorMetadata: EXPORT_MP4_COLOR_METADATA,
     preset: state.preset,
     state,
   }, null, 2);
@@ -1159,18 +1301,29 @@ function getSupportedMp4MimeType() {
 }
 
 function getExportPlan(target = "background") {
-  const seconds = clamp(state.duration / Math.max(state.evolutionSpeed, 0.1), 8, 80);
+  const cycleSeconds = state.duration / Math.max(state.evolutionSpeed, 0.1);
+  const minSeconds = target === "logo" ? LOGO_EXPORT_MIN_SECONDS : BACKGROUND_EXPORT_MIN_SECONDS;
+  const loopCycles = Math.max(1, Math.ceil(minSeconds / Math.max(cycleSeconds, 0.1)));
+  const seconds = clamp(cycleSeconds * loopCycles, minSeconds, EXPORT_MAX_SECONDS);
   const roundedSeconds = Number(seconds.toFixed(2));
+  const width = target === "logo" ? LOGO_EXPORT_WIDTH : EXPORT_WIDTH;
+  const height = target === "logo" ? LOGO_EXPORT_HEIGHT : EXPORT_HEIGHT;
   return {
     target,
     mode: "flame",
     label: exportPlanLabel(target),
     seconds: roundedSeconds,
+    cycleSeconds: Number(cycleSeconds.toFixed(4)),
+    loopCycles,
+    loopAligned: Math.abs(seconds - cycleSeconds * loopCycles) < 0.001,
     frames: Math.ceil(roundedSeconds * EXPORT_FPS),
     fps: EXPORT_FPS,
-    width: EXPORT_WIDTH,
-    height: EXPORT_HEIGHT,
+    width,
+    height,
     mimeType: getSupportedMp4MimeType(),
+    colorSpace: EXPORT_COLOR_SPACE,
+    colorProfile: EXPORT_COLOR_PROFILE,
+    mp4ColorMetadata: EXPORT_MP4_COLOR_METADATA,
     startTime: (performance.now() - shaderRuntime.origin) / 1000,
   };
 }
@@ -1209,7 +1362,7 @@ async function exportCurrentGradientMp4(target = "background") {
   });
 
   setExportButtonsDisabled(true);
-  copyStatus.textContent = `Exporting ${plan.label} MP4 loop (${plan.seconds}s)...`;
+  copyStatus.textContent = `Exporting ${plan.label} MP4 loop (${plan.seconds}s, ${plan.loopCycles} cycle${plan.loopCycles === 1 ? "" : "s"})...`;
 
   recorder.addEventListener("dataavailable", (event) => {
     if (event.data.size > 0) chunks.push(event.data);
@@ -1225,12 +1378,13 @@ async function exportCurrentGradientMp4(target = "background") {
     await renderExportFrames(renderer, plan);
     recorder.stop();
     await finished;
-    const blob = new Blob(chunks, { type: plan.mimeType });
+    const recordedBlob = new Blob(chunks, { type: plan.mimeType });
+    const blob = await tagMp4BlobWithSrgb(recordedBlob);
     const filename = target === "logo"
       ? `aha-living-gradient-logo-${plan.seconds.toFixed(2)}s-loop.mp4`
       : `aha-living-gradient-background-${plan.seconds.toFixed(2)}s-loop.mp4`;
     downloadBlob(blob, filename);
-    copyStatus.textContent = `Exported ${filename}.`;
+    copyStatus.textContent = `Exported ${filename} with sRGB MP4 colour metadata.`;
   } catch (error) {
     if (recorder.state !== "inactive") recorder.stop();
     copyStatus.textContent = error.message || "MP4 export failed.";
@@ -1239,6 +1393,38 @@ async function exportCurrentGradientMp4(target = "background") {
     cleanupExportShaderRenderer(renderer);
     setExportButtonsDisabled(false);
   }
+}
+
+async function tagMp4BlobWithSrgb(blob) {
+  if (!blob.type.includes("mp4")) return blob;
+  const buffer = await blob.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  const patched = patchExistingMp4ColorBoxes(bytes);
+  return patched > 0 ? new Blob([bytes], { type: blob.type }) : blob;
+}
+
+function patchExistingMp4ColorBoxes(bytes) {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  let patched = 0;
+
+  for (let offset = 4; offset + 15 < bytes.length; offset += 1) {
+    if (bytes[offset] !== 0x63 || bytes[offset + 1] !== 0x6f || bytes[offset + 2] !== 0x6c || bytes[offset + 3] !== 0x72) {
+      continue;
+    }
+
+    const boxStart = offset - 4;
+    const boxSize = view.getUint32(boxStart);
+    const isNclx = bytes[offset + 4] === 0x6e && bytes[offset + 5] === 0x63 && bytes[offset + 6] === 0x6c && bytes[offset + 7] === 0x78;
+    if (boxSize !== 19 || !isNclx) continue;
+
+    view.setUint16(boxStart + 12, EXPORT_MP4_COLOR_METADATA.colorPrimaries);
+    view.setUint16(boxStart + 14, EXPORT_MP4_COLOR_METADATA.transferCharacteristics);
+    view.setUint16(boxStart + 16, EXPORT_MP4_COLOR_METADATA.matrixCoefficients);
+    bytes[boxStart + 18] = EXPORT_MP4_COLOR_METADATA.fullRange ? 0x80 : 0x00;
+    patched += 1;
+  }
+
+  return patched;
 }
 
 function setExportButtonsDisabled(disabled) {
@@ -1261,7 +1447,6 @@ function renderExportFrames(renderer, plan) {
         requestAnimationFrame(tick);
         return;
       }
-      drawExportFrame(renderer, 0, plan);
       resolve();
     };
     drawExportFrame(renderer, 0, plan);
@@ -1270,12 +1455,23 @@ function renderExportFrames(renderer, plan) {
 }
 
 function drawExportFrame(renderer, elapsed, plan) {
+  const shaderTime = plan.startTime + elapsed;
+  if (renderer.type === "logo") {
+    drawLogoPreviewSource(renderer, shaderTime);
+    drawLogoExportFrame(renderer, plan);
+    return;
+  }
+  drawExportShaderSource(renderer, shaderTime);
+  drawBackgroundExportFrame(renderer, plan);
+}
+
+function drawExportShaderSource(renderer, shaderTime) {
   if (renderer.blurPipeline) {
     renderer.shader.gl.bindFramebuffer(renderer.shader.gl.FRAMEBUFFER, renderer.blurPipeline.sourceFramebuffer);
   }
   drawShaderRenderer(
     renderer.shader,
-    plan.startTime + elapsed,
+    shaderTime,
     renderer.sourceCanvas.width,
     renderer.sourceCanvas.height,
     renderer.shaderOverrides,
@@ -1284,11 +1480,6 @@ function drawExportFrame(renderer, elapsed, plan) {
     renderer.shader.gl.bindFramebuffer(renderer.shader.gl.FRAMEBUFFER, null);
   }
   bakeExportBlur(renderer);
-  if (renderer.type === "logo") {
-    drawLogoExportFrame(renderer, plan);
-    return;
-  }
-  drawBackgroundExportFrame(renderer, plan);
 }
 
 function drawBackgroundExportFrame(renderer, plan) {
@@ -1300,13 +1491,9 @@ function drawLogoExportFrame(renderer, plan) {
   renderer.context.fillStyle = "#ffffff";
   renderer.context.fillRect(0, 0, plan.width, plan.height);
 
-  renderer.logoContext.clearRect(0, 0, renderer.logoRect.width, renderer.logoRect.height);
-  renderer.logoContext.drawImage(renderer.sourceCanvas, -renderer.pad, -renderer.pad);
-  renderer.logoContext.globalCompositeOperation = "destination-in";
-  renderer.logoContext.drawImage(renderer.maskImage, 0, 0, renderer.logoRect.width, renderer.logoRect.height);
-  renderer.logoContext.globalCompositeOperation = "source-over";
-
-  renderer.context.drawImage(renderer.logoCanvas, renderer.logoRect.x, renderer.logoRect.y);
+  const logoCanvas = renderLogoPreviewCrop(renderer);
+  const exportRect = getSingleLogoExportRect(renderer, plan.width, plan.height);
+  renderer.context.drawImage(logoCanvas, exportRect.x, exportRect.y, exportRect.width, exportRect.height);
 }
 
 function bakeExportBlur(renderer) {
@@ -1346,13 +1533,13 @@ function createExportShaderRenderer(width, height) {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const context = canvas.getContext("2d", { alpha: false });
+  const context = get2dContext(canvas, { alpha: false });
   if (!context) return null;
 
   const sourceCanvas = document.createElement("canvas");
   sourceCanvas.width = width + pad * 2;
   sourceCanvas.height = height + pad * 2;
-  const gl = sourceCanvas.getContext("webgl", {
+  const gl = getWebGLContext(sourceCanvas, {
     alpha: false,
     antialias: false,
     depth: false,
@@ -1393,26 +1580,25 @@ function createExportShaderRenderer(width, height) {
 }
 
 async function createLogoExportShaderRenderer(width, height) {
-  const maskImage = await loadImage(LOGO_MASK_URL);
-  const blur = Math.max(0, Math.round(state.shaderBlur));
-  const pad = blur * 2;
-  const logoRect = getLogoExportRect(width, height);
+  const surface = document.querySelector(LOGO_EXPORT_SELECTOR);
+  if (!surface) throw new Error("Logo export could not find the large preview logo.");
+  ensureShaderSurface(surface);
+  const liveShader = shaderRuntime.items.get(surface);
+  if (!liveShader) throw new Error("Logo export could not access the live logo shader.");
+  const maskImage = await loadImage(LOGO_EXPORT_MASK_URL);
+  drawShaderItemAtTime(liveShader, surface, getShaderTime());
+  const blur = getComputedShaderBlur(surface);
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const context = canvas.getContext("2d", { alpha: false });
+  const context = get2dContext(canvas, { alpha: false });
   if (!context) return null;
 
-  const logoCanvas = document.createElement("canvas");
-  logoCanvas.width = logoRect.width;
-  logoCanvas.height = logoRect.height;
-  const logoContext = logoCanvas.getContext("2d");
-  if (!logoContext) return null;
-
   const sourceCanvas = document.createElement("canvas");
-  sourceCanvas.width = logoRect.width + pad * 2;
-  sourceCanvas.height = logoRect.height + pad * 2;
-  const gl = sourceCanvas.getContext("webgl", {
+  sourceCanvas.width = liveShader.canvas.width;
+  sourceCanvas.height = liveShader.canvas.height;
+  const gl = getWebGLContext(sourceCanvas, {
     alpha: false,
     antialias: false,
     depth: false,
@@ -1439,16 +1625,20 @@ async function createLogoExportShaderRenderer(width, height) {
   const blurPipeline = blur > 0 ? createExportBlurPipeline(gl, sourceCanvas.width, sourceCanvas.height) : null;
   if (blur > 0 && !blurPipeline) return null;
 
+  const logoCanvas = document.createElement("canvas");
+  const logoContext = get2dContext(logoCanvas);
+  if (!logoContext) return null;
+
   return {
     type: "logo",
     canvas,
     context,
+    surface,
+    liveShader,
     sourceCanvas,
+    maskImage,
     logoCanvas,
     logoContext,
-    logoRect,
-    maskImage,
-    pad,
     blur,
     blurPipeline,
     shaderOverrides: getLogoShaderOverrides(),
@@ -1514,15 +1704,70 @@ function createExportTexture(gl, width, height) {
   return texture;
 }
 
-function getLogoExportRect(width, height) {
-  const logoHeight = Math.round(height * state.logoExportScale);
-  const logoWidth = Math.round(logoHeight * LOGO_MASK_ASPECT);
+function drawLogoPreviewSource(renderer, shaderTime) {
+  drawShaderItemAtTime(renderer.liveShader, renderer.surface, shaderTime);
+  drawExportShaderSource(renderer, shaderTime);
+}
+
+function renderLogoPreviewCrop(renderer) {
+  const crop = getLiveLogoCanvasCrop(renderer.surface, renderer.liveShader.canvas);
+  const sourceCanvas = renderer.sourceCanvas;
+
+  resizeCanvas(renderer.logoCanvas, crop.sw, crop.sh);
+  renderer.logoContext.clearRect(0, 0, crop.sw, crop.sh);
+  renderer.logoContext.drawImage(sourceCanvas, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, crop.sw, crop.sh);
+  renderer.logoContext.globalCompositeOperation = "destination-in";
+  renderer.logoContext.drawImage(renderer.maskImage, 0, 0, crop.sw, crop.sh);
+  renderer.logoContext.globalCompositeOperation = "source-over";
+  return renderer.logoCanvas;
+}
+
+function getLiveLogoCanvasCrop(surface, liveCanvas) {
+  const surfaceRect = surface.getBoundingClientRect();
+  const canvasRect = liveCanvas.getBoundingClientRect();
+  const scaleX = liveCanvas.width / Math.max(canvasRect.width, 1);
+  const scaleY = liveCanvas.height / Math.max(canvasRect.height, 1);
+  const rawSx = Math.round((surfaceRect.left - canvasRect.left) * scaleX);
+  const rawSy = Math.round((surfaceRect.top - canvasRect.top) * scaleY);
+  const sx = clamp(rawSx, 0, liveCanvas.width - 1);
+  const sy = clamp(rawSy, 0, liveCanvas.height - 1);
+  const sw = Math.max(1, Math.round(surfaceRect.width * scaleX));
+  const sh = Math.max(1, Math.round(surfaceRect.height * scaleY));
   return {
-    width: logoWidth,
-    height: logoHeight,
-    x: Math.round((width - logoWidth) / 2),
-    y: Math.round((height - logoHeight) / 2),
+    sx,
+    sy,
+    sw: Math.min(sw, liveCanvas.width - sx),
+    sh: Math.min(sh, liveCanvas.height - sy),
+    scaleX,
+    scaleY,
+    aspect: surfaceRect.width > 0 && surfaceRect.height > 0
+      ? surfaceRect.width / surfaceRect.height
+      : LOGO_EXPORT_FALLBACK_ASPECT,
   };
+}
+
+function getSingleLogoExportRect(renderer, width, height) {
+  const crop = getLiveLogoCanvasCrop(renderer.surface, renderer.liveShader.canvas);
+  const fill = clamp(state.logoExportScale, 0.25, 0.95);
+  const maxWidth = width * fill;
+  const maxHeight = height * fill;
+  let rectWidth = maxWidth;
+  let rectHeight = rectWidth / crop.aspect;
+  if (rectHeight > maxHeight) {
+    rectHeight = maxHeight;
+    rectWidth = rectHeight * crop.aspect;
+  }
+  return {
+    width: Math.round(rectWidth),
+    height: Math.round(rectHeight),
+    x: Math.round((width - rectWidth) / 2),
+    y: Math.round((height - rectHeight) / 2),
+  };
+}
+
+function resizeCanvas(canvas, width, height) {
+  if (canvas.width !== width) canvas.width = width;
+  if (canvas.height !== height) canvas.height = height;
 }
 
 async function renderExportDiagnosticFrame(target = "background", elapsed = 0) {
@@ -1537,9 +1782,64 @@ async function renderExportDiagnosticFrame(target = "background", elapsed = 0) {
     return {
       target,
       blur: renderer.blur,
+      colorSpace: EXPORT_COLOR_SPACE,
+      colorProfile: EXPORT_COLOR_PROFILE,
       width: plan.width,
       height: plan.height,
       dataUrl: renderer.canvas.toDataURL("image/png"),
+    };
+  } finally {
+    cleanupExportShaderRenderer(renderer);
+  }
+}
+
+async function renderLogoPreviewDiagnosticFrame(elapsed = 0) {
+  const plan = getExportPlan("logo");
+  const renderer = await createLogoExportShaderRenderer(plan.width, plan.height);
+  if (!renderer) throw new Error("Logo preview diagnostic renderer is unavailable.");
+
+  try {
+    drawLogoPreviewSource(renderer, plan.startTime + elapsed);
+    const logoCanvas = renderLogoPreviewCrop(renderer);
+    return {
+      target: "logo-preview",
+      blur: renderer.blur,
+      colorSpace: EXPORT_COLOR_SPACE,
+      colorProfile: EXPORT_COLOR_PROFILE,
+      width: logoCanvas.width,
+      height: logoCanvas.height,
+      dataUrl: logoCanvas.toDataURL("image/png"),
+    };
+  } finally {
+    cleanupExportShaderRenderer(renderer);
+  }
+}
+
+async function renderLogoDiagnosticPair(elapsed = 0) {
+  const plan = getExportPlan("logo");
+  const renderer = await createLogoExportShaderRenderer(plan.width, plan.height);
+  if (!renderer) throw new Error("Logo diagnostic renderer is unavailable.");
+
+  try {
+    drawLogoPreviewSource(renderer, plan.startTime + elapsed);
+    const previewCanvas = renderLogoPreviewCrop(renderer);
+    const previewDataUrl = previewCanvas.toDataURL("image/png");
+    drawLogoExportFrame(renderer, plan);
+    return {
+      target: "logo-pair",
+      blur: renderer.blur,
+      colorSpace: EXPORT_COLOR_SPACE,
+      colorProfile: EXPORT_COLOR_PROFILE,
+      preview: {
+        width: previewCanvas.width,
+        height: previewCanvas.height,
+        dataUrl: previewDataUrl,
+      },
+      export: {
+        width: plan.width,
+        height: plan.height,
+        dataUrl: renderer.canvas.toDataURL("image/png"),
+      },
     };
   } finally {
     cleanupExportShaderRenderer(renderer);
@@ -1598,7 +1898,11 @@ function loadSavedState() {
 
 function migrateLegacyState(candidate) {
   const next = {
-    preset: "A",
+    ...candidate,
+    preset: candidate?.preset ?? "A",
+    deepColor: candidate?.deepColor ?? authoredDefaultValues.deepColor,
+    redColor: candidate?.redColor ?? authoredDefaultValues.redColor,
+    orangeColor: candidate?.orangeColor ?? authoredDefaultValues.orangeColor,
     surfaces: candidate?.surfaces,
     reducedMotion: candidate?.reducedMotion,
     contrastSafe: candidate?.contrastSafe,
@@ -1617,13 +1921,47 @@ function markStateDirty() {
     : "Unsaved changes. Click Save Settings to keep them after reload.";
 }
 
-function saveCurrentState() {
+async function saveCurrentState() {
+  let browserSaved = false;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     savedStateSnapshot = serializeState(state);
-    copyStatus.textContent = "Saved settings. They will load automatically next time.";
+    browserSaved = true;
   } catch {
     copyStatus.textContent = "Settings changed, but browser storage is unavailable.";
+    return;
+  }
+
+  const codebaseResult = await saveCurrentStateToCodebase();
+  if (codebaseResult.saved) {
+    copyStatus.textContent = "Saved settings to this browser and wrote them into the codebase defaults.";
+    return;
+  }
+
+  copyStatus.textContent = browserSaved
+    ? `Saved settings for reload. Codebase save unavailable here${codebaseResult.reason ? `: ${codebaseResult.reason}` : "."}`
+    : "Settings changed, but browser storage is unavailable.";
+}
+
+async function saveCurrentStateToCodebase() {
+  try {
+    const response = await fetch("/__gradient-lab/save-settings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        schema: CONFIG_SCHEMA,
+        state,
+      }),
+    });
+    if (!response.ok) {
+      return { saved: false, reason: response.status === 404 ? "serve with npm run play to enable file writes" : `server returned ${response.status}` };
+    }
+    const result = await response.json();
+    return { saved: Boolean(result.saved), reason: result.message };
+  } catch {
+    return { saved: false, reason: "serve with npm run play to enable file writes" };
   }
 }
 
@@ -1641,6 +1979,10 @@ function normalizeState(candidate) {
     }
     if (control.type === "checkbox") {
       setNestedValue(next, control.key, Boolean(value));
+      return;
+    }
+    if (control.type === "color") {
+      setNestedValue(next, control.key, normalizeHexColor(value, control.default));
     }
   });
 
@@ -1677,7 +2019,38 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function getComputedShaderBlur(surface) {
+  const raw = getComputedStyle(surface).getPropertyValue("--lg-shader-blur").trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? Math.max(0, Math.round(value)) : Math.max(0, Math.round(state.shaderBlur));
+}
+
+function normalizeHexColor(value, fallback = "#000000") {
+  const raw = String(value ?? "").trim();
+  if (/^#[0-9a-fA-F]{6}$/.test(raw)) return raw.toLowerCase();
+  if (/^#[0-9a-fA-F]{3}$/.test(raw)) {
+    return `#${raw[1]}${raw[1]}${raw[2]}${raw[2]}${raw[3]}${raw[3]}`.toLowerCase();
+  }
+  return /^#[0-9a-fA-F]{6}$/.test(fallback) ? fallback.toLowerCase() : "#000000";
+}
+
+function hexToRgb255(value) {
+  const color = normalizeHexColor(value);
+  return {
+    r: parseInt(color.slice(1, 3), 16),
+    g: parseInt(color.slice(3, 5), 16),
+    b: parseInt(color.slice(5, 7), 16),
+  };
+}
+
+function hexToRgbUnit(value) {
+  const rgb = hexToRgb255(value);
+  return [rgb.r / 255, rgb.g / 255, rgb.b / 255];
+}
+
 function formatValue(key, value) {
+  const control = controlByKey.get(key);
+  if (control?.type === "color") return formatters[key] ? formatters[key](String(value)) : String(value);
   return formatters[key] ? formatters[key](Number(value)) : String(value);
 }
 
@@ -1692,6 +2065,8 @@ document.addEventListener("visibilitychange", syncShaderLoop);
 window.addEventListener("resize", () => drawShadersOnce());
 window.__ahaLivingGradientExportDebug = {
   renderFrame: renderExportDiagnosticFrame,
+  renderLogoPreviewFrame: renderLogoPreviewDiagnosticFrame,
+  renderLogoPair: renderLogoDiagnosticPair,
 };
 
 initReducedMotion();
