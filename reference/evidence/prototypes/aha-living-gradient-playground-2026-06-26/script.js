@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v31";
+const STORAGE_KEY = "aha-living-gradient-playground:v32";
 const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v30", "aha-living-gradient-playground:v29", "aha-living-gradient-playground:v28", "aha-living-gradient-playground:v27", "aha-living-gradient-playground:v26"];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v31";
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v32";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -15,7 +15,7 @@ const resetButton = document.querySelector("[data-reset-config]");
 const copyStatus = document.querySelector("[data-copy-status]");
 const modeReadout = document.querySelector("[data-mode-readout]");
 
-const EXPORT_WIDTH = 1920;
+const EXPORT_WIDTH = 1440;
 const EXPORT_HEIGHT = 1080;
 const EXPORT_FPS = 30;
 const LOGO_MASK_URL = "assets/aha-logo-mask-large.svg";
@@ -407,7 +407,7 @@ function renderExplanation() {
     <div class="effect-overview-title">What this is showing</div>
     <p>This demo is now one flame shader. A-D are close presets around the current flame direction, not separate effects.</p>
     <p>The shader starts with a deep-red field, builds one responsive red plume from layered noise, then places a smaller orange plume inside it. No white or extra red is used inside the animated artwork.</p>
-    <p>Logo Mapping remaps that same flame inside the logo mask only, so the logo can show shadow and orange together without changing the larger background, card, or button surfaces.</p>
+    <p>The background preview uses the same 4:3 shader window as the background export. Logo Mapping intentionally remaps the flame inside the logo mask only, so the logo can show shadow and orange together without changing the larger background, card, or button surfaces.</p>
   </section>`;
 }
 
@@ -1120,7 +1120,7 @@ function logoCustomProperties() {
 function buildConfigExport() {
   return JSON.stringify({
     schema: CONFIG_SCHEMA,
-    updated: "2026-06-29",
+    updated: "2026-06-30",
     visualMode: "flame",
     preset: state.preset,
     state,

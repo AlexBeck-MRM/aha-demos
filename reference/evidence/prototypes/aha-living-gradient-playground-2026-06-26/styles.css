@@ -204,7 +204,7 @@ input {
 }
 
 .preview-panel-background {
-  background: var(--aha-red);
+  background: var(--page-bg);
 }
 
 .living-gradient {
@@ -281,7 +281,7 @@ input {
   left: 21%;
   top: 28.9%;
   width: 28%;
-  aspect-ratio: 116 / 145;
+  aspect-ratio: 124 / 149;
   -webkit-mask-image: url("assets/aha-logo-mask-large.svg");
   mask-image: url("assets/aha-logo-mask-large.svg");
 }
@@ -290,7 +290,7 @@ input {
   left: 62%;
   top: 40.7%;
   width: 12%;
-  aspect-ratio: 50 / 64;
+  aspect-ratio: 58 / 67;
   -webkit-mask-image: url("assets/aha-logo-mask-small.svg");
   mask-image: url("assets/aha-logo-mask-small.svg");
 }
@@ -317,8 +317,10 @@ input {
 }
 
 .background-surface {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: 4 / 3;
   border-radius: 0;
 }
 
