@@ -850,6 +850,56 @@ function compileShader(gl, type, source) {
   return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
 }
 
+const textureVertexSource = `
+  attribute vec2 a_position;
+  varying vec2 v_uv;
+
+  void main() {
+    v_uv = a_position * 0.5 + 0.5;
+    gl_Position = vec4(a_position, 0.0, 1.0);
+  }
+`;
+
+const exportBlurFragmentSource = `
+  precision mediump float;
+
+  varying vec2 v_uv;
+
+  uniform sampler2D u_texture;
+  uniform vec2 u_resolution;
+  uniform vec2 u_direction;
+  uniform float u_radius;
+
+  void main() {
+    vec2 stepSize = u_direction * u_radius / max(u_resolution, vec2(1.0));
+    vec4 color = texture2D(u_texture, v_uv) * 0.208;
+    float total = 0.208;
+
+    for (int i = 1; i <= 7; i++) {
+      float progress = float(i) / 7.0;
+      float weight = exp(-4.5 * progress * progress);
+      vec2 offset = stepSize * progress;
+      color += texture2D(u_texture, v_uv + offset) * weight;
+      color += texture2D(u_texture, v_uv - offset) * weight;
+      total += weight * 2.0;
+    }
+
+    gl_FragColor = color / total;
+  }
+`;
+
+function createTextureProgram(gl, fragmentSource) {
+  const vertex = compileShader(gl, gl.VERTEX_SHADER, textureVertexSource);
+  const fragment = compileShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+  if (!vertex || !fragment) return null;
+
+  const program = gl.createProgram();
+  gl.attachShader(program, vertex);
+  gl.attachShader(program, fragment);
+  gl.linkProgram(program);
+  return gl.getProgramParameter(program, gl.LINK_STATUS) ? program : null;
+}
+
 function drawShadersOnce(now = performance.now()) {
   shaderRuntime.items.forEach((item, surface) => drawShaderItem(item, surface, now));
 }
@@ -1220,6 +1270,9 @@ function renderExportFrames(renderer, plan) {
 }
 
 function drawExportFrame(renderer, elapsed, plan) {
+  if (renderer.blurPipeline) {
+    renderer.shader.gl.bindFramebuffer(renderer.shader.gl.FRAMEBUFFER, renderer.blurPipeline.sourceFramebuffer);
+  }
   drawShaderRenderer(
     renderer.shader,
     plan.startTime + elapsed,
@@ -1227,6 +1280,10 @@ function drawExportFrame(renderer, elapsed, plan) {
     renderer.sourceCanvas.height,
     renderer.shaderOverrides,
   );
+  if (renderer.blurPipeline) {
+    renderer.shader.gl.bindFramebuffer(renderer.shader.gl.FRAMEBUFFER, null);
+  }
+  bakeExportBlur(renderer);
   if (renderer.type === "logo") {
     drawLogoExportFrame(renderer, plan);
     return;
@@ -1236,9 +1293,7 @@ function drawExportFrame(renderer, elapsed, plan) {
 
 function drawBackgroundExportFrame(renderer, plan) {
   renderer.context.clearRect(0, 0, plan.width, plan.height);
-  renderer.context.filter = renderer.blur > 0 ? `blur(${renderer.blur}px)` : "none";
   renderer.context.drawImage(renderer.sourceCanvas, -renderer.pad, -renderer.pad);
-  renderer.context.filter = "none";
 }
 
 function drawLogoExportFrame(renderer, plan) {
@@ -1246,14 +1301,43 @@ function drawLogoExportFrame(renderer, plan) {
   renderer.context.fillRect(0, 0, plan.width, plan.height);
 
   renderer.logoContext.clearRect(0, 0, renderer.logoRect.width, renderer.logoRect.height);
-  renderer.logoContext.filter = renderer.blur > 0 ? `blur(${renderer.blur}px)` : "none";
   renderer.logoContext.drawImage(renderer.sourceCanvas, -renderer.pad, -renderer.pad);
-  renderer.logoContext.filter = "none";
   renderer.logoContext.globalCompositeOperation = "destination-in";
   renderer.logoContext.drawImage(renderer.maskImage, 0, 0, renderer.logoRect.width, renderer.logoRect.height);
   renderer.logoContext.globalCompositeOperation = "source-over";
 
   renderer.context.drawImage(renderer.logoCanvas, renderer.logoRect.x, renderer.logoRect.y);
+}
+
+function bakeExportBlur(renderer) {
+  if (!renderer.blurPipeline || renderer.blur <= 0) return;
+
+  const { blurPipeline } = renderer;
+
+  drawExportBlurPass(renderer, blurPipeline.sourceTexture, blurPipeline.tempFramebuffer, 1, 0);
+  drawExportBlurPass(renderer, blurPipeline.tempTexture, null, 0, 1);
+}
+
+function drawExportBlurPass(renderer, inputTexture, framebuffer, directionX, directionY) {
+  const { gl, buffer } = renderer.shader;
+  const { blurPipeline } = renderer;
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+  gl.viewport(0, 0, blurPipeline.width, blurPipeline.height);
+  gl.useProgram(blurPipeline.program);
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.enableVertexAttribArray(blurPipeline.attribs.position);
+  gl.vertexAttribPointer(blurPipeline.attribs.position, 2, gl.FLOAT, false, 0, 0);
+
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, inputTexture);
+  gl.uniform1i(blurPipeline.uniforms.texture, 0);
+  gl.uniform2f(blurPipeline.uniforms.resolution, blurPipeline.width, blurPipeline.height);
+  gl.uniform2f(blurPipeline.uniforms.direction, directionX, directionY);
+  gl.uniform1f(blurPipeline.uniforms.radius, renderer.blur);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
 
 function createExportShaderRenderer(width, height) {
@@ -1292,6 +1376,9 @@ function createExportShaderRenderer(width, height) {
     1, 1,
   ]), gl.STATIC_DRAW);
 
+  const blurPipeline = blur > 0 ? createExportBlurPipeline(gl, sourceCanvas.width, sourceCanvas.height) : null;
+  if (blur > 0 && !blurPipeline) return null;
+
   return {
     type: "background",
     canvas,
@@ -1299,6 +1386,7 @@ function createExportShaderRenderer(width, height) {
     sourceCanvas,
     pad,
     blur,
+    blurPipeline,
     shaderOverrides: null,
     shader: createShaderRenderer(gl, sourceCanvas, program, buffer),
   };
@@ -1348,6 +1436,9 @@ async function createLogoExportShaderRenderer(width, height) {
     1, 1,
   ]), gl.STATIC_DRAW);
 
+  const blurPipeline = blur > 0 ? createExportBlurPipeline(gl, sourceCanvas.width, sourceCanvas.height) : null;
+  if (blur > 0 && !blurPipeline) return null;
+
   return {
     type: "logo",
     canvas,
@@ -1359,9 +1450,68 @@ async function createLogoExportShaderRenderer(width, height) {
     maskImage,
     pad,
     blur,
+    blurPipeline,
     shaderOverrides: getLogoShaderOverrides(),
     shader: createShaderRenderer(gl, sourceCanvas, program, buffer),
   };
+}
+
+function createExportBlurPipeline(gl, width, height) {
+  const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+  if (width > maxTextureSize || height > maxTextureSize) return null;
+
+  const program = createTextureProgram(gl, exportBlurFragmentSource);
+  if (!program) return null;
+
+  const sourceTexture = createExportTexture(gl, width, height);
+  const tempTexture = createExportTexture(gl, width, height);
+  if (!sourceTexture || !tempTexture) return null;
+
+  const sourceFramebuffer = gl.createFramebuffer();
+  gl.bindFramebuffer(gl.FRAMEBUFFER, sourceFramebuffer);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, sourceTexture, 0);
+  const sourceComplete = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+  if (!sourceComplete) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    return null;
+  }
+
+  const tempFramebuffer = gl.createFramebuffer();
+  gl.bindFramebuffer(gl.FRAMEBUFFER, tempFramebuffer);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tempTexture, 0);
+  const isComplete = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  if (!isComplete) return null;
+
+  return {
+    width,
+    height,
+    program,
+    sourceTexture,
+    sourceFramebuffer,
+    tempTexture,
+    tempFramebuffer,
+    attribs: {
+      position: gl.getAttribLocation(program, "a_position"),
+    },
+    uniforms: {
+      texture: gl.getUniformLocation(program, "u_texture"),
+      resolution: gl.getUniformLocation(program, "u_resolution"),
+      direction: gl.getUniformLocation(program, "u_direction"),
+      radius: gl.getUniformLocation(program, "u_radius"),
+    },
+  };
+}
+
+function createExportTexture(gl, width, height) {
+  const texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+  return texture;
 }
 
 function getLogoExportRect(width, height) {
@@ -1375,6 +1525,27 @@ function getLogoExportRect(width, height) {
   };
 }
 
+async function renderExportDiagnosticFrame(target = "background", elapsed = 0) {
+  const plan = getExportPlan(target);
+  const renderer = target === "logo"
+    ? await createLogoExportShaderRenderer(plan.width, plan.height)
+    : createExportShaderRenderer(plan.width, plan.height);
+  if (!renderer) throw new Error("Export diagnostic renderer is unavailable.");
+
+  try {
+    drawExportFrame(renderer, elapsed, plan);
+    return {
+      target,
+      blur: renderer.blur,
+      width: plan.width,
+      height: plan.height,
+      dataUrl: renderer.canvas.toDataURL("image/png"),
+    };
+  } finally {
+    cleanupExportShaderRenderer(renderer);
+  }
+}
+
 function loadImage(src) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -1386,8 +1557,18 @@ function loadImage(src) {
 
 function cleanupExportShaderRenderer(renderer) {
   const { gl, buffer, program } = renderer.shader;
+  cleanupExportBlurPipeline(gl, renderer.blurPipeline);
   gl.deleteBuffer(buffer);
   gl.deleteProgram(program);
+}
+
+function cleanupExportBlurPipeline(gl, pipeline) {
+  if (!pipeline) return;
+  gl.deleteTexture(pipeline.sourceTexture);
+  gl.deleteFramebuffer(pipeline.sourceFramebuffer);
+  gl.deleteTexture(pipeline.tempTexture);
+  gl.deleteFramebuffer(pipeline.tempFramebuffer);
+  gl.deleteProgram(pipeline.program);
 }
 
 function downloadBlob(blob, filename) {
@@ -1509,6 +1690,9 @@ resetButton.addEventListener("click", resetConfig);
 
 document.addEventListener("visibilitychange", syncShaderLoop);
 window.addEventListener("resize", () => drawShadersOnce());
+window.__ahaLivingGradientExportDebug = {
+  renderFrame: renderExportDiagnosticFrame,
+};
 
 initReducedMotion();
 renderPanel();
