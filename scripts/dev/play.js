@@ -51,6 +51,7 @@ const AUTHORED_VALUE_KEYS = [
   "logoShaderY",
   "logoShaderRotation",
   "logoExportScale",
+  "logoExportResolution",
 ];
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],

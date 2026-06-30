@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v36";
-const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v35"];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v36";
+const STORAGE_KEY = "aha-living-gradient-playground:v37";
+const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v36", "aha-living-gradient-playground:v35"];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v37";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -293,6 +293,7 @@ const authoredDefaultValues = {
   logoShaderY: 0,
   logoShaderRotation: -9,
   logoExportScale: 0.82,
+  logoExportResolution: 3,
 };
 
 const controlGroups = [
@@ -336,7 +337,7 @@ const controlGroups = [
     title: "Logo Mapping",
     icon: "logo",
     open: true,
-    keys: ["logoShaderScale", "logoShaderX", "logoShaderY", "logoShaderRotation", "logoExportScale"],
+    keys: ["logoShaderScale", "logoShaderX", "logoShaderY", "logoShaderRotation", "logoExportScale", "logoExportResolution"],
   },
   {
     id: "surfaces",
@@ -390,6 +391,7 @@ const controlDefinitions = {
   logoShaderY: { key: "logoShaderY", label: "Logo animation Y", type: "range", min: -1, max: 1, step: 0.01, default: authoredDefaultValues.logoShaderY },
   logoShaderRotation: { key: "logoShaderRotation", label: "Logo rotation offset", type: "range", min: -180, max: 180, step: 1, default: authoredDefaultValues.logoShaderRotation, unit: "deg" },
   logoExportScale: { key: "logoExportScale", label: "Logo export size", type: "range", min: 0.25, max: 0.95, step: 0.01, default: authoredDefaultValues.logoExportScale },
+  logoExportResolution: { key: "logoExportResolution", label: "Logo export resolution", type: "range", min: 1, max: 3, step: 1, default: authoredDefaultValues.logoExportResolution, unit: "x" },
   "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
   "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
   "surfaces.button": { key: "surfaces.button", label: "Button", type: "checkbox", default: true },
@@ -451,6 +453,7 @@ const formatters = {
   logoShaderY: (value) => `${Math.round(value * 100)}%`,
   logoShaderRotation: (value) => `${Math.round(value)}deg`,
   logoExportScale: (value) => `${Math.round(value * 100)}%`,
+  logoExportResolution: (value) => `${Math.round(value)}x`,
 };
 
 function createDefaultState() {
@@ -462,6 +465,7 @@ function createDefaultState() {
     logoShaderY: authoredDefaultValues.logoShaderY,
     logoShaderRotation: authoredDefaultValues.logoShaderRotation,
     logoExportScale: authoredDefaultValues.logoExportScale,
+    logoExportResolution: authoredDefaultValues.logoExportResolution,
     surfaces: {
       all: true,
       logo: true,
@@ -711,6 +715,7 @@ function updateDerivedVariables() {
   prototype.style.setProperty("--lg-logo-shader-y", `${Math.round(state.logoShaderY * 100)}%`);
   prototype.style.setProperty("--lg-logo-shader-rotation", `${Math.round(state.logoShaderRotation)}deg`);
   prototype.style.setProperty("--lg-logo-export-scale", state.logoExportScale.toFixed(2));
+  prototype.style.setProperty("--lg-logo-export-resolution", state.logoExportResolution.toFixed(0));
 }
 
 function applyFlags() {
@@ -1266,6 +1271,7 @@ function logoCustomProperties() {
     ["--lg-logo-shader-y", `${Math.round(state.logoShaderY * 100)}%`],
     ["--lg-logo-shader-rotation", `${Math.round(state.logoShaderRotation)}deg`],
     ["--lg-logo-export-scale", state.logoExportScale.toFixed(2)],
+    ["--lg-logo-export-resolution", `${Math.round(state.logoExportResolution)}x`],
   ];
 }
 
@@ -1320,8 +1326,9 @@ function getExportPlan(target = "background") {
   const loopCycles = Math.max(1, Math.ceil(minSeconds / Math.max(cycleSeconds, 0.1)));
   const seconds = clamp(cycleSeconds * loopCycles, minSeconds, EXPORT_MAX_SECONDS);
   const roundedSeconds = Number(seconds.toFixed(2));
-  const width = target === "logo" ? LOGO_EXPORT_WIDTH : EXPORT_WIDTH;
-  const height = target === "logo" ? LOGO_EXPORT_HEIGHT : EXPORT_HEIGHT;
+  const logoResolution = getLogoExportResolution();
+  const width = target === "logo" ? LOGO_EXPORT_WIDTH * logoResolution : EXPORT_WIDTH;
+  const height = target === "logo" ? LOGO_EXPORT_HEIGHT * logoResolution : EXPORT_HEIGHT;
   return {
     target,
     mode: "flame",
@@ -1338,8 +1345,13 @@ function getExportPlan(target = "background") {
     colorSpace: EXPORT_COLOR_SPACE,
     colorProfile: EXPORT_COLOR_PROFILE,
     mp4ColorMetadata: EXPORT_MP4_COLOR_METADATA,
+    logoExportResolution: target === "logo" ? logoResolution : 1,
     startTime: (performance.now() - shaderRuntime.origin) / 1000,
   };
+}
+
+function getLogoExportResolution() {
+  return Math.max(1, Math.min(3, Math.round(Number(state.logoExportResolution) || 1)));
 }
 
 function exportPlanLabel(target) {
@@ -1372,7 +1384,7 @@ async function exportCurrentGradientMp4(target = "background") {
   const chunks = [];
   const recorder = new MediaRecorder(stream, {
     mimeType: plan.mimeType,
-    videoBitsPerSecond: 10_000_000,
+    videoBitsPerSecond: target === "logo" ? 10_000_000 * plan.logoExportResolution : 10_000_000,
   });
 
   setExportButtonsDisabled(true);
@@ -1395,7 +1407,7 @@ async function exportCurrentGradientMp4(target = "background") {
     const recordedBlob = new Blob(chunks, { type: plan.mimeType });
     const blob = await tagMp4BlobWithSrgb(recordedBlob);
     const filename = target === "logo"
-      ? `aha-living-gradient-logo-${plan.seconds.toFixed(2)}s-loop.mp4`
+      ? `aha-living-gradient-logo-${plan.logoExportResolution}x-${plan.seconds.toFixed(2)}s-loop.mp4`
       : `aha-living-gradient-background-${plan.seconds.toFixed(2)}s-loop.mp4`;
     downloadBlob(blob, filename);
     copyStatus.textContent = `Exported ${filename} with sRGB MP4 colour metadata.`;
@@ -1601,7 +1613,23 @@ async function createLogoExportShaderRenderer(width, height) {
   if (!liveShader) throw new Error("Logo export could not access the live logo shader.");
   const maskImage = await loadImage(LOGO_EXPORT_MASK_URL);
   drawShaderItemAtTime(liveShader, surface, getShaderTime());
-  const blur = getComputedShaderBlur(surface);
+  const liveCrop = getLiveLogoCanvasCrop(surface, liveShader.canvas);
+  const exportRect = getSingleLogoExportRectForAspect(liveCrop.aspect, width, height);
+  const sourceScaleX = exportRect.width / Math.max(liveCrop.sw, 1);
+  const sourceScaleY = exportRect.height / Math.max(liveCrop.sh, 1);
+  const sourceWidth = Math.max(1, Math.round(liveShader.canvas.width * sourceScaleX));
+  const sourceHeight = Math.max(1, Math.round(liveShader.canvas.height * sourceScaleY));
+  const logoCrop = {
+    sx: Math.max(0, Math.round(liveCrop.sx * sourceScaleX)),
+    sy: Math.max(0, Math.round(liveCrop.sy * sourceScaleY)),
+    sw: Math.max(1, Math.round(exportRect.width)),
+    sh: Math.max(1, Math.round(exportRect.height)),
+  };
+  const blurScale = Math.max(
+    exportRect.width / Math.max(liveCrop.surfaceWidth, 1),
+    exportRect.height / Math.max(liveCrop.surfaceHeight, 1),
+  );
+  const blur = Math.max(0, Math.round(getComputedShaderBlur(surface) * blurScale));
 
   const canvas = document.createElement("canvas");
   canvas.width = width;
@@ -1610,8 +1638,8 @@ async function createLogoExportShaderRenderer(width, height) {
   if (!context) return null;
 
   const sourceCanvas = document.createElement("canvas");
-  sourceCanvas.width = liveShader.canvas.width;
-  sourceCanvas.height = liveShader.canvas.height;
+  sourceCanvas.width = sourceWidth;
+  sourceCanvas.height = sourceHeight;
   const gl = getWebGLContext(sourceCanvas, {
     alpha: false,
     antialias: false,
@@ -1653,6 +1681,9 @@ async function createLogoExportShaderRenderer(width, height) {
     maskImage,
     logoCanvas,
     logoContext,
+    logoAspect: liveCrop.aspect,
+    logoCrop,
+    exportRect,
     blur,
     blurPipeline,
     shaderOverrides: getLogoShaderOverrides(),
@@ -1724,7 +1755,7 @@ function drawLogoPreviewSource(renderer, shaderTime) {
 }
 
 function renderLogoPreviewCrop(renderer) {
-  const crop = getLiveLogoCanvasCrop(renderer.surface, renderer.liveShader.canvas);
+  const crop = renderer.logoCrop ?? getLiveLogoCanvasCrop(renderer.surface, renderer.liveShader.canvas);
   const sourceCanvas = renderer.sourceCanvas;
 
   resizeCanvas(renderer.logoCanvas, crop.sw, crop.sh);
@@ -1754,6 +1785,8 @@ function getLiveLogoCanvasCrop(surface, liveCanvas) {
     sh: Math.min(sh, liveCanvas.height - sy),
     scaleX,
     scaleY,
+    surfaceWidth: surfaceRect.width,
+    surfaceHeight: surfaceRect.height,
     aspect: surfaceRect.width > 0 && surfaceRect.height > 0
       ? surfaceRect.width / surfaceRect.height
       : LOGO_EXPORT_FALLBACK_ASPECT,
@@ -1761,15 +1794,19 @@ function getLiveLogoCanvasCrop(surface, liveCanvas) {
 }
 
 function getSingleLogoExportRect(renderer, width, height) {
-  const crop = getLiveLogoCanvasCrop(renderer.surface, renderer.liveShader.canvas);
+  if (renderer.exportRect) return renderer.exportRect;
+  return getSingleLogoExportRectForAspect(renderer.logoAspect ?? LOGO_EXPORT_FALLBACK_ASPECT, width, height);
+}
+
+function getSingleLogoExportRectForAspect(aspect, width, height) {
   const fill = clamp(state.logoExportScale, 0.25, 0.95);
   const maxWidth = width * fill;
   const maxHeight = height * fill;
   let rectWidth = maxWidth;
-  let rectHeight = rectWidth / crop.aspect;
+  let rectHeight = rectWidth / aspect;
   if (rectHeight > maxHeight) {
     rectHeight = maxHeight;
-    rectWidth = rectHeight * crop.aspect;
+    rectWidth = rectHeight * aspect;
   }
   return {
     width: Math.round(rectWidth),

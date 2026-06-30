@@ -100,6 +100,7 @@ input {
   --lg-logo-shader-y: 0%;
   --lg-logo-shader-rotation: -9deg;
   --lg-logo-export-scale: 0.82;
+  --lg-logo-export-resolution: 3;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
