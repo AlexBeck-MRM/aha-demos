@@ -1,4 +1,4 @@
-name: Validate GitHub Pages source
+name: Deploy GitHub Pages
 
 on:
   push:
@@ -8,19 +8,24 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: pages-source-validation
+  group: pages
   cancel-in-progress: true
 
 jobs:
-  validate:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate static Pages source
+      - name: Build static Pages artifact
         run: |
           set -euo pipefail
           rm -rf .pages-site
@@ -35,4 +40,15 @@ jobs:
           test -f .pages-site/index.html
           test -f .pages-site/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html
           test -f .pages-site/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html
-          echo "::notice::GitHub Pages is published from the main branch root. This workflow validates the same static source paths before Pages builds."
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .pages-site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
