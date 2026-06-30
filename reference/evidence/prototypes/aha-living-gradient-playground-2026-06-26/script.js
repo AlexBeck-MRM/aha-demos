@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v35";
-const LEGACY_STORAGE_KEYS = [];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v35";
+const STORAGE_KEY = "aha-living-gradient-playground:v36";
+const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v35"];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v36";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -75,6 +75,7 @@ const presets = [
       rise: 0.92,
       sway: 1.14,
       colorIntensity: 1.18,
+      shaderContrast: 1,
       shaderBlur: 24,
       deepColor: "#520208",
       redColor: "#e2001e",
@@ -112,6 +113,7 @@ const presets = [
       rise: 0.82,
       sway: 0.96,
       colorIntensity: 1.16,
+      shaderContrast: 0.96,
       shaderBlur: 24,
       deepColor: "#520208",
       redColor: "#e2001e",
@@ -149,6 +151,7 @@ const presets = [
       rise: 0.96,
       sway: 1.2,
       colorIntensity: 1.2,
+      shaderContrast: 1.12,
       shaderBlur: 22,
       deepColor: "#520208",
       redColor: "#e2001e",
@@ -186,6 +189,7 @@ const presets = [
       rise: 0.9,
       sway: 1.32,
       colorIntensity: 1.18,
+      shaderContrast: 1.04,
       shaderBlur: 26,
       deepColor: "#520208",
       redColor: "#e2001e",
@@ -279,6 +283,7 @@ const authoredDefaultValues = {
   rise: 0.92,
   sway: 1.14,
   colorIntensity: 1.18,
+  shaderContrast: 1,
   shaderBlur: 24,
   deepColor: "#520208",
   redColor: "#e2001e",
@@ -324,7 +329,7 @@ const controlGroups = [
     title: "Colour & Depth",
     icon: "swatch",
     open: true,
-    keys: ["deepColor", "redColor", "orangeColor", "deepPressure", "colorIntensity"],
+    keys: ["deepColor", "redColor", "orangeColor", "deepPressure", "colorIntensity", "shaderContrast"],
   },
   {
     id: "logo-mapping",
@@ -375,6 +380,7 @@ const controlDefinitions = {
   rise: { key: "rise", label: "Rising pull", type: "range", min: 0, max: 1.4, step: 0.01, default: authoredDefaultValues.rise },
   sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 4, step: 0.01, default: authoredDefaultValues.sway },
   colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: authoredDefaultValues.colorIntensity },
+  shaderContrast: { key: "shaderContrast", label: "Shader contrast", type: "range", min: 0.7, max: 1.8, step: 0.01, default: authoredDefaultValues.shaderContrast },
   shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: authoredDefaultValues.shaderBlur, unit: "px" },
   deepColor: { key: "deepColor", label: "Deep red", type: "color", default: authoredDefaultValues.deepColor },
   redColor: { key: "redColor", label: "Middle red", type: "color", default: authoredDefaultValues.redColor },
@@ -435,6 +441,7 @@ const formatters = {
   rise: (value) => value.toFixed(2),
   sway: (value) => value.toFixed(2),
   colorIntensity: (value) => value.toFixed(2),
+  shaderContrast: (value) => value.toFixed(2),
   shaderBlur: (value) => `${Math.round(value)}px`,
   deepColor: (value) => value,
   redColor: (value) => value,
@@ -697,6 +704,7 @@ function updateDerivedVariables() {
   prototype.style.setProperty("--lg-rise", state.rise.toFixed(2));
   prototype.style.setProperty("--lg-sway", state.sway.toFixed(2));
   prototype.style.setProperty("--lg-color-intensity", state.colorIntensity.toFixed(2));
+  prototype.style.setProperty("--lg-shader-contrast", state.shaderContrast.toFixed(2));
   prototype.style.setProperty("--lg-shader-blur", `${Math.round(state.shaderBlur)}px`);
   prototype.style.setProperty("--lg-logo-shader-scale", state.logoShaderScale.toFixed(2));
   prototype.style.setProperty("--lg-logo-shader-x", `${Math.round(state.logoShaderX * 100)}%`);
@@ -841,6 +849,7 @@ const shaderFragmentSource = `
   uniform float u_rise;
   uniform float u_sway;
   uniform float u_energy;
+  uniform float u_contrast;
   uniform vec3 u_deep_color;
   uniform vec3 u_red_color;
   uniform vec3 u_orange_color;
@@ -936,7 +945,8 @@ const shaderFragmentSource = `
     vec3 color = u_deep_color;
     color = mix(color, u_red_color, redPlume);
     color = mix(color, u_orange_color, orangePlume);
-    return mix(u_deep_color, color, clamp(0.78 + (intensity - 0.75) * 0.44, 0.78, 1.0));
+    color = mix(u_deep_color, color, clamp(0.78 + (intensity - 0.75) * 0.44, 0.78, 1.0));
+    return clamp(u_red_color + (color - u_red_color) * clamp(u_contrast, 0.7, 1.8), 0.0, 1.0);
   }
 
   void main() {
@@ -1086,6 +1096,7 @@ function createShaderRenderer(gl, canvas, program, buffer) {
       rise: gl.getUniformLocation(program, "u_rise"),
       sway: gl.getUniformLocation(program, "u_sway"),
       energy: gl.getUniformLocation(program, "u_energy"),
+      contrast: gl.getUniformLocation(program, "u_contrast"),
       deepColor: gl.getUniformLocation(program, "u_deep_color"),
       redColor: gl.getUniformLocation(program, "u_red_color"),
       orangeColor: gl.getUniformLocation(program, "u_orange_color"),
@@ -1133,6 +1144,7 @@ function getShaderParameters(overrides = null) {
     rise: state.rise,
     sway: state.sway,
     energy: state.colorIntensity,
+    contrast: state.shaderContrast,
     deepColor: hexToRgbUnit(state.deepColor),
     redColor: hexToRgbUnit(state.redColor),
     orangeColor: hexToRgbUnit(state.orangeColor),
@@ -1177,6 +1189,7 @@ function drawShaderRenderer(item, shaderTime, width = item.canvas.width, height 
   gl.uniform1f(item.uniforms.rise, params.rise);
   gl.uniform1f(item.uniforms.sway, params.sway);
   gl.uniform1f(item.uniforms.energy, params.energy);
+  gl.uniform1f(item.uniforms.contrast, params.contrast);
   gl.uniform3fv(item.uniforms.deepColor, params.deepColor);
   gl.uniform3fv(item.uniforms.redColor, params.redColor);
   gl.uniform3fv(item.uniforms.orangeColor, params.orangeColor);
@@ -1241,6 +1254,7 @@ function flameCustomProperties() {
     ["--lg-rise", state.rise.toFixed(2)],
     ["--lg-sway", state.sway.toFixed(2)],
     ["--lg-color-intensity", state.colorIntensity.toFixed(2)],
+    ["--lg-shader-contrast", state.shaderContrast.toFixed(2)],
     ["--lg-shader-blur", `${Math.round(state.shaderBlur)}px`],
   ];
 }

@@ -93,6 +93,7 @@ input {
   --lg-rise: 0.92;
   --lg-sway: 1.14;
   --lg-color-intensity: 1.18;
+  --lg-shader-contrast: 1;
   --lg-shader-blur: 24px;
   --lg-logo-shader-scale: 0.95;
   --lg-logo-shader-x: -2%;

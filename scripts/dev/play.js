@@ -38,6 +38,7 @@ const PRESET_VALUE_KEYS = [
   "rise",
   "sway",
   "colorIntensity",
+  "shaderContrast",
   "shaderBlur",
   "deepColor",
   "redColor",
