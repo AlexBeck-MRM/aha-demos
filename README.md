@@ -5,6 +5,11 @@ It is structured so Codex can act like a grounded design partner: source-aware, 
 
 ## Labs
 
+Public GitHub Pages:
+- [AHA demo index](https://alexbeck-mrm.github.io/aha-demos/)
+- [Living gradient lab](https://alexbeck-mrm.github.io/aha-demos/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/)
+- [Living UI cards and tabs lab](https://alexbeck-mrm.github.io/aha-demos/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/)
+
 Run `npm run play` from the repo root, then open these pages:
 
 | Lab | Link | What it tests |
