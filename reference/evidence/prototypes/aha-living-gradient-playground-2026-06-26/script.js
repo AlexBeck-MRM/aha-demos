@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v37";
-const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v36", "aha-living-gradient-playground:v35"];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v37";
+const STORAGE_KEY = "aha-living-gradient-playground:v38";
+const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v37", "aha-living-gradient-playground:v36", "aha-living-gradient-playground:v35"];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v38";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
