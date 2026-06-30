@@ -279,7 +279,7 @@ input {
 
 .figma-logo-stage .aha-logo-effect-large {
   left: 21%;
-  top: 32%;
+  top: 28.9%;
   width: 28%;
   aspect-ratio: 116 / 145;
   -webkit-mask-image: url("assets/aha-logo-mask-large.svg");
@@ -288,7 +288,7 @@ input {
 
 .figma-logo-stage .aha-logo-effect-small {
   left: 62%;
-  top: 43%;
+  top: 40.7%;
   width: 12%;
   aspect-ratio: 50 / 64;
   -webkit-mask-image: url("assets/aha-logo-mask-small.svg");

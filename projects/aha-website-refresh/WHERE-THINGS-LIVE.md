@@ -18,15 +18,31 @@
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/styles.css`
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/script.js`
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/high-blood-pressure-condition-guide-content.md`
-- AHA living gradient playground:
+- AHA living gradient lab:
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
   - `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/assets/`
   - mode API: `flame`; presets `A`, `B`, `C`, and `D` drive the same flame shader sliders
-  - preset cards and flame-specific parameter groups are generated from `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel only shows controls that affect the flame simulation, including expanded shape, texture, colour, and optional blur controls
-  - use Save Settings to persist the current panel state for reload, Copy CSS for reusable custom properties, Copy Config for the current parameter state, or Export MP4 for a seamless canvas-rendered loop when the browser supports MP4 MediaRecorder
-  - v25 schema/storage keeps the gradient artwork on an opaque middle-red base, with deep red and restored top/right orange flame light layered above it; flame rotation is adjustable, scale controls can reach `5x`, shader blur defaults to `0px` and can be raised up to `180px`; the flame shader uses the included no-dependency WebGL renderer and falls back to a static three-colour flame composition when WebGL or motion is unavailable
+  - preset cards and flame-specific parameter groups are generated from `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel only shows controls that affect the flame simulation, including simplified plume shape, texture, colour, logo mapping, and optional blur controls
+  - use Save Settings to persist the current panel state for reload, Copy CSS for reusable custom properties, Copy Config for the current parameter state, Export Background MP4 for a seamless 16:9 shader-matched loop, or Export Logo MP4 for the animated AHA logo mask on a white 16:9 canvas when the browser supports MP4 MediaRecorder
+  - v30 schema/storage keeps the gradient artwork on an opaque deep-red base, then builds a red plume around a smaller orange plume; legacy `v29`, `v28`, `v27`, and `v26` settings are migrated on read with logo mapping reset to the shared shader window and side sway scaled into the stronger range; flame rotation is adjustable, scale controls can reach `5x`, side sway reaches `4x` and drives both whole-plume drift and spine bend, logo mapping can still be adjusted independently when needed, shader blur defaults to `0px` and can be raised up to `180px` using an oversized blur plane; the flame shader uses the included no-dependency WebGL renderer and falls back to a static three-colour flame composition when WebGL or motion is unavailable
+- AHA living UI cards and tabs lab:
+  - `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`
+  - `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+  - `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+  - `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/assets/`
+  - uses Figma file key `3qEMU5hYtAJ3S7vWGijJhQ` and node `7140:440002` as the source reference for the corrected living-UI layout
+  - shows two medium image-card components above the seven-tab journey bar, matching the linked frame instead of using a perspective card field
+  - the Women’s Heart Health card is matched to Figma component node `7140:440045` with a fixed `320px x 471px` frame, `16px` radius, `20px` horizontal padding, `24px` vertical padding, `24px` content gap, `14px` title/body gap, and Body 2 outer/inner shadows
+  - the Women’s Heart Health image stack uses the Figma layers exactly: `#f5f5f4` fill, full-cover portrait image, a cropped landscape image at `left: -75.86%`, `width: 209.23%`, `height: 99.99%`, then the final full-cover image layer
+  - the card image treatment follows the Figma frame: a bottom-to-middle tone gradient with `7px` backdrop blur and a masked fade so the image reveals progressively toward the middle
+  - the card chevron uses the Figma SVG directly with viewBox 0 0 6.66667 11.6667, white 0.94 stroke opacity, 1.66667 stroke width, and round caps/joins inside the `20px` icon box
+  - default hover scales the body layer to 1.01, lifts it `6px`, moves content up `2px`, nudges the chevron forward, and opens the shadow to 1.1; pressed scales the body to 0.992, drops it `2px`, moves content down `1px`, subtly tucks the chevron back, and tightens the shadow to 0.7
+  - default copy translates but never scales; Anchored copy keeps text unscaled while moving it with the surface lift/drop, while diagnostic copy modes can follow `25%` of surface scale or the full surface scale to expose text-blur tradeoffs for a later React implementation
+  - the right panel groups controls by Presets, Surface, Copy, Depth, and Timing, with denser sliders and expanded ranges for scale, lift, tilt, text movement, shadow weight, media drift, chevron nudge, timing, and overshoot
+  - the four parameter presets are Quiet, Default, Anchored, and Expressive, plus Reset back to Default
+  - the default timing/easing contract is hover `510ms cubic-bezier(.18,.72,.18,1.14)`, press `80ms cubic-bezier(.3,0,.18,1)`, release `720ms cubic-bezier(.16,1,.24,1)`; reduced motion removes scale, lift, tilt, copy scale, media drift, chevron nudge, animated shadows, and transforms
 - High Blood Pressure detail page:
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/medicines-that-can-affect-blood-pressure.html`
 - Condition guide navigation boards:

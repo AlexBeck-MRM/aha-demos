@@ -3,6 +3,19 @@
 This repo is the working design brain for the American Heart Association website refresh.
 It is structured so Codex can act like a grounded design partner: source-aware, decision-aware, route-aware, and able to carry project memory forward instead of starting from scratch each session.
 
+## Labs
+
+Run `npm run play` from the repo root, then open these pages:
+
+| Lab | Link | What it tests |
+| --- | --- | --- |
+| Living gradient lab | [`reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`](reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html) | AHA red/orange flame-gradient behavior across logo, card, button, and background surfaces, with export and parameter controls. |
+| Living UI cards and tabs lab | [`reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`](reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html) | Card and tab states where four presets tune surface, copy anchoring, depth, timing, and subtle chevron response; default copy translates without scale, with diagnostic modes for text-blur tradeoffs. |
+
+Local preview URLs:
+- `http://127.0.0.1:4173/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/`
+- `http://127.0.0.1:4173/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/`
+
 ## Source priority
 
 Codex should retrieve in this order:

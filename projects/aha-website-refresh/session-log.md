@@ -2512,7 +2512,7 @@ decision_refs:
 
 ### Next
 - keep future button padding and gap changes inside `Components / buttons/*`
-- avoid reintroducing display-only type scale edits without checking the text scale matrix too
+- avoid adding back display-only type scale edits without checking the text scale matrix too
 
 ## 2026-06-22
 ### Task
@@ -4182,3 +4182,396 @@ decision_refs:
 - Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v25` with `flameRotation`, `flameScale`, `flameWidth`, and `flameHeight`
 - Playwright confirmed no horizontal overflow and zero console warnings/errors after setting rotation to `45deg` and scale/width/height to `5.00`
 - screenshot saved to `output/playwright/aha-living-gradient-playground/v25-rotation-scale/background-rotated-5x.png`
+
+## 2026-06-29
+### Task
+- make MP4 export match the live background shader and soften colour transitions
+
+### Change
+- bump saved settings and config schema to `v26`
+- soften the red-to-deep transition by broadening the shadow masks and lowering the hard deep-red peak
+- change live blur geometry so the shader canvas renders beyond the visible surface before being blurred and cropped
+- replace the old hand-drawn MP4 export approximation with the same WebGL flame shader used by the live preview
+- change MP4 export to a flat `1920 x 1080` 16:9 canvas with no rounded-corner framing
+- bake blur into MP4 export by rendering an oversized WebGL source and drawing it through a filtered 16:9 recording canvas
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v26`
+- Playwright confirmed MP4 export plan is `1920 x 1080`
+- Playwright confirmed a `40px` blur renders the live shader canvas larger than the visible background surface, avoiding cutout-edge blur loss
+- Playwright confirmed the MP4 export renderer uses a `1920 x 1080` recording canvas and a larger `2080 x 1240` shader source for `40px` blur
+- Playwright confirmed a real intercepted MP4 export completes as `aha-living-gradient-flame-8.00s-loop.mp4` with MIME type `video/mp4`
+- Playwright confirmed no horizontal overflow and zero console warnings/errors
+
+## 2026-06-29
+### Task
+- add animated logo MP4 export with logo-specific shader mapping
+
+### Change
+- bump saved settings and config schema to `v27`, while reading legacy `v26` saved settings before the user saves forward
+- add Logo Mapping controls for logo-only shader scale, X/Y offset, rotation offset, and export size
+- apply logo mapping only to `data-surface="logo"` previews and logo MP4 export renders
+- split MP4 actions into Export Background MP4 and Export Logo MP4
+- render logo MP4s by drawing the current flame shader through the large AHA logo mask on a white `1920 x 1080` canvas
+- keep oversized blur-plane behavior for both background and logo exports
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright confirmed legacy `aha-living-gradient-playground:v26` settings migrate into schema `aha-living-gradient-playground/v27` without writing `v27` before Save Settings
+- Playwright confirmed Logo Mapping changes alter the logo shader override values while leaving the background shader unchanged
+- Playwright confirmed Copy Config exports the new logo mapping fields
+- Playwright confirmed Export Background MP4 and Export Logo MP4 both produce MP4 blobs with browser-supported `video/mp4` MIME type
+- Playwright confirmed logo export uses a white `1920 x 1080` canvas, a centered large AHA logo mask, and an oversized shader source when blur is active
+- Playwright headed Chromium confirmed WebGL is active, five live shader canvases render, the new logo controls/button are present, no horizontal overflow exists, and no console warnings/errors appear
+- Playwright mobile Chromium confirmed the new export controls remain available with no horizontal overflow and no console warnings/errors
+
+## 2026-06-29
+### Task
+- simplify the flame plume model so dark red is the background, not a separate moving area
+
+### Change
+- bump saved settings and config schema to `v28`, while reading legacy `v27` and `v26` saved settings before the user saves forward
+- replace the multi-mask plume shader with a simpler nested model: opaque deep-red base, larger red plume, smaller orange plume
+- remove the separate dark-red shadow mask, inner tongue, crown, tip cap, and shadow-reach logic from the active shader model
+- remove unused tongue, spine, tip, and shadow controls from the authored `v28` state and active panel
+- update reduced-motion and no-canvas fallback styling to use a deep-red base with red and orange plumes
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/styles.css`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright headed Chromium confirmed Copy Config exports schema `aha-living-gradient-playground/v28`
+- Playwright confirmed the active controls no longer include the removed tongue, spine, tip, or shadow-reach controls
+- Playwright confirmed Copy CSS no longer exports the removed plume/shadow custom properties
+- Playwright sampled the background preview and found all three intended colour regions: deep-red base, red plume, and smaller orange plume
+- Playwright confirmed the background surface fallback colour is deep red `rgb(82, 2, 8)`
+- Playwright confirmed Export Background MP4 and Export Logo MP4 still produce browser-supported `video/mp4` blobs with the simplified shader
+- Playwright confirmed no horizontal overflow and zero console warnings/errors
+
+## 2026-06-29
+### Task
+- quick-fix the logo preview so it uses the same shader window as the broader surfaces by default
+
+### Change
+- bump saved settings and config schema to `v29`
+- default `logoShaderScale` to `1` instead of `0.5`
+- migrate legacy `v28`, `v27`, and `v26` saved settings while resetting only logo scale, logo X/Y, and logo rotation offsets to neutral
+- keep the global flame settings and existing logo export size during migration
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright seeded a legacy `v28` saved state with `logoShaderScale: 0.5`, `logoShaderX`, `logoShaderY`, and `logoShaderRotation` offsets, then confirmed `v29` loads logo mapping as neutral
+- Playwright confirmed global flame scale, flame X/Y, and logo export size survive the legacy migration
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v29`
+- Playwright confirmed no horizontal overflow and zero console warnings/errors
+
+## 2026-06-29
+### Task
+- make side sway much stronger and add more visible plume movement
+
+### Change
+- bump saved settings and config schema to `v30`
+- increase Side sway range from `0-1` to `0-4`
+- multiply authored preset side-sway defaults by four
+- migrate legacy saved side-sway values into the stronger range by multiplying by four and clamping to the new max
+- add a slow whole-plume horizontal drift driven by Side sway
+- strengthen the existing internal spine bend driven by Side sway
+
+### Files
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`
+- `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- Playwright seeded a legacy `v29` saved state with `sway: 0.34`, then confirmed `v30` loads it as `1.36`
+- Playwright confirmed Side sway max is `4` and authored default is `0.96`
+- Playwright confirmed Copy Config exports schema `aha-living-gradient-playground/v30`
+- Playwright confirmed Copy CSS exports the migrated stronger sway value
+- Playwright confirmed no horizontal overflow and zero console warnings/errors
+
+## 2026-06-29
+### Task
+- build spatial tabs and cards playground
+
+### Change
+- add a self-contained static prototype for testing tactile tabs and full-card targets in one live surface
+- use the linked Figma node `3qEMU5hYtAJ3S7vWGijJhQ / 7070:408023` as the state reference, with solid red selected tabs
+- add seven journey tabs and ten related cards across healthy living, conditions, caregiving, donation, volunteering, CPR, and personal-start examples
+- make hover lift surfaces and increase drop shadow, while pressed moves surfaces inward into the page and reduces drop shadow
+- separate each target into `.surface-body` and `.surface-content` layers so fill, edge, media, shadow, and transform can move without scaling or moving the text/icons
+- keep inner body shadows fixed as pseudo-elements so they do not change across hover, pressed, selected, route, or slider states
+- add right-panel sliders for shadow strength, lift, pressed depth, scale, timing, spread, tilt, and perspective
+- add Route A / Route B, Live / State board, and Reduced motion toggles
+- use the same gradient-playground header structure and right-side parameter panel pattern
+- register the prototype in the artifact index and human lookup map
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/assets/`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- `npm run play -- --no-open` confirmed the managed server is running at `http://127.0.0.1:4173`
+- Browser QA confirmed seven semantic tabs, ten cards in the live card field, and eleven adjustment sliders
+- Browser QA confirmed hover transforms only `.surface-body` to `scale(1.028)`, `translateY(-10px)`, and positive Z depth while `.surface-content` remains identity transform
+- Browser QA confirmed pressed transforms only `.surface-body` to `scale(0.982)`, `translateY(7px)`, and negative Z depth while `.surface-content` remains identity transform
+- Browser QA confirmed no content-nudge control remains and `.surface-content` computes to `transform: none` in default, hover, and pressed states
+- Browser QA confirmed the `::after` inner body shadow stays identical across default, hover, and pressed states
+- Playwright confirmed ArrowRight, Home, and End tab keyboard navigation update `aria-selected`
+- Browser QA confirmed selecting tabs reorders related cards onto the foreground plane
+- Browser QA confirmed hover-shadow, pressed-depth, and spatial-spread sliders update live CSS variables
+- Playwright confirmed Route A / Route B, Live / State board, and Reduced motion toggles work and expose `aria-pressed`
+- Browser QA confirmed image assets load, the image card uses local `card-build-healthier-habits.png`, panel contents fit, card titles fit, no console errors occur, and desktop/mobile layouts have no horizontal overflow
+- screenshots saved to `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/desktop.png` and `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/mobile.png`
+
+## 2026-06-29
+### Task
+- rebuild the cards and tabs playground from the corrected living-UI Figma frame
+
+### Change
+- replace the exaggerated spatial card field with the linked Figma node `3qEMU5hYtAJ3S7vWGijJhQ / 7140:440002`
+- keep the gradient-playground status header, then match the frame structure: two medium image-card components in the top white panel, seven journey tabs centered in the lower white panel, and a quiet three-block right panel
+- remove perspective, card tilt, Z-depth controls, foreground reordering, and the multi-card stage that did not match the design intent
+- use local Figma-exported image and icon assets while keeping card text as live HTML
+- define the subtle tactile contract in CSS: hover expands the visual surface by `2px` on each side, moves content up `1px`, and increases shadow; pressed tucks the visual surface inward by `1px`, moves content down `1px`, and removes the visible drop shadow
+- document the exact motion in the right panel: hover `180ms cubic-bezier(.2,.8,.2,1)`, press `90ms cubic-bezier(.3,0,.2,1)`, release `220ms cubic-bezier(.16,1,.3,1)`
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/assets/figma/`
+- `README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- `npm run play -- --no-open` confirmed the managed server is running at `http://127.0.0.1:4173`
+- Browser QA confirmed two cards, seven semantic tabs, three right-panel blocks, loaded local assets, no console errors, and no desktop/mobile horizontal overflow
+- Browser QA confirmed hover expands the surface from `320 x 471` to `324 x 475`, moves content to `translateY(-1px)`, and increases the drop shadow
+- Browser QA confirmed pressed tucks the surface to `318 x 469`, moves content to `translateY(1px)`, and reduces the visible drop shadow to a 1px hairline
+- Browser QA confirmed the inner shadow remains identical across live, hover, and pressed states
+- Browser QA confirmed keyboard tab navigation still works
+- screenshots saved to `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/rebuilt-desktop.png` and `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/rebuilt-mobile.png`
+
+## 2026-06-29
+
+### Task
+- refine the living-UI cards and tabs playground against the linked Figma frame with subtler defaults and adjustable effect controls
+
+### Change
+- rechecked Figma node `3qEMU5hYtAJ3S7vWGijJhQ / 7140:440002`
+- reduced the default hover behavior from the previous stronger surface expansion to `1px` on each side, with a `1px` content lift and a smaller shadow increase
+- kept the pressed behavior intentionally quiet: `1px` inward surface tuck, `1px` content drop, and a near-zero shadow
+- added right-panel sliders for hover expansion, hover text lift, hover shadow strength, pressed inset, pressed text drop, pressed shadow strength, hover timing, press timing, and release timing
+- refined card typography to the Figma values: `24px / 1.1` title, `14px / 1.4` medium body, `0.14px` tracking, and `14px` title/body gap
+- fixed the shell sizing so the right-panel controls do not stretch the Figma preview panels
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- `npm run play -- --no-open` confirmed the managed server is running at `http://127.0.0.1:4173`
+- Browser QA confirmed two cards, seven tabs, nine effect sliders, loaded assets, no console errors, and no desktop/mobile horizontal overflow
+- Browser QA confirmed hover expands the visual surface by `1px` on each side, moves content to `translateY(-1px)`, and leaves the inner shadow unchanged
+- Browser QA confirmed pressed tucks the visual surface inward by `1px`, moves content to `translateY(1px)`, and leaves the inner shadow unchanged
+- Browser QA confirmed the sliders update live CSS variables
+- screenshots saved to `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/refined-desktop.png` and `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/refined-mobile.png`
+
+## 2026-06-29
+
+### Task
+- refine the living-UI playground gradient, typography rendering, and spatial motion after rechecking the Figma board
+
+### Change
+- captured the linked Figma frame `3qEMU5hYtAJ3S7vWGijJhQ / 7140:440002` to `output/figma-living-ui-7140-440002.png`
+- changed the card media overlay to a Figma-style bottom-to-middle tone gradient with `7px` backdrop blur and a masked fade so the image reveals progressively instead of hitting a hard blur band
+- changed motion from inset expansion to a layered body transform: the body layer scales/lifts while carrying the edge, image, gradient, inner light, and shadow
+- kept the copy layer separate so text moves in whole pixels but is not scaled
+- changed default hover to body scale `1.018`, body lift `6px`, text lift `2px`, and a stronger weighted shadow
+- changed default pressed to body scale `0.992`, body drop `2px`, text drop `2px`, and a tightened near-surface shadow
+- lengthened the timing to hover `360ms`, press `140ms`, and release `460ms`, with a slight hover overshoot via `cubic-bezier(.18,.72,.18,1.14)`
+- set card and tab typography to geometric precision rendering with antialiasing, and fixed all tab bodies at `108px` height
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- Playwright confirmed hover scales the first card body from `320 x 471` to about `326 x 479`, lifts it, moves text to `0px -2px`, and increases the weighted shadow
+- Playwright confirmed pressed scales the first card body to about `317 x 467`, drops it, moves text to `0px 2px`, and tightens the shadow
+- Playwright confirmed the inner shadow stays constant across states
+- Playwright confirmed the card gradient uses the Figma tone ramp, `blur(7px)`, and a fade mask
+- Playwright confirmed all seven tabs are `108px` tall
+- Playwright confirmed no console errors and no desktop/mobile horizontal overflow
+- screenshots saved to `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/weighted-gradient-desktop.png` and `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/weighted-motion-mobile.png`
+
+## 2026-06-29
+
+### Task
+- implement design parity for the Women’s Heart Health card against Figma component node `7140:440045`
+
+### Change
+- refreshed live Figma context and screenshot for `3qEMU5hYtAJ3S7vWGijJhQ / 7140:440045`
+- changed the card renderer to support card-specific image layer schemas
+- rebuilt the Women’s Heart Health media stack with the Figma layers: `#f5f5f4` fill, full-cover portrait image, cropped landscape image at `left: -75.86%`, `width: 209.23%`, `height: 99.99%`, then the final full-cover image layer
+- fixed the card frame to `320px x 471px` with `16px` radius, Body 2 outer shadow, and constant Body 2 inner edge
+- kept the Figma content metrics: `20px` horizontal padding, `24px` vertical padding, `24px` copy/chevron row gap, and `14px` title/body gap
+- matched the title text to Figma punctuation: `Women’s Heart Health`
+- changed the chevron rendering to use the Figma SVG directly, without CSS filtering, at the small inner geometry inside the `20px` icon box
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- Playwright captured the rendered Women’s Heart Health card to `output/playwright/aha-spatial-tabs-cards-playground-2026-06-29/womens-card-parity.png`
+- Playwright confirmed card size `320 x 471`, radius `16px`, default Body 2 shadow restoration, and constant inner shadow across default, hover, and pressed states
+- Playwright confirmed gradient height `200px`, `blur(7px)`, and `#503926` tone ramp
+- Playwright confirmed title `24px / 26.4px / 700`, body `14px / 19.6px / 500`, body tracking `0.14px`, white title, and `rgba(255,255,255,0.8)` body colour
+- Playwright confirmed content padding, row gap, title/body gap, Figma crop dimensions, chevron image geometry, no console errors, and no desktop/mobile horizontal overflow
+- SVG inspection confirmed chevron `viewBox 0 0 6.66667 11.6667`, stroke opacity `0.94`, stroke width `1.66667`, and round caps/joins
+
+## 2026-06-29
+
+### Task
+- rework the living-interface lab control system so more parameters fit cleanly in the right panel
+
+### Change
+- replaced the flat slider list with grouped controls for Presets, Surface, Copy, Depth, and Timing
+- added Quiet, Default, Expressive, and Reset presets
+- reset the default baseline to the screenshot values: hover scale `1.01`, hover lift `6px`, hover text lift `2px`, hover shadow `1.1`, pressed scale `0.992`, pressed drop `2px`, pressed text drop `1px`, pressed shadow `0.7`, hover `510ms`, press `80ms`, and release `720ms`
+- expanded the parameter ranges for hover/pressed scale, lift, drop, half-pixel text movement, shadow weights, timing, hover tilt, media drift, chevron nudge, and overshoot
+- added Copy response modes: Stable, Follow 25%, and Full surface diagnostic; Stable keeps live copy unscaled by default
+- made the control panel denser with smaller rows, smaller range tracks, compact grouped headings, and internally scrolling effect controls
+- disabled text selection on cards, tabs, labels, copy, and state/preset buttons while keeping sliders usable
+- tightened the tab row toward the Figma master: `108px` tab height, `52px` icon row, `8px` top padding, `10px` sides, `15px` bottom padding, `8px` icon/label gap, and Make a contribution selected by default
+- made reduced motion strict by neutralizing scale, lift, tilt, copy scale, media drift, chevron nudge, animated shadows, and transforms
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- `npm run play -- --no-open` confirmed the managed server is running at `http://127.0.0.1:4173`
+- Playwright confirmed grouped controls render as Presets, Surface, Copy, Depth, and Timing
+- Playwright confirmed `2.5px` hover text lift and `1.5px` pressed text drop values update live
+- Playwright confirmed Stable copy transforms without scale, Follow 25% reaches `matrix(1.0025, 0, 0, 1.0025, 0, -2.5)`, and Full surface diagnostic reaches `matrix(1.01, 0, 0, 1.01, 0, -2.5)`
+- Playwright confirmed card and tab text selection computes to `user-select: none` while sliders remain draggable
+- Playwright confirmed Make a contribution is selected by default and the tab metrics match `108px` height, `8px 10px 15px` padding, `52px` icon row, and `8px` gap
+- Playwright confirmed reduced motion computes surface/content/media transforms to `none`, arrow translate to `0px`, and all movement variables to neutral values
+- Playwright confirmed no console warnings or errors and no desktop or mobile horizontal overflow
+
+## 2026-06-30
+
+### Task
+- refine the living-interface lab controls with lighter parameter typography, four presets, copy anchoring, and subtle card-arrow response
+
+### Change
+- reduced the weight of parameter labels, group status values, preset buttons, segmented copy-mode buttons, and motion-spec terms so the right panel no longer uses the thick display feel for controls
+- added a fourth parameter preset, Anchored, alongside Quiet, Default, and Expressive; Reset still restores Default
+- added an Anchored copy response mode that keeps live text unscaled but moves it with the surface lift/drop, plus the small text offset
+- kept Stable as the default copy mode so normal usage still protects text sharpness and avoids scale-driven shimmer
+- gave the card chevron its own hover and pressed response: hover nudges and scales it forward slightly, while pressed tucks it back/down subtly
+- kept the chevron response connected to the existing Chevron nudge control and neutralized it in reduced motion
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- `npm run play -- --no-open` started the managed server at `http://127.0.0.1:4173`
+- Playwright confirmed the preset buttons render as Quiet, Default, Anchored, Expressive, and Reset
+- Playwright confirmed the lighter control typography: group headers `700`, group status `600`, slider labels `600`, slider outputs `500`, and segmented buttons `600`
+- Playwright confirmed Anchored mode keeps copy unscaled while moving with the surface: hover copy transform `matrix(1, 0, 0, 1, 0, -6)` and pressed copy transform `matrix(1, 0, 0, 1, 0, 2.5)` for the Anchored preset
+- Playwright confirmed chevron response: hover transform `matrix(1.02625, 0, 0, 1.02625, 1.75, 0)` and pressed transform `matrix(0.9825, 0, 0, 0.9825, -0.6125, 0.4375)`
+- Playwright confirmed reduced motion neutralizes content and arrow transforms to `none`, with chevron variables reset to `0px`, `0px`, and `1`
+- Playwright confirmed no console warnings or errors and no desktop or mobile horizontal overflow

@@ -66,7 +66,7 @@ artifacts:
       - Intermediate preview images, Figma capture exports, redirect stubs, and unused icons were removed after the final page model was accepted.
 
   - id: aha-living-gradient-playground
-    title: AHA living gradient playground
+    title: AHA living gradient lab
     topic: gradient-motion
     type: html-prototype
     status: current
@@ -83,13 +83,40 @@ artifacts:
       - Logo preview uses local AHA logo SVG masks with `.living-gradient` fills and logo-specific field geometry so the motion effect remains visible inside the marks.
       - Tests one AHA-red flame shader across logo, button, card, and background surfaces.
       - Current mode API is `data-mode="flame"` with presets `A|B|C|D` controlling the same flame parameters.
-      - Preset cards and grouped controls are generated from `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel exposes only flame scale, position, shape, texture, colour, blur, surface, and motion/contrast controls.
-      - Saved settings currently use schema/storage `v25`; legacy CSS breath modes, Shader Flow, and old multi-effect plumbing were removed from the active contract.
-      - Live values persist in browser storage only through Save Settings and export through Copy CSS / Copy Config; Export MP4 renders a deterministic canvas loop for the currently selected mode when the browser supports MP4 MediaRecorder.
+      - Preset cards and grouped controls are generated from `reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js`; the panel exposes only flame scale, position, simplified plume shape, texture, colour, logo mapping, blur, surface, and motion/contrast controls.
+      - Saved settings currently use schema/storage `v30`, with legacy `v29`, `v28`, `v27`, and `v26` settings migrated on read; legacy CSS breath modes, Shader Flow, and old multi-effect plumbing were removed from the active contract.
+      - Live values persist in browser storage only through Save Settings and export through Copy CSS / Copy Config; Export Background MP4 renders a deterministic 16:9 shader-matched canvas loop and Export Logo MP4 renders the large AHA logo mask on a white 16:9 canvas when the browser supports MP4 MediaRecorder.
       - The right-panel Save Settings action is the explicit browser-storage write path; parameter edits live-apply immediately and reload only from the last saved settings.
-      - The v25 baseline keeps every living-gradient surface on an opaque middle-red base and mixes only middle red, deep red, and orange inside the animated artwork, with restored top/right orange flame light, flame rotation control, scale controls up to `5x`, and shader blur defaulting to `0px` with a maximum of `180px`.
+      - The v30 baseline keeps every living-gradient surface on an opaque deep-red base, then builds a red plume around a smaller orange plume using only middle red, deep red, and orange inside the animated artwork; flame rotation is adjustable, scale controls can reach `5x`, side sway ranges up to `4x` and drives both whole-plume drift and spine bend, logo mapping defaults to the same shader window as the broader surfaces, and shader blur defaults to `0px` with a maximum of `180px`.
       - The flame shader requires the included no-dependency WebGL renderer and falls back to a static three-colour flame composition when WebGL or motion is unavailable.
       - Header uses static local logo assets for Figma fidelity; the preview logos use clipped living-gradient fills for motion testing.
+
+  - id: aha-spatial-tabs-cards-playground
+    title: AHA living UI cards and tabs lab
+    topic: tabs-cards-interaction
+    type: html-prototype
+    status: current
+    cleanup_tag: current
+    recommended_action: keep in reference/evidence/prototypes as the current subtle living-UI card and tab state lab
+    primary_entry: reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html
+    supporting_files:
+      - reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css
+      - reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js
+      - reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/assets/
+    notes:
+      - Uses linked Figma node `3qEMU5hYtAJ3S7vWGijJhQ / 7140:440002` as the source reference for the corrected layout.
+      - Matches the living-UI frame structure: two medium image cards in the top preview panel, seven journey tabs centered in the lower preview panel, and a quiet three-block right panel.
+      - Women’s Heart Health card matches Figma component node `7140:440045` with fixed `320px x 471px` frame, `16px` radius, `20px` horizontal padding, `24px` vertical padding, `24px` content gap, `14px` title/body gap, and Body 2 outer/inner shadows.
+      - Women’s Heart Health image stack uses the Figma layers exactly: `#f5f5f4` fill, full-cover portrait image, cropped landscape image at `left: -75.86%`, `width: 209.23%`, `height: 99.99%`, then the final full-cover image layer.
+      - Card image treatment follows the Figma frame: bottom-to-middle tone gradient, `7px` backdrop blur, and a masked fade so the image reveals progressively toward the middle.
+      - Card chevron uses the Figma SVG directly with `viewBox 0 0 6.66667 11.6667`, white `0.94` stroke opacity, `1.66667` stroke width, and round caps/joins inside the `20px` icon box.
+      - Default hover scales the body layer to `1.01`, lifts it `6px`, moves content up `2px`, nudges the chevron forward, and opens the shadow to `1.1`.
+      - Default pressed scales the body layer to `0.992`, drops it `2px`, moves content down `1px`, subtly tucks the chevron back, and tightens the shadow to `0.7`.
+      - Default text is translated but never scaled; Anchored copy keeps text unscaled while moving it with the surface lift/drop, and diagnostic copy modes can follow `25%` of surface scale or the full surface scale to expose text-blur tradeoffs.
+      - The right panel groups controls by Presets, Surface, Copy, Depth, and Timing, with compact sliders and expanded ranges for scale, lift, tilt, text movement, shadow weight, media drift, chevron nudge, timing, and overshoot.
+      - Four parameter presets are available: Quiet, Default, Anchored, and Expressive, plus Reset back to Default.
+      - Default motion contract is documented in the right panel: hover `510ms cubic-bezier(.18,.72,.18,1.14)`, press `80ms cubic-bezier(.3,0,.18,1)`, release `720ms cubic-bezier(.16,1,.24,1)`.
+      - Reduced motion removes scale, lift, tilt, copy scale, media drift, chevron nudge, animated shadows, and transforms.
 
   - id: condition-guide-navigation-boards
     title: Condition guide navigation boards

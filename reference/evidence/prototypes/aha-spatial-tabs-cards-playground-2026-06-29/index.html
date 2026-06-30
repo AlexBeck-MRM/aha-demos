@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHA Living UI Cards And Tabs Lab</title>
+    <meta name="description" content="Internal prototype for testing subtle AHA card and tab hover and press behavior.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="prototype" data-demo-state="live">
+      <header class="status-bar" aria-label="Prototype status">
+        <div class="partners" aria-label="Project partners">
+          <img class="partner-logo logo-mrm" src="assets/logo-mrm.svg" alt="MRM">
+          <img class="partner-logo logo-aha-header" src="assets/logo-aha-header.png" alt="American Heart Association">
+        </div>
+
+        <div class="project-title">
+          <strong>Heart.org Redesign</strong>
+          <span>Demo Lab - Living UI</span>
+        </div>
+
+        <div class="project-meta">
+          <span>Last Updated: June 29, 2026</span>
+          <span>Status: Internal Preview</span>
+        </div>
+      </header>
+
+      <main class="workspace" id="main">
+        <section class="preview-area" aria-label="Living UI card and tab preview">
+          <article class="preview-panel cards-panel" aria-labelledby="cards-title">
+            <h1 id="cards-title" class="visually-hidden">Cards</h1>
+            <div class="card-row" data-card-row></div>
+          </article>
+
+          <article class="preview-panel tabs-panel" aria-labelledby="tabs-title">
+            <h2 id="tabs-title" class="visually-hidden">Journey tabs</h2>
+            <div class="tab-bar" role="tablist" aria-label="AHA journey tabs" data-tablist></div>
+          </article>
+        </section>
+
+        <aside class="motion-panel" aria-label="Living UI motion notes and controls">
+          <section class="motion-card">
+            <p class="panel-kicker">State preview</p>
+            <div class="state-controls" aria-label="Simulated state">
+              <button class="panel-button is-active" type="button" data-state="live" aria-pressed="true">Live</button>
+              <button class="panel-button" type="button" data-state="hover" aria-pressed="false">Hover</button>
+              <button class="panel-button" type="button" data-state="pressed" aria-pressed="false">Pressed</button>
+            </div>
+          </section>
+
+          <section class="motion-card">
+            <p class="panel-kicker">Effect controls</p>
+            <form class="effect-controls" data-control-root></form>
+          </section>
+
+          <section class="motion-card">
+            <p class="panel-kicker">Motion contract</p>
+            <dl class="motion-spec">
+              <div>
+                <dt>Hover</dt>
+                <dd data-spec-hover>Surface lifts and scales toward the viewer, content rises slightly, and the weighted shadow opens up.</dd>
+              </div>
+              <div>
+                <dt>Pressed</dt>
+                <dd data-spec-pressed>Surface compresses into the page, content drops slightly, and the shadow tightens under the body.</dd>
+              </div>
+              <div>
+                <dt>Timing</dt>
+                <dd data-spec-timing>Hover in 510ms, press in 80ms, release in 720ms.</dd>
+              </div>
+              <div>
+                <dt>Easing</dt>
+                <dd>Hover uses cubic-bezier(.18,.72,.18,1.14); press uses cubic-bezier(.3,0,.18,1); release uses cubic-bezier(.16,1,.24,1).</dd>
+              </div>
+            </dl>
+            <p class="panel-copy">Default preset. Default keeps live text unscaled; half-pixel text values are for feel exploration. Stable copy translates only and does not scale.</p>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
