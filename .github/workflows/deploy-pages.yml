@@ -28,10 +28,21 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Build static Pages artifact
+        run: |
+          set -euo pipefail
+          rm -rf .pages-site
+          mkdir -p .pages-site/reference/evidence .pages-site/reference .pages-site/experiments
+          cp README.md .pages-site/
+          cp -R reference/evidence/prototypes .pages-site/reference/evidence/
+          cp -R reference/assets .pages-site/reference/
+          cp -R experiments/visualisers .pages-site/experiments/
+          touch .pages-site/.nojekyll
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: .pages-site
 
       - name: Deploy
         id: deployment

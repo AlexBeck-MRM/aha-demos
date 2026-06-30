@@ -22,38 +22,42 @@
   --card-icon-size: 20px;
   --surface-radius-card: 16px;
   --surface-radius-tab: 10px;
-  --hover-surface-scale: 1.01;
-  --hover-surface-y: -6px;
+  --hover-surface-scale: 1.004;
+  --hover-surface-y: -2px;
   --hover-surface-tilt: 0deg;
-  --hover-content-y: -2px;
-  --hover-content-y-anchored: -8px;
-  --pressed-surface-scale: 0.992;
-  --pressed-surface-y: 2px;
-  --pressed-content-y: 1px;
-  --pressed-content-y-anchored: 3px;
-  --hover-copy-scale-follow: 1.0025;
-  --pressed-copy-scale-follow: 0.998;
+  --hover-content-y: -1px;
+  --hover-content-y-anchored: -3px;
+  --pressed-surface-scale: 0.997;
+  --pressed-surface-y: 1px;
+  --pressed-content-y: 0.5px;
+  --pressed-content-y-anchored: 1.5px;
+  --hover-copy-scale-follow: 1.001;
+  --pressed-copy-scale-follow: 0.99925;
   --media-hover-y: 0px;
-  --chevron-hover-x: 1.25px;
-  --chevron-hover-scale: 1.01875;
-  --chevron-pressed-x: -0.4375px;
-  --chevron-pressed-y: 0.3125px;
-  --chevron-pressed-scale: 0.9875;
+  --chevron-hover-x: 1.5px;
+  --chevron-hover-scale: 1.0105;
+  --chevron-pressed-x: -0.525px;
+  --chevron-pressed-y: 0.27px;
+  --chevron-pressed-scale: 0.991;
   --copy-scale: 1;
   --media-y: 0px;
   --chevron-x: 0px;
   --chevron-y: 0px;
   --chevron-scale: 1;
   --surface-tilt: 0deg;
-  --state-duration: 510ms;
-  --state-ease: cubic-bezier(.18, .72, .18, 1.14);
-  --press-duration: 80ms;
+  --state-duration: 420ms;
+  --state-ease: cubic-bezier(.18, .72, .18, 1.03);
+  --press-duration: 90ms;
   --press-ease: cubic-bezier(.3, 0, .18, 1);
-  --release-duration: 720ms;
+  --release-duration: 560ms;
   --release-ease: cubic-bezier(.16, 1, .24, 1);
+  --shadow-body-1: 0 3px 2px rgb(0 0 0 / 0.025), 0 1px 2px rgb(0 0 0 / 0.045), 0 0 1px rgb(0 0 0 / 0.08);
   --shadow-default: 0 8px 3px rgb(0 0 0 / 0.02), 0 4px 3px rgb(0 0 0 / 0.05), 0 0 1px rgb(0 0 0 / 0.1);
-  --shadow-hover: 0 24px 24px rgb(0 0 0 / 0.06), 0 10px 10px rgb(0 0 0 / 0.08), 0 1px 2px rgb(0 0 0 / 0.16);
-  --shadow-pressed: 0 3px 2px rgb(0 0 0 / 0.04), 0 0 1px rgb(0 0 0 / 0.11);
+  --shadow-hover: 0 15px 16px rgb(0 0 0 / 0.045), 0 7px 8px rgb(0 0 0 / 0.055), 0 1px 2px rgb(0 0 0 / 0.145);
+  --shadow-pressed: 0 2px 2px rgb(0 0 0 / 0.022), 0 0 1px rgb(0 0 0 / 0.098);
+  --shadow-tab-default: var(--shadow-body-1);
+  --shadow-tab-hover: 0 13px 15px rgb(0 0 0 / 0.05), 0 6px 7px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.14);
+  --shadow-tab-pressed: 0 1px 1px rgb(0 0 0 / 0.025), 0 0 1px rgb(0 0 0 / 0.09);
   --inner-shadow: inset 0 1px 1px rgb(255 255 255 / 0.5), inset 0 -1px 1px 1px rgb(0 0 0 / 0.25);
 }
 
@@ -787,6 +791,20 @@ button {
 
 .tab-surface {
   background: var(--white);
+  box-shadow: var(--shadow-tab-default);
+}
+
+.journey-tab:hover .tab-surface,
+.journey-tab.is-demo-hover .tab-surface,
+.prototype[data-demo-state="hover"] .journey-tab.demo-target .tab-surface {
+  box-shadow: var(--shadow-tab-hover);
+}
+
+.journey-tab:active .tab-surface,
+.journey-tab.is-pointer-pressed .tab-surface,
+.journey-tab.is-demo-pressed .tab-surface,
+.prototype[data-demo-state="pressed"] .journey-tab.demo-target .tab-surface {
+  box-shadow: var(--shadow-tab-pressed);
 }
 
 .tab-content {

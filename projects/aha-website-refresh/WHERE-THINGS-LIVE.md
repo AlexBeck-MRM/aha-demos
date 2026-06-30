@@ -38,11 +38,12 @@
   - the Women’s Heart Health image stack uses the Figma layers exactly: `#f5f5f4` fill, full-cover portrait image, a cropped landscape image at `left: -75.86%`, `width: 209.23%`, `height: 99.99%`, then the final full-cover image layer
   - the card image treatment follows the Figma frame: a bottom-to-middle tone gradient with `7px` backdrop blur and a masked fade so the image reveals progressively toward the middle
   - the card chevron uses the Figma SVG directly with viewBox 0 0 6.66667 11.6667, white 0.94 stroke opacity, 1.66667 stroke width, and round caps/joins inside the `20px` icon box
-  - default hover scales the body layer to 1.01, lifts it `6px`, moves content up `2px`, nudges the chevron forward, and opens the shadow to 1.1; pressed scales the body to 0.992, drops it `2px`, moves content down `1px`, subtly tucks the chevron back, and tightens the shadow to 0.7
+  - Quiet is the opening and reset baseline: hover scales the body layer to 1.004, lifts it `2px`, moves content up `1px`, nudges the chevron laterally by 1.5px, and opens the shadow gently; pressed scales the body to 0.997, drops it `1px`, and tightens the shadow
+  - tabs use a separate Body 1 resting shadow and a tab-specific hover shadow, so hover adds depth without inheriting the heavier card hover shadow
   - default copy translates but never scales; Anchored copy keeps text unscaled while moving it with the surface lift/drop, while diagnostic copy modes can follow `25%` of surface scale or the full surface scale to expose text-blur tradeoffs for a later React implementation
   - the right panel groups controls by Presets, Surface, Copy, Depth, and Timing, with denser sliders and expanded ranges for scale, lift, tilt, text movement, shadow weight, media drift, chevron nudge, timing, and overshoot
-  - the four parameter presets are Quiet, Default, Anchored, and Expressive, plus Reset back to Default
-  - the default timing/easing contract is hover `510ms cubic-bezier(.18,.72,.18,1.14)`, press `80ms cubic-bezier(.3,0,.18,1)`, release `720ms cubic-bezier(.16,1,.24,1)`; reduced motion removes scale, lift, tilt, copy scale, media drift, chevron nudge, animated shadows, and transforms
+  - the four parameter presets are Quiet, Default, Anchored, and Expressive, plus Reset back to Quiet
+  - the Quiet timing/easing contract is hover `420ms cubic-bezier(.18,.72,.18,1.03)`, press `90ms cubic-bezier(.3,0,.18,1)`, release `560ms cubic-bezier(.16,1,.24,1)`; reduced motion removes scale, lift, tilt, copy scale, media drift, chevron nudge, animated shadows, and transforms
 - High Blood Pressure detail page:
   - `reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07/medicines-that-can-affect-blood-pressure.html`
 - Condition guide navigation boards:

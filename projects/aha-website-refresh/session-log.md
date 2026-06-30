@@ -4575,3 +4575,37 @@ decision_refs:
 - Playwright confirmed chevron response: hover transform `matrix(1.02625, 0, 0, 1.02625, 1.75, 0)` and pressed transform `matrix(0.9825, 0, 0, 0.9825, -0.6125, 0.4375)`
 - Playwright confirmed reduced motion neutralizes content and arrow transforms to `none`, with chevron variables reset to `0px`, `0px`, and `1`
 - Playwright confirmed no console warnings or errors and no desktop or mobile horizontal overflow
+
+## 2026-06-30
+
+### Task
+- make Quiet the best/default living-interface motion baseline and refine tab/card depth realism
+
+### Change
+- made Quiet the opening state and Reset target instead of the stronger Default preset
+- softened the overall motion baseline: hover scale `1.004`, hover lift `2px`, text lift `1px`, pressed scale `0.997`, pressed drop `1px`, pressed text drop `0.5px`, hover `420ms`, press `90ms`, release `560ms`, and overshoot `0.08`
+- gave tabs their own Body 1 resting shadow and a separate tab hover shadow so they gain drop shadow on hover without using the heavier card shadow
+- retained the existing tab structure and selected-tab styling while making default/resting tab depth quieter
+- refined the card chevron response to read as a realistic lateral nudge: Quiet hover moves it `1.5px` sideways with a very small scale increase, and pressed tucks it back/down
+- softened the stronger Default preset so it remains available for comparison without overpowering the Quiet baseline
+
+### Files
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/styles.css`
+- `reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js`
+- `README.md`
+- `projects/aha-website-refresh/artifact-index.yaml`
+- `projects/aha-website-refresh/WHERE-THINGS-LIVE.md`
+- `projects/aha-website-refresh/session-log.md`
+
+### Validation
+- `node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js` passed
+- `npm run verify:brain` passed
+- `git diff --check` passed
+- `npm run play -- --no-open` confirmed the managed server is running at `http://127.0.0.1:4173`
+- Playwright confirmed the lab opens on Quiet and Reset returns to Quiet
+- Playwright confirmed the Quiet baseline variables: hover scale `1.004`, hover lift `-2px`, hover duration `420ms`, and release duration `560ms`
+- Playwright confirmed tabs rest on the Body 1 shadow and hover with the tab-specific deeper drop shadow
+- Playwright confirmed hover moves card copy to `matrix(1, 0, 0, 1, 0, -1)` and moves the chevron sideways to `matrix(1.0105, 0, 0, 1.0105, 1.5, 0)`
+- Playwright confirmed pressed state tightens the tab shadow, moves card copy to `matrix(1, 0, 0, 1, 0, 0.5)`, and tucks the chevron to `matrix(0.991, 0, 0, 0.991, -0.525, 0.27)`
+- Playwright confirmed reduced motion neutralizes content, arrow, and tab transforms to `none`
+- Playwright confirmed no console warnings or errors and no desktop or mobile horizontal overflow

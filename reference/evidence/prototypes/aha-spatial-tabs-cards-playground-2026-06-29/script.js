@@ -52,7 +52,7 @@ const presets = {
       hoverScale: 1.004,
       hoverLift: 2,
       hoverTilt: 0,
-      pressedScale: 0.996,
+      pressedScale: 0.997,
       pressedDrop: 1,
       copyResponse: "stable",
       hoverTextLift: 1,
@@ -60,32 +60,32 @@ const presets = {
       hoverShadow: 0.7,
       pressedShadow: 0.4,
       mediaDrift: 0,
-      chevronNudge: 0.5,
+      chevronNudge: 1.5,
       hoverMs: 420,
       pressMs: 90,
-      releaseMs: 620,
-      overshoot: 0.15,
+      releaseMs: 560,
+      overshoot: 0.08,
     },
   },
   default: {
     label: "Default",
     values: {
-      hoverScale: 1.01,
-      hoverLift: 6,
+      hoverScale: 1.008,
+      hoverLift: 4,
       hoverTilt: 0,
-      pressedScale: 0.992,
-      pressedDrop: 2,
+      pressedScale: 0.994,
+      pressedDrop: 1.5,
       copyResponse: "stable",
-      hoverTextLift: 2,
-      pressedTextDrop: 1,
-      hoverShadow: 1.1,
-      pressedShadow: 0.7,
+      hoverTextLift: 1.5,
+      pressedTextDrop: 0.5,
+      hoverShadow: 0.95,
+      pressedShadow: 0.55,
       mediaDrift: 0,
-      chevronNudge: 1.25,
-      hoverMs: 510,
+      chevronNudge: 2,
+      hoverMs: 480,
       pressMs: 80,
-      releaseMs: 720,
-      overshoot: 0.35,
+      releaseMs: 640,
+      overshoot: 0.18,
     },
   },
   anchored: {
@@ -102,7 +102,7 @@ const presets = {
       hoverShadow: 1.2,
       pressedShadow: 0.65,
       mediaDrift: 1,
-      chevronNudge: 1.75,
+      chevronNudge: 2.25,
       hoverMs: 540,
       pressMs: 90,
       releaseMs: 760,
@@ -188,7 +188,7 @@ const controlGroups = [
 ];
 
 const controls = controlGroups.flatMap((group) => group.controls.filter((control) => control.type !== "segmented"));
-const state = { ...presets.default.values };
+const state = { ...presets.quiet.values };
 
 function init() {
   renderCards();
@@ -334,7 +334,7 @@ function renderControl(control) {
 }
 
 function applyPreset(presetKey) {
-  const targetPreset = presetKey === "reset" ? presets.default : presets[presetKey];
+  const targetPreset = presetKey === "reset" ? presets.quiet : presets[presetKey];
   Object.assign(state, targetPreset.values);
 
   controls.forEach((control) => {
@@ -419,8 +419,8 @@ function applyControls() {
   const hoverCopyScaleFollow = 1 + ((state.hoverScale - 1) * 0.25);
   const pressedCopyScaleFollow = 1 + ((state.pressedScale - 1) * 0.25);
   const hoverEaseY2 = 1 + (state.overshoot * 0.4);
-  const chevronHoverScale = 1 + (state.chevronNudge * 0.015);
-  const chevronPressedScale = Math.max(0.94, 1 - (state.chevronNudge * 0.01));
+  const chevronHoverScale = 1 + (state.chevronNudge * 0.007);
+  const chevronPressedScale = Math.max(0.965, 1 - (state.chevronNudge * 0.006));
 
   prototype.dataset.copyResponse = state.copyResponse;
   prototype.style.setProperty("--hover-surface-scale", state.hoverScale);
@@ -438,7 +438,7 @@ function applyControls() {
   prototype.style.setProperty("--chevron-hover-x", `${state.chevronNudge}px`);
   prototype.style.setProperty("--chevron-hover-scale", chevronHoverScale);
   prototype.style.setProperty("--chevron-pressed-x", `${state.chevronNudge * -0.35}px`);
-  prototype.style.setProperty("--chevron-pressed-y", `${Math.min(1.2, state.chevronNudge * 0.25)}px`);
+  prototype.style.setProperty("--chevron-pressed-y", `${Math.min(0.9, state.chevronNudge * 0.18)}px`);
   prototype.style.setProperty("--chevron-pressed-scale", chevronPressedScale);
   prototype.style.setProperty("--state-duration", `${state.hoverMs}ms`);
   prototype.style.setProperty("--press-duration", `${state.pressMs}ms`);
@@ -474,7 +474,7 @@ function applyControls() {
   specHover.textContent = `Surface scales to ${formatValue(state.hoverScale, findControl("hoverScale"))}, lifts ${formatValue(state.hoverLift, findControl("hoverLift"))}, copy rises ${formatValue(state.hoverTextLift, findControl("hoverTextLift"))}, and shadow opens to ${formatValue(state.hoverShadow, findControl("hoverShadow"))}.`;
   specPressed.textContent = `Surface compresses to ${formatValue(state.pressedScale, findControl("pressedScale"))}, drops ${formatValue(state.pressedDrop, findControl("pressedDrop"))}, copy drops ${formatValue(state.pressedTextDrop, findControl("pressedTextDrop"))}, and shadow tightens to ${formatValue(state.pressedShadow, findControl("pressedShadow"))}.`;
   specTiming.textContent = `Hover in ${state.hoverMs}ms, press in ${state.pressMs}ms, release in ${state.releaseMs}ms.`;
-  panelCopy.textContent = `${getPresetLabel()} preset. Default keeps live text unscaled; half-pixel text values are for feel exploration. ${getCopyModeDescription()}`;
+  panelCopy.textContent = `${getPresetLabel()} preset. Stable keeps live text unscaled; half-pixel text values are for feel exploration. ${getCopyModeDescription()}`;
 }
 
 function buildHoverShadow(strength) {

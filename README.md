@@ -10,7 +10,7 @@ Run `npm run play` from the repo root, then open these pages:
 | Lab | Link | What it tests |
 | --- | --- | --- |
 | Living gradient lab | [`reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html`](reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html) | AHA red/orange flame-gradient behavior across logo, card, button, and background surfaces, with export and parameter controls. |
-| Living UI cards and tabs lab | [`reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`](reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html) | Card and tab states where four presets tune surface, copy anchoring, depth, timing, and subtle chevron response; default copy translates without scale, with diagnostic modes for text-blur tradeoffs. |
+| Living UI cards and tabs lab | [`reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html`](reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/index.html) | Card and tab states where Quiet is the opening/reset baseline, tabs rest on Body 1 shadow, hover adds depth, and card chevrons nudge laterally. |
 
 Local preview URLs:
 - `http://127.0.0.1:4173/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/`
