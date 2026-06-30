@@ -17,33 +17,43 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
 
       - name: Build static Pages artifact
         run: |
           set -euo pipefail
           rm -rf .pages-site
           mkdir -p .pages-site/reference/evidence .pages-site/reference .pages-site/experiments
+          cp index.html .pages-site/
           cp README.md .pages-site/
           cp -R reference/evidence/prototypes .pages-site/reference/evidence/
           cp -R reference/assets .pages-site/reference/
           cp -R experiments/visualisers .pages-site/experiments/
-          touch .pages-site/.nojekyll
+          cp .nojekyll .pages-site/.nojekyll
+          find .pages-site -type l -print -quit | (! read -r _)
+          test -f .pages-site/index.html
+          test -f .pages-site/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
           path: .pages-site
 
+      - name: Configure Pages
+        if: ${{ github.event.repository.visibility == 'public' }}
+        uses: actions/configure-pages@v5
+
       - name: Deploy
+        if: ${{ github.event.repository.visibility == 'public' }}
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Skip deploy for unsupported repository visibility
+        if: ${{ github.event.repository.visibility != 'public' }}
+        env:
+          REPOSITORY_VISIBILITY: ${{ github.event.repository.visibility }}
+        run: |
+          echo "::notice::Static demo artifact was built, but GitHub Pages deploy was skipped because this repository is ${REPOSITORY_VISIBILITY}. Make the repository public or enable a plan that supports Pages for private repositories to publish it."
