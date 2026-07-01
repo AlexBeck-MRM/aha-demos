@@ -228,7 +228,6 @@ input {
   height: calc(100% + (var(--lg-shader-blur) * 4));
   opacity: 0;
   pointer-events: none;
-  filter: blur(var(--lg-shader-blur));
   transform: translateZ(0);
 }
 
@@ -269,6 +268,8 @@ input {
 .figma-logo-stage {
   position: absolute;
   inset: 0;
+  --aha-logo-mask-large: url("assets/aha-logo-mask-large.svg");
+  --aha-logo-mask-small: url("assets/aha-logo-mask-small.svg");
 }
 
 .figma-logo-stage .aha-logo-effect {
@@ -287,8 +288,8 @@ input {
   top: 28.9%;
   width: 28%;
   aspect-ratio: 124 / 149;
-  -webkit-mask-image: url("assets/aha-logo-mask-large.svg");
-  mask-image: url("assets/aha-logo-mask-large.svg");
+  -webkit-mask-image: var(--aha-logo-mask-large);
+  mask-image: var(--aha-logo-mask-large);
 }
 
 .figma-logo-stage .aha-logo-effect-small {
@@ -296,8 +297,8 @@ input {
   top: 40.7%;
   width: 12%;
   aspect-ratio: 58 / 67;
-  -webkit-mask-image: url("assets/aha-logo-mask-small.svg");
-  mask-image: url("assets/aha-logo-mask-small.svg");
+  -webkit-mask-image: var(--aha-logo-mask-small);
+  mask-image: var(--aha-logo-mask-small);
 }
 
 .donate-button {

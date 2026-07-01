@@ -3,7 +3,9 @@
 const fs = require("node:fs");
 const http = require("node:http");
 const net = require("node:net");
+const os = require("node:os");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const { spawn, execFileSync } = require("node:child_process");
 
 const PORT = 4173;
@@ -12,6 +14,18 @@ const PID_FILE = path.join(process.cwd(), ".aha-server.pid");
 const LAB_PATH = "/reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/";
 const LAB_SCRIPT = path.join(process.cwd(), "reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/script.js");
 const CODEBASE_SAVE_ENDPOINT = "/__gradient-lab/save-settings";
+const HQ_MP4_ENDPOINTS = {
+  start: "/__gradient-lab/hq-mp4/start",
+  frame: "/__gradient-lab/hq-mp4/frame",
+  finish: "/__gradient-lab/hq-mp4/finish",
+  cancel: "/__gradient-lab/hq-mp4/cancel",
+  download: "/__gradient-lab/hq-mp4/download",
+};
+const FFMPEG_BIN = "/opt/homebrew/bin/ffmpeg";
+const HQ_MP4_ROOT = path.join(process.cwd(), ".artifacts", "tmp", "aha-living-gradient-hq-mp4");
+const HQ_MP4_FILENAME = "aha-living-gradient-background-hq.mp4";
+const HQ_MP4_MAX_FRAMES = 30 * 160;
+const HQ_MP4_MAX_FRAME_BYTES = 20 * 1024 * 1024;
 const PRESET_VALUE_KEYS = [
   "duration",
   "evolutionSpeed",
@@ -37,6 +51,7 @@ const PRESET_VALUE_KEYS = [
   "noiseScale",
   "rise",
   "sway",
+  "redExtraSway",
   "colorIntensity",
   "shaderContrast",
   "shaderBlur",
@@ -52,12 +67,14 @@ const AUTHORED_VALUE_KEYS = [
   "logoShaderRotation",
   "logoExportScale",
   "logoExportResolution",
+  "figmaExportGrade",
 ];
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],
   [".html", "text/html; charset=utf-8"],
   [".js", "text/javascript; charset=utf-8"],
   [".json", "application/json; charset=utf-8"],
+  [".mp4", "video/mp4"],
   [".png", "image/png"],
   [".svg", "image/svg+xml; charset=utf-8"],
   [".txt", "text/plain; charset=utf-8"],
@@ -146,6 +163,24 @@ function readRequestBody(request) {
   });
 }
 
+function readBinaryRequestBody(request, maxBytes = HQ_MP4_MAX_FRAME_BYTES) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let size = 0;
+    request.on("data", (chunk) => {
+      size += chunk.length;
+      if (size > maxBytes) {
+        reject(new Error("Request body is too large."));
+        request.destroy();
+        return;
+      }
+      chunks.push(chunk);
+    });
+    request.on("end", () => resolve(Buffer.concat(chunks, size)));
+    request.on("error", reject);
+  });
+}
+
 function sanitizeStateValues(state, keys) {
   const next = {};
   keys.forEach((key) => {
@@ -156,6 +191,10 @@ function sanitizeStateValues(state, keys) {
     }
     if (typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value)) {
       next[key] = value.toLowerCase();
+      return;
+    }
+    if (typeof value === "boolean") {
+      next[key] = value;
     }
   });
   return next;
@@ -241,6 +280,281 @@ async function saveGradientLabSettings(request, response) {
   }
 }
 
+function isSafeSessionId(sessionId) {
+  return typeof sessionId === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(sessionId);
+}
+
+function getHqMp4SessionDir(sessionId) {
+  if (!isSafeSessionId(sessionId)) {
+    throw new Error("Invalid HQ MP4 export session.");
+  }
+  return path.join(HQ_MP4_ROOT, sessionId);
+}
+
+function getHqMp4FramesDir(sessionId) {
+  return path.join(getHqMp4SessionDir(sessionId), "frames");
+}
+
+function getHqMp4ManifestPath(sessionId) {
+  return path.join(getHqMp4SessionDir(sessionId), "manifest.json");
+}
+
+function getHqMp4OutputPath(sessionId) {
+  return path.join(getHqMp4SessionDir(sessionId), HQ_MP4_FILENAME);
+}
+
+function readHqMp4Manifest(sessionId) {
+  const manifestPath = getHqMp4ManifestPath(sessionId);
+  if (!fs.existsSync(manifestPath)) {
+    throw new Error("HQ MP4 export session was not found.");
+  }
+  return JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+}
+
+function writeHqMp4Manifest(sessionId, manifest) {
+  fs.writeFileSync(getHqMp4ManifestPath(sessionId), `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
+function validateHqMp4Plan(candidate) {
+  const width = Number(candidate?.width);
+  const height = Number(candidate?.height);
+  const fps = Number(candidate?.fps);
+  const frames = Number(candidate?.frames);
+  const seconds = Number(candidate?.seconds);
+  if (width !== 2160 || height !== 1620) {
+    throw new Error("HQ MP4 export currently expects a 2160x1620 background frame.");
+  }
+  if (fps !== 30) {
+    throw new Error("HQ MP4 export currently expects 30fps frames.");
+  }
+  if (!Number.isInteger(frames) || frames <= 0 || frames > HQ_MP4_MAX_FRAMES) {
+    throw new Error(`HQ MP4 export frame count must be between 1 and ${HQ_MP4_MAX_FRAMES}.`);
+  }
+  if (!Number.isFinite(seconds) || seconds <= 0 || seconds > 160) {
+    throw new Error("HQ MP4 export duration must be between 0 and 160 seconds.");
+  }
+  return {
+    ...candidate,
+    width,
+    height,
+    fps,
+    frames,
+    seconds,
+  };
+}
+
+function hasPngSignature(buffer) {
+  return buffer.length > 8
+    && buffer[0] === 0x89
+    && buffer[1] === 0x50
+    && buffer[2] === 0x4e
+    && buffer[3] === 0x47
+    && buffer[4] === 0x0d
+    && buffer[5] === 0x0a
+    && buffer[6] === 0x1a
+    && buffer[7] === 0x0a;
+}
+
+function hqMp4FrameName(frame) {
+  return `frame-${String(frame).padStart(5, "0")}.png`;
+}
+
+async function startHqMp4Export(request, response) {
+  try {
+    const body = JSON.parse(await readRequestBody(request));
+    const plan = validateHqMp4Plan(body?.plan);
+    const sessionId = crypto.randomUUID();
+    const sessionDir = getHqMp4SessionDir(sessionId);
+    const framesDir = getHqMp4FramesDir(sessionId);
+    fs.mkdirSync(framesDir, { recursive: true });
+    const manifest = {
+      sessionId,
+      createdAt: new Date().toISOString(),
+      host: os.hostname(),
+      status: "receiving-frames",
+      plan,
+      state: body?.state ?? null,
+      config: body?.config ?? null,
+      expectedFrames: plan.frames,
+      receivedFrames: 0,
+      ffmpeg: {
+        binary: FFMPEG_BIN,
+        codec: "libx264",
+        preset: "slow",
+        crf: 14,
+        pixelFormat: "yuv420p",
+        colorPrimaries: "bt709",
+        colorTransfer: "bt709",
+        colorSpace: "bt709",
+        x264Params: "colorprim=bt709:transfer=bt709:colormatrix=bt709",
+      },
+    };
+    writeHqMp4Manifest(sessionId, manifest);
+    sendJson(response, 200, {
+      sessionId,
+      expectedFrames: plan.frames,
+      framePattern: path.join(framesDir, "frame-%05d.png"),
+      outputPath: getHqMp4OutputPath(sessionId),
+    });
+  } catch (error) {
+    sendJson(response, 400, { started: false, message: error.message });
+  }
+}
+
+async function uploadHqMp4Frame(request, response) {
+  try {
+    const parsedUrl = new URL(request.url, `http://${HOST}:${PORT}`);
+    const sessionId = parsedUrl.searchParams.get("sessionId");
+    const frame = Number(parsedUrl.searchParams.get("frame"));
+    const manifest = readHqMp4Manifest(sessionId);
+    if (!Number.isInteger(frame) || frame < 0 || frame >= manifest.expectedFrames) {
+      sendJson(response, 400, { saved: false, message: "Frame index is outside the expected export range." });
+      return;
+    }
+    const body = await readBinaryRequestBody(request);
+    if (!hasPngSignature(body)) {
+      sendJson(response, 400, { saved: false, message: "Uploaded frame is not a PNG." });
+      return;
+    }
+    const framePath = path.join(getHqMp4FramesDir(sessionId), hqMp4FrameName(frame));
+    fs.writeFileSync(framePath, body);
+    manifest.receivedFrames = Math.max(manifest.receivedFrames ?? 0, frame + 1);
+    manifest.lastFrameReceivedAt = new Date().toISOString();
+    writeHqMp4Manifest(sessionId, manifest);
+    sendJson(response, 200, { saved: true, frame, bytes: body.length });
+  } catch (error) {
+    sendJson(response, 500, { saved: false, message: error.message });
+  }
+}
+
+function missingHqMp4Frames(sessionId, expectedFrames) {
+  const framesDir = getHqMp4FramesDir(sessionId);
+  const missing = [];
+  for (let frame = 0; frame < expectedFrames; frame += 1) {
+    if (!fs.existsSync(path.join(framesDir, hqMp4FrameName(frame)))) {
+      missing.push(frame);
+      if (missing.length >= 10) break;
+    }
+  }
+  return missing;
+}
+
+function runFfmpeg(args, cwd) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(FFMPEG_BIN, args, { cwd, stdio: ["ignore", "ignore", "pipe"] });
+    let stderr = "";
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+      if (stderr.length > 80_000) stderr = stderr.slice(-80_000);
+    });
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve({ stderr });
+        return;
+      }
+      reject(new Error(`FFmpeg exited with code ${code}: ${stderr.slice(-4000)}`));
+    });
+  });
+}
+
+async function finishHqMp4Export(request, response) {
+  try {
+    const body = JSON.parse(await readRequestBody(request));
+    const sessionId = body?.sessionId;
+    const manifest = readHqMp4Manifest(sessionId);
+    if (!fs.existsSync(FFMPEG_BIN)) {
+      sendJson(response, 500, { encoded: false, message: `FFmpeg was not found at ${FFMPEG_BIN}.` });
+      return;
+    }
+    const missing = missingHqMp4Frames(sessionId, manifest.expectedFrames);
+    if (missing.length > 0) {
+      sendJson(response, 400, { encoded: false, message: `Missing frame(s): ${missing.join(", ")}.` });
+      return;
+    }
+
+    const framesDir = getHqMp4FramesDir(sessionId);
+    const outputPath = getHqMp4OutputPath(sessionId);
+    const ffmpegArgs = [
+      "-y",
+      "-framerate", String(manifest.plan.fps),
+      "-i", "frame-%05d.png",
+      "-c:v", "libx264",
+      "-preset", "slow",
+      "-crf", "14",
+      "-pix_fmt", "yuv420p",
+      "-x264-params", "colorprim=bt709:transfer=bt709:colormatrix=bt709",
+      "-color_primaries", "bt709",
+      "-color_trc", "bt709",
+      "-colorspace", "bt709",
+      "-movflags", "+faststart",
+      outputPath,
+    ];
+    manifest.status = "encoding";
+    manifest.ffmpeg.command = [FFMPEG_BIN, ...ffmpegArgs];
+    manifest.encodingStartedAt = new Date().toISOString();
+    writeHqMp4Manifest(sessionId, manifest);
+
+    await runFfmpeg(ffmpegArgs, framesDir);
+    const stat = fs.statSync(outputPath);
+    manifest.status = "encoded";
+    manifest.outputPath = outputPath;
+    manifest.outputBytes = stat.size;
+    manifest.encodedAt = new Date().toISOString();
+    writeHqMp4Manifest(sessionId, manifest);
+    sendJson(response, 200, {
+      encoded: true,
+      sessionId,
+      filename: HQ_MP4_FILENAME,
+      bytes: stat.size,
+      outputPath,
+      downloadUrl: `${HQ_MP4_ENDPOINTS.download}?sessionId=${encodeURIComponent(sessionId)}`,
+      ffmpegCommand: manifest.ffmpeg.command,
+    });
+  } catch (error) {
+    sendJson(response, 500, { encoded: false, message: error.message });
+  }
+}
+
+async function cancelHqMp4Export(request, response) {
+  try {
+    const body = JSON.parse(await readRequestBody(request));
+    const sessionId = body?.sessionId;
+    fs.rmSync(getHqMp4SessionDir(sessionId), { recursive: true, force: true });
+    sendJson(response, 200, { cancelled: true });
+  } catch (error) {
+    sendJson(response, 500, { cancelled: false, message: error.message });
+  }
+}
+
+function downloadHqMp4Export(request, response) {
+  try {
+    const parsedUrl = new URL(request.url, `http://${HOST}:${PORT}`);
+    const sessionId = parsedUrl.searchParams.get("sessionId");
+    const outputPath = getHqMp4OutputPath(sessionId);
+    if (!fs.existsSync(outputPath)) {
+      response.writeHead(404);
+      response.end("Encoded MP4 was not found.");
+      return;
+    }
+    const stat = fs.statSync(outputPath);
+    response.writeHead(200, {
+      "Content-Type": "video/mp4",
+      "Content-Length": stat.size,
+      "Content-Disposition": `attachment; filename="${HQ_MP4_FILENAME}"`,
+      "Cache-Control": "no-store",
+    });
+    if (request.method === "HEAD") {
+      response.end();
+      return;
+    }
+    fs.createReadStream(outputPath).pipe(response);
+  } catch (error) {
+    response.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+    response.end(error.message);
+  }
+}
+
 function serveStatic(request, response) {
   const parsedUrl = new URL(request.url, `http://${HOST}:${PORT}`);
   let pathname = decodeURIComponent(parsedUrl.pathname);
@@ -271,6 +585,26 @@ function runServer() {
   const server = http.createServer((request, response) => {
     if (request.method === "POST" && request.url?.startsWith(CODEBASE_SAVE_ENDPOINT)) {
       void saveGradientLabSettings(request, response);
+      return;
+    }
+    if (request.method === "POST" && request.url?.startsWith(HQ_MP4_ENDPOINTS.start)) {
+      void startHqMp4Export(request, response);
+      return;
+    }
+    if (request.method === "POST" && request.url?.startsWith(HQ_MP4_ENDPOINTS.frame)) {
+      void uploadHqMp4Frame(request, response);
+      return;
+    }
+    if (request.method === "POST" && request.url?.startsWith(HQ_MP4_ENDPOINTS.finish)) {
+      void finishHqMp4Export(request, response);
+      return;
+    }
+    if (request.method === "POST" && request.url?.startsWith(HQ_MP4_ENDPOINTS.cancel)) {
+      void cancelHqMp4Export(request, response);
+      return;
+    }
+    if ((request.method === "GET" || request.method === "HEAD") && request.url?.startsWith(HQ_MP4_ENDPOINTS.download)) {
+      downloadHqMp4Export(request, response);
       return;
     }
     if (request.method === "GET" || request.method === "HEAD") {

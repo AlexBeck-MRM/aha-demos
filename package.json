@@ -12,6 +12,8 @@
     "play": "node scripts/dev/play.js",
     "stop": "node scripts/dev/stop.js",
     "test": "npm run verify:brain",
+    "qa:aha-gradient-export": "node scripts/prototypes/qa_aha_living_gradient_export.mjs --prototype reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html --out .artifacts/reports/aha-living-gradient-export-qa.json",
+    "qa:aha-gradient-export:exhaustive": "node scripts/prototypes/qa_aha_living_gradient_export.mjs --prototype reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26/index.html --out .artifacts/reports/aha-living-gradient-export-qa-exhaustive.json --exhaustive",
     "ppt:extract:pilot": "node scripts/ppt/figma_extract_deck.mjs --file-key Mn0vZrL7nud32WjHcSVear --node-id 31:2757 --slides 31:4025,31:4018,31:4013,31:3994,31:3937,31:3933,31:3929,31:3925,31:3921,31:3902 --out .artifacts/build/figma",
     "ppt:normalize:pilot": "node scripts/ppt/normalize_figma_to_ppt_ir.mjs --input .artifacts/build/figma/deck.json --out .artifacts/build/presentation-spec.json",
     "ppt:build:pilot": "node scripts/ppt/generate_ppt_template.mjs --input .artifacts/build/presentation-spec.json --out .artifacts/dist/aha-master-template-pilot-01-10.pptx",
