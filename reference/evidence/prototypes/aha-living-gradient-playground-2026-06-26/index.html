@@ -6,7 +6,7 @@
     <title>AHA Living Gradient Lab</title>
     <meta name="description" content="Internal prototype for testing subtle red-led living gradient motion across logo, button, card, and background surfaces.">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="styles.css?v=46-ffmpeg-hq-export">
+    <link rel="stylesheet" href="styles.css?v=50-current-defaults">
   </head>
   <body>
     <div class="prototype" data-mode="flame" data-preset="A">
@@ -55,6 +55,20 @@
               <a href="#" class="card-button" aria-label="Donate today from the preview card">Donate today</a>
             </section>
           </article>
+
+          <article class="preview-panel preview-panel-minimap" aria-label="Shader minimap">
+            <div class="minimap-shell">
+              <div class="minimap-toolbar" aria-label="Minimap crop source">
+                <button class="minimap-toggle is-active" type="button" data-minimap-surface="logo" aria-pressed="true">Logo</button>
+                <button class="minimap-toggle" type="button" data-minimap-surface="background" aria-pressed="false">Background</button>
+                <button class="minimap-toggle" type="button" data-minimap-surface="card" aria-pressed="false">Card</button>
+                <button class="minimap-toggle" type="button" data-minimap-surface="button" aria-pressed="false">Button</button>
+              </div>
+              <div class="shader-minimap living-gradient" data-surface="minimap" data-mode="flame" aria-hidden="true">
+                <span class="minimap-crop-outline" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
         </section>
 
         <aside class="parameter-panel parameterizer-panel" aria-label="Gradient parameters">
@@ -86,6 +100,6 @@
       </main>
     </div>
 
-    <script src="script.js?v=46-ffmpeg-hq-export"></script>
+    <script src="script.js?v=50-current-defaults"></script>
   </body>
 </html>

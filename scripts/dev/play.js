@@ -55,6 +55,7 @@ const PRESET_VALUE_KEYS = [
   "colorIntensity",
   "shaderContrast",
   "shaderBlur",
+  "surfaceBlurBoost",
   "deepColor",
   "redColor",
   "orangeColor",
@@ -67,8 +68,11 @@ const AUTHORED_VALUE_KEYS = [
   "logoShaderRotation",
   "logoExportScale",
   "logoExportResolution",
+  "minimapSurface",
+  "minimapContextScale",
   "figmaExportGrade",
 ];
+const MINIMAP_SURFACES = new Set(["logo", "background", "card", "button"]);
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],
   [".html", "text/html; charset=utf-8"],
@@ -191,6 +195,10 @@ function sanitizeStateValues(state, keys) {
     }
     if (typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value)) {
       next[key] = value.toLowerCase();
+      return;
+    }
+    if (key === "minimapSurface" && MINIMAP_SURFACES.has(value)) {
+      next[key] = value;
       return;
     }
     if (typeof value === "boolean") {

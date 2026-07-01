@@ -1,6 +1,6 @@
-const STORAGE_KEY = "aha-living-gradient-playground:v41";
-const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v40", "aha-living-gradient-playground:v39", "aha-living-gradient-playground:v38", "aha-living-gradient-playground:v37", "aha-living-gradient-playground:v36", "aha-living-gradient-playground:v35"];
-const CONFIG_SCHEMA = "aha-living-gradient-playground/v41";
+const STORAGE_KEY = "aha-living-gradient-playground:v43";
+const LEGACY_STORAGE_KEYS = ["aha-living-gradient-playground:v42", "aha-living-gradient-playground:v41", "aha-living-gradient-playground:v40", "aha-living-gradient-playground:v39", "aha-living-gradient-playground:v38", "aha-living-gradient-playground:v37", "aha-living-gradient-playground:v36", "aha-living-gradient-playground:v35"];
+const CONFIG_SCHEMA = "aha-living-gradient-playground/v43";
 
 const prototype = document.querySelector(".prototype");
 const gradients = Array.from(document.querySelectorAll(".living-gradient"));
@@ -17,9 +17,11 @@ const exportLogoMp4Button = document.querySelector("[data-export-logo-mp4]");
 const resetButton = document.querySelector("[data-reset-config]");
 const copyStatus = document.querySelector("[data-copy-status]");
 const modeReadout = document.querySelector("[data-mode-readout]");
+const minimapButtons = Array.from(document.querySelectorAll("[data-minimap-surface]"));
 
 const EXPORT_WIDTH = 2160;
 const EXPORT_HEIGHT = 1620;
+const MAX_PREVIEW_CANVAS_SIZE = 1600;
 const LOGO_EXPORT_WIDTH = 1080;
 const LOGO_EXPORT_HEIGHT = 1080;
 const EXPORT_FPS = 30;
@@ -27,6 +29,7 @@ const BACKGROUND_EXPORT_BITRATE = 60_000_000;
 const LOGO_EXPORT_BASE_BITRATE = 10_000_000;
 const BACKGROUND_EXPORT_SELECTOR = ".background-surface";
 const LOGO_EXPORT_SELECTOR = ".aha-logo-effect-large";
+const MINIMAP_SELECTOR = ".shader-minimap";
 const LOGO_EXPORT_MASK_URL = "assets/aha-logo-mask-large.svg";
 const LOGO_EXPORT_FALLBACK_ASPECT = 124 / 149;
 const BACKGROUND_EXPORT_MIN_SECONDS = 8;
@@ -66,6 +69,7 @@ const EXPORT_COLOR_GRADE_DEFAULTS = {
   saturation: 1.03,
 };
 const REDUCED_MOTION_STATIC_PHASE = 0.34;
+const MINIMAP_SURFACES = ["logo", "background", "card", "button"];
 const MP4_MIME_TYPES = [
   "video/mp4;codecs=avc1.42E01E",
   "video/mp4;codecs=avc1",
@@ -81,33 +85,34 @@ const presets = [
     summary: "The approved flame balance with strong blur and a restrained warm plume.",
     values: {
       duration: 22,
-      evolutionSpeed: 1.93,
-      flameScale: 1.9,
-      flameRotation: -96,
-      flameX: 1.27,
-      flameY: 0.89,
-      flameWidth: 1.86,
-      flameHeight: 1.35,
-      flameStrength: 1.33,
-      redPlumeX: 0,
-      redPlumeY: 0,
-      taperPower: 1.53,
-      edgeSoftness: 0.68,
-      warmLight: 1.14,
-      warmSpread: 0.56,
-      orangePlumeX: 0,
-      orangePlumeY: 0,
-      orangePlumeHeight: 1,
-      orangePlumeSoftness: 1,
-      deepPressure: 1.22,
-      turbulence: 0.95,
-      noiseScale: 2.32,
-      rise: 0.92,
-      sway: 1.8,
-      redExtraSway: 0.65,
-      colorIntensity: 1.18,
-      shaderContrast: 1,
-      shaderBlur: 24,
+      evolutionSpeed: 1.68,
+      flameScale: 1.36,
+      flameRotation: -52,
+      flameX: 0.91,
+      flameY: 0.65,
+      flameWidth: 1.48,
+      flameHeight: 1.33,
+      flameStrength: 1.39,
+      redPlumeX: 0.04,
+      redPlumeY: -0.02,
+      taperPower: 1.62,
+      edgeSoftness: 0.62,
+      warmLight: 1.17,
+      warmSpread: 1.44,
+      orangePlumeX: 0.17,
+      orangePlumeY: -0.04,
+      orangePlumeHeight: 0.9,
+      orangePlumeSoftness: 1.98,
+      deepPressure: 1.34,
+      turbulence: 1,
+      noiseScale: 1.44,
+      rise: 1.4,
+      sway: 0.79,
+      redExtraSway: 2.39,
+      colorIntensity: 1.2,
+      shaderContrast: 1.12,
+      shaderBlur: 22,
+      surfaceBlurBoost: 126,
       deepColor: "#520208",
       redColor: "#e2001e",
       orangeColor: "#ffc139",
@@ -147,6 +152,7 @@ const presets = [
       colorIntensity: 1.16,
       shaderContrast: 0.96,
       shaderBlur: 24,
+      surfaceBlurBoost: 24,
       deepColor: "#520208",
       redColor: "#e2001e",
       orangeColor: "#ffc139",
@@ -186,6 +192,7 @@ const presets = [
       colorIntensity: 1.2,
       shaderContrast: 1.12,
       shaderBlur: 22,
+      surfaceBlurBoost: 24,
       deepColor: "#520208",
       redColor: "#e2001e",
       orangeColor: "#ffc139",
@@ -225,6 +232,7 @@ const presets = [
       colorIntensity: 1.18,
       shaderContrast: 1.04,
       shaderBlur: 26,
+      surfaceBlurBoost: 24,
       deepColor: "#520208",
       redColor: "#e2001e",
       orangeColor: "#ffc139",
@@ -293,33 +301,34 @@ function getWebGLContext(canvas, options = {}) {
 
 const authoredDefaultValues = {
   duration: 22,
-  evolutionSpeed: 1.93,
-  flameScale: 1.9,
-  flameRotation: -96,
-  flameX: 1.27,
-  flameY: 0.89,
-  flameWidth: 1.86,
-  flameHeight: 1.35,
-  flameStrength: 1.33,
-  redPlumeX: 0,
-  redPlumeY: 0,
-  taperPower: 1.53,
-  edgeSoftness: 0.68,
-  warmLight: 1.14,
-  warmSpread: 0.56,
-  orangePlumeX: 0,
-  orangePlumeY: 0,
-  orangePlumeHeight: 1,
-  orangePlumeSoftness: 1,
-  deepPressure: 1.22,
-  turbulence: 0.95,
-  noiseScale: 2.32,
-  rise: 0.92,
-  sway: 1.8,
-  redExtraSway: 0.65,
-  colorIntensity: 1.18,
-  shaderContrast: 1,
-  shaderBlur: 24,
+  evolutionSpeed: 1.68,
+  flameScale: 1.36,
+  flameRotation: -52,
+  flameX: 0.91,
+  flameY: 0.65,
+  flameWidth: 1.48,
+  flameHeight: 1.33,
+  flameStrength: 1.39,
+  redPlumeX: 0.04,
+  redPlumeY: -0.02,
+  taperPower: 1.62,
+  edgeSoftness: 0.62,
+  warmLight: 1.17,
+  warmSpread: 1.44,
+  orangePlumeX: 0.17,
+  orangePlumeY: -0.04,
+  orangePlumeHeight: 0.9,
+  orangePlumeSoftness: 1.98,
+  deepPressure: 1.34,
+  turbulence: 1,
+  noiseScale: 1.44,
+  rise: 1.4,
+  sway: 0.79,
+  redExtraSway: 2.39,
+  colorIntensity: 1.2,
+  shaderContrast: 1.12,
+  shaderBlur: 22,
+  surfaceBlurBoost: 126,
   deepColor: "#520208",
   redColor: "#e2001e",
   orangeColor: "#ffc139",
@@ -329,6 +338,8 @@ const authoredDefaultValues = {
   logoShaderRotation: -9,
   logoExportScale: 0.82,
   logoExportResolution: 3,
+  minimapSurface: "logo",
+  minimapContextScale: 3,
   figmaExportGrade: true,
 };
 
@@ -338,7 +349,7 @@ const controlGroups = [
     title: "Composition",
     icon: "target",
     open: true,
-    keys: ["flameScale", "flameRotation", "flameX", "flameY", "shaderBlur"],
+    keys: ["flameScale", "flameRotation", "flameX", "flameY", "shaderBlur", "surfaceBlurBoost"],
   },
   {
     id: "red-plume",
@@ -374,6 +385,13 @@ const controlGroups = [
     icon: "logo",
     open: true,
     keys: ["logoShaderScale", "logoShaderX", "logoShaderY", "logoShaderRotation", "logoExportScale", "logoExportResolution"],
+  },
+  {
+    id: "minimap",
+    title: "Shader Minimap",
+    icon: "map",
+    open: true,
+    keys: ["minimapContextScale"],
   },
   {
     id: "surfaces",
@@ -419,7 +437,8 @@ const controlDefinitions = {
   sway: { key: "sway", label: "Side sway", type: "range", min: 0, max: 4, step: 0.01, default: authoredDefaultValues.sway },
   colorIntensity: { key: "colorIntensity", label: "Colour intensity", type: "range", min: 0.75, max: 1.25, step: 0.01, default: authoredDefaultValues.colorIntensity },
   shaderContrast: { key: "shaderContrast", label: "Shader contrast", type: "range", min: 0.7, max: 1.8, step: 0.01, default: authoredDefaultValues.shaderContrast },
-  shaderBlur: { key: "shaderBlur", label: "Shader blur", type: "range", min: 0, max: 180, step: 1, default: authoredDefaultValues.shaderBlur, unit: "px" },
+  shaderBlur: { key: "shaderBlur", label: "Base blur", type: "range", min: 0, max: 180, step: 1, default: authoredDefaultValues.shaderBlur, unit: "px" },
+  surfaceBlurBoost: { key: "surfaceBlurBoost", label: "Non-heart blur boost", type: "range", min: 0, max: 240, step: 1, default: authoredDefaultValues.surfaceBlurBoost, unit: "px" },
   deepColor: { key: "deepColor", label: "Deep red", type: "color", default: authoredDefaultValues.deepColor },
   redColor: { key: "redColor", label: "Middle red", type: "color", default: authoredDefaultValues.redColor },
   orangeColor: { key: "orangeColor", label: "Orange light", type: "color", default: authoredDefaultValues.orangeColor },
@@ -430,6 +449,7 @@ const controlDefinitions = {
   logoShaderRotation: { key: "logoShaderRotation", label: "Logo rotation offset", type: "range", min: -180, max: 180, step: 1, default: authoredDefaultValues.logoShaderRotation, unit: "deg" },
   logoExportScale: { key: "logoExportScale", label: "Logo export size", type: "range", min: 0.25, max: 0.95, step: 0.01, default: authoredDefaultValues.logoExportScale },
   logoExportResolution: { key: "logoExportResolution", label: "Logo export resolution", type: "range", min: 1, max: 3, step: 1, default: authoredDefaultValues.logoExportResolution, unit: "x" },
+  minimapContextScale: { key: "minimapContextScale", label: "Minimap context", type: "range", min: 2, max: 3, step: 0.05, default: authoredDefaultValues.minimapContextScale, unit: "x" },
   "surfaces.all": { key: "surfaces.all", label: "All surfaces", type: "checkbox", default: true },
   "surfaces.logo": { key: "surfaces.logo", label: "Logo", type: "checkbox", default: true },
   "surfaces.button": { key: "surfaces.button", label: "Button", type: "checkbox", default: true },
@@ -484,6 +504,7 @@ const formatters = {
   colorIntensity: (value) => value.toFixed(2),
   shaderContrast: (value) => value.toFixed(2),
   shaderBlur: (value) => `${Math.round(value)}px`,
+  surfaceBlurBoost: (value) => `${Math.round(value)}px`,
   deepColor: (value) => value,
   redColor: (value) => value,
   orangeColor: (value) => value,
@@ -493,6 +514,7 @@ const formatters = {
   logoShaderRotation: (value) => `${Math.round(value)}deg`,
   logoExportScale: (value) => `${Math.round(value * 100)}%`,
   logoExportResolution: (value) => `${Math.round(value)}x`,
+  minimapContextScale: (value) => `${value.toFixed(2)}x`,
   figmaExportGrade: (value) => (value ? "On" : "Off"),
 };
 
@@ -506,6 +528,8 @@ function createDefaultState() {
     logoShaderRotation: authoredDefaultValues.logoShaderRotation,
     logoExportScale: authoredDefaultValues.logoExportScale,
     logoExportResolution: authoredDefaultValues.logoExportResolution,
+    minimapSurface: authoredDefaultValues.minimapSurface,
+    minimapContextScale: authoredDefaultValues.minimapContextScale,
     figmaExportGrade: authoredDefaultValues.figmaExportGrade,
     surfaces: {
       all: true,
@@ -540,6 +564,7 @@ function renderGroupIcon(icon) {
     wave: '<path d="M3 12c2.2-4 4.7-4 7 0s4.8 4 7 0c1.1-2 2.2-3 4-3"></path>',
     swatch: '<path d="M5 5h14v14H5z"></path><path d="M5 15h14"></path>',
     logo: '<path d="M12 5c4 0 7 3 7 7 0 5-7 8-7 8s-7-3-7-8c0-4 3-7 7-7Z"></path><path d="M12 8v8"></path>',
+    map: '<path d="M5 6h14v14H5z"></path><path d="M9 10h6v6H9z"></path><path d="M3 4l2 2M21 4l-2 2M3 22l2-2M21 22l-2-2"></path>',
     grid: '<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"></path>',
     pause: '<path d="M8 5v14M16 5v14"></path>',
   };
@@ -552,7 +577,7 @@ function renderExplanation() {
     <div class="effect-overview-title">What this is showing</div>
     <p>This demo is now one flame shader. A-D are close presets around the current flame direction, not separate effects.</p>
     <p>The shader starts with a deep-red field, builds one responsive red plume through the middle, then lets a smaller orange plume peek from the upper-right. No white or extra red is used inside the animated artwork.</p>
-    <p>The preview, PNG export, and MP4 export now use the same post-processed shader path. Logo Mapping remaps the flame inside the logo mask, and the logo PNG export uses transparent alpha.</p>
+    <p>The preview, PNG export, and MP4 export now use the same post-processed shader path. Logo Mapping remaps the flame inside the logo mask, while the minimap shows the wider shader field around the selected crop.</p>
   </section>`;
 }
 
@@ -621,7 +646,7 @@ function bindControls() {
       if (definition.type === "color") value = normalizeHexColor(value, definition.default);
 
       setStateValue(key, value);
-      if (!key.startsWith("surfaces.") && key !== "reducedMotion" && key !== "contrastSafe" && key !== "paused" && key !== "figmaExportGrade") {
+      if (!key.startsWith("surfaces.") && key !== "minimapContextScale" && key !== "reducedMotion" && key !== "contrastSafe" && key !== "paused" && key !== "figmaExportGrade") {
         state.preset = getMatchingPresetId() ?? "Custom";
       }
       if (key === "surfaces.all") syncSurfaceDisabledState();
@@ -705,12 +730,21 @@ function syncControlValues() {
   });
 
   syncSurfaceDisabledState();
+  syncMinimapControls();
   isRendering = false;
 }
 
 function syncSurfaceDisabledState() {
   controlsRoot.querySelectorAll('[data-control-key^="surfaces."]:not([data-control-key="surfaces.all"])').forEach((toggle) => {
     toggle.disabled = !state.surfaces.all;
+  });
+}
+
+function syncMinimapControls() {
+  minimapButtons.forEach((button) => {
+    const active = button.dataset.minimapSurface === state.minimapSurface;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
   });
 }
 
@@ -752,12 +786,16 @@ function updateDerivedVariables() {
   prototype.style.setProperty("--lg-color-intensity", state.colorIntensity.toFixed(2));
   prototype.style.setProperty("--lg-shader-contrast", state.shaderContrast.toFixed(2));
   prototype.style.setProperty("--lg-shader-blur", `${Math.round(state.shaderBlur)}px`);
+  prototype.style.setProperty("--lg-surface-blur-boost", `${Math.round(state.surfaceBlurBoost)}px`);
+  prototype.style.setProperty("--lg-minimap-context-scale", state.minimapContextScale.toFixed(2));
+  prototype.style.setProperty("--lg-minimap-crop-size", `${(100 / Math.max(state.minimapContextScale, 0.1)).toFixed(3)}%`);
   prototype.style.setProperty("--lg-logo-shader-scale", state.logoShaderScale.toFixed(2));
   prototype.style.setProperty("--lg-logo-shader-x", `${Math.round(state.logoShaderX * 100)}%`);
   prototype.style.setProperty("--lg-logo-shader-y", `${Math.round(state.logoShaderY * 100)}%`);
   prototype.style.setProperty("--lg-logo-shader-rotation", `${Math.round(state.logoShaderRotation)}deg`);
   prototype.style.setProperty("--lg-logo-export-scale", state.logoExportScale.toFixed(2));
   prototype.style.setProperty("--lg-logo-export-resolution", state.logoExportResolution.toFixed(0));
+  syncSurfaceBlurVariables();
 }
 
 function applyFlags() {
@@ -775,9 +813,22 @@ function applySurfaceToggles() {
   const globalEnabled = state.surfaces.all;
   gradients.forEach((surface) => {
     const surfaceName = surface.dataset.surface;
-    const enabled = Boolean(globalEnabled && state.surfaces[surfaceName]);
+    const enabled = surfaceName === "minimap" || Boolean(globalEnabled && state.surfaces[surfaceName]);
     surface.classList.toggle("is-surface-off", !enabled);
   });
+}
+
+function syncSurfaceBlurVariables() {
+  gradients.forEach((surface) => {
+    surface.style.setProperty("--lg-effective-shader-blur", `${getRawSurfaceShaderBlur(surface)}px`);
+  });
+}
+
+function getRawSurfaceShaderBlur(surface) {
+  const surfaceName = typeof surface === "string" ? surface : surface?.dataset?.surface;
+  const base = Math.max(0, Math.round(Number(state.shaderBlur) || 0));
+  const boost = surfaceName === "logo" ? 0 : Math.max(0, Math.round(Number(state.surfaceBlurBoost) || 0));
+  return base + boost;
 }
 
 function canUseWebGL() {
@@ -800,7 +851,7 @@ function updateShaderRuntime() {
 
   gradients.forEach((surface) => {
     const surfaceName = surface.dataset.surface;
-    const enabled = active && globalEnabled && state.surfaces[surfaceName];
+    const enabled = surfaceName === "minimap" ? active : active && globalEnabled && state.surfaces[surfaceName];
     surface.classList.toggle("has-shader", enabled);
     if (enabled) {
       ensureShaderSurface(surface);
@@ -1149,7 +1200,7 @@ function drawShaderItem(item, surface, now) {
 function drawShaderItemAtTime(item, surface, shaderTime) {
   const rect = item.canvas.getBoundingClientRect();
   const renderScale = 1;
-  const dpr = getPreviewRenderScale(surface);
+  const dpr = capPreviewRenderScale(rect, getPreviewRenderScale(surface));
   const width = Math.max(1, Math.round(rect.width * renderScale * dpr));
   const height = Math.max(1, Math.round(rect.height * renderScale * dpr));
   const blurMetadata = getSurfaceBlurMetadata(surface, width, height, dpr, "preview");
@@ -1186,16 +1237,22 @@ function getPreviewRenderScale(surface) {
   if (rect.width <= 0 || rect.height <= 0) return fallback;
 
   if (surface.matches(BACKGROUND_EXPORT_SELECTOR)) {
-    return Math.max(1, EXPORT_WIDTH / rect.width, EXPORT_HEIGHT / rect.height);
+    return capPreviewRenderScale(rect, Math.max(1, EXPORT_WIDTH / rect.width, EXPORT_HEIGHT / rect.height));
   }
 
   if (surface.matches(LOGO_EXPORT_SELECTOR)) {
     const logoResolution = getLogoExportResolution();
     const exportRect = getSingleLogoExportRectForAspect(getSurfaceAspect(surface, LOGO_EXPORT_FALLBACK_ASPECT), LOGO_EXPORT_WIDTH * logoResolution, LOGO_EXPORT_HEIGHT * logoResolution);
-    return Math.max(1, exportRect.width / rect.width, exportRect.height / rect.height);
+    return capPreviewRenderScale(rect, Math.max(1, exportRect.width / rect.width, exportRect.height / rect.height));
   }
 
-  return fallback;
+  return capPreviewRenderScale(rect, fallback);
+}
+
+function capPreviewRenderScale(rect, scale) {
+  const widthCap = MAX_PREVIEW_CANVAS_SIZE / Math.max(rect.width, 1);
+  const heightCap = MAX_PREVIEW_CANVAS_SIZE / Math.max(rect.height, 1);
+  return Math.max(1, Math.min(scale, widthCap, heightCap));
 }
 
 function getShaderTime(now = performance.now()) {
@@ -1256,7 +1313,9 @@ function createShaderRenderer(gl, canvas, program, buffer) {
 }
 
 function getSurfaceShaderOverrides(surface) {
-  return surface.dataset.surface === "logo" ? getLogoShaderOverrides() : null;
+  if (surface.dataset.surface === "logo") return getLogoShaderOverrides();
+  if (surface.dataset.surface === "minimap") return getMinimapShaderOverrides();
+  return null;
 }
 
 function getLogoShaderOverrides() {
@@ -1265,6 +1324,21 @@ function getLogoShaderOverrides() {
     flameX: state.flameX + state.logoShaderX,
     flameY: state.flameY + state.logoShaderY,
     rotation: state.flameRotation + state.logoShaderRotation,
+  };
+}
+
+function getMinimapShaderOverrides() {
+  const contextScale = Math.max(2, Math.min(3, Number(state.minimapContextScale) || 3));
+  const selectedSurface = MINIMAP_SURFACES.includes(state.minimapSurface) ? state.minimapSurface : "logo";
+  const base = selectedSurface === "logo" ? getLogoShaderOverrides() : {};
+  const baseScale = base.scale ?? state.flameScale;
+  const baseX = base.flameX ?? state.flameX;
+  const baseY = base.flameY ?? state.flameY;
+  return {
+    ...base,
+    scale: baseScale / contextScale,
+    flameX: 0.5 + ((baseX - 0.5) / contextScale),
+    flameY: 0.5 + ((baseY - 0.5) / contextScale),
   };
 }
 
@@ -1410,6 +1484,8 @@ function flameCustomProperties() {
     ["--lg-color-intensity", state.colorIntensity.toFixed(2)],
     ["--lg-shader-contrast", state.shaderContrast.toFixed(2)],
     ["--lg-shader-blur", `${Math.round(state.shaderBlur)}px`],
+    ["--lg-surface-blur-boost", `${Math.round(state.surfaceBlurBoost)}px`],
+    ["--lg-minimap-context-scale", state.minimapContextScale.toFixed(2)],
   ];
 }
 
@@ -1444,6 +1520,12 @@ function buildConfigExport() {
     backgroundHqMp4Export: getBackgroundHqMp4ExportPlan(),
     backgroundExportBlur: getBackgroundExportBlurMetadata(EXPORT_WIDTH, EXPORT_HEIGHT),
     logoExportBlur: getLogoExportBlurMetadata(LOGO_EXPORT_WIDTH * getLogoExportResolution(), LOGO_EXPORT_HEIGHT * getLogoExportResolution()),
+    minimap: {
+      surface: state.minimapSurface,
+      contextScale: state.minimapContextScale,
+      cropSizePercent: Number((100 / Math.max(state.minimapContextScale, 0.1)).toFixed(3)),
+      exportTarget: false,
+    },
     previewExportParity: getCurrentPreviewExportMetadata(),
     preset: state.preset,
     state,
@@ -2755,6 +2837,9 @@ function migrateLegacyState(candidate) {
     redColor: candidate?.redColor ?? authoredDefaultValues.redColor,
     orangeColor: candidate?.orangeColor ?? authoredDefaultValues.orangeColor,
     redExtraSway: candidate?.redExtraSway ?? authoredDefaultValues.redExtraSway,
+    surfaceBlurBoost: candidate?.surfaceBlurBoost ?? authoredDefaultValues.surfaceBlurBoost,
+    minimapSurface: MINIMAP_SURFACES.includes(candidate?.minimapSurface) ? candidate.minimapSurface : authoredDefaultValues.minimapSurface,
+    minimapContextScale: candidate?.minimapContextScale ?? authoredDefaultValues.minimapContextScale,
     surfaces: candidate?.surfaces,
     figmaExportGrade: candidate?.figmaExportGrade ?? authoredDefaultValues.figmaExportGrade,
     reducedMotion: candidate?.reducedMotion,
@@ -2839,6 +2924,8 @@ function normalizeState(candidate) {
     }
   });
 
+  next.minimapSurface = MINIMAP_SURFACES.includes(candidate?.minimapSurface) ? candidate.minimapSurface : next.minimapSurface;
+
   return next;
 }
 
@@ -2873,13 +2960,14 @@ function clamp(value, min, max) {
 }
 
 function getComputedShaderBlur(surface) {
-  const raw = getComputedStyle(surface).getPropertyValue("--lg-shader-blur").trim();
+  const raw = getComputedStyle(surface).getPropertyValue("--lg-effective-shader-blur").trim()
+    || getComputedStyle(surface).getPropertyValue("--lg-shader-blur").trim();
   const value = Number.parseFloat(raw);
-  return Number.isFinite(value) ? Math.max(0, Math.round(value)) : Math.max(0, Math.round(state.shaderBlur));
+  return Number.isFinite(value) ? Math.max(0, Math.round(value)) : getRawSurfaceShaderBlur(surface);
 }
 
 function getSurfaceBlurMetadata(surface, targetWidth, targetHeight, pixelScale = null, source = "export") {
-  const fallbackBlur = Math.max(0, Math.round(state.shaderBlur));
+  const fallbackBlur = getRawSurfaceShaderBlur(surface);
   if (!surface) {
     return {
       source: "fallback",
@@ -2981,6 +3069,15 @@ if (exportHqMp4Button) exportHqMp4Button.addEventListener("click", exportCurrent
 exportMp4Button.addEventListener("click", () => exportCurrentGradientMp4("background"));
 if (exportLogoMp4Button) exportLogoMp4Button.addEventListener("click", () => exportCurrentGradientMp4("logo"));
 resetButton.addEventListener("click", resetConfig);
+minimapButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const surface = button.dataset.minimapSurface;
+    if (!MINIMAP_SURFACES.includes(surface)) return;
+    state.minimapSurface = surface;
+    markStateDirty();
+    render();
+  });
+});
 
 document.addEventListener("visibilitychange", syncShaderLoop);
 window.addEventListener("resize", () => drawShadersOnce());
