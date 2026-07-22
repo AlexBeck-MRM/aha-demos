@@ -1,0 +1,47 @@
+[
+  {
+    "id": "body1",
+    "title": "Body 1 — controls",
+    "open": true,
+    "controls": [
+      { "type": "range", "key": "lightOffsetY", "label": "Light position", "min": 0, "max": 3, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "lightBlur", "label": "Light softness", "min": 0, "max": 5, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "lightSpread", "label": "Light reach", "min": 0, "max": 1.5, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "lightOpacity", "label": "Light strength", "min": 0, "max": 1, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 },
+      { "type": "range", "key": "shadowDepth", "label": "Shadow position", "min": 0, "max": 3, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "shadowBlur", "label": "Shadow softness", "min": 0, "max": 5, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "shadowSpread", "label": "Shadow reach", "min": 0, "max": 1.5, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "shadowOpacity", "label": "Shadow strength", "min": 0, "max": 0.5, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 }
+    ]
+  },
+  {
+    "id": "body2",
+    "title": "Body 2 — cards",
+    "open": false,
+    "controls": [
+      { "type": "range", "key": "lightOffsetY", "label": "Light position", "min": 0, "max": 3, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "lightBlur", "label": "Light softness", "min": 0, "max": 5, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "lightSpread", "label": "Light reach", "min": 0, "max": 1.5, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "lightOpacity", "label": "Light strength", "min": 0, "max": 1, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 },
+      { "type": "range", "key": "shadowDepth", "label": "Shadow position", "min": 0, "max": 3, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "shadowBlur", "label": "Shadow softness", "min": 0, "max": 5, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "shadowSpread", "label": "Shadow reach", "min": 0, "max": 1.5, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "shadowOpacity", "label": "Shadow strength", "min": 0, "max": 0.5, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 }
+    ]
+  },
+  {
+    "id": "body3",
+    "title": "Body 3 — overlays",
+    "open": false,
+    "controls": [
+      { "type": "range", "key": "lightOffsetY", "label": "Light position", "min": 0, "max": 3, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "lightBlur", "label": "Light softness", "min": 0, "max": 5, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "lightSpread", "label": "Light reach", "min": 0, "max": 1.5, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "lightOpacity", "label": "Light strength", "min": 0, "max": 1, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 },
+      { "type": "range", "key": "shadowDepth", "label": "Shadow position", "min": 0, "max": 3, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "shadowBlur", "label": "Shadow softness", "min": 0, "max": 5, "step": 0.1, "unit": "px", "precision": 1 },
+      { "type": "range", "key": "shadowSpread", "label": "Shadow reach", "min": 0, "max": 1.5, "step": 0.05, "unit": "px", "precision": 2 },
+      { "type": "range", "key": "shadowOpacity", "label": "Shadow strength", "min": 0, "max": 0.5, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 }
+    ]
+  }
+]

@@ -1,0 +1,444 @@
+@import url("../../../../assets/playground-system/parameterizer.css");
+@import url("../../../../assets/playground-system/playground-header.css");
+
+@font-face {
+  font-family: "Lub Dub";
+  src: url("../../aha-soft-skeuomorphic-hover-system-2026-07-06/src/assets/fonts/LubDubMedium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lub Dub Display";
+  src: url("../../aha-soft-skeuomorphic-hover-system-2026-07-06/src/assets/fonts/LubDubBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lub Dub";
+  src: url("../../aha-soft-skeuomorphic-hover-system-2026-07-06/src/assets/fonts/LubDubBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --aha-white: #fff;
+  --aha-page: #f5f5f4;
+  --aha-page-alt: #fafaf9;
+  --aha-ink: #1d1b16;
+  --aha-ink-secondary: #3e3b37;
+  --aha-ink-muted: #5b5a57;
+  --aha-border: #dddcda;
+  --aha-red: #cf222b;
+  --aha-red-pressed: #b11a24;
+  --aha-deep-red: #8f0717;
+  --aha-orange: #ffc139;
+  --aha-control: #f5f5f4;
+  --aha-control-pressed: #e8e7e4;
+  --surface-3:
+    0 0 0 1px rgb(29 27 22 / 0.1),
+    0 18px 48px -24px rgb(10 13 18 / 0.32),
+    inset 0 1px 1px rgb(255 255 255 / 0.8);
+  --body-3: var(--surface-3);
+  color: var(--aha-ink);
+  background: var(--aha-page);
+  font-family: "Lub Dub", ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--aha-page);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--aha-page);
+  color: var(--aha-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+.prototype {
+  min-height: 100vh;
+}
+
+.status-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--playground-header-height);
+  background: var(--aha-page);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--parameterizer-docked-width);
+  align-items: start;
+  background: var(--aha-page);
+}
+
+.story-canvas {
+  min-width: 0;
+  overflow: clip;
+}
+
+.living-gradient-source {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 256px;
+  height: 256px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.living-shader-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 34% 42% at 82% 34%, var(--aha-orange), transparent 74%),
+    radial-gradient(ellipse 72% 88% at 70% 58%, var(--aha-red), transparent 76%),
+    var(--aha-deep-red);
+}
+
+.living-gradient-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 480ms cubic-bezier(.22, .72, .16, 1);
+}
+
+.living-gradient-canvas[data-gradient-active="true"][data-gradient-ready="true"] {
+  opacity: 1;
+}
+
+.workspace > .parameterizer-panel {
+  position: sticky;
+  top: var(--playground-header-height);
+  height: calc(100vh - var(--playground-header-height));
+  max-height: calc(100vh - var(--playground-header-height));
+}
+
+.hero-lockup {
+  --hero-cluster-entry: clamp(0, var(--ss-entry), 1);
+  --hero-cluster-exit: clamp(0, var(--ss-exit), 1);
+  width: min(780px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: clamp(18px, 3vh, 32px);
+  text-align: center;
+  transform: translate3d(
+    0,
+    calc(
+      var(--ss-title-parallax-y)
+      + (1 - var(--hero-cluster-entry)) * var(--ss-title-travel)
+      - var(--hero-cluster-exit) * var(--ss-title-travel) * 0.45
+    ),
+    0
+  );
+  will-change: transform;
+}
+
+.hero-lockup-wide {
+  width: min(920px, 100%);
+}
+
+.brand-mark-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.brand-mark {
+  width: clamp(96px, 10vw, 142px);
+  height: auto;
+  display: block;
+}
+
+.brand-mark-inverse {
+  filter: grayscale(1) brightness(0) invert(1);
+}
+
+.display-title {
+  --display-embolden: 0.04em;
+  max-width: none;
+  color: var(--aha-white);
+  font-family: "Lub Dub Display", "Lub Dub", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(42px, 5.2vw, 78px);
+  font-weight: 700;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
+  letter-spacing: -0.038em;
+  line-height: 0.86;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hero-lockup .display-title {
+  /* The shared hero wrapper owns every vertical shift so its children cannot drift apart. */
+  --ss-title-parallax-y: 0px;
+  --ss-title-travel: 0px;
+}
+
+.hero-lockup > .brand-mark-wrap,
+.hero-lockup > .hero-action {
+  transform: none;
+}
+
+.hero-lockup-wide .display-title {
+  width: 660px;
+  max-width: 100%;
+}
+
+.hero-action {
+  display: flex;
+  justify-content: center;
+}
+
+.interactive {
+  --hover-scale: 1.05;
+  --press-scale: 0.98;
+  --material-bg: var(--aha-control);
+  --material-hover-bg: var(--material-bg);
+  --material-active-bg: var(--aha-control-pressed);
+  --body-effect:
+    inset 0 -0.5px 1.5px 0.6px rgb(10 13 18 / 0.18),
+    inset 0 1.5px 1.5px 0.25px rgb(255 255 255 / 0.92);
+  --body-effect-hover:
+    0 4px 12px -6px rgb(10 13 18 / 0.2),
+    inset 0 -0.5px 1.5px 0.6px rgb(10 13 18 / 0.18),
+    inset 0 1.5px 1.5px 0.25px rgb(255 255 255 / 0.92);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.material-layer {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  background: var(--material-bg);
+  box-shadow: var(--body-effect);
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    transform 240ms cubic-bezier(.22, .87, .16, 1.04),
+    box-shadow 240ms cubic-bezier(.22, .87, .16, 1.04),
+    background 240ms cubic-bezier(.22, .87, .16, 1.04);
+  pointer-events: none;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 2;
+  display: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+  gap: inherit;
+  min-width: 0;
+}
+
+.interactive:hover > .material-layer,
+.interactive:focus-visible > .material-layer {
+  background: var(--material-hover-bg);
+  box-shadow: var(--body-effect-hover);
+  transform: scale(var(--hover-scale));
+}
+
+.interactive:active > .material-layer {
+  background: var(--material-active-bg);
+  box-shadow: none;
+  transform: scale(var(--press-scale));
+  transition-duration: 100ms;
+  transition-timing-function: cubic-bezier(.3, 0, .18, 1);
+}
+
+.aha-button {
+  min-height: 44px;
+  gap: 8px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.aha-button svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.aha-button:focus-visible {
+  outline-color: var(--aha-ink);
+}
+
+.hero-action .aha-button:focus-visible {
+  outline-color: var(--aha-white);
+}
+
+.aha-button.primary {
+  --material-bg: var(--aha-red);
+  --material-hover-bg: var(--aha-red);
+  --material-active-bg: var(--aha-red-pressed);
+  --body-effect:
+    inset 0 -1px 1.5px 0.55px rgb(125 14 23 / 0.48),
+    inset 0 1.2px 1.5px 0.3px rgb(255 158 164 / 0.62);
+  --body-effect-hover:
+    0 6px 16px -9px rgb(10 13 18 / 0.5),
+    inset 0 -1px 1.5px 0.55px rgb(125 14 23 / 0.48),
+    inset 0 1.2px 1.5px 0.3px rgb(255 158 164 / 0.62);
+  color: var(--aha-white);
+}
+
+.aha-button.secondary {
+  color: var(--aha-ink-secondary);
+}
+
+.surface-story-block {
+  width: min(900px, 100%);
+  display: grid;
+  justify-items: center;
+  gap: clamp(24px, 4vh, 40px);
+  text-align: center;
+}
+
+.surface-background-secondary {
+  background: var(--aha-page-alt);
+}
+
+.surface-title {
+  width: 100%;
+  max-width: none;
+  color: var(--aha-ink);
+  font-family: "Lub Dub", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(46px, 6vw, 92px);
+  font-weight: 700;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
+  letter-spacing: -0.033em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.display-title > span,
+.surface-title > span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.display-title > span {
+  /* Lub Dub Bold is the heaviest real master. Expand its solid paint instead of requesting a synthetic weight. */
+  -webkit-text-stroke-width: var(--display-embolden);
+  -webkit-text-stroke-color: currentColor;
+  paint-order: stroke fill;
+}
+
+.surface-support {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+}
+
+.surface-support p {
+  max-width: 38ch;
+  margin: 0;
+  color: var(--aha-ink-secondary);
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 500;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.parameterizer-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.parameterizer-output {
+  flex: 0 0 88px;
+  height: 88px;
+}
+
+@media (max-width: 1120px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .workspace > .parameterizer-panel {
+    position: relative;
+    top: auto;
+    width: 100%;
+    height: 760px;
+    max-height: 760px;
+  }
+}
+
+@media (max-width: 620px) {
+  .display-title {
+    font-size: clamp(28px, 8.4vw, 42px);
+    letter-spacing: -0.032em;
+    line-height: 0.88;
+  }
+
+  .surface-title {
+    font-size: clamp(34px, 9.5vw, 52px);
+    letter-spacing: -0.028em;
+    line-height: 0.92;
+  }
+
+  .brand-mark {
+    width: 104px;
+  }
+
+}

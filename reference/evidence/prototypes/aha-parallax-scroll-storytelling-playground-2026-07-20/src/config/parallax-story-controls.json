@@ -1,0 +1,40 @@
+[
+  {
+    "id": "depth",
+    "title": "Depth & Surface",
+    "open": true,
+    "controls": [
+      { "type": "range", "key": "imageDepthPx", "label": "Image depth", "min": 0, "max": 800, "step": 1, "unit": "px" },
+      { "type": "range", "key": "titleDepthRatio", "label": "Title depth", "min": 0, "max": 1, "step": 0.05, "unit": "%", "scale": 100, "precision": 0 },
+      { "type": "range", "key": "sheetRadiusPx", "label": "Sheet radius", "min": 0, "max": 48, "step": 2, "unit": "px" },
+      { "type": "range", "key": "shadeOpacity", "label": "Photo shade", "min": 0, "max": 0.42, "step": 0.01, "unit": "%", "scale": 100, "precision": 0 }
+    ]
+  },
+  {
+    "id": "image",
+    "title": "Image Motion",
+    "open": true,
+    "controls": [
+      { "type": "range", "key": "kenBurnsZoom", "label": "Zoom", "min": 0, "max": 0.1, "step": 0.005, "unit": "%", "scale": 100, "precision": 1 },
+      { "type": "range", "key": "kenBurnsPan", "label": "Pan reach", "min": 0, "max": 1, "step": 0.05, "unit": "%", "scale": 100, "precision": 0 },
+      { "type": "range", "key": "kenBurnsDurationMs", "label": "Cycle", "min": 16000, "max": 48000, "step": 1000, "unit": "s", "scale": 0.001, "precision": 0 }
+    ]
+  },
+  {
+    "id": "title",
+    "title": "Title Reveal",
+    "open": true,
+    "controls": [
+      { "type": "range", "key": "backgroundTitleEntryLineVh", "label": "Background enter", "min": 50, "max": 100, "step": 2, "unit": "%" },
+      { "type": "range", "key": "backgroundTitleExitLineVh", "label": "Background leave", "min": 20, "max": 80, "step": 2, "unit": "%" },
+      { "type": "range", "key": "surfaceTitleEntryLineVh", "label": "Surface enter", "min": 50, "max": 100, "step": 2, "unit": "%" },
+      { "type": "range", "key": "titleTravelPx", "label": "Travel", "min": 0, "max": 64, "step": 2, "unit": "px" },
+      { "type": "range", "key": "titleScaleIn", "label": "Image scale in", "min": 0.88, "max": 1, "step": 0.005, "unit": "x", "precision": 3 },
+      { "type": "range", "key": "titleScaleOut", "label": "Image scale out", "min": 0.88, "max": 1, "step": 0.005, "unit": "x", "precision": 3 },
+      { "type": "range", "key": "surfaceTitleScaleIn", "label": "Surface scale in", "min": 1, "max": 1.16, "step": 0.005, "unit": "x", "precision": 3 },
+      { "type": "range", "key": "titleBlurInPx", "label": "Blur in", "min": 0, "max": 24, "step": 1, "unit": "px" },
+      { "type": "range", "key": "titleBlurOutPx", "label": "Blur out", "min": 0, "max": 32, "step": 1, "unit": "px" },
+      { "type": "range", "key": "titleRevealSpanVh", "label": "Reveal span", "min": 25, "max": 80, "step": 5, "unit": "vh" }
+    ]
+  }
+]

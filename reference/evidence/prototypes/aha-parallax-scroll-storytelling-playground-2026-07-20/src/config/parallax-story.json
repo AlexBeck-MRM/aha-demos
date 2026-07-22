@@ -1,0 +1,23 @@
+{
+  "schema": "aha-parallax-scroll-storytelling/v1",
+  "surface": "AHA Parallax Scroll Storytelling Lab",
+  "state": {
+    "imageDepthPx": 506,
+    "titleDepthRatio": 0.5,
+    "sheetRadiusPx": 28,
+    "shadeOpacity": 0.22,
+    "kenBurnsZoom": 0.045,
+    "kenBurnsPan": 0.45,
+    "kenBurnsDurationMs": 28000,
+    "backgroundTitleEntryLineVh": 100,
+    "backgroundTitleExitLineVh": 58,
+    "surfaceTitleEntryLineVh": 80,
+    "titleTravelPx": 28,
+    "titleScaleIn": 0.94,
+    "titleScaleOut": 0.94,
+    "surfaceTitleScaleIn": 1.075,
+    "titleBlurInPx": 12,
+    "titleBlurOutPx": 18,
+    "titleRevealSpanVh": 50
+  }
+}

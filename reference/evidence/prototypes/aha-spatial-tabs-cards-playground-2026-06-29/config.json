@@ -1,0 +1,11 @@
+{
+  "schema": "aha-adaptive-colour-card/v1",
+  "surface": "AHA Adaptive Colour Card Lab",
+  "state": {
+    "targetContrast": 7,
+    "sampleDepth": 0.52,
+    "toneSaturation": 0.95,
+    "gradientHeight": 62,
+    "gradientBlur": 7
+  }
+}

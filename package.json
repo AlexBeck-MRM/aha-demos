@@ -1,0 +1,15 @@
+{
+  "name": "aha-demos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public code demos for the American Heart Association design system",
+  "scripts": {
+    "install:demos": "npm ci --prefix reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06 && npm ci --prefix reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20",
+    "build": "npm --prefix reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06 run build && npm --prefix reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20 run build",
+    "dev": "npm run build && node scripts/dev/play.js",
+    "play": "npm run dev",
+    "stop": "node scripts/dev/stop.js",
+    "clean": "rm -rf .aha-server.pid .artifacts reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06/dist reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06/.npm-cache reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06/.playwright-cli reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06/*.tsbuildinfo reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06/vite.config.js reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06/vite.config.d.ts reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20/dist reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20/*.tsbuildinfo reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20/vite.config.js reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20/vite.config.d.ts"
+  },
+  "license": "UNLICENSED"
+}

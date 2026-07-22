@@ -1,0 +1,266 @@
+.story {
+  --ss-entry: 1;
+  --ss-exit: 0;
+  --ss-scene-progress: 0;
+  --ss-parallax-y: 0px;
+  --ss-title-parallax-y: 0px;
+  --ss-depth-bleed: 4px;
+  --ss-sheet-radius: 28px;
+  --ss-shade-opacity: 0.22;
+  --ss-title-travel: 28px;
+  --ss-title-scale-in: 0.94;
+  --ss-title-scale-out: 0.94;
+  --ss-surface-title-scale-in: 1.16;
+  --ss-title-blur-in: 12px;
+  --ss-title-blur-out: 18px;
+  --ss-title-blur-guard: 18px;
+  --ss-title-scale-guard: 4%;
+  --ss-ambient-duration: 28000ms;
+  position: relative;
+  width: 100%;
+  background: var(--aha-ink, #1d1b16);
+}
+
+.imageSection,
+.foregroundSection {
+  --ss-entry: 0;
+  --ss-exit: 0;
+  position: relative;
+  width: 100%;
+}
+
+.imageSection {
+  z-index: 0;
+  min-height: 560px;
+  /* The depth and ambient layers include calculated bleed; this clip hides only their excess. */
+  overflow: clip;
+  background: var(--aha-ink, #1d1b16);
+  color: var(--aha-white, #fff);
+}
+
+.depthLayer {
+  position: absolute;
+  inset: calc(var(--ss-depth-bleed) * -1);
+  transform: translate3d(0, var(--ss-parallax-y), 0);
+  will-change: transform;
+}
+
+.ambientFrame,
+.ambientMotion,
+.backdropFrame,
+.image,
+.imageShade {
+  position: absolute;
+  inset: 0;
+}
+
+.backdropFrame {
+  overflow: hidden;
+}
+
+.ambientFrame {
+  --ss-ambient-bleed-x: 0px;
+  --ss-ambient-bleed-y: 0px;
+}
+
+.ambientMotion {
+  inset: calc(var(--ss-ambient-bleed-y) * -1) calc(var(--ss-ambient-bleed-x) * -1);
+  transform-origin: center;
+  animation: spatialKenBurns var(--ss-ambient-duration) linear infinite alternate;
+  will-change: transform;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: var(--ss-focal-x, 50%) var(--ss-focal-y, 50%);
+  user-select: none;
+}
+
+.imageShade {
+  background: rgb(29 27 22 / var(--ss-shade-opacity));
+  pointer-events: none;
+}
+
+.imageContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(28px, 6vw, 96px);
+  padding-inline: max(
+    clamp(28px, 6vw, 96px),
+    calc(var(--ss-title-blur-guard) + var(--ss-title-scale-guard) + 8px)
+  );
+}
+
+.foregroundSection {
+  z-index: 2;
+  min-height: 760px;
+  margin-top: calc(var(--ss-sheet-radius) * -1);
+  border-radius: var(--ss-sheet-radius);
+  background: var(--aha-white, #fff);
+  box-shadow: var(--body-3, none);
+  color: var(--aha-ink, #1d1b16);
+}
+
+.foregroundSection + .imageSection {
+  margin-top: calc(var(--ss-sheet-radius) * -1);
+}
+
+.stickyContent {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(28px, 7vw, 112px);
+  padding-inline: max(
+    clamp(28px, 7vw, 112px),
+    calc(var(--ss-title-blur-guard) + var(--ss-title-scale-guard) + 8px)
+  );
+}
+
+.title {
+  --ss-title-entry: clamp(0, var(--ss-entry), 1);
+  --ss-title-exit: clamp(0, var(--ss-exit), 1);
+  margin: 0;
+  max-width: 100%;
+  transform-origin: center;
+  will-change: transform, filter, opacity;
+}
+
+.title[data-tone="image"] {
+  transform:
+    translate3d(
+      0,
+      calc(
+        var(--ss-title-parallax-y)
+        + (1 - var(--ss-title-entry)) * var(--ss-title-travel)
+        - var(--ss-title-exit) * var(--ss-title-travel) * 0.45
+      ),
+      0
+    )
+    scale(calc(
+      (1 - var(--ss-title-entry)) * var(--ss-title-scale-in)
+      + var(--ss-title-entry) * (1 - var(--ss-title-exit))
+      + var(--ss-title-exit) * var(--ss-title-scale-out)
+    ));
+  filter: blur(calc(
+    (1 - var(--ss-title-entry)) * var(--ss-title-blur-in)
+    + var(--ss-title-exit) * var(--ss-title-blur-out)
+  ));
+  opacity: calc(var(--ss-title-entry) * (1 - var(--ss-title-exit)));
+}
+
+.title[data-tone="surface"] {
+  transform:
+    translate3d(0, calc((1 - var(--ss-title-entry)) * var(--ss-title-travel)), 0)
+    scale(calc(
+      (1 - var(--ss-title-entry)) * var(--ss-surface-title-scale-in)
+      + var(--ss-title-entry)
+    ));
+  filter: blur(calc((1 - var(--ss-title-entry)) * var(--ss-title-blur-in)));
+  opacity: calc(
+    clamp(0, var(--ss-title-entry) * 1.8, 1)
+    * (1 - var(--ss-title-exit))
+  );
+}
+
+.titleLine {
+  display: block;
+  max-width: 100%;
+  /* Font-relative paint space prevents tight display line-height from cropping ascenders/descenders. */
+  padding-block: 0.22em;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  color: inherit;
+}
+
+.titleLine + .titleLine {
+  /* Cancels the paint guard visually while preserving it in each line's render box. */
+  margin-top: -0.44em;
+}
+
+.title[data-tone="image"] .titleLine {
+  color: var(--aha-white, #fff);
+}
+
+.title[data-tone="surface"] .titleLine {
+  color: var(--aha-ink, #1d1b16);
+}
+
+.title[data-tone="surface"] .titleLine[data-accent="true"] {
+  color: var(--aha-red, #cf222b);
+}
+
+.title[data-intro="true"] .titleLine {
+  animation: spatialTitleIntro 900ms cubic-bezier(.2, .82, .18, 1) both;
+}
+
+.revealGroup {
+  --ss-group-entry: clamp(0, calc((var(--ss-entry) - var(--ss-group-delay, 0)) * 3.3), 1);
+  transform: translate3d(0, calc((1 - var(--ss-group-entry)) * 18px), 0);
+  opacity: calc(var(--ss-group-entry) * (1 - var(--ss-exit)));
+  will-change: transform, opacity;
+}
+
+.story[data-ambient-paused="true"] .ambientMotion {
+  animation-play-state: paused;
+}
+
+.story[data-reduced-motion="true"] .depthLayer,
+.story[data-reduced-motion="true"] .title,
+.story[data-reduced-motion="true"] .revealGroup {
+  transform: none;
+  filter: none;
+  opacity: 1;
+}
+
+.story[data-reduced-motion="true"] .ambientMotion {
+  animation: none;
+  transform: none;
+}
+
+.story[data-reduced-motion="true"] .titleLine {
+  color: inherit;
+}
+
+.story[data-reduced-motion="true"] .title[data-tone="surface"] .titleLine[data-accent="true"] {
+  color: var(--aha-red, #cf222b);
+}
+
+@keyframes spatialKenBurns {
+  from {
+    transform: translate3d(var(--ss-kb-from-x, 0), var(--ss-kb-from-y, 0), 0) scale(var(--ss-kb-from-scale, 1));
+  }
+
+  to {
+    transform: translate3d(var(--ss-kb-to-x, 0), var(--ss-kb-to-y, 0), 0) scale(var(--ss-kb-to-scale, 1.04));
+  }
+}
+
+@keyframes spatialTitleIntro {
+  from {
+    opacity: 0;
+    filter: blur(var(--ss-title-blur-in));
+    transform: translate3d(0, var(--ss-title-travel), 0) scale(var(--ss-title-scale-in));
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambientMotion,
+  .titleLine {
+    animation: none;
+  }
+}

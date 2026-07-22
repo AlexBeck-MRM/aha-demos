@@ -1,0 +1,184 @@
+.root {
+  --kb-bleed-x: 0px;
+  --kb-bleed-y: 0px;
+  --kb-from-x: 0px;
+  --kb-from-y: 0px;
+  --kb-from-scale: 1;
+  --kb-to-x: 0px;
+  --kb-to-y: 0px;
+  --kb-to-scale: 1;
+  --kb-move-duration: 23500ms;
+  --kb-fade-duration: 750ms;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+}
+
+.slide {
+  position: absolute;
+  inset: calc(var(--kb-bleed-y) * -1) calc(var(--kb-bleed-x) * -1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slide[data-state="active"] {
+  z-index: 1;
+  opacity: 1;
+}
+
+.slide[data-state="incoming"] {
+  z-index: 2;
+  animation: kbFadeIn var(--kb-fade-duration) linear forwards;
+  will-change: opacity;
+}
+
+.slide[data-state="outgoing"] {
+  z-index: 1;
+  opacity: 1;
+  animation: kbFadeOut var(--kb-fade-duration) linear forwards;
+  will-change: opacity;
+}
+
+.slide[data-state="idle"] {
+  visibility: hidden;
+  animation: none;
+}
+
+.motion {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  animation: kbMove var(--kb-move-duration) linear forwards;
+}
+
+.slide[data-state="active"] .motion,
+.slide[data-state="incoming"] .motion,
+.slide[data-state="outgoing"] .motion {
+  will-change: transform;
+}
+
+.slide[data-state="idle"] .motion {
+  animation: none;
+}
+
+.image,
+.staticImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.staticImage {
+  position: absolute;
+  inset: 0;
+}
+
+.pauseButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.52);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 160ms ease;
+}
+
+.pauseButton:hover {
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.pauseButton:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.root[data-paused="true"] .slide,
+.root[data-paused="true"] .motion {
+  animation-play-state: paused;
+}
+
+.root[data-reduced-motion="true"] .slide,
+.root[data-reduced-motion="true"] .motion {
+  animation: none;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[data-respect-reduced-motion="true"] .slide,
+  .root[data-respect-reduced-motion="true"] .motion {
+    animation: none;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (forced-colors: active) {
+  .pauseButton {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+@keyframes kbMove {
+  from {
+    transform:
+      translate3d(var(--kb-from-x), var(--kb-from-y), 0)
+      scale(var(--kb-from-scale));
+  }
+
+  to {
+    transform:
+      translate3d(var(--kb-to-x), var(--kb-to-y), 0)
+      scale(var(--kb-to-scale));
+  }
+}
+
+@keyframes kbFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes kbFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

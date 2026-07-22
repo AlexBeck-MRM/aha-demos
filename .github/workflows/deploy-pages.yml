@@ -1,0 +1,83 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build visual language UI
+        working-directory: reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+
+      - name: Build parallax storytelling
+        working-directory: reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+
+      - name: Build allowlisted Pages artifact
+        run: |
+          set -euo pipefail
+          LIVING=reference/evidence/prototypes/aha-living-gradient-playground-2026-06-26
+          VISUAL=reference/evidence/prototypes/aha-soft-skeuomorphic-hover-system-2026-07-06
+          CARDS=reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29
+          KEN_BURNS=reference/evidence/prototypes/aha-ken-burns-background-playground-2026-06-25
+          PARALLAX=reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20
+
+          rm -rf .pages-site
+          mkdir -p .pages-site/reference/evidence/prototypes .pages-site/reference
+          cp index.html .pages-site/
+          cp .nojekyll .pages-site/
+          cp -R reference/assets .pages-site/reference/
+          cp -R "$LIVING" .pages-site/reference/evidence/prototypes/
+          cp -R "$CARDS" .pages-site/reference/evidence/prototypes/
+          cp -R "$KEN_BURNS" .pages-site/reference/evidence/prototypes/
+          mkdir -p ".pages-site/$VISUAL" ".pages-site/$PARALLAX"
+          cp -R "$VISUAL/dist/." ".pages-site/$VISUAL/"
+          cp -R "$PARALLAX/dist/." ".pages-site/$PARALLAX/"
+
+          find .pages-site -type l -print -quit | (! read -r _)
+          test -f .pages-site/index.html
+          test -f ".pages-site/$LIVING/index.html"
+          test -f ".pages-site/$VISUAL/index.html"
+          test -f ".pages-site/$CARDS/index.html"
+          test -f ".pages-site/$KEN_BURNS/index.html"
+          test -f ".pages-site/$PARALLAX/index.html"
+          test ! -e .pages-site/experiments
+          test ! -e .pages-site/reference/evidence/prototypes/aha-high-blood-pressure-condition-guide-2026-05-07
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .pages-site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

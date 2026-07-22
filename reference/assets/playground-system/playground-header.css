@@ -1,0 +1,158 @@
+/* Shared partner header for the launcher and every code demo. */
+
+.prototype {
+  --playground-header-height: 48px;
+}
+
+.playground-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 24px);
+  min-height: var(--playground-header-height, 64px);
+  padding: 10px clamp(18px, 3vw, 44px);
+  border: 0;
+  border-bottom: 1px solid rgb(0 0 0 / 0.22);
+  background: inherit;
+  color: #1d1b16;
+  font-family: "Lub Dub", "Lub_Dub", "Avenir Next", "Inter", "Segoe UI", system-ui, sans-serif;
+  line-height: 1.2;
+}
+
+.playground-header .partner-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
+.playground-header .logo-cm {
+  height: 27px;
+}
+
+.playground-header .logo-mrm {
+  width: 45.75px;
+  height: 15px;
+}
+
+.playground-header .logo-aha-header {
+  height: 32px;
+}
+
+.playground-header .brand-divider {
+  width: 1px;
+  height: 26px;
+  flex: 0 0 1px;
+  background: rgb(0 0 0 / 0.22);
+}
+
+.playground-header .playground-back-link {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-left: auto;
+  padding: 0 13px;
+  border: 1px solid rgb(29 27 22 / 0.26);
+  border-radius: 999px;
+  color: #1d1b16;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.playground-header .playground-back-link:hover {
+  border-color: rgb(29 27 22 / 0.46);
+  background: rgb(29 27 22 / 0.07);
+}
+
+.playground-header .playground-back-link:focus-visible {
+  outline: 3px solid #cf222b;
+  outline-offset: 2px;
+}
+
+.prototype .playground-header {
+  gap: clamp(9px, 1.5vw, 18px);
+  padding: 7.5px clamp(14px, 2.25vw, 33px);
+}
+
+.prototype .playground-header .logo-cm {
+  height: 20.25px;
+}
+
+.prototype .playground-header .logo-mrm {
+  width: 34.3125px;
+  height: 11.25px;
+}
+
+.prototype .playground-header .logo-aha-header {
+  height: 24px;
+}
+
+.prototype .playground-header .brand-divider {
+  height: 19.5px;
+}
+
+@media (max-width: 760px) {
+  .playground-header {
+    gap: 12px;
+    min-height: 58px;
+  }
+
+  .playground-header .logo-cm {
+    height: 22.5px;
+  }
+
+  .playground-header .logo-mrm {
+    width: 36.75px;
+    height: 12px;
+  }
+
+  .playground-header .logo-aha-header {
+    height: 28px;
+  }
+
+  .playground-header .brand-divider {
+    height: 22px;
+  }
+
+  .prototype .playground-header {
+    gap: 9px;
+    min-height: 44px;
+    padding: 7.5px 14px;
+  }
+
+  .prototype .playground-header .logo-cm {
+    height: 16.875px;
+  }
+
+  .prototype .playground-header .logo-mrm {
+    width: 27.5625px;
+    height: 9px;
+  }
+
+  .prototype .playground-header .logo-aha-header {
+    height: 21px;
+  }
+
+  .prototype .playground-header .brand-divider {
+    height: 16.5px;
+  }
+
+  .prototype .playground-header .playground-back-link {
+    min-height: 30px;
+    padding-inline: 11px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .playground-back-link .back-link-long {
+    display: none;
+  }
+}

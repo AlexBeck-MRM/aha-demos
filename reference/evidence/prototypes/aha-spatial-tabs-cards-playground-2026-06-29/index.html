@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHA Adaptive Colour Card Lab</title>
+    <meta name="description" content="Internal prototype for testing image-sampled colour washes that keep card text legible.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css?v=adaptive-colour-v1">
+    <link rel="stylesheet" href="../../../assets/playground-system/parameterizer.css?v=1">
+    <link rel="stylesheet" href="../../../assets/playground-system/playground-header.css?v=3">
+  </head>
+  <body>
+    <div class="prototype" data-demo-state="live">
+      <header class="status-bar playground-header" aria-label="Project partners">
+        <img class="partner-logo logo-cm" src="../../../assets/playground-launcher/cm-logo.webp" alt="Critical Mass">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img class="partner-logo logo-mrm" src="../../../assets/playground-launcher/mrm-logo.svg" alt="MRM">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img class="partner-logo logo-aha-header" src="../../../assets/aha-logo.png" alt="American Heart Association">
+        <a class="playground-back-link" href="../../../../"><span aria-hidden="true">←</span><span class="back-link-long">Playground </span>overview</a>
+      </header>
+
+      <main class="workspace" id="main">
+        <section class="preview-area" aria-label="Adaptive colour card preview">
+          <article class="preview-panel cards-panel" aria-labelledby="cards-title">
+            <div class="preview-intro">
+              <p>Automatic legibility</p>
+              <h1 id="cards-title">Image-led colour behind every card</h1>
+              <span>The browser samples the lower part of each image, derives a matching dark tone, and checks its contrast before placing white copy over it.</span>
+            </div>
+            <div class="card-row" data-card-row></div>
+          </article>
+        </section>
+
+        <aside class="parameterizer-panel" aria-label="Adaptive colour controls">
+          <div class="parameterizer-header">
+            <div>
+              <p class="tool-label">Adaptive colour controls</p>
+              <h2>Image sampling</h2>
+            </div>
+            <span class="mode-readout" data-active-preset>Balanced</span>
+          </div>
+
+          <div class="state-controls parameterizer-toolbar" aria-label="Simulated state">
+              <button class="panel-button parameterizer-button is-active" type="button" data-state="live" aria-pressed="true">Live</button>
+              <button class="panel-button parameterizer-button" type="button" data-state="hover" aria-pressed="false">Hover</button>
+              <button class="panel-button parameterizer-button" type="button" data-state="pressed" aria-pressed="false">Pressed</button>
+          </div>
+
+          <form class="effect-controls parameterizer-scroll" data-control-root></form>
+
+          <div class="parameterizer-actions" aria-label="Parameter save and export actions">
+            <button class="panel-button parameterizer-button" type="button" data-save-config>Save</button>
+            <button class="panel-button parameterizer-button" type="button" data-copy-config>Copy Config</button>
+            <button class="panel-button parameterizer-button" type="button" data-copy-css>Copy CSS</button>
+            <button class="panel-button parameterizer-button" type="button" data-reset-config>Revert</button>
+          </div>
+
+          <textarea class="config-output parameterizer-output" data-config-output rows="8" readonly aria-label="Current adaptive colour config"></textarea>
+          <p class="copy-status parameterizer-status" data-copy-status role="status" aria-live="polite">Analysing images…</p>
+        </aside>
+      </main>
+    </div>
+
+    <script src="script.js?v=adaptive-colour-v1"></script>
+  </body>
+</html>
