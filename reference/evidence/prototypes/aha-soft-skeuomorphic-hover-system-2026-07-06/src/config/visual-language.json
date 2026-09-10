@@ -1,0 +1,111 @@
+{
+  "lab": {
+    "title": "AHA Visual Language Lab",
+    "shortTitle": "Visual language",
+    "status": "Internal Preview",
+    "lastUpdated": "July 21, 2026"
+  },
+  "motion": {
+    "compact": {
+      "scale": 1.05,
+      "duration": 240,
+      "spring": 0.35,
+      "settle": 0.72
+    },
+    "surface": {
+      "scale": 1.02,
+      "duration": 420,
+      "spring": 0.22,
+      "settle": 0.62
+    },
+    "cards": {
+      "scale": 1.01,
+      "mediaScale": 1.02,
+      "duration": 420,
+      "spring": 0.22,
+      "settle": 0.62
+    },
+    "reducedMotion": false
+  },
+  "colors": {
+    "selected": "#47346f"
+  },
+  "layout": {
+    "controlHeight": 44,
+    "compactControlHeight": 40
+  },
+  "bodies": {
+    "body1": {
+      "lightOffsetY": 1.5,
+      "lightBlur": 1.8,
+      "lightSpread": 0.35,
+      "lightOpacity": 0.94,
+      "shadowDepth": 0.75,
+      "shadowBlur": 1.8,
+      "shadowSpread": 0.75,
+      "shadowOpacity": 0.2
+    },
+    "body2": {
+      "lightOffsetY": 1.5,
+      "lightBlur": 1.6,
+      "lightSpread": 0.25,
+      "lightOpacity": 0.76,
+      "shadowDepth": 1,
+      "shadowBlur": 1.8,
+      "shadowSpread": 0.65,
+      "shadowOpacity": 0.22
+    },
+    "body3": {
+      "lightOffsetY": 2,
+      "lightBlur": 2.4,
+      "lightSpread": 0.35,
+      "lightOpacity": 0.82,
+      "shadowDepth": 1.2,
+      "shadowBlur": 2.4,
+      "shadowSpread": 0.85,
+      "shadowOpacity": 0.24
+    }
+  },
+  "shader": {
+    "interactionOpacity": 0.18,
+    "revealDuration": 560,
+    "revealBlur": 1.5
+  },
+  "figma": {
+    "fileKey": "DYhenSpnamlWoqLmszNKE3",
+    "fileName": "AHA---Design-System--WIP-",
+    "styleguideNodeId": "18028:257266",
+    "secondaryButtonNodeId": "18034:399214"
+  },
+  "navigation": [
+    { "label": "Cards", "target": "cards" },
+    { "label": "Controls", "target": "buttons" },
+    { "label": "Navigation", "target": "journeys" },
+    { "label": "Disclosure", "target": "disclosure" },
+    { "label": "Messaging", "target": "calls-to-action" },
+    { "label": "Actions", "target": "action-cards" }
+  ],
+  "previewStates": [
+    { "id": "rest", "label": "Rest" },
+    { "id": "hover", "label": "Hover" },
+    { "id": "focus", "label": "Focus" },
+    { "id": "disabled", "label": "Disabled" }
+  ],
+  "sections": [
+    { "id": "cards", "title": "Cards and image treatments", "category": "Cards", "purpose": "Editorial stories and supportive health actions using three deliberate image treatments.", "motion": "Local action", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "buttons", "title": "Buttons", "category": "Controls", "purpose": "Primary, secondary and tertiary actions with a consistent tactile body and meaningful icons.", "motion": "Compact", "figmaNodeId": "18034:399214", "figmaLabel": "Button source" },
+    { "id": "fields", "title": "Form fields", "category": "Controls", "purpose": "Clear input anatomy for contact and location-based health support.", "motion": "Compact", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "status-labels", "title": "Status labels", "category": "Controls", "purpose": "Concise semantic labels for urgency, recommendation and audience.", "motion": "Static", "figmaNodeId": "18028:257266", "figmaLabel": "Style guide" },
+    { "id": "journeys", "title": "Journey navigation", "category": "Navigation", "purpose": "Audience-led paths into health information, support and participation.", "motion": "Compact", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "selection", "title": "Selection controls", "category": "Controls", "purpose": "Switches, radio choices and checkboxes for personal preferences.", "motion": "Compact", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "segments", "title": "Segmented control", "category": "Navigation", "purpose": "A compact way to move between closely related health-guide views.", "motion": "Tint only", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "dialog", "title": "Dialog preview", "category": "Feedback", "purpose": "A focused confirmation surface for a completed health task.", "motion": "Static body", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "disclosure", "title": "Disclosure", "category": "Content", "purpose": "Progressive disclosure for supporting health information and common questions.", "motion": "Surface", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "content-tabs", "title": "Content tabs", "category": "Navigation", "purpose": "Contained and underline variants for switching between guide sections.", "motion": "Compact", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "calls-to-action", "title": "Calls to action", "category": "Messaging", "purpose": "Contextual prompts that help people take the next useful step.", "motion": "Static body", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "guide-navigation", "title": "Guide navigation", "category": "Navigation", "purpose": "Persistent orientation across a condition guide.", "motion": "Tint only", "figmaNodeId": "18028:257266", "figmaLabel": "Style guide" },
+    { "id": "primary-navigation", "title": "Primary navigation", "category": "Navigation", "purpose": "A floating entry point into information, support and ways to take action.", "motion": "Nested controls", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "newsletter", "title": "Newsletter sign-up", "category": "Messaging", "purpose": "A calm invitation to keep useful heart-health guidance close.", "motion": "Static body", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" },
+    { "id": "action-cards", "title": "Action cards", "category": "Actions", "purpose": "Short, scannable next steps for common health tasks.", "motion": "Local action", "figmaNodeId": "18086:5186", "figmaLabel": "Body styles" }
+  ]
+}

@@ -1,0 +1,11 @@
+.DS_Store
+.aha-server.pid
+.artifacts/
+node_modules/
+dist/
+.npm-cache/
+.playwright-cli/
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts

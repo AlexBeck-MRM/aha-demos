@@ -1,0 +1,33 @@
+{
+  "defaultMode": "fast",
+  "watchdogMs": 10000,
+  "motion": {
+    "transitionE": {
+      "durationMs": 900,
+      "exitEasing": "cubic-bezier(.4, 0, 1, 1)",
+      "enterEasing": "cubic-bezier(0, 0, .6, 1)"
+    },
+    "veilFadeMs": 900,
+    "heartEnterMs": 500,
+    "heartExitMs": 320
+  },
+  "modes": {
+    "fast": {
+      "label": "Fast connection",
+      "minimumVeilMs": 1900,
+      "statusAfterMs": null,
+      "statusChanges": [],
+      "description": "A measured editorial beat. The living AHA heart-and-torch mark is the only visible transition content."
+    },
+    "slow": {
+      "label": "Slow connection",
+      "minimumVeilMs": 8200,
+      "statusAfterMs": 3000,
+      "statusChanges": [
+        { "atMs": 3000, "message": "Loading the main image…" },
+        { "atMs": 6000, "message": "Still loading the main image…" }
+      ],
+      "description": "The veil stays quiet at first, then adds a small factual loading status beneath the mark."
+    }
+  }
+}

@@ -1,0 +1,517 @@
+/*
+ * AHA playground parameter panel
+ *
+ * The Living Gradient Lab is the visual source for this shared shell. Demo
+ * code owns its control schema and runtime; this file owns panel geometry,
+ * chrome, row anatomy, folders, actions, and responsive behavior.
+ */
+
+.prototype {
+  --parameterizer-docked-width: 360px;
+  --parameterizer-header-height: 40px;
+  --parameterizer-folder-height: 26px;
+  --parameterizer-row-height: 26px;
+  --parameterizer-shell-inset: 10px;
+  --parameterizer-panel-bg: #191a1d;
+  --parameterizer-header-bg: #111215;
+  --parameterizer-folder-bg: #222429;
+  --parameterizer-row-bg: #191a1d;
+  --parameterizer-row-hover: #202228;
+  --parameterizer-separator: #2d3036;
+  --parameterizer-text: #eceff3;
+  --parameterizer-muted: #8d939c;
+  --parameterizer-widget: #2a2d33;
+  --parameterizer-widget-hover: #343842;
+  --parameterizer-widget-active: #3f4652;
+  --parameterizer-accent: #ff5a68;
+  --parameterizer-number: #5db7ff;
+}
+
+.parameterizer-panel {
+  width: var(--parameterizer-docked-width);
+  min-width: var(--parameterizer-docked-width);
+  min-height: 0;
+  max-height: calc(100vh - 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  padding: var(--parameterizer-shell-inset);
+  background: var(--parameterizer-panel-bg);
+  color: var(--parameterizer-text);
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.workspace > .parameterizer-panel {
+  height: calc(100vh - 75px);
+  max-height: calc(100vh - 75px);
+}
+
+.parameterizer-header {
+  flex: 0 0 var(--parameterizer-header-height);
+  min-width: 0;
+  height: var(--parameterizer-header-height);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  padding: 7px 8px;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 4px;
+  background: var(--parameterizer-header-bg);
+}
+
+.parameterizer-header > div {
+  min-width: 0;
+}
+
+.parameterizer-header .tool-label,
+.parameterizer-header h1,
+.parameterizer-header h2 {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.parameterizer-header .tool-label {
+  margin-bottom: 3px;
+  color: var(--parameterizer-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.parameterizer-header h1,
+.parameterizer-header h2 {
+  color: var(--parameterizer-text);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.parameterizer-header .mode-readout {
+  max-width: 118px;
+  overflow: hidden;
+  border: 1px solid rgb(255 90 104 / 0.32);
+  border-radius: 3px;
+  padding: 5px 6px;
+  background: rgb(255 90 104 / 0.12);
+  color: #ffc7cd;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.parameterizer-toolbar {
+  flex: 0 0 var(--parameterizer-row-height);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+.parameterizer-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  display: block;
+  overflow: auto;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 4px;
+  background: var(--parameterizer-row-bg);
+  scrollbar-color: var(--parameterizer-widget-hover) transparent;
+}
+
+.parameterizer-folder {
+  min-width: 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--parameterizer-separator);
+  background: var(--parameterizer-folder-bg);
+}
+
+.parameterizer-folder:last-child {
+  border-bottom: 0;
+}
+
+.parameterizer-folder-title {
+  height: var(--parameterizer-folder-height);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  padding: 0 8px;
+  background: var(--parameterizer-folder-bg);
+  color: var(--parameterizer-text);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  list-style: none;
+  user-select: none;
+}
+
+.parameterizer-folder-title::-webkit-details-marker {
+  display: none;
+}
+
+.parameterizer-folder-title::before {
+  content: ">";
+  flex: 0 0 auto;
+  width: 10px;
+  color: var(--parameterizer-muted);
+}
+
+.parameterizer-folder[open] > .parameterizer-folder-title::before {
+  transform: rotate(90deg);
+}
+
+.parameterizer-folder-title > span:not(.parameterizer-folder-icon):first-of-type {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.parameterizer-folder-title > span:last-child:not(:first-of-type) {
+  margin-left: auto;
+  color: var(--parameterizer-muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.parameterizer-folder-icon {
+  flex: 0 0 auto;
+  width: 13px;
+  height: 13px;
+  color: var(--parameterizer-muted);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.parameterizer-folder-body {
+  padding: 2px 0;
+  background: var(--parameterizer-row-bg);
+}
+
+.parameterizer-row {
+  height: var(--parameterizer-row-height);
+  min-height: var(--parameterizer-row-height);
+  display: grid;
+  grid-template-columns: minmax(92px, 44%) minmax(0, 1fr) 58px;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  padding: 0 8px 0 18px;
+  background: var(--parameterizer-row-bg);
+  color: var(--parameterizer-text);
+}
+
+.parameterizer-row:hover {
+  background: var(--parameterizer-row-hover);
+}
+
+.parameterizer-label,
+.parameterizer-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.parameterizer-label {
+  color: var(--parameterizer-text);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.parameterizer-value {
+  color: var(--parameterizer-number);
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.parameterizer-control {
+  min-width: 0;
+}
+
+.parameterizer-range,
+.parameterizer-row input[type="range"] {
+  width: 100%;
+  height: 18px;
+  min-width: 0;
+  margin: 0;
+  accent-color: var(--parameterizer-accent);
+  cursor: pointer;
+}
+
+.parameterizer-check,
+.parameterizer-row input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  justify-self: start;
+  accent-color: var(--parameterizer-accent);
+}
+
+.parameterizer-color,
+.parameterizer-row input[type="color"] {
+  width: 42px;
+  height: 20px;
+  justify-self: start;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 3px;
+  padding: 0;
+  background: var(--parameterizer-widget);
+  cursor: pointer;
+}
+
+.parameterizer-select,
+.parameterizer-row select {
+  width: 100%;
+  height: 20px;
+  min-width: 0;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 2px;
+  padding: 0 5px;
+  background: var(--parameterizer-widget);
+  color: var(--parameterizer-text);
+  font-size: 11px;
+}
+
+.parameterizer-actions {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.parameterizer-button,
+.parameterizer-panel .copy-button,
+.parameterizer-panel .panel-button {
+  min-height: var(--parameterizer-row-height);
+  overflow: hidden;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 3px;
+  padding: 0 8px;
+  background: var(--parameterizer-widget);
+  color: var(--parameterizer-text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.parameterizer-button:hover,
+.parameterizer-panel .copy-button:hover,
+.parameterizer-panel .panel-button:hover {
+  background: var(--parameterizer-widget-hover);
+}
+
+.parameterizer-button.is-active,
+.parameterizer-panel .panel-button.is-active {
+  border-color: rgb(255 90 104 / 0.58);
+  background: rgb(255 90 104 / 0.15);
+  color: #ffc7cd;
+}
+
+.parameterizer-button:focus-visible,
+.parameterizer-panel input:focus-visible,
+.parameterizer-panel select:focus-visible,
+.parameterizer-panel textarea:focus-visible {
+  outline: 2px solid var(--parameterizer-accent);
+  outline-offset: -2px;
+}
+
+.parameterizer-output,
+.parameterizer-panel .css-output,
+.parameterizer-panel .config-output {
+  flex: 0 0 116px;
+  width: 100%;
+  height: 116px;
+  min-width: 0;
+  min-height: 116px;
+  resize: none;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 3px;
+  padding: 8px;
+  overflow: auto;
+  background: var(--parameterizer-widget);
+  color: var(--parameterizer-text);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.parameterizer-status,
+.parameterizer-panel .copy-status {
+  flex: 0 0 14px;
+  min-height: 14px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--parameterizer-muted);
+  font-size: 10px;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.effect-overview {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border-bottom: 1px solid var(--parameterizer-separator);
+  background: var(--parameterizer-header-bg);
+}
+
+.effect-overview-title {
+  color: var(--parameterizer-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.effect-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.effect-card {
+  min-width: 0;
+  min-height: 46px;
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: start;
+  gap: 3px;
+  overflow: hidden;
+  border: 1px solid var(--parameterizer-separator);
+  border-radius: 3px;
+  padding: 6px;
+  background: var(--parameterizer-row-bg);
+  color: var(--parameterizer-text);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.12;
+  text-align: left;
+}
+
+.effect-card:hover {
+  background: var(--parameterizer-row-hover);
+}
+
+.effect-card.is-active {
+  border-color: rgb(255 90 104 / 0.62);
+  background: rgb(255 90 104 / 0.14);
+  box-shadow: inset 0 0 0 1px rgb(255 90 104 / 0.22);
+}
+
+.effect-card-kicker,
+.effect-card strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.effect-card-kicker {
+  color: var(--parameterizer-muted);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.effect-card strong {
+  color: var(--parameterizer-text);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.effect-card-summary {
+  display: none;
+}
+
+.preset-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border-top: 1px solid var(--parameterizer-separator);
+  background: var(--parameterizer-row-bg);
+}
+
+@media (max-width: 1120px) {
+  .parameterizer-panel {
+    width: 100%;
+    min-width: 0;
+    height: 760px;
+    max-height: 760px;
+  }
+
+  .workspace > .parameterizer-panel {
+    height: 760px;
+    max-height: 760px;
+  }
+}
+
+@media (max-width: 520px) {
+  .prototype {
+    --parameterizer-row-height: 32px;
+  }
+
+  .parameterizer-panel {
+    height: 720px;
+    max-height: none;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+
+  .workspace > .parameterizer-panel {
+    height: 720px;
+    max-height: none;
+  }
+
+  .parameterizer-row {
+    grid-template-columns: minmax(84px, 42%) minmax(0, 1fr) 52px;
+    padding-left: 12px;
+  }
+
+  .parameterizer-label,
+  .parameterizer-button,
+  .parameterizer-panel .copy-button,
+  .parameterizer-panel .panel-button,
+  .parameterizer-select,
+  .parameterizer-row select {
+    font-size: 13px;
+  }
+
+  .parameterizer-panel input,
+  .parameterizer-panel select,
+  .parameterizer-panel textarea {
+    font-size: 16px;
+  }
+
+  .effect-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

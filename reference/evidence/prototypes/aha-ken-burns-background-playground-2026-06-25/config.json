@@ -1,0 +1,12 @@
+{
+  "schema": "aha-ken-burns-background/v1",
+  "surface": "AHA Ken Burns Background Lab",
+  "state": {
+    "holdDuration": 10000,
+    "motionDuration": 11200,
+    "fadeDuration": 1200,
+    "overscan": 12,
+    "zoomAmount": 0.12,
+    "panStrength": 1
+  }
+}
