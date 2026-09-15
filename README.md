@@ -1,6 +1,6 @@
 # AHA Design System Code Demos
 
-Six focused browser labs for testing visual and interaction ideas for the American Heart Association design system.
+Seven focused browser labs for testing visual and interaction ideas for the American Heart Association design system.
 
 ## Published demos
 
@@ -10,6 +10,7 @@ Six focused browser labs for testing visual and interaction ideas for the Americ
 - [Ken Burns background](https://alexbeck-mrm.github.io/aha-demos/reference/evidence/prototypes/aha-ken-burns-background-playground-2026-06-25/)
 - [Parallax scroll storytelling](https://alexbeck-mrm.github.io/aha-demos/reference/evidence/prototypes/aha-parallax-scroll-storytelling-playground-2026-07-20/)
 - [Page transition](https://alexbeck-mrm.github.io/aha-demos/reference/evidence/prototypes/aha-page-transition-playground-2026-08-28/)
+- [Smart search](https://alexbeck-mrm.github.io/aha-demos/reference/evidence/prototypes/aha-smart-search-playground-2026-09-15/)
 
 The overview is published at [alexbeck-mrm.github.io/aha-demos](https://alexbeck-mrm.github.io/aha-demos/).
 
@@ -24,6 +25,6 @@ The local launcher opens at `http://127.0.0.1:4173/`. The managed server support
 
 ## Repository boundary
 
-This repository contains only the source, shared assets, local runner, and deployment files required by the six published demos. Research, design-brain documents, working evidence, and QA captures are intentionally kept outside the public repository.
+This repository contains only the source, shared assets, local runner, and deployment files required by the seven published demos. Research, design-brain documents, working evidence, and QA captures are intentionally kept outside the public repository.
 
 No licence is granted for reuse of the code or included brand assets.
