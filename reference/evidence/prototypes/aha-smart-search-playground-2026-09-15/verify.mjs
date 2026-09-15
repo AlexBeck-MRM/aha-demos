@@ -144,11 +144,11 @@ check('Destination questions bypass AI; informational questions keep it',()=>{
   assert.equal(read("answerIntent('How can I manage high blood pressure?')"),true);
 });
 
-check('Quick task links lead to real destinations without duplicate result cards',()=>{
+check('Practical destinations remain in the result list after shortcut removal',()=>{
   read("state.q='high blood pressure';state.results=rank(state.q);state.filter='All';state.searchStatus='ready'");
-  assert.equal(read('quickTasks().length'),2);
   assert.equal(read('previewRows().length'),10);
-  assert.equal(read("quickTasks().every(([id])=>DATA.some(d=>d.id===id)&&!previewRows().some(d=>d.id===id))"),true);
+  assert.equal(read("['bp-log','bp-monitor'].every(id=>previewRows().some(d=>d.id===id))"),true);
+  assert.equal(read('new Set(previewRows().map(d=>d.id)).size'),10);
   assert.equal(read('new Set(previewRows().map(d=>d.type)).size'),4);
 });
 check('Specific destination question promotes its task rather than a generic guide',()=>{
