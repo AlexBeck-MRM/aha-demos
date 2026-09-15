@@ -6,10 +6,25 @@ import vm from 'node:vm';
 const html = readFileSync(new URL('./index.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 new vm.Script(script); // Parse every handler, including code outside the pure-function checks.
+let now = 0, timerId = 0;
+const timers = new Map();
+function advance(ms) {
+  const end = now + ms;
+  while (true) {
+    const next = [...timers].filter(([, timer]) => timer.at <= end).sort((a, b) => a[1].at - b[1].at)[0];
+    if (!next) break;
+    const [id, timer] = next;
+    now = timer.at;
+    timers.delete(id);
+    timer.callback();
+  }
+  now = end;
+}
 const context = vm.createContext({
   URLSearchParams,
   document: { querySelector: () => ({ innerHTML: '', focus() {} }) },
-  clearTimeout() {},
+  setTimeout(callback, delay) { const id = ++timerId; timers.set(id, { callback, at: now + delay }); return id; },
+  clearTimeout(id) { timers.delete(id); },
   location: {
     get hash() { return '#home'; },
     set hash(value) { throw new Error(`Query submission tried to navigate to ${value}`); }
@@ -154,6 +169,52 @@ check('Practical destinations remain in the result list after shortcut removal',
 check('Specific destination question promotes its task rather than a generic guide',()=>{
   assert.equal(read("rank('Where can I track my blood pressure?')[0].id"),'bp-log');
   assert.equal(read("rank('Where can I find a CPR class?')[0].id"),'cpr-local');
+});
+// Exercise real search scheduling with a controlled clock and no DOM rendering.
+read('render=()=>{};announce=()=>{}');
+check('Modal search waits 450ms while suggestions are available immediately',()=>{
+  read("state.q='high';state.hiddenSuggestions=false;state.delay=0;state.failSearch=false;runSearch()");
+  assert.equal(read('state.searchStatus'),'loading');
+  assert.equal(read('state.results.length'),0);
+  assert.equal(read('state.suggestions[0]'),'High blood pressure');
+  advance(449);
+  assert.equal(read('state.searchStatus'),'loading');
+  advance(1);
+  assert.equal(read('state.searchStatus'),'ready');
+  assert.equal(read('state.results[0].id'),'bp-guide');
+});
+check('Rapid typing restarts the delay and ignores an older response',()=>{
+  read("state.q='blood pressure';runSearch()");
+  const oldResponse = [...timers.values()][0].callback;
+  advance(200);
+  read("state.q='CPR';runSearch()");
+  oldResponse();
+  advance(250);
+  assert.equal(read('state.searchStatus'),'loading');
+  assert.equal(read('state.results.length'),0);
+  advance(200);
+  assert.equal(read('state.searchStatus'),'ready');
+  assert.equal(read('state.results[0].id'),'cpr-guide');
+});
+check('Clearing or shortening the query cancels pending results',()=>{
+  for(const query of ['', 'c']) {
+    read("state.q='CPR';runSearch()");
+    read(`state.q=${JSON.stringify(query)};runSearch()`);
+    advance(450);
+    assert.equal(read('state.searchStatus'),'idle');
+    assert.equal(read('state.results.length'),0);
+    assert.equal(timers.size,0);
+  }
+});
+check('The slow scenario and retry use their respective loading delays',()=>{
+  read("state.q='CPR';state.delay=1400;state.failSearch=true;runSearch()");
+  advance(1399);
+  assert.equal(read('state.searchStatus'),'loading');
+  advance(1);
+  assert.equal(read('state.searchStatus'),'error');
+  read('state.delay=0;state.failSearch=false;runSearch()');
+  advance(450);
+  assert.equal(read('state.searchStatus'),'ready');
 });
 // Exercise the actual submit dispatcher and confirmation state, with rendering and AI I/O stubbed.
 read("render=()=>{};announce=()=>{};runSearch=()=>{};let asked=[];ask=(q=state.q)=>{asked.push(q);state.aiStatus='loading'}");
