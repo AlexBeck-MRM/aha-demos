@@ -1,0 +1,234 @@
+.story {
+  --ss-title-entry: 1;
+  --ss-group-progress: 1;
+  --ss-backdrop-y: 0vh;
+  --ss-backdrop-content-y: 0vh;
+  --ss-depth-bleed: 4px;
+  --ss-sheet-radius: 28px;
+  --ss-shade-opacity: 0.22;
+  --ss-title-travel: 18px;
+  --ss-backdrop-title-scale-in: 0.96;
+  --ss-page-title-scale-in: 0.96;
+  --ss-title-blur-in: 6px;
+  --ss-title-blur-guard: 18px;
+  --ss-title-scale-guard: 4%;
+  position: relative;
+  width: 100%;
+  background: var(--aha-ink, #1d1b16);
+}
+
+.imageSection,
+.foregroundSection {
+  --ss-title-entry: 0;
+  --ss-group-progress: 0;
+  position: relative;
+  width: 100%;
+}
+
+.imageSection {
+  z-index: 0;
+  min-height: 560px;
+  /* Layer −2 includes the configured travel as bleed per edge; this clip hides only its excess. */
+  overflow: clip;
+  background: var(--aha-ink, #1d1b16);
+  color: var(--aha-white, #fff);
+}
+
+.depthLayer {
+  position: absolute;
+  inset: calc(var(--ss-depth-bleed) * -1);
+  transform: translate3d(0, var(--ss-backdrop-y), 0);
+  will-change: transform;
+}
+
+.backdropFrame,
+.image,
+.imageShade {
+  position: absolute;
+  inset: 0;
+}
+
+.backdropFrame {
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: var(--ss-focal-x, 50%) var(--ss-focal-y, 50%);
+  user-select: none;
+}
+
+.imageShade {
+  background: rgb(29 27 22 / var(--ss-shade-opacity));
+  pointer-events: none;
+}
+
+.imageContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(28px, 6vw, 96px);
+  padding-inline: max(
+    clamp(28px, 6vw, 96px),
+    calc(var(--ss-title-blur-guard) + var(--ss-title-scale-guard) + 8px)
+  );
+  transform: translate3d(0, var(--ss-backdrop-content-y), 0);
+  will-change: transform;
+}
+
+.layerLabel {
+  position: absolute;
+  z-index: 5;
+  top: calc(var(--ss-depth-bleed) + 12px);
+  left: calc(var(--ss-depth-bleed) + 12px);
+  max-width: min(200px, calc(100% - 24px));
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  padding: 4px 6px;
+  background: #ff00ff;
+  color: #fff;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.imageContent > .layerLabel,
+.stickyContent > .layerLabel {
+  top: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+}
+
+.imageContent > .contentLayerLabel {
+  top: 36px;
+}
+
+.foregroundSection {
+  z-index: 2;
+  min-height: 760px;
+  margin-top: calc(var(--ss-sheet-radius) * -1);
+  border-radius: var(--ss-sheet-radius);
+  background: var(--aha-white, #fff);
+  box-shadow: var(--body-3, none);
+  color: var(--aha-ink, #1d1b16);
+}
+
+.foregroundSection + .imageSection {
+  margin-top: calc(var(--ss-sheet-radius) * -1);
+}
+
+.stickyContent {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(28px, 7vw, 112px);
+  padding-inline: max(
+    clamp(28px, 7vw, 112px),
+    calc(var(--ss-title-blur-guard) + var(--ss-title-scale-guard) + 8px)
+  );
+}
+
+.title {
+  margin: 0;
+  max-width: 100%;
+  transform-origin: center;
+  will-change: transform, filter, opacity;
+}
+
+.title {
+  /* Focus clears at 85% while the final scale continues to settle. No reveal translation. */
+  --ss-title-focus: clamp(0, calc(var(--ss-title-entry) / 0.85), 1);
+  --ss-title-start-scale: var(--ss-backdrop-title-scale-in);
+  transform: scale(calc(
+    (1 - var(--ss-title-entry)) * var(--ss-title-start-scale)
+    + var(--ss-title-entry)
+  ));
+  filter: blur(calc(
+    (1 - var(--ss-title-focus)) * var(--ss-title-blur-in)
+  ));
+  opacity: var(--ss-title-focus);
+}
+
+.title[data-tone="surface"] {
+  --ss-title-start-scale: var(--ss-page-title-scale-in);
+}
+
+.titleLine {
+  display: block;
+  max-width: 100%;
+  /* Font-relative paint space prevents tight display line-height from cropping ascenders/descenders. */
+  padding-block: 0.22em;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  color: inherit;
+}
+
+.titleLine + .titleLine {
+  /* Cancels the paint guard visually while preserving it in each line's render box. */
+  margin-top: -0.44em;
+}
+
+.title[data-tone="image"] .titleLine {
+  color: var(--aha-white, #fff);
+}
+
+.title[data-tone="surface"] .titleLine {
+  color: var(--aha-ink, #1d1b16);
+}
+
+.title[data-tone="surface"] .titleLine[data-accent="true"] {
+  color: var(--aha-red, #cf222b);
+}
+
+.revealGroup {
+  --ss-group-entry: clamp(0, calc((var(--ss-group-progress) - var(--ss-group-delay, 0)) / (1 - var(--ss-group-delay, 0))), 1);
+  transform: translate3d(0, calc((1 - var(--ss-group-entry)) * var(--ss-title-travel)), 0);
+  opacity: var(--ss-group-entry);
+  will-change: transform, opacity;
+}
+
+.story[data-reduced-motion="true"] .depthLayer,
+.story[data-reduced-motion="true"] .imageContent,
+.story[data-reduced-motion="true"] .title,
+.story[data-reduced-motion="true"] .revealGroup {
+  transform: none;
+  filter: none;
+  opacity: 1;
+}
+
+.story[data-reduced-motion="true"] .titleLine {
+  color: inherit;
+}
+
+.story[data-reduced-motion="true"] .title[data-tone="surface"] .titleLine[data-accent="true"] {
+  color: var(--aha-red, #cf222b);
+}
+
+/* Keep keyboard focus visible even before the scroll trigger has completed. */
+.revealGroup:focus-within {
+  transform: none;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depthLayer, .imageContent, .title, .revealGroup {
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+}

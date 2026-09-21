@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="description" content="AHA Ken Burns background-image motion lab.">
+    <title>AHA Ken Burns Background Lab</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css?v=parameter-panel-v1">
+    <link rel="stylesheet" href="../../../assets/playground-system/parameterizer.css?v=1">
+    <link rel="stylesheet" href="../../../assets/playground-system/playground-header.css?v=3">
+  </head>
+  <body>
+    <div class="prototype" data-paused="false">
+      <header class="status-bar playground-header" aria-label="Project partners">
+        <img class="partner-logo logo-cm" src="../../../assets/playground-launcher/cm-logo.webp" alt="Critical Mass">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img class="partner-logo logo-mrm" src="../../../assets/playground-launcher/mrm-logo.svg" alt="MRM">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img class="partner-logo logo-aha-header" src="../../../assets/aha-logo.png" alt="American Heart Association">
+        <a class="playground-back-link" href="../../../../"><span aria-hidden="true">←</span><span class="back-link-long">Playground </span>overview</a>
+      </header>
+
+      <main class="workspace" id="main">
+        <section class="preview-area" aria-label="Ken Burns image preview">
+          <article class="preview-panel">
+            <div class="media-frame">
+              <div class="slideshow" aria-hidden="true">
+                <div class="slide is-active is-animating" data-route="0">
+                  <img src="assets/card-feature-marcus.png" alt="">
+                </div>
+                <div class="slide" data-route="1">
+                  <img src="assets/card-build-healthier-habits.png" alt="">
+                </div>
+                <div class="slide" data-route="2">
+                  <img src="assets/card-mindful-listening.png" alt="">
+                </div>
+              </div>
+
+              <button class="pause-button" type="button" aria-pressed="false" aria-label="Pause background animation">
+                <span aria-hidden="true">Ⅱ</span>
+              </button>
+            </div>
+          </article>
+        </section>
+
+        <aside class="parameterizer-panel" aria-label="Ken Burns parameters">
+          <div class="parameterizer-header">
+            <div>
+              <p class="tool-label">Ken Burns controls</p>
+              <h1>Background motion</h1>
+            </div>
+            <span class="mode-readout" data-mode-readout>Playing</span>
+          </div>
+
+          <div class="parameterizer-toolbar" aria-label="Animation playback">
+            <button class="parameterizer-button is-active" type="button" data-play aria-pressed="true">Play</button>
+            <button class="parameterizer-button" type="button" data-pause aria-pressed="false">Pause</button>
+          </div>
+
+          <form class="parameterizer-scroll" data-control-root></form>
+
+          <div class="parameterizer-actions" aria-label="Parameter save and export actions">
+            <button class="parameterizer-button" type="button" data-save-config>Save</button>
+            <button class="parameterizer-button" type="button" data-copy-config>Copy Config</button>
+            <button class="parameterizer-button" type="button" data-reset-config>Revert</button>
+          </div>
+
+          <textarea class="parameterizer-output" data-config-output readonly aria-label="Current Ken Burns config"></textarea>
+          <p class="parameterizer-status" data-copy-status role="status" aria-live="polite">Loading authored motion…</p>
+        </aside>
+      </main>
+    </div>
+
+    <script src="script.js?v=parameter-panel-v1"></script>
+  </body>
+</html>

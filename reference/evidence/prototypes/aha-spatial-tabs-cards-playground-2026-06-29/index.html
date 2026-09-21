@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHA Adaptive Image Colour Lab</title>
+    <meta name="description" content="Internal prototype for testing image-sampled colour washes that keep white text legible.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css?v=overlay-v10">
+    <link rel="stylesheet" href="../../../assets/playground-system/parameterizer.css?v=1">
+    <link rel="stylesheet" href="../../../assets/playground-system/playground-header.css?v=3">
+  </head>
+  <body>
+    <div class="prototype">
+      <header class="status-bar playground-header" aria-label="Project partners">
+        <img class="partner-logo logo-cm" src="../../../assets/playground-launcher/cm-logo.webp" alt="Critical Mass">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img class="partner-logo logo-mrm" src="../../../assets/playground-launcher/mrm-logo.svg" alt="MRM">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img class="partner-logo logo-aha-header" src="../../../assets/aha-logo.png" alt="American Heart Association">
+        <a class="playground-back-link" href="../../../../"><span aria-hidden="true">←</span><span class="back-link-long">Playground </span>overview</a>
+      </header>
+
+      <main class="workspace" id="main">
+        <section class="preview-area" aria-label="Adaptive image colour preview">
+          <article class="preview-panel cards-panel" aria-label="Image gradient examples">
+            <div class="image-example-groups" data-image-row></div>
+          </article>
+        </section>
+
+        <aside class="parameterizer-panel" aria-label="Adaptive colour controls">
+          <div class="parameterizer-header">
+            <div>
+              <p class="tool-label">Adaptive colour controls</p>
+              <h2>Overlay families</h2>
+            </div>
+            <span class="mode-readout" data-active-preset>Defaults</span>
+          </div>
+
+          <form class="effect-controls parameterizer-scroll" data-control-root></form>
+
+          <div class="parameterizer-actions" aria-label="Parameter save and export actions">
+            <button class="panel-button parameterizer-button" type="button" data-save-config>Save</button>
+            <button class="panel-button parameterizer-button" type="button" data-copy-config>Copy Config</button>
+            <button class="panel-button parameterizer-button" type="button" data-copy-css>Copy CSS</button>
+            <button class="panel-button parameterizer-button" type="button" data-reset-config>Revert</button>
+          </div>
+
+          <textarea class="config-output parameterizer-output" data-config-output rows="8" readonly aria-label="Current adaptive colour config"></textarea>
+          <p class="migration-status parameterizer-status" data-migration-status hidden></p>
+          <p class="copy-status parameterizer-status" data-copy-status role="status" aria-live="polite">Analysing images…</p>
+        </aside>
+      </main>
+    </div>
+
+    <script src="settings.js?v=overlay-v10"></script>
+    <script src="script.js?v=overlay-v10"></script>
+  </body>
+</html>

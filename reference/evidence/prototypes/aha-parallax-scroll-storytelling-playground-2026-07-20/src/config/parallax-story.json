@@ -1,0 +1,17 @@
+{
+  "schema": "aha-parallax-scroll-storytelling/v5",
+  "surface": "AHA Parallax Scroll Storytelling Lab",
+  "state": {
+    "backdropTravelVh": 12,
+    "sheetRadiusPx": 28,
+    "shadeOpacity": 0.22,
+    "backdropTitleStartVh": 90,
+    "backdropTitleFullVh": 70,
+    "pageTitleStartVh": 90,
+    "pageTitleFullVh": 70,
+    "titleTravelPx": 18,
+    "backdropTitleScaleIn": 0.96,
+    "pageTitleScaleIn": 0.96,
+    "titleBlurInPx": 6
+  }
+}

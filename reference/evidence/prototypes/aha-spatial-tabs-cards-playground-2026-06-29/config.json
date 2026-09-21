@@ -1,0 +1,10 @@
+{
+  "schema": "aha-adaptive-colour/v4",
+  "surface": "AHA Adaptive Image Colour Lab",
+  "state": {
+    "overlayAVerticalCoverage": 60,
+    "overlayAHorizontalCoverage": 80,
+    "overlayBVerticalCoverage": 40,
+    "overlayBHorizontalCoverage": 80
+  }
+}
