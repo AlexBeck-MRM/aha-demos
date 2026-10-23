@@ -1,7 +1,8 @@
 {
-  "schema": "aha-adaptive-colour/v4",
+  "schema": "aha-adaptive-colour/v5",
   "surface": "AHA Adaptive Image Colour Lab",
   "state": {
+    "targetContrast": 4.5,
     "overlayAVerticalCoverage": 60,
     "overlayAHorizontalCoverage": 80,
     "overlayBVerticalCoverage": 40,

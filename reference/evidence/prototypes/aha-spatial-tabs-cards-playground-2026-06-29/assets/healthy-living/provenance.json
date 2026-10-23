@@ -1,0 +1,60 @@
+{
+  "generator": "Built-in image generation, 22 October 2026",
+  "derivative": "1200px maximum dimension, WebP quality 90",
+  "images": [
+    {
+      "id": "eat-healthier",
+      "original": "eat-healthier.png",
+      "created": "2026-10-22",
+      "sourceSHA256": "946faa7dcab3740e22585bd41243f5a0e8c8a62acf68de237c5c68cf05c376d9",
+      "delivery": "assets/healthy-living/eat-healthier.webp",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "id": "exercise-more",
+      "original": "exercise-more.png",
+      "created": "2026-10-22",
+      "sourceSHA256": "20aaf1294cba1981f76cf30170bcc58f54d21e98b0c00f8c492b58873ea360ed",
+      "delivery": "assets/healthy-living/exercise-more.webp",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "id": "sleep-better",
+      "original": "sleep-better.png",
+      "created": "2026-10-22",
+      "sourceSHA256": "43edca453d13e44137040704225207e31ed37d20e1f80c985aaa912570ed8b4c",
+      "delivery": "assets/healthy-living/sleep-better.webp",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "id": "reduce-stress",
+      "original": "reduce-stress.png",
+      "created": "2026-10-22",
+      "sourceSHA256": "fc6f651538a7376a52b1e65d6236fa6c0b621fcfc0c2997fed743b346ea3531e",
+      "delivery": "assets/healthy-living/reduce-stress.webp",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "id": "quit-tobacco",
+      "original": "quit-tobacco.png",
+      "created": "2026-10-22",
+      "sourceSHA256": "8c3e1287a47e1037971736974596cbdcdc35881b470743f640bff53f51ad75a6",
+      "delivery": "assets/healthy-living/quit-tobacco.webp",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "id": "manage-weight",
+      "original": "manage-weight.png",
+      "created": "2026-10-22",
+      "sourceSHA256": "b7261b2ee82a16657bb5230128b68e7fe926f3406d0fe64929d98ed7e9a3b2a6",
+      "delivery": "assets/healthy-living/manage-weight.webp",
+      "width": 1200,
+      "height": 675
+    }
+  ]
+}

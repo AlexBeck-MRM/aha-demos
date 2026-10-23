@@ -1,92 +1,101 @@
 # Adaptive image colour
 
-Eight unchanged source photographs appear in twelve views on the gray page. The preview and control panel have exactly two families, with matching titles and divider lines:
+A browser demo of automatic photo-derived colour with white-text contrast checks. All twelve original examples, source photos, copy and focal positions are retained. Six Healthy Living still-life photographs created on 22 October and six labelled synthetic extreme-image tests bring the gallery to 24 examples. The synthetic tests cover pure white, near-black, neutral grey, black/white detail, bright colours and a small white hotspot. Optimised WebP derivatives reduce the eight photo downloads from 27.9 MB to 4.3 MB; original PNGs are kept. Default: **4.5:1 (AA)**. Live control: **4.5–7.1:1**. AAA normal-text contrast begins at **7:1**.
 
-| Family | Use | Photo peak | Vertical coverage | Horizontal coverage |
-| --- | --- | --- | --- | --- |
-| Overlay A | Cards and compact images | 90% | Lower 60% | 80% at photo mid-height |
-| Overlay B | Backgrounds and large heroes | 80% | Lower 40% | 80% at photo mid-height |
+## Developer handover
 
-A/B is a use choice. Vertical and horizontal are directions within either family. Left and right mirror the same gradient; photographs are never mirrored. The six original numbered portraits remain, including dark tones, saturated reds and mixed lighting. Example 7 reuses the warm photograph as a horizontal A card. Existing B photographs remain; the former portrait header now uses the shared stacked composition.
+Open `integration.html` for a runnable, one-card implementation. Copy **adaptive-colour.min.js** and **surface.css**. The readable **adaptive-colour.js** is included for inspection; **engine.js** and **adapter.js** are maintained source files, not separate browser requests. The gallery, controls, example data, config migration and local server are demo utilities; a product does not need them.
 
-## Controls and saved settings
+```html
+<link rel="stylesheet" href="surface.css">
+<div class="image-surface is-pending" id="card" style="--photo-position:50% 50%">
+  <img class="image-photo" src="photo.jpg" alt="">
+  <div class="image-gradient" aria-hidden="true"></div>
+  <div class="image-content">
+    <div class="image-copy">
+      <h2 class="image-title">Heading</h2>
+      <p class="image-body">Supporting text.</p>
+    </div>
+  </div>
+</div>
+<script src="adaptive-colour.min.js"></script>
+```
 
-Each family has two controls: **Vertical height** and **Horizontal width**. Photo peaks are fixed at A90% and B80%, shown as read-only values in the family headings. Vertical coverage ranges from 30–80%; horizontal coverage from 50–100%. The 30% minimum leaves room for the fixed 8px boundary join at the smallest possible stacked photo in the three-column grid. It does not add height outside the selected coverage.
+```js
+const controller = attachAdaptiveColour(document.querySelector('#card'), {
+  targetContrast: 4.5,
+  // Defaults: bottom half, portrait crop, 60% fade coverage, 90% peak.
+  onResult(result) {
+    // result.source: automatic | override | fallback
+    // result.contrast: unrounded worst-case ratio
+    // result.error: actual image-reading error, if present
+  },
+});
+controller.update({ targetContrast: 7.1 });
+controller.update({ override: [130, 90, 60] }); // Still contrast-checked.
+controller.update({ override: null }); // Resume automatic colour.
+controller.refresh(); // After changing object-position or other crop CSS.
+controller.destroy(); // On component unmount.
+```
 
-Vertical height changes that family's vertical and stacked examples. Horizontal width changes that family's horizontal examples; the chosen width resumes when a narrow stack returns to a horizontal layout. No control affects the other family. Defaults restores the table above. The former Softer preset is removed because it only changed opacity. Broader uses A70%/B50% vertical and 90% horizontal coverage for both.
+## What the engine does
 
-Save writes `config.json` through the existing local server. Revert restores the last saved values, including after reload. The static Pages site cannot write files: Save selects the JSON for copying and explains this. Copy Config includes the four coverage settings and preset label. Copy CSS exports the actual gradients, finite photo heights and derived tones at the current dimensions; responsive integration still requires the matching config, stylesheet and runtime checks.
+1. Read the displayed `<img>` and its current source. Reproduce its actual `object-fit: cover` crop and two percentage `object-position` values.
+2. Average the bottom 50%, or the left/right 50% nearest the text. A small 80px-wide copy is sufficient for this representative colour. Alpha weights exclude transparent pixels. There is no saturation boost or minimum saturation that could tint a grey image.
+3. Read only the union of the text areas at a minimum analysis density of 2 pixels per CSS pixel, or the device pixel ratio when higher. Preserve the full-photo cover transform and device-pixel phase when drawing this bounded area. The small colour sample never substitutes for this check. Solid text panels skip photo contrast readback entirely.
+4. Measure each wrapped heading/body line, including a 2px safety boundary. One physical gradient-stop model drives the CSS fade and pixel analysis.
+5. Check composited photo and fade pixels against white. If the sampled colour already passes, use it. Otherwise binary-search the lightest passing colour along its RGB path towards black. Reject a failing candidate immediately; scan the final rounded colour completely to report its actual worst contrast. The selected target has a disclosed 0.02 numerical margin.
+6. If even black cannot make the existing fade pass, or the copy does not fit, put all text on a fully opaque colour below the photo. If image reading fails, also use this solid fallback and report the actual error.
 
-`settings.js` is the shared browser/server normalization and migration contract. Schema is `aha-adaptive-colour/v4`. The save endpoint remains `/__adaptive-card-lab/save-settings`. No browser storage is read or cleared. Config requests use `no-store`; versioned script, settings and stylesheet URLs update returning visitors.
+The pending state immediately reserves the image space and keeps text on a solid dark background until checked. Colour sampling is cached separately from contrast, so target changes never resample the image. Pixel fields use one typed allocation and do not retain canvas backing stores.
 
-### Migration
+The process darkens only as much as needed. It does not lighten a naturally dark sampled colour, so some examples need no change between AA and AAA. Contrast is conservative over text-line rectangles, including spaces, rather than individual glyph outlines. It is a browser-paint model, independently checked against screenshots; it does not claim full accessibility conformance.
 
-- Current A/B keys take precedence and are clamped to their family ranges.
-- All earlier opacity settings are discarded. A and B always use their fixed 90% and 80% photo peaks. Custom card height is retained where representable; A horizontal width starts at 80%.
-- Old side widths of 85%, or legacy `horizontalGradientWidth:60`, become B80%. Other custom widths are retained within range; the newer side-width key takes precedence.
-- B combines landscape and mobile vertical height. Previous defaults become 40%. One custom value, or agreeing custom values, survives. Conflicting custom values use the new family default and produce a visible migration notice.
-- The former portrait height, per-context angle and shared contrast/sampling/saturation controls are retired. Both families use the fixed shared settings below. These fields are not retained as hidden exceptions.
-- Only four numeric coverage values are saved. Invalid input uses defaults; unsupported fields are discarded. The same migration runs on config load and local save. A notice identifies migration, conflicts and clamping until the new config is saved.
+## Integration limits
 
-## One shared curve
+- Use **white text**, `object-fit: cover`, and two percentage positions such as `70% 35%`. This small adapter deliberately does not parse every CSS crop syntax.
+- Use same-origin images, or CORS-enabled images with the image's `crossorigin` attribute configured **before loading**. The engine creates no second image request. `srcset`/`currentSrc`, image loading, font changes, copy changes and resizes trigger refreshes. Call `refresh()` after other style changes that do not alter dimensions.
+- Keep text free of independent opacity and keep photo filters, extra tint layers, blend modes and motion outside this contract. Those change the pixels and need corresponding checks.
+- Options `aspect`, `direction` (`left`/`right`/null), `stacked`, `coverage`, `stackedCoverage`, and `opacity` describe the existing layout. The demo's A/B mapping is outside the engine. Every stacked layout uses vertical coverage; its final 8px join reaches the solid colour.
+- Manual override sets a starting colour, not a bypass of the contrast guard. Keep automatic selection as the editor default.
 
-The following ramp positions are measured **inside the selected coverage**, including the transparent start, rising opacity and peak portion. No extra protective height is added.
+## Files
 
-| Ramp position | 0% | 20% | 40% | 80% | 100% |
-| --- | --- | --- | --- | --- | --- |
-| Peak multiplier | 0 | 0.15 | 0.80 | 1 | 1 |
-| A default alpha | 0% | 13.5% | 72% | 90% | 90% |
-| B default alpha | 0% | 12% | 64% | 80% | 80% |
+| File | Responsibility |
+| --- | --- |
+| `adaptive-colour.min.js` | One browser request; no runtime dependencies |
+| `adaptive-colour.js` | Readable version of the same delivery |
+| `engine.js` | Maintained sampling, crop, gradient and contrast source |
+| `adapter.js` | One component controller; image, text, resize and font lifecycle |
+| `surface.css` | Required component styling; no demo dependencies |
+| `integration.html` | Minimal runnable developer example |
+| `examples.js` | The 24 examples (12 original, 6 Healthy Living, 6 synthetic tests) |
+| `script.js` | Gallery and side controls, diagnostics, save/export |
+| `settings.js` | Validated demo config and migration to v5 |
+| `verify.cjs` | Behavioural checks, final contrast, bounded coordinates and bundle checksum |
+| `verify-standalone.cjs` | Independent stylesheet, one-script delivery and fractional-DPR paint checks |
+| `build.cjs` | Development-only deterministic delivery generation |
 
-A vertical fade starts at 40% down the photo; its peak starts at 88%. B starts at 60%; its peak starts at 92%. The curve and family photo peaks are fixed. Coverage scales the curve without changing its shape.
+## Saving and verification
 
-Horizontal gradients use a fixed 60° angle from vertical, with CSS directions 120° right and 240° left. Coverage is measured at **photo mid-height**, not across the full CSS gradient line. For rendered photo width W, height H, coverage C and angle θ:
-
-- Physical gradient-line start: `(1−C)W sinθ + H cosθ/2`.
-- Ramp length: `CW sinθ`.
-- Each stop: `start + rampPosition × length` pixels.
-
-This conversion uses the actual rendered aspect ratio. A normalized Figma transform cannot be copied unchanged across different image ratios.
-
-## One shared stacked composition
-
-A finite 3:2 photo sits above all text. It uses the selected family's vertical coverage and photo peak. Only the final **8 CSS px** blend from that peak to **100% of the same derived colour**. The solid text area below grows with content. Captions distinguish the 90%/80% photo peak from the fully opaque boundary and text area. This is a composition helper available to A and B, not a third family.
-
-Ordinary A portraits retain the 320:471 ratio and text over the photograph. A horizontal examples use a 2:1 photo; available width below 520px selects the stack. B landscape uses 16:9 and B sides 1600:618; available width below 720px selects the stack. Two explicit mobile B examples always use it at up to 390px width. Breakpoints measure the example's available width after the sidebar. The old 3:4 portrait / 62% fade / 48px join is removed.
-
-Insufficient space or contrast selects this same stack for either family. It does not increase the opacity cap, extend the gradient, or stretch the photo to fit the copy. Once stacked, longer copy grows only the solid area. `ResizeObserver` rechecks wrapping and font changes. Words can wrap without horizontal overflow.
-
-## Sampling and legibility
-
-Both families sample the relevant **50% of the displayed photo crop**: bottom for vertical/stacked layouts, text-side edge for horizontal. An 80px-wide canvas matches `object-fit: cover` and percentage `object-position`. Original pixels only enter the sampler; overlays and text panels do not. Every fourth pixel is inspected, alpha below 128 is skipped, and weight is `0.55 + 0.9 × saturation`.
-
-The weighted RGB mean converts to HSL. Saturation uses the shared 0.95 multiplier and is clamped to 0.18–0.78. Initial lightness is `clamp(sampleLightness × 0.68, 0.08, 0.32)`. Lightness falls in 0.005 steps until the relevant contrast check reaches **7.2:1**, protecting the displayed **7:1** white-text target with a common 0.2 numerical reserve. The target is a text check, not a full-page conformance claim.
-
-For text over a photo, the check combines the actual crop with the physical gradient at each pixel behind wrapped heading/body fragments, including a 2px margin. Empty block width is excluded; spaces inside fragments remain included. The result is the minimum composited white-text contrast, not merely the solid-swatch contrast. Results cache by crop, dimensions, gradient and text regions. If even black cannot reach the reserve, all text moves below the photo and is checked against the solid colour.
-
-Derived tones vary with crop, viewport and text. Figma RGB examples are reference results, not universal colour tokens. Keep full-white text and the same final tone for the gradient and solid continuation. New crops, copy, fonts, animation or tint layers require new checks.
-
-## Photographs and failures
-
-Examples 1–3 retain `assets/figma/card-habits-2.png`, `card-women-3.png` and `card-women-1.png`. Example 4 uses `assets/card-dark-tones.png`; Example 5 uses `assets/figma/card-women-2.png` at 70%/50%; Example 6 uses `assets/card-mixed-lighting.png`. Example 7 reuses `card-women-3.png` at 50%/20%. Header examples reuse `assets/header-women-outdoors.png`. B text-right/mobile reuse `assets/community-hands.png` at 30%/50%; text-left uses `card-women-2.png` at 70%/35%. This change adds no photographs and changes no asset bytes.
-
-Successful and failed loads are cached until reload. An eight-second timeout, missing image, unreadable canvas or no usable pixels selects a safe authored tone family. Unreadable photo data is checked against a white underlay, since the visible photo may still load. Text moves below if required. Sampling uses anonymous CORS; use same-origin or permitted images. Reload retries failures. No continuous sampling, image filters, blur, hover effects, CTAs or decorative card elements are added.
-
-## Verify
-
-From the repository root:
+The managed local runner supports Save. GitHub Pages is static; Save selects config for copying and says so. Config v5 retains the four A/B coverage values, adds the target, and optionally stores validated overrides. Earlier configs adopt AA by default. Copy CSS is a snapshot at the current dimensions; it does not replace the responsive engine.
 
 ```sh
+# Only for maintainers; consumers need no build step:
+node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/build.cjs --check
+node --test reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify.cjs
+node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/engine.js
+node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/adapter.js
 node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js
-node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/settings.js
-node --check scripts/dev/play.js
-npm run lint
-npm test
+# Optional browser checks from the design-brain repo (Playwright + pngjs installed):
+node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify-browser.cjs
+node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify-render.cjs
+node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify-standalone.cjs
 git diff --check
 ```
 
-This static lab has no separate typecheck or build. The public export and shared site's three production builds are also checked. Configuration tests exercise legacy defaults, custom choices, conflicts, current-key precedence, fixed peaks, invalid input, caps and boundary space.
+Standards: [W3C AA contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [W3C AAA contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html). These are text-contrast thresholds, not whole-component accessibility certification.
 
-Browser checks cover desktop, tablet, 390px/320px phones and the sidebar breakpoint; all twelve views; all four controls; presets; local save/reload/Revert; migration and exports; white/missing/unreadable images; longer and enlarged copy; family peaks, exact dimensions, angle and finite stacked photos.
+## Additional image provenance
 
-Neutral black-gradient/white-photo fixtures verify physical geometry. At device scale 1, CSS background paint origins can round fractional layout coordinates to the nearest pixel; compare pixel centres to the painted origin, retaining the original tolerance. Separate translated fixtures verify that rounding rather than relaxing the error threshold. Clear-region gradient-on/off comparisons check unchanged pixels. Mac screenshot colours require calibration with held-out swatches and a conservative error allowance; raw screenshot bytes are not assumed to be sRGB.
+The six Healthy Living images are delivery derivatives of the original 22 October image-generation outputs. Their source checksums and dimensions are recorded in `assets/healthy-living/provenance.json`. No gradients or text from the Figma cards are baked into these images; the live component applies its own sampled colour and contrast check. Synthetic SVG calibration fields are labelled separately from photographs.

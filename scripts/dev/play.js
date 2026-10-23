@@ -354,6 +354,7 @@ async function saveAdaptiveCardSettings(request, response) {
       schema: adaptiveColourSettings.schema,
       surface: "AHA Adaptive Image Colour Lab",
       state: migrated.state,
+      overrides: migrated.overrides,
     };
     fs.writeFileSync(ADAPTIVE_CARD_CONFIG, `${JSON.stringify(payload, null, 2)}\n`);
     sendJson(response, 200, { saved: true, message: "Updated both adaptive colour families.", migrationNotes: migrated.notes });

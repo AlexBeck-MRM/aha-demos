@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Adaptive colour · Minimal integration</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="surface.css?v=aa-publish-v3">
+<style>
+body { margin:0; padding:24px; font-family:system-ui,sans-serif; background:#f5f5f4; color:#111827; }
+main { max-width:680px; margin:auto; }
+h1 { font-size:24px; }
+.demo { width:min(100%,320px); }
+label,output { display:block; margin:16px 0; }
+input[type=range] { width:min(100%,320px); }
+pre { white-space:pre-wrap; overflow-wrap:anywhere; padding:16px; background:#e8e8e5; line-height:1.5; }
+</style>
+<main>
+<h1>Minimal developer example</h1>
+<p>One browser script and the component stylesheet. No framework or build step.</p>
+<label for="contrast">White-text contrast target <output id="target">4.5:1</output></label>
+<input id="contrast" type="range" min="4.5" max="7.1" step="0.1" value="4.5">
+<div class="demo image-surface is-pending" id="example" style="--photo-position:50% 50%;--image-tone:#000;--image-tone-rgb:0 0 0">
+  <img class="image-photo" src="assets/figma/card-women-3.webp" alt="">
+  <div class="image-gradient" aria-hidden="true"></div>
+  <div class="image-content"><div class="image-copy"><h2 class="image-title">Women’s Heart Health</h2><p class="image-body">Know the signs, understand your risk, and plan ahead.</p></div></div>
+</div>
+<p id="result" role="status">Loading photograph…</p>
+<pre>const controller = attachAdaptiveColour(surface, {
+  targetContrast: 4.5,
+  onResult: showResult,
+});
+controller.update({ targetContrast: 7.1 });
+controller.refresh(); // Call after changing the crop CSS.
+controller.destroy(); // Call when the component unmounts.</pre>
+<p><a href="./">Full example gallery</a> · <a href="README.md">Developer handover</a></p>
+</main>
+<script src="adaptive-colour.min.js?v=aa-publish-v3"></script>
+<script>
+const surface = document.querySelector('#example');
+const controller = attachAdaptiveColour(surface, {
+  targetContrast: 4.5,
+  onResult(result) {
+    document.querySelector('#result').textContent = `${result.source}: ${AdaptiveColour.hex(result.rgb)} · Measured ≥ ${(Math.floor(result.contrast*100)/100).toFixed(2)}:1${result.error ? ' · '+result.error : ''}`;
+  },
+});
+document.querySelector('#contrast').addEventListener('input',event=>{
+  const targetContrast=Number(event.target.value);
+  document.querySelector('#target').textContent=`${targetContrast.toFixed(1)}:1`;
+  controller.update({targetContrast});
+});
+</script>
+</html>

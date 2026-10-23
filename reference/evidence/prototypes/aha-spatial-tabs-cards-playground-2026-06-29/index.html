@@ -6,9 +6,10 @@
     <title>AHA Adaptive Image Colour Lab</title>
     <meta name="description" content="Internal prototype for testing image-sampled colour washes that keep white text legible.">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="styles.css?v=overlay-v10">
     <link rel="stylesheet" href="../../../assets/playground-system/parameterizer.css?v=1">
     <link rel="stylesheet" href="../../../assets/playground-system/playground-header.css?v=3">
+    <link rel="stylesheet" href="surface.css?v=aa-publish-v3">
+    <link rel="stylesheet" href="styles.css?v=aa-publish-v3">
   </head>
   <body>
     <div class="prototype">
@@ -31,13 +32,29 @@
         <aside class="parameterizer-panel" aria-label="Adaptive colour controls">
           <div class="parameterizer-header">
             <div>
-              <p class="tool-label">Adaptive colour controls</p>
-              <h2>Overlay families</h2>
+              <h1>Adaptive image colour</h1>
             </div>
-            <span class="mode-readout" data-active-preset>Defaults</span>
+            <span class="mode-readout" data-target-label>AA · 4.5:1</span>
           </div>
 
-          <form class="effect-controls parameterizer-scroll" data-control-root></form>
+          <div class="parameterizer-scroll lab-controls">
+            <form class="effect-controls" data-control-root></form>
+            <details class="lab-details">
+              <summary>Colour override</summary>
+              <label class="lab-label" for="override-example">Example</label>
+              <select id="override-example" data-override-example></select>
+              <label class="lab-toggle"><input type="checkbox" data-override-enabled> Use a manual colour</label>
+              <label class="lab-colour" for="override-colour">Starting colour <input id="override-colour" type="color" value="#86715c" data-override-colour disabled></label>
+              <p>The automatic colour is the default. Overrides are darkened if needed to meet the same contrast target.</p>
+            </details>
+            <details class="lab-details">
+              <summary>How it works</summary>
+              <p>Sample the visible crop near the text. Keep its colour, then find the lightest shade that passes the selected contrast target.</p>
+              <p>Contrast is checked across the image and fade behind every line of white text. If the fade cannot pass, the text moves onto a solid colour below the image.</p>
+              <p>AA is 4.5:1; AAA is 7:1 for normal text. These checks cover text contrast, not every accessibility requirement.</p>
+              <p><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">W3C contrast guidance</a></p>
+            </details>
+          </div>
 
           <div class="parameterizer-actions" aria-label="Parameter save and export actions">
             <button class="panel-button parameterizer-button" type="button" data-save-config>Save</button>
@@ -46,14 +63,17 @@
             <button class="panel-button parameterizer-button" type="button" data-reset-config>Revert</button>
           </div>
 
-          <textarea class="config-output parameterizer-output" data-config-output rows="8" readonly aria-label="Current adaptive colour config"></textarea>
+          <details class="export-details"><summary>Current configuration</summary><textarea class="config-output parameterizer-output" data-config-output rows="8" readonly aria-label="Current adaptive colour config"></textarea></details>
           <p class="migration-status parameterizer-status" data-migration-status hidden></p>
-          <p class="copy-status parameterizer-status" data-copy-status role="status" aria-live="polite">Analysing images…</p>
+          <p class="sampling-status parameterizer-status" data-sampling-status role="status" aria-live="polite">Loading images…</p>
+          <p class="copy-status parameterizer-status" data-copy-status role="status" aria-live="polite"></p>
         </aside>
       </main>
     </div>
 
-    <script src="settings.js?v=overlay-v10"></script>
-    <script src="script.js?v=overlay-v10"></script>
+    <script src="settings.js?v=aa-publish-v3"></script>
+    <script src="adaptive-colour.min.js?v=aa-publish-v3"></script>
+    <script src="examples.js?v=aa-publish-v3"></script>
+    <script src="script.js?v=aa-publish-v3"></script>
   </body>
 </html>

@@ -1,0 +1,112 @@
+/* Component styles: independent of the gallery and host page box model. */
+.image-surface,
+.image-surface * {
+  box-sizing: border-box;
+}
+.image-surface {
+  --image-tone: #000;
+  --image-tone-rgb: 0 0 0;
+  container-type: inline-size;
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: var(--image-photo-height);
+  overflow: hidden;
+  background: var(--image-tone);
+  isolation: isolate;
+}
+
+.image-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: var(--image-photo-height);
+  object-fit: cover;
+  object-position: var(--photo-position,50% 50%);
+}
+
+.image-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: var(--image-photo-height);
+  background: var(--adaptive-gradient);
+}
+
+.image-content {
+  position: relative;
+  align-self: end;
+  padding: 24px 20px;
+  color: #fff;
+}
+
+.image-copy {
+  display: grid;
+  gap: 14px;
+  overflow-wrap: anywhere;
+}
+
+.image-title,.image-body {
+  margin: 0;
+  color: #fff;
+}
+
+.image-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.image-body {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+
+
+
+
+.image-surface[data-layout="horizontal"] .image-content {
+  width: 41.8%;
+  margin-left: auto;
+  align-self: center;
+  padding: 32px 6cqi 32px 0;
+}
+
+.image-surface[data-layout="horizontal"][data-horizontal-direction="left"] .image-content {
+  margin: 0 auto 0 0;
+  padding: 32px 0 32px 6cqi;
+}
+
+.image-surface.is-stacked {
+  display: block;
+  height: auto;
+  padding-top: var(--image-photo-height);
+}
+
+.image-surface.is-stacked .image-content {
+  width: 100%;
+  margin: 0;
+  padding: 24px;
+  background: var(--image-tone);
+}
+
+.image-surface.is-stacked .image-title {
+  font-size: 28px;
+}
+
+.image-surface.is-stacked .image-body {
+  font-size: 16px;
+}
+
+.image-surface.is-stacked .image-copy {
+  max-width: none;
+}
+
+
+.image-surface.is-pending .image-content {
+  background: #111;
+}

@@ -92,119 +92,6 @@ button,input,textarea {
   font-weight: 600;
 }
 
-.image-surface {
-  position: relative;
-  display: grid;
-  width: 100%;
-  height: var(--image-photo-height);
-  overflow: hidden;
-  background: var(--image-tone);
-  isolation: isolate;
-}
-
-.image-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: var(--image-photo-height);
-  object-fit: cover;
-  object-position: var(--photo-position,50% 50%);
-}
-
-.image-gradient {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: var(--image-photo-height);
-  background: var(--adaptive-gradient);
-}
-
-.image-content {
-  position: relative;
-  align-self: end;
-  padding: 24px 20px;
-  color: #fff;
-}
-
-.image-copy {
-  display: grid;
-  gap: 14px;
-  overflow-wrap: anywhere;
-}
-
-.image-title,.image-body {
-  margin: 0;
-  color: #fff;
-}
-
-.image-title {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.1;
-  text-wrap: balance;
-}
-
-.image-body {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
-  text-wrap: pretty;
-}
-
-.image-example-background .image-title {
-  font-size: clamp(28px,3.5cqi,42px);
-}
-
-.image-example-background .image-body {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.image-example-background .image-copy {
-  gap: 20px;
-}
-
-.image-example-background [data-layout="vertical"] .image-copy {
-  max-width: 440px;
-}
-
-[data-layout="horizontal"] .image-content {
-  width: 41.8%;
-  margin-left: auto;
-  align-self: center;
-  padding: 32px 6cqi 32px 0;
-}
-
-[data-layout="horizontal"][data-horizontal-direction="left"] .image-content {
-  margin: 0 auto 0 0;
-  padding: 32px 0 32px 6cqi;
-}
-
-.image-surface.is-stacked {
-  display: block;
-  height: auto;
-  padding-top: var(--image-photo-height);
-}
-
-.image-surface.is-stacked .image-content {
-  width: 100%;
-  margin: 0;
-  padding: 24px;
-  background: var(--image-tone);
-}
-
-.image-surface.is-stacked .image-title {
-  font-size: 28px;
-}
-
-.image-surface.is-stacked .image-body {
-  font-size: 16px;
-}
-
-.image-surface.is-stacked .image-copy {
-  max-width: none;
-}
-
 .image-analysis {
   display: flex;
   align-items: center;
@@ -287,4 +174,59 @@ button,input,textarea {
     justify-self: center;
   }
 
+}
+
+/* Rebuilt lab: keep the existing gallery and shared AHA panel. */
+.prototype { --parameterizer-muted: #b0b5be; }
+.image-analysis { align-items: flex-start; }
+.image-analysis small { font-size: 12px; line-height: 1.5; }
+.image-analysis strong { font-size: 12px; text-transform: none; }
+.image-analysis [data-reason] { color: #87351e; }
+.workspace > .parameterizer-panel { top: 8px; height: calc(100dvh - 72px); max-height: calc(100dvh - 72px); }
+.parameterizer-header h1 { font-size: 15px; line-height: 1.2; font-weight: 600; }
+.lab-controls { overflow-y: auto; min-height: 0; }
+.contrast-controls { padding: 16px 8px; }
+.contrast-heading { display: flex; justify-content: space-between; font-size: 14px; line-height: 1.4; font-weight: 600; }
+.contrast-heading output { font-variant-numeric: tabular-nums; color: #fff; }
+#targetContrast { width: 100%; min-height: 32px; margin: 8px 0 0; accent-color: #ff7180; cursor: pointer; }
+.contrast-scale { display: flex; justify-content: space-between; color: #b0b5be; font-size: 12px; line-height: 1.5; }
+.contrast-presets { display: flex; gap: 8px; margin-top: 12px; }
+.contrast-presets button { flex: 1; min-height: 32px; }
+.contrast-presets [aria-pressed="true"] { outline: 1px solid #ff7180; outline-offset: -1px; }
+.lab-details, .export-details { margin: 8px 0; border-top: 1px solid #42464e; padding: 12px 8px 0; }
+.lab-details summary, .export-details summary { cursor: pointer; font-size: 13px; line-height: 1.5; }
+.lab-details p, .contrast-controls p { margin: 10px 0 0; color: #b0b5be; font-size: 12px; line-height: 1.5; }
+.lab-details a { color: #a5d5ff; text-underline-offset: 3px; }
+.lab-label { display: block; margin-top: 14px; margin-bottom: 6px; }
+.lab-details select { width: 100%; min-height: 32px; color: #fff; background: #292c32; border: 1px solid #656c78; padding: 4px; }
+.lab-toggle, .lab-colour { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12px; line-height: 1.5; }
+.lab-colour input { margin-left: auto; width: 48px; height: 30px; padding: 2px; }
+.recheck { align-self: flex-start; margin: 0 8px; min-height: 30px; }
+.parameterizer-status { font-size: 12px; line-height: 1.5; color: #c1c6cf; }
+.parameterizer-status:empty { display: none; }
+.config-output { width: 100%; margin-top: 8px; }
+::selection { background: #c8102e; color: #fff; }
+input { accent-color: #ff7180; }
+
+@media (max-width: 1120px) {
+  .workspace > .parameterizer-panel { grid-row: 1; width: 100%; min-width: 0; height: auto; max-height: none; position: static; }
+  .lab-controls { max-height: 360px; }
+  .parameterizer-header { min-height: 42px; }
+}
+.parameterizer-panel .mode-readout { font-size:11px; }
+.parameterizer-panel .parameterizer-status { font-size:12px; line-height:1.5; white-space:normal; overflow:visible; }
+
+/* Gallery typography; not required by the reusable component. */
+.image-example-background .image-title {
+  font-size: clamp(28px,3.5cqi,42px);
+}
+.image-example-background .image-body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.image-example-background .image-copy {
+  gap: 20px;
+}
+.image-example-background [data-layout="vertical"] .image-copy {
+  max-width: 440px;
 }
