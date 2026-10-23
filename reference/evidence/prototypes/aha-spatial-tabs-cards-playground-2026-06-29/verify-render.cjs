@@ -1,4 +1,4 @@
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
+const browserType = require(process.env.PLAYWRIGHT_MODULE || "playwright")[process.env.BROWSER_ENGINE || "chromium"];
 const { PNG } = require(process.env.PNGJS_MODULE || "pngjs");
 const E = require("./engine.js");
 const assert = require("node:assert/strict");
@@ -7,7 +7,7 @@ const url = process.argv[2] || "http://127.0.0.1:4178/reference/evidence/prototy
 const qaOutput = require("node:path").resolve(process.env.QA_OUTPUT || "output/adaptive-colour-qa");
 require("node:fs").mkdirSync(qaOutput, { recursive: true });
 (async () => {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await browserType.launch({ headless: true });
   const report = [];
   try {
     for (const dpr of [1, 2]) {
@@ -19,7 +19,7 @@ require("node:fs").mkdirSync(qaOutput, { recursive: true });
         const surfaces = [...document.querySelectorAll("[data-image-id]")];
         return surfaces.length === count && surfaces.every((surface) => surface.dataset.toneSource === "automatic" && Number(surface.dataset.contrast) >= 4.5);
       }, expectedCount);
-      for (const target of [4.5, 7.1]) {
+      for (const target of [4.5, 7, 7.1]) {
         await page.locator("#targetContrast").fill(String(target));
         await page.waitForFunction((t) => [...document.querySelectorAll("[data-image-id]")].every((e) => +e.dataset.targetContrast === t), target);
         const regions = await page.locator("[data-image-id]").evaluateAll((es) => es.map((e) => ({ id: e.dataset.imageId, model: +e.dataset.contrast, rects: [...e.querySelectorAll(".image-title,.image-body")].flatMap((n) => {
@@ -39,7 +39,7 @@ require("node:fs").mkdirSync(qaOutput, { recursive: true });
         }
         await hide.evaluate((e) => e.remove());
       }
-      for (const width of [320, 390, 768, 1121, 1440]) {
+      for (const width of (process.env.SKIP_RESPONSIVE ? [] : [320, 390, 768, 1121, 1440])) {
         await page.setViewportSize({ width, height: 1e3 });
         await page.waitForTimeout(150);
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `overflow ${width}`);

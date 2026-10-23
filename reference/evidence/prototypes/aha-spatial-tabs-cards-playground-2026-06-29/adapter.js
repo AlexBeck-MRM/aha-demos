@@ -1,7 +1,8 @@
-/* Component lifecycle. Production delivery combines this file with engine.js. */
+/* Component lifecycle. Gallery fixture only; combines with gradient-colour.js for the examples. */
 (function (root) {
   "use strict";
-  const colour = root.AdaptiveColour;
+  const colour = root.GradientColour;
+  const hex = (rgb) => `#${rgb.map((channel) => channel.toString(16).padStart(2, "0")).join("")}`;
   const IMAGE_TIMEOUT_MS = 8000;
 
   function validateOptions(options) {
@@ -55,8 +56,10 @@
     validateOptions(options);
     let frame = 0;
     let destroyed = false;
-    let sampleCache;
-    let fieldCache;
+    let analysis;
+    let analysisKey = "";
+    let revision = 0;
+    let imageRevision = 0;
     let observed = "";
     let loadingExpired = false;
     let loadTimeout;
@@ -104,54 +107,58 @@
 
     function readRegions(bounds) {
       const range = document.createRange();
-      return [...text.children].flatMap((node) => {
+      const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT);
+      const regions = [];
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (!node.textContent.trim()) continue;
+        const style = getComputedStyle(node.parentElement);
+        if (style.color !== "rgb(255, 255, 255)") throw new Error("unsupported-text-style");
+        for (let parent = node.parentElement; parent; parent = parent.parentElement) {
+          const paint = getComputedStyle(parent);
+          if (Number(paint.opacity) !== 1 || paint.filter !== "none" || paint.mixBlendMode !== "normal" || paint.transform !== "none") throw new Error("unsupported-text-style");
+          if (parent === surface) break;
+        }
         range.selectNodeContents(node);
-        return [...range.getClientRects()].map((rect) => ({
-          left: Math.max(0, rect.left - bounds.left - 2),
-          top: Math.max(0, rect.top - bounds.top - 2),
-          right: Math.min(bounds.width, rect.right - bounds.left + 2),
-          bottom: Math.min(bounds.height, rect.bottom - bounds.top + 2),
-        })).filter((rect) => rect.right > rect.left && rect.bottom > rect.top);
-      });
-    }
-
-    function gradientFor(bounds, stacked) {
-      return colour.gradientModel({
-        width: bounds.width,
-        height: bounds.height,
-        coverage: stacked ? (options.stackedCoverage ?? options.coverage) : options.coverage,
-        opacity: options.opacity,
-        direction: stacked ? null : options.direction,
-        stacked,
-      });
+        for (const rect of range.getClientRects()) {
+          if (!rect.width || !rect.height) continue;
+          const left = rect.left - bounds.left, top = rect.top - bounds.top;
+          const right = rect.right - bounds.left, bottom = rect.bottom - bounds.top;
+          if (left < 0 || top < 0 || right > bounds.width || bottom > bounds.height) throw new Error("unsupported-text-area");
+          // Clip only the additional safety padding; never discard actual text.
+          regions.push({ left: Math.max(0, left - 2), top: Math.max(0, top - 2), right: Math.min(bounds.width, right + 2), bottom: Math.min(bounds.height, bottom + 2) });
+        }
+      }
+      return regions;
     }
 
     function measure(stacked) {
       const bounds = image.getBoundingClientRect();
       const position = readPosition();
+      for (const node of [surface, image, text, content]) {
+        const style = getComputedStyle(node);
+        if (style.filter !== "none" || style.mixBlendMode !== "normal" || Number(style.opacity) !== 1 || style.transform !== "none") throw new Error("unsupported-rendering");
+      }
       const edge = !stacked && options.direction ? options.direction : "bottom";
-      const sampleKey = JSON.stringify([image.currentSrc || image.src, bounds.width, bounds.height, position, edge]);
-      if (sampleCache?.key !== sampleKey) {
-        sampleCache = { key: sampleKey, rgb: colour.sampleColour(image, bounds, position, edge) };
+      const gradient = {
+        coverage: stacked ? (options.stackedCoverage ?? options.coverage) : options.coverage,
+        opacity: options.opacity,
+        direction: stacked ? null : options.direction,
+        stacked,
+      };
+      const density = Math.max(2, window.devicePixelRatio || 1);
+      const regions = stacked ? undefined : readRegions(bounds);
+      const phase = [bounds.left, bounds.top].map((value) => value * density - Math.floor(value * density));
+      const key = JSON.stringify([imageRevision, image.currentSrc || image.src, bounds.width, bounds.height, phase, position, edge, gradient, regions, density, stacked]);
+      let preparedNow = false;
+      if (!analysis || key !== analysisKey) {
+        analysis = colour.prepare({ image, imageRect: bounds, objectPosition: position, sampleEdge: edge, gradient, textRects: regions, density, mode: stacked ? "solid" : "overlay", revision: ++revision, imageRevision });
+        analysisKey = key;
+        preparedNow = true;
       }
-      const model = gradientFor(bounds, stacked);
-      surface.style.setProperty("--adaptive-gradient", colour.gradientCss(model));
-      let check = colour.whiteContrast;
-      if (stacked) {
-        // Solid text has no photograph behind it; retain no high-density pixel data.
-        fieldCache = null;
-      } else {
-        const density = Math.max(2, window.devicePixelRatio || 1);
-        const regions = readRegions(bounds);
-        const phase = [bounds.left, bounds.top].map((position) => position * density - Math.floor(position * density));
-        const fieldKey = JSON.stringify([sampleKey, phase, regions, model, density]);
-        if (fieldCache?.key !== fieldKey) {
-          const crop = colour.readTextPixels(image, bounds, position, regions, density);
-          fieldCache = { key: fieldKey, field: colour.contrastField(crop, regions, model) };
-        }
-        check = (rgb, minimum) => colour.contrastAgainstPhoto(fieldCache.field, rgb, minimum);
-      }
-      return { sample: sampleCache.rgb, check };
+      if (!analysis.ok) throw new Error(analysis.reason);
+      surface.style.setProperty("--adaptive-gradient", analysis.gradientCss);
+      return { analysis, preparedNow };
     }
 
     function fits() {
@@ -183,58 +190,54 @@
       }
       let sample = options.fallback;
       let source = "automatic";
-      let result;
+      let result, measured;
+      let overlayFailure = "";
       try {
-        if (!image.complete || !image.naturalWidth) {
-          throw new Error(loadingExpired && !image.complete
-            ? "Image loading timed out. Reload the page to retry."
-            : "The photograph could not be loaded. Reload the page to retry.");
-        }
-        let measured = measure(stacked);
-        sample = measured.sample;
-        result = colour.solveTone(options.override || sample, options.targetContrast, measured.check);
-        if (!result.passes) {
+        if (!image.complete || !image.naturalWidth) throw new Error(loadingExpired && !image.complete ? "image-loading-timeout" : "image-load-failed");
+        measured = measure(stacked);
+        sample = measured.analysis.sample;
+        result = measured.analysis.solve({ targetContrast: options.targetContrast, startingColour: options.override });
+        if (!result.ok) {
+          overlayFailure = result.reason;
           stacked = true;
-          reason = "contrast";
+          reason = result.reason === "insufficient-safety-margin" ? "margin" : "contrast";
           setLayout(true);
           measured = measure(true);
-          sample = measured.sample;
-          result = colour.solveTone(options.override || sample, options.targetContrast);
+          sample = measured.analysis.sample;
+          result = measured.analysis.solve({ targetContrast: options.targetContrast, startingColour: options.override });
         }
       } catch (failure) {
-        error = `${failure.name}: ${failure.message}`;
+        error = failure.message;
         source = "fallback";
         stacked = true;
         reason = "image";
-        fieldCache = null;
+        analysis = null;
         setLayout(true);
-        surface.style.setProperty("--adaptive-gradient", colour.gradientCss(gradientFor(image.getBoundingClientRect(), true)));
-        result = colour.solveTone(options.override || sample, options.targetContrast);
+        const safe = colour.prepare({ mode: "solid", colour: options.override || sample, revision: ++revision });
+        result = safe.solve({ targetContrast: options.targetContrast });
+        measured = { analysis: safe, preparedNow: true };
       }
-      if (options.override) {
-        source = "override";
-      }
-      surface.style.setProperty("--image-tone", colour.hex(result.rgb));
+      if (options.override) source = "override";
+      const verified = !["unsupported-text-style", "unsupported-rendering"].includes(error);
+      surface.style.setProperty("--image-tone", hex(result.rgb));
       surface.style.setProperty("--image-tone-rgb", result.rgb.join(" "));
       surface.classList.remove("is-pending");
       Object.assign(surface.dataset, {
-        toneSource: source,
-        sampleTone: colour.hex(sample),
-        autoTone: colour.hex(result.rgb),
-        contrast: String(result.contrast),
-        targetContrast: String(options.targetContrast),
-        fallbackReason: reason,
-        sampleEdge: stacked || !options.direction ? "bottom" : options.direction,
-        error,
+        toneSource: source, sampleTone: hex(sample), autoTone: hex(result.rgb),
+        contrast: verified ? String(result.contrast) : "", verification: verified ? "verified" : "unverified", targetContrast: String(options.targetContrast),
+        fallbackReason: reason, sampleEdge: stacked || !options.direction ? "bottom" : options.direction,
+        error, calculationVersion: "2", calculationRevision: String(result.revision), overlayFailure,
       });
       observed = fingerprint();
-      options.onResult?.({ ...result, sample, source, stacked, reason, error, duration: performance.now() - started });
+      const metrics = { ...measured.analysis.metrics, reused: !measured.preparedNow };
+      if (!measured.preparedNow) { metrics.sampleReads = 0; metrics.pixelReads = 0; metrics.prepareMs = 0; }
+      options.onResult?.({ ...result, ok: verified && result.ok, passes: verified && result.ok, verified, sample, source, stacked, reason, error, overlayFailure, metrics, duration: performance.now() - started });
     }
 
     function refresh({ retry = false } = {}) {
       if (retry) {
-        sampleCache = null;
-        fieldCache = null;
+        analysis = null;
+        analysisKey = "";
       }
       if (!destroyed && !frame) {
         frame = requestAnimationFrame(render);
@@ -250,21 +253,23 @@
     resized.observe(text);
     resized.observe(image);
     const edited = new MutationObserver((mutations) => {
-      const sourceChanged = mutations.some((mutation) => mutation.target === image);
+      const sourceChanged = mutations.some((mutation) => mutation.target === image && ["src", "srcset", "sizes"].includes(mutation.attributeName));
       if (sourceChanged) {
+        imageRevision++;
         surface.classList.add("is-pending");
         startLoadingDeadline();
       }
-      refresh({ retry: sourceChanged });
+      refresh({ retry: true });
     });
-    edited.observe(text, { childList: true, characterData: true, subtree: true });
-    edited.observe(image, { attributes: true, attributeFilter: ["src", "srcset", "sizes"] });
+    edited.observe(text, { childList: true, characterData: true, subtree: true, attributes: true });
+    edited.observe(image, { attributes: true, attributeFilter: ["src", "srcset", "sizes", "class", "style"] });
     const imageSettled = () => {
+      imageRevision++;
       clearTimeout(loadTimeout);
       loadingExpired = false;
       refresh({ retry: true });
     };
-    const fontsChanged = () => refresh();
+    const fontsChanged = () => refresh({ retry: true });
     image.addEventListener("load", imageSettled);
     image.addEventListener("error", imageSettled);
     window.addEventListener("resize", refresh);
@@ -300,8 +305,8 @@
         image.removeEventListener("error", imageSettled);
         window.removeEventListener("resize", refresh);
         document.fonts?.removeEventListener("loadingdone", fontsChanged);
-        sampleCache = null;
-        fieldCache = null;
+        analysis = null;
+        analysisKey = "";
       },
     };
   }

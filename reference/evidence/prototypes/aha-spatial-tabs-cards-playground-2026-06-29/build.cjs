@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const directory = __dirname;
-const sources = ["engine.js", "adapter.js"].map((name) => fs.readFileSync(path.join(directory, name), "utf8"));
+const sources = ["gradient-colour.js", "adapter.js"].map((name) => fs.readFileSync(path.join(directory, name), "utf8"));
 const source = sources.join("\n");
 const checksum = crypto.createHash("sha256").update(source).digest("hex");
 const banner = `/* Adaptive image colour. Source SHA256: ${checksum} */
@@ -38,4 +38,10 @@ for (const [filename, minify] of [["adaptive-colour.js", false], ["adaptive-colo
     fs.writeFileSync(destination, code);
   }
 }
+const coreSource = fs.readFileSync(path.join(directory, "gradient-colour.js"), "utf8");
+const coreDelivery = compiler.transformSync(coreSource, { loader: "js", target: "es2020", charset: "utf8", legalComments: "none", minify: true }).code;
+const corePath = path.join(directory, "gradient-colour.min.js");
+if (process.argv.includes("--check")) {
+  if (fs.readFileSync(corePath, "utf8") !== coreDelivery) throw new Error("gradient-colour.min.js is stale.");
+} else fs.writeFileSync(corePath, coreDelivery);
 console.log(process.argv.includes("--check") ? "Browser delivery matches the maintained sources." : "Generated readable and minified single-file browser deliveries.");

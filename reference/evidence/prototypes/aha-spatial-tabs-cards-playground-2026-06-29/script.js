@@ -1,4 +1,7 @@
-const colourEngine = AdaptiveColour;
+const colourEngine = {
+  hex: (rgb) => `#${rgb.map((channel) => channel.toString(16).padStart(2, "0")).join("")}`,
+  fromHex: (value) => [1, 3, 5].map((start) => parseInt(value.slice(start, start + 2), 16)),
+};
 const settings = AdaptiveColourSettings;
 const root = document.querySelector("[data-image-row]");
 const controlsRoot = document.querySelector("[data-control-root]");
@@ -61,12 +64,12 @@ function showResult(card, surface, result) {
   figure.querySelector("[data-sample]").textContent = result.error ? `Image pixels unavailable · Authored fallback ${colourEngine.hex(result.sample).toUpperCase()}` : `${surface.dataset.sampleEdge === "bottom" ? "Bottom" : surface.dataset.sampleEdge === "right" ? "Right" : "Left"} 50% · Sample ${colourEngine.hex(result.sample).toUpperCase()}`;
   const measured = Math.floor(result.contrast * 100) / 100;
   const level = result.contrast >= 7 ? "AAA" : result.contrast >= 4.5 ? "AA" : "Below AA";
-  figure.querySelector("[data-contrast-readout]").textContent = `${level} · Measured ≥ ${measured.toFixed(2)}:1 · Target ${state.targetContrast.toFixed(1)}:1${result.stacked ? " · Solid text panel" : " · Photo + fade"}`;
+  figure.querySelector("[data-contrast-readout]").textContent = result.verified === false ? "Unverified rendering · Review unsupported text or image effects" : `${level} · Measured ≥ ${measured.toFixed(2)}:1 · Target ${state.targetContrast.toFixed(1)}:1${result.stacked ? " · Solid text panel" : " · Photo + fade"}`;
   const reason = figure.querySelector("[data-reason]");
-  reason.textContent = result.error || (result.reason === "contrast" ? "Text moved below: the photo fade could not meet this target." : result.reason === "space" ? "Text moved below to fit the copy." : "");
+  reason.textContent = result.error || (result.reason === "contrast" ? "Test fallback: the photo fade could not meet this target." : result.reason === "margin" ? "Test fallback: the overlay misses the numerical safety margin." : result.reason === "space" ? "Test fallback: text moved below to fit the sample copy." : "");
   reason.hidden = !reason.textContent;
   const failed = [...results.values()].filter((value) => value.error).length;
-  samplingStatus.textContent = `${results.size - failed}/${cards.length} images sampled${failed ? ` · ${failed} using a checked solid fallback. Recheck image access, or reload the page to retry failed downloads.` : results.size === cards.length ? ". All text meets the selected target." : ". Loading remaining images…"}`;
+  samplingStatus.textContent = `${results.size - failed}/${cards.length} images sampled${failed ? ` · ${failed} need review. Checked solid fallbacks are used for image-access failures.` : results.size === cards.length ? ". All text meets the selected target." : ". Loading remaining images…"}`;
 }
 function renderControls() {
   controlsRoot.innerHTML = `
@@ -75,7 +78,7 @@ function renderControls() {
       <input id="targetContrast" type="range" min="4.5" max="7.1" step="0.1" value="${state.targetContrast}" data-control="targetContrast" aria-describedby="contrast-help">
       <div class="contrast-scale"><span>4.5:1 · AA</span><span>7:1 · AAA</span></div>
       <div class="contrast-presets"><button type="button" class="parameterizer-button" data-target="4.5">AA · 4.5:1</button><button type="button" class="parameterizer-button" data-target="7">AAA · 7:1</button></div>
-      <p id="contrast-help">Updates every example live. Finds the lightest passing shade towards black. A 0.02 margin covers numerical rounding.</p>
+      <p id="contrast-help">Updates every example live. Finds the lightest passing shade towards black. A 0.02 numerical margin and one 8-bit pixel step allow for tested browser paint differences.</p>
     </section>
     ${["A", "B"].map((family) => `<details class="parameterizer-folder image-type-controls" open>
       <summary class="parameterizer-folder-title">${imageGroupTitles[family]} <span>${settings.photoPeaks[family] * 100}%</span></summary>

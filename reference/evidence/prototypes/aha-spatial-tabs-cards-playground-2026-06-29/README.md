@@ -1,101 +1,89 @@
-# Adaptive image colour
+# Image gradient colour — developer handover
 
-A browser demo of automatic photo-derived colour with white-text contrast checks. All twelve original examples, source photos, copy and focal positions are retained. Six Healthy Living still-life photographs created on 22 October and six labelled synthetic extreme-image tests bring the gallery to 24 examples. The synthetic tests cover pure white, near-black, neutral grey, black/white detail, bright colours and a small white hotspot. Optimised WebP derivatives reduce the eight photo downloads from 27.9 MB to 4.3 MB; original PNGs are kept. Default: **4.5:1 (AA)**. Live control: **4.5–7.1:1**. AAA normal-text contrast begins at **7:1**.
+This is a test of the colour calculation over an image. The cards already have their own design. You do not need to copy their markup, layout or stylesheet.
 
-## Developer handover
+The bit to take is **gradient-colour.min.js**. It is one dependency-free browser file. **gradient-colour.js** is its readable source. Its API has two calls: `prepare()` and `solve()`.
 
-Open `integration.html` for a runnable, one-card implementation. Copy **adaptive-colour.min.js** and **surface.css**. The readable **adaptive-colour.js** is included for inspection; **engine.js** and **adapter.js** are maintained source files, not separate browser requests. The gallery, controls, example data, config migration and local server are demo utilities; a product does not need them.
+## What actually happens
 
-```html
-<link rel="stylesheet" href="surface.css">
-<div class="image-surface is-pending" id="card" style="--photo-position:50% 50%">
-  <img class="image-photo" src="photo.jpg" alt="">
-  <div class="image-gradient" aria-hidden="true"></div>
-  <div class="image-content">
-    <div class="image-copy">
-      <h2 class="image-title">Heading</h2>
-      <p class="image-body">Supporting text.</p>
-    </div>
-  </div>
-</div>
-<script src="adaptive-colour.min.js"></script>
-```
+1. **Pick a starting colour.** The script makes a small copy of the visible image crop. It averages the bottom half, or the left/right half nearest the text. This is an average, not a median.
+2. **Check where the text sits.** The component supplies the rectangles for every text line. The script reads the image pixels behind those rectangles and works out how the supplied gradient mixes with them. It checks the brightest resulting background against opaque white text.
+3. **Darken only as far as needed.** If the starting colour passes, it stays. Otherwise the script searches the RGB shades between that colour and black. It returns the lightest shade on that path that passes the conservative check, including a 0.02 numerical allowance and one extra 8-bit step per composited channel for tested browser paint differences. The returned ratio comes from a complete scan of that final shade.
+
+The small image copy picks the colour. The more detailed text-area pixels check contrast. They have different jobs.
+
+## The two calls
 
 ```js
-const controller = attachAdaptiveColour(document.querySelector('#card'), {
-  targetContrast: 4.5,
-  // Defaults: bottom half, portrait crop, 60% fade coverage, 90% peak.
-  onResult(result) {
-    // result.source: automatic | override | fallback
-    // result.contrast: unrounded worst-case ratio
-    // result.error: actual image-reading error, if present
-  },
+const ready = GradientColour.prepare({
+  image,                         // Loaded HTMLImageElement; use its current source.
+  imageRect: image.getBoundingClientRect(),
+  objectPosition: [0.5, 0.5],     // The same cover crop as the component.
+  sampleEdge: "bottom",          // Or "left" / "right".
+  textRects: measuredLines,       // {left, top, right, bottom}, relative to the image.
+  gradient: { coverage: 0.6, opacity: 0.9, direction: null },
+  revision: layoutRevision,
+  imageRevision: sourceRevision,
 });
-controller.update({ targetContrast: 7.1 });
-controller.update({ override: [130, 90, 60] }); // Still contrast-checked.
-controller.update({ override: null }); // Resume automatic colour.
-controller.refresh(); // After changing object-position or other crop CSS.
-controller.destroy(); // On component unmount.
+
+if (ready.ok) {
+  const result = ready.solve({ targetContrast: 4.5 });
+  if (result.ok) {
+    gradientLayer.style.backgroundImage = ready.gradientCss;
+    gradientLayer.style.setProperty("--image-tone-rgb", result.rgb.join(" "));
+  } else {
+    showApprovedFallback(result.reason);
+  }
+} else {
+  showApprovedFallback(ready.reason);
+}
 ```
 
-## What the engine does
+`measuredLines`, the revision counters, the layer and `showApprovedFallback` belong to your component. They are integration inputs, not hidden services. See `integration.html` for a small working example.
 
-1. Read the displayed `<img>` and its current source. Reproduce its actual `object-fit: cover` crop and two percentage `object-position` values.
-2. Average the bottom 50%, or the left/right 50% nearest the text. A small 80px-wide copy is sufficient for this representative colour. Alpha weights exclude transparent pixels. There is no saturation boost or minimum saturation that could tint a grey image.
-3. Read only the union of the text areas at a minimum analysis density of 2 pixels per CSS pixel, or the device pixel ratio when higher. Preserve the full-photo cover transform and device-pixel phase when drawing this bounded area. The small colour sample never substitutes for this check. Solid text panels skip photo contrast readback entirely.
-4. Measure each wrapped heading/body line, including a 2px safety boundary. One physical gradient-stop model drives the CSS fade and pixel analysis.
-5. Check composited photo and fade pixels against white. If the sampled colour already passes, use it. Otherwise binary-search the lightest passing colour along its RGB path towards black. Reject a failing candidate immediately; scan the final rounded colour completely to report its actual worst contrast. The selected target has a disclosed 0.02 numerical margin.
-6. If even black cannot make the existing fade pass, or the copy does not fit, put all text on a fully opaque colour below the photo. If image reading fails, also use this solid fallback and report the actual error.
+Only the target changed? Reuse `ready.solve({targetContrast: 7})`. An optional editor override is `startingColour: [130, 90, 60]`; it goes through the same contrast check. Editors should get automatic colour by default, with an override only when needed.
 
-The pending state immediately reserves the image space and keeps text on a solid dark background until checked. Colour sampling is cached separately from contrast, so target changes never resample the image. Pixel fields use one typed allocation and do not retain canvas backing stores.
+## Your component owns these things
 
-The process darkens only as much as needed. It does not lighten a naturally dark sampled colour, so some examples need no change between AA and AAA. Contrast is conservative over text-line rectangles, including spaces, rather than individual glyph outlines. It is a browser-paint model, independently checked against screenshots; it does not claim full accessibility conformance.
+- Measure all visible text lines after fonts and layout settle. The gallery adds 2px around each line. Do not omit a heading, label or link that needs checking.
+- Prepare again when the image, crop, image size, text, fonts, text positions, device-pixel ratio or gradient settings change. Increment `imageRevision` when the source pixels change, even if the URL is reused. Revision is returned so stale asynchronous work can be discarded.
+- Keep only the latest prepared result per component; it retains the text-area pixel field. Release it on unmount.
+- Keep an approved readable pending/error state. If even black cannot make the chosen fade pass, `solve()` returns `ok:false` and no RGB. Your component chooses its approved fallback. The engine does not move text, redesign a card or change the fade to hide a failure.
 
-## Integration limits
+Invalid arguments throw `TypeError` or `RangeError`. Image loading, denied pixel access and unsupported image/text areas return `ok:false` with a reason. A miss of the 0.02 allowance is labelled separately from a miss of the requested contrast.
 
-- Use **white text**, `object-fit: cover`, and two percentage positions such as `70% 35%`. This small adapter deliberately does not parse every CSS crop syntax.
-- Use same-origin images, or CORS-enabled images with the image's `crossorigin` attribute configured **before loading**. The engine creates no second image request. `srcset`/`currentSrc`, image loading, font changes, copy changes and resizes trigger refreshes. Call `refresh()` after other style changes that do not alter dimensions.
-- Keep text free of independent opacity and keep photo filters, extra tint layers, blend modes and motion outside this contract. Those change the pixels and need corresponding checks.
-- Options `aspect`, `direction` (`left`/`right`/null), `stacked`, `coverage`, `stackedCoverage`, and `opacity` describe the existing layout. The demo's A/B mapping is outside the engine. Every stacked layout uses vertical coverage; its final 8px join reaches the solid colour.
-- Manual override sets a starting colour, not a bypass of the contrast guard. Keep automatic selection as the editor default.
+## Supported rendering
 
-## Files
+Use opaque **sRGB** images, opaque white text, normal compositing, `object-fit:cover`, and matching percentage focal positions. Use the returned `gradientCss` so the calculation and painted fade share the same stops. Extra tint layers, filters, blend modes, opacity, transparent images, animated images and unrestricted wide-gamut assets need separate support and tests. Normalise production assets to sRGB before expanding this contract.
 
-| File | Responsibility |
-| --- | --- |
-| `adaptive-colour.min.js` | One browser request; no runtime dependencies |
-| `adaptive-colour.js` | Readable version of the same delivery |
-| `engine.js` | Maintained sampling, crop, gradient and contrast source |
-| `adapter.js` | One component controller; image, text, resize and font lifecycle |
-| `surface.css` | Required component styling; no demo dependencies |
-| `integration.html` | Minimal runnable developer example |
-| `examples.js` | The 24 examples (12 original, 6 Healthy Living, 6 synthetic tests) |
-| `script.js` | Gallery and side controls, diagnostics, save/export |
-| `settings.js` | Validated demo config and migration to v5 |
-| `verify.cjs` | Behavioural checks, final contrast, bounded coordinates and bundle checksum |
-| `verify-standalone.cjs` | Independent stylesheet, one-script delivery and fractional-DPR paint checks |
-| `build.cjs` | Development-only deterministic delivery generation |
+Use same-origin images or correctly configured CORS. Set `crossorigin` before loading. A canvas cannot read an image when the image server refuses access. No second image request is made.
 
-## Saving and verification
+Default density is at least two analysis pixels per CSS pixel, or device density when higher. Overlapping line rectangles are checked once. Reads are bounded to the text area, with a 4-million-pixel guard. Target-only changes read no new image pixels. The calculation is synchronous: test it in the actual component on target phones before making a performance claim.
 
-The managed local runner supports Save. GitHub Pages is static; Save selects config for copying and says so. Config v5 retains the four A/B coverage values, adds the target, and optionally stores validated overrides. Earlier configs adopt AA by default. Copy CSS is a snapshot at the current dimensions; it does not replace the responsive engine.
+The default target is **4.5:1** for AA normal text. **7:1** is AAA normal text; the demo also allows **7.1:1**. These are text-contrast checks, not certification of the whole component. Rectangle checks include spaces; the result is the lightest passing shade on this RGB path under this conservative model, not a universal optical minimum.
+
+For an existing approved solid text panel, use explicit `mode:"solid"` with `colour:[r,g,b]`. Never substitute that check for text over a photograph.
+
+## What is just the demo?
+
+The gallery keeps all **24 examples**: 12 original, six Healthy Living photographs and six synthetic stress tests. `adapter.js`, `surface.css`, `script.js`, `settings.js` and `examples.js` run those fixtures and controls. Their existing stacked/solid fallback demonstrates one option. It is not a card design instruction.
+
+`adaptive-colour.min.js` combines the engine with that gallery controller. Products that need only the calculation should use the smaller `gradient-colour.min.js`. `engine.js` remains a legacy reference; it is not the v2 source.
+
+## Build and check
+
+Consumers can use the supplied minified file without a build step. Maintainers need Node, esbuild, Playwright and pngjs. Commands below run from this folder; module-path environment variables can point to an existing installation.
 
 ```sh
-# Only for maintainers; consumers need no build step:
-node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/build.cjs --check
-node --test reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify.cjs
-node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/engine.js
-node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/adapter.js
-node --check reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/script.js
-# Optional browser checks from the design-brain repo (Playwright + pngjs installed):
-node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify-browser.cjs
-node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify-render.cjs
-node reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/verify-standalone.cjs
-git diff --check
+node build.cjs --check
+node --test verify-gradient.cjs verify.cjs
+node verify-browser.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
+node verify-render.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
+node verify-standalone.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
 ```
 
-Standards: [W3C AA contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [W3C AAA contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html). These are text-contrast thresholds, not whole-component accessibility certification.
+`verify-gradient.cjs` checks the v2 public contract, independent exhaustive shade comparisons, failure states, overlap union, cache invalidation and gradient stop order. `verify.cjs` retains legacy/config regression checks and the bundle checksum. Screenshot checks measure the painted background with text hidden, rather than trusting the engine's own reported ratio. See `VERIFICATION.md` for this release's results and limits.
 
-## Additional image provenance
+Healthy Living source provenance is in `assets/healthy-living/provenance.json`. The synthetic calibration fields are labelled separately from photographs.
 
-The six Healthy Living images are delivery derivatives of the original 22 October image-generation outputs. Their source checksums and dimensions are recorded in `assets/healthy-living/provenance.json`. No gradients or text from the Figma cards are baked into these images; the live component applies its own sampled colour and contrast check. Synthetic SVG calibration fields are labelled separately from photographs.
+Standards: [W3C AA normal-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [W3C AAA normal-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html). Compare unrounded ratios.

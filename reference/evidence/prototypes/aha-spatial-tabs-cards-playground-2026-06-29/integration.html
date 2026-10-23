@@ -2,51 +2,98 @@
 <html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Adaptive colour · Minimal integration</title>
+<title>Image gradient calculation — small developer example</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="surface.css?v=aa-publish-v3">
 <style>
-body { margin:0; padding:24px; font-family:system-ui,sans-serif; background:#f5f5f4; color:#111827; }
-main { max-width:680px; margin:auto; }
-h1 { font-size:24px; }
-.demo { width:min(100%,320px); }
-label,output { display:block; margin:16px 0; }
-input[type=range] { width:min(100%,320px); }
-pre { white-space:pre-wrap; overflow-wrap:anywhere; padding:16px; background:#e8e8e5; line-height:1.5; }
+body{margin:0;padding:24px;font:16px/1.5 system-ui,sans-serif;background:#f5f5f4;color:#172026}main{max-width:720px;margin:auto}h1{font-size:26px}label,output{display:block;margin:12px 0}input[type=range]{width:min(100%,320px)}pre{padding:16px;background:#e8e8e5;white-space:pre-wrap;overflow-wrap:anywhere}.fixture{position:relative;width:min(100%,320px);height:440px;overflow:hidden;background:#111;color:white}.fixture img,.fade{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}.copy{position:absolute;left:20px;right:20px;bottom:20px;background:#111;padding:8px}.fixture.is-ready .copy{background:transparent}.copy h2{font-size:24px;line-height:1.15;margin:0 0 10px}.copy p{margin:0;font-size:16px}.fade{background:transparent}
 </style>
 <main>
-<h1>Minimal developer example</h1>
-<p>One browser script and the component stylesheet. No framework or build step.</p>
-<label for="contrast">White-text contrast target <output id="target">4.5:1</output></label>
+<h1>The colour calculation, on its own</h1>
+<p>This is a small test fixture. Your cards keep their own design. The only production file here is <a href="gradient-colour.js">gradient-colour.js</a> (or its <a href="gradient-colour.min.js">minified version</a>).</p>
+<p><strong>Prepare</strong> reads the visible photo crop and the pixels behind the text. <strong>Solve</strong> picks a colour that keeps white text readable. Change the target below: the prepared pixels are reused.</p>
+<label for="contrast">Contrast target <output id="target">4.5:1</output></label>
 <input id="contrast" type="range" min="4.5" max="7.1" step="0.1" value="4.5">
-<div class="demo image-surface is-pending" id="example" style="--photo-position:50% 50%;--image-tone:#000;--image-tone-rgb:0 0 0">
-  <img class="image-photo" src="assets/figma/card-women-3.webp" alt="">
-  <div class="image-gradient" aria-hidden="true"></div>
-  <div class="image-content"><div class="image-copy"><h2 class="image-title">Women’s Heart Health</h2><p class="image-body">Know the signs, understand your risk, and plan ahead.</p></div></div>
+<div class="fixture" id="example">
+<img id="photo" src="assets/figma/card-women-3.webp" alt="">
+<div class="fade" id="fade" aria-hidden="true"></div>
+<div class="copy" id="copy"><h2>Women’s Heart Health</h2><p>Know the signs, understand your risk, and plan ahead.</p></div>
 </div>
 <p id="result" role="status">Loading photograph…</p>
-<pre>const controller = attachAdaptiveColour(surface, {
-  targetContrast: 4.5,
-  onResult: showResult,
+<pre>const ready = GradientColour.prepare({
+  image, imageRect, textRects,
+  gradient: { coverage: 0.9, opacity: 1 },
+  revision, imageRevision,
 });
-controller.update({ targetContrast: 7.1 });
-controller.refresh(); // Call after changing the crop CSS.
-controller.destroy(); // Call when the component unmounts.</pre>
-<p><a href="./">Full example gallery</a> · <a href="README.md">Developer handover</a></p>
+if (ready.ok) {
+  const result = ready.solve({ targetContrast: 4.5 });
+  // Check result.ok before applying result.rgb.
+  // Apply ready.gradientCss to the same image-sized layer.
+}</pre>
+<p>The small colour sample is an average of the bottom half of the visible crop. The contrast check uses detailed pixels behind every measured text line. It keeps the starting colour if it passes, or selects the lightest passing RGB shade towards black, with a 0.02 numerical allowance and a one-step pixel guard for tested browser paint differences.</p>
+<p>The inline code below this page supplies the test layout and measurements. The engine supplies no card CSS, observers or fallback design. Automatic colour is the editor default; an optional starting-colour override still goes through the same check.</p>
+<p><a href="README.md">Plain-language guide</a> · <a href="developer-handover.zip">Download handover</a> · <a href="./">All 24 examples</a> · <a href="VERIFICATION.md">Test results</a></p>
 </main>
-<script src="adaptive-colour.min.js?v=aa-publish-v3"></script>
+<script src="gradient-colour.min.js?v=prepare-solve-v2"></script>
 <script>
+// Fixture integration only. Existing components should supply their own lifecycle.
 const surface = document.querySelector('#example');
-const controller = attachAdaptiveColour(surface, {
-  targetContrast: 4.5,
-  onResult(result) {
-    document.querySelector('#result').textContent = `${result.source}: ${AdaptiveColour.hex(result.rgb)} · Measured ≥ ${(Math.floor(result.contrast*100)/100).toFixed(2)}:1${result.error ? ' · '+result.error : ''}`;
-  },
-});
-document.querySelector('#contrast').addEventListener('input',event=>{
-  const targetContrast=Number(event.target.value);
-  document.querySelector('#target').textContent=`${targetContrast.toFixed(1)}:1`;
-  controller.update({targetContrast});
-});
+const image = document.querySelector('#photo');
+const copy = document.querySelector('#copy');
+const layer = document.querySelector('#fade');
+const control = document.querySelector('#contrast');
+const status = document.querySelector('#result');
+let ready, revision = 0, imageRevision = 0, frame = 0;
+function showResult() {
+  const targetContrast = Number(control.value);
+  document.querySelector('#target').textContent = `${targetContrast.toFixed(1)}:1`;
+  if (!ready?.ok) { surface.dataset.toneSource = 'unverified'; delete surface.dataset.contrast; status.textContent = ready?.reason || 'Waiting for image'; return; }
+  const result = ready.solve({ targetContrast });
+  if (!result.ok) {
+    surface.classList.remove('is-ready');
+    surface.dataset.toneSource = 'unverified';
+    delete surface.dataset.contrast;
+    status.textContent = `Use an approved fallback: ${result.reason}`;
+    return;
+  }
+  layer.style.backgroundImage = ready.gradientCss;
+  layer.style.setProperty('--image-tone-rgb', result.rgb.join(' '));
+  surface.classList.add('is-ready');
+  Object.assign(surface.dataset, { toneSource:'automatic', targetContrast, contrast:result.contrast });
+  status.textContent = `automatic: ${result.rgb.join(', ')} · checked ${(Math.floor(result.contrast*100)/100).toFixed(2)}:1`;
+}
+function prepare() {
+  frame = 0;
+  surface.classList.remove('is-ready');
+  const imageRect = image.getBoundingClientRect();
+  const range = document.createRange();
+  const textRects = [];
+  for (const node of copy.children) {
+    range.selectNodeContents(node);
+    for (const rect of range.getClientRects()) {
+      if (!rect.width || !rect.height) continue;
+      const left = rect.left-imageRect.left, top = rect.top-imageRect.top;
+      const right = rect.right-imageRect.left, bottom = rect.bottom-imageRect.top;
+      if (left < 0 || top < 0 || right > imageRect.width || bottom > imageRect.height) {
+        ready = {ok:false, reason:'unsupported-text-area'};
+        showResult();
+        return;
+      }
+      // Clip the added padding only; never omit actual text.
+      textRects.push({left:Math.max(0,left-2), top:Math.max(0,top-2),
+        right:Math.min(imageRect.width,right+2), bottom:Math.min(imageRect.height,bottom+2)});
+    }
+  }
+  ready = GradientColour.prepare({image, imageRect, textRects,
+    gradient:{coverage:0.9, opacity:1}, revision:++revision, imageRevision});
+  showResult();
+}
+function refresh() { if (!frame) frame = requestAnimationFrame(prepare); }
+control.addEventListener('input', showResult);
+image.addEventListener('load', () => { imageRevision++; refresh(); });
+image.addEventListener('error', refresh);
+new ResizeObserver(refresh).observe(surface);
+document.fonts?.addEventListener('loadingdone', refresh);
+document.fonts?.ready.then(refresh);
+refresh();
 </script>
 </html>

@@ -67,7 +67,7 @@ test("single-file browser delivery matches its sources and exposes the component
   const fs = require("node:fs");
   const path = require("node:path");
   const crypto = require("node:crypto");
-  const source = ["engine.js", "adapter.js"].map((name) => fs.readFileSync(path.join(__dirname, name), "utf8")).join("\n");
+  const source = ["gradient-colour.js", "adapter.js"].map((name) => fs.readFileSync(path.join(__dirname, name), "utf8")).join("\n");
   const checksum = crypto.createHash("sha256").update(source).digest("hex");
   const bundle = fs.readFileSync(path.join(__dirname, "adaptive-colour.min.js"), "utf8");
   assert.ok(bundle.includes(`Source SHA256: ${checksum}`));

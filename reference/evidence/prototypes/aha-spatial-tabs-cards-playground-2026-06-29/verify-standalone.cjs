@@ -14,7 +14,7 @@ async function run() {
     const page = await browser.newPage({ viewport: { width: 1000, height: 1000 }, deviceScaleFactor: 2.5 });
     const requests = [];
     page.on("request", (request) => requests.push(request.url()));
-    await page.goto(`${url}integration.html`);
+    await page.goto(`${url}component-fixture.html`);
     await page.waitForFunction(() => document.querySelector("#example").dataset.toneSource === "automatic");
     assert.equal(requests.some((request) => /\/styles\.css/.test(request)), false);
     assert.equal(requests.filter((request) => /\.js\?/.test(request)).length, 1);
