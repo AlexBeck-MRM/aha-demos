@@ -7,10 +7,18 @@ The bit to take is **gradient-colour.min.js**. It is one dependency-free browser
 ## What actually happens
 
 1. **Pick a starting colour.** The script makes a small copy of the visible image crop. It averages the bottom half, or the left/right half nearest the text. This is an average, not a median.
+
 2. **Check where the text sits.** The component supplies the rectangles for every text line. The script reads the image pixels behind those rectangles and works out how the supplied gradient mixes with them. It checks the brightest resulting background against opaque white text.
 3. **Darken only as far as needed.** If the starting colour passes, it stays. Otherwise the script searches the RGB shades between that colour and black. It returns the lightest shade on that path that passes the conservative check, including a 0.02 numerical allowance and one extra 8-bit step per composited channel for tested browser paint differences. The returned ratio comes from a complete scan of that final shade.
 
 The small image copy picks the colour. The more detailed text-area pixels check contrast. They have different jobs.
+
+Before checking contrast, the automatic starting colour gets a modest **12% HSV
+saturation increase** at the same maximum RGB channel value. The calculation keeps
+neutral greys neutral and caps the increase before a channel would clip. The raw
+image sample remains available separately. Explicit editor overrides and authored
+solid fallback colours are not boosted.
+
 
 ## The two calls
 
@@ -68,7 +76,55 @@ For an existing approved solid text panel, use explicit `mode:"solid"` with `col
 
 The gallery keeps all **24 examples**: 12 original, six Healthy Living photographs and six synthetic stress tests. `adapter.js`, `surface.css`, `script.js`, `settings.js` and `examples.js` run those fixtures and controls. Their existing stacked/solid fallback demonstrates one option. It is not a card design instruction.
 
-`adaptive-colour.min.js` combines the engine with that gallery controller. Products that need only the calculation should use the smaller `gradient-colour.min.js`. `engine.js` remains a legacy reference; it is not the v2 source.
+`adaptive-colour.min.js` combines the engine with that gallery controller. Products that need only the calculation should use the smaller `gradient-colour.min.js`.
+
+## Developer reading order and standards review (27 October 2026)
+
+Start with `gradient-colour.js` for the calculation. Read `adapter.js` for text measurement,
+cache invalidation and fallbacks, then `script.js` for gallery controls. `integration.html`
+is the smallest working example.
+
+The review uses concrete web standards rather than a blanket coding-style certificate:
+
+- WCAG 2.2 text contrast: keep the existing 4.5:1 AA and 7:1 AAA thresholds, unrounded
+  comparisons, per-line composite checks and separate fallback. The 0.02 allowance is
+  an implementation guard, not an extra WCAG requirement.
+- Fixed a false-positive check: stacked/solid layouts now validate opaque white text,
+  including nested text, before reporting a verified contrast result. Unsupported
+  text paint remains explicitly unverified and needs an approved component treatment.
+- Replaced two `Array.prototype.at()` calls with indexed access. This avoids requiring
+  an ES2022 array API in the core's ES2020-targeted delivery; compilation alone does
+  not polyfill browser APIs. This does not promise support for all ES2020 browsers:
+  Canvas, observers and explicit sRGB gradient interpolation still need validation.
+- The small example now gives its contrast slider a spoken ratio value. Existing
+  labels, status regions, keyboard controls and focus styling remain in place.
+- Added comments explaining ownership, sampling, luminance, shade search, caches and
+  lifecycle. Gallery HTML templates contain trusted fixtures; escape CMS content in
+  the actual integration. Keep user-authored content out of raw `innerHTML` templates.
+
+Sitecore integration changes the authoring/data flow. Upload-time processing can store
+starting colours and an image revision. Final contrast still depends on each actual
+crop, gradient, text, font and layout. A card and page-title image can share an image
+while requiring different final shades. The current browser engine needs DOM/canvas
+inputs; it is not a backend image-upload plugin.
+
+Confirm the actual Sitecore edition, media source and crop/rendering stack before
+selecting event hooks. Upload-time processing is optional: the browser calculation
+can run directly when the chosen image renders in the component.
+
+## Readable source layout (27 October 2026)
+
+The source now starts with its main flow. In `gradient-colour.js`, read `prepare()`,
+then `createSolver()`. Image preparation, gradient geometry, text-pixel collection
+and exact shade enumeration follow as named private helpers. In `adapter.js`,
+read `render()`, `calculateColour()` and `paintResult()` before the measurement
+and observer details. The gallery separates markup, readouts, controls and export
+handlers. The small example expands its HTML, CSS and integration steps.
+
+`adaptive-colour.js` now keeps the commented sources verbatim. Use it when reading
+or debugging; the production `.min.js` files still come from the existing build.
+The public calls and supported rendering contract are unchanged. The pixel buffer,
+quantised shade ordering, conservative rounding and cache checks remain deliberate.
 
 ## Build and check
 
@@ -82,7 +138,7 @@ node verify-render.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-s
 node verify-standalone.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
 ```
 
-`verify-gradient.cjs` checks the v2 public contract, independent exhaustive shade comparisons, failure states, overlap union, cache invalidation and gradient stop order. `verify.cjs` retains legacy/config regression checks and the bundle checksum. Screenshot checks measure the painted background with text hidden, rather than trusting the engine's own reported ratio. See `VERIFICATION.md` for this release's results and limits.
+`verify-gradient.cjs` checks the v2 public contract, independent exhaustive shade comparisons, failure states, overlap union, cache invalidation and gradient stop order. `verify.cjs` checks configuration migration and the bundle checksum. Screenshot checks measure the painted background with text hidden, rather than trusting the engine's own reported ratio. See `VERIFICATION.md` for this release's results and limits.
 
 Healthy Living source provenance is in `assets/healthy-living/provenance.json`. The synthetic calibration fields are labelled separately from photographs.
 

@@ -3,7 +3,19 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const { PNG } = require(process.env.PNGJS_MODULE || "pngjs");
-const colour = require("./engine.js");
+// Independent WCAG calculation for screenshot pixels. Prepare the 256 channel
+// values once; a rendered check can visit millions of pixels.
+const linearChannels = Array.from({ length: 256 }, (_, channel) => {
+  const value = channel / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+});
+function whiteContrast([red, green, blue]) {
+  const luminance = linearChannels[red] * 0.2126
+    + linearChannels[green] * 0.7152
+    + linearChannels[blue] * 0.0722;
+  return 1.05 / (luminance + 0.05);
+}
+
 const url = process.argv[2] || "http://127.0.0.1:4178/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/";
 const output = path.resolve(process.env.QA_OUTPUT || "output/adaptive-colour-qa");
 
@@ -38,7 +50,7 @@ async function run() {
         for (let y = Math.floor(rect.top * 2.5); y < Math.ceil(rect.bottom * 2.5); y++) {
           for (let x = Math.floor(rect.left * 2.5); x < Math.ceil(rect.right * 2.5); x++) {
             const index = (y * screenshot.width + x) * 4;
-            contrast = Math.min(contrast, colour.whiteContrast([screenshot.data[index], screenshot.data[index + 1], screenshot.data[index + 2]]));
+            contrast = Math.min(contrast, whiteContrast([screenshot.data[index], screenshot.data[index + 1], screenshot.data[index + 2]]));
           }
         }
       }

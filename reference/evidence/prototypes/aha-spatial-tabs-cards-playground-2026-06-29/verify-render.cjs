@@ -1,6 +1,18 @@
 const browserType = require(process.env.PLAYWRIGHT_MODULE || "playwright")[process.env.BROWSER_ENGINE || "chromium"];
 const { PNG } = require(process.env.PNGJS_MODULE || "pngjs");
-const E = require("./engine.js");
+// Independent WCAG calculation for screenshot pixels. Prepare the 256 channel
+// values once; a rendered check can visit millions of pixels.
+const linearChannels = Array.from({ length: 256 }, (_, channel) => {
+  const value = channel / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+});
+function whiteContrast([red, green, blue]) {
+  const luminance = linearChannels[red] * 0.2126
+    + linearChannels[green] * 0.7152
+    + linearChannels[blue] * 0.0722;
+  return 1.05 / (luminance + 0.05);
+}
+
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const url = process.argv[2] || "http://127.0.0.1:4178/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/";
@@ -33,7 +45,7 @@ require("node:fs").mkdirSync(qaOutput, { recursive: true });
           let ratio = 21;
           for (const r of region.rects) for (let y = Math.max(0, Math.floor(r.y * dpr)); y < Math.min(png.height, Math.ceil((r.y + r.h) * dpr)); y++) for (let x = Math.max(0, Math.floor(r.x * dpr)); x < Math.min(png.width, Math.ceil((r.x + r.w) * dpr)); x++) {
             const i = (y * png.width + x) * 4;
-            ratio = Math.min(ratio, E.whiteContrast([png.data[i], png.data[i + 1], png.data[i + 2]]));
+            ratio = Math.min(ratio, whiteContrast([png.data[i], png.data[i + 1], png.data[i + 2]]));
           }
           report.push({ dpr, target, id: region.id, model: region.model, rendered: ratio, pass: ratio >= target });
         }

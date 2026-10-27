@@ -22,13 +22,16 @@ if (!compiler) {
   throw new Error("Regeneration requires esbuild (development only). Install the existing demo dependencies or set ESBUILD_MODULE.");
 }
 for (const [filename, minify] of [["adaptive-colour.js", false], ["adaptive-colour.min.js", true]]) {
-  const code = banner + compiler.transformSync(source, {
+  // Keep the development delivery identical to the commented source. Only the
+  // production delivery is transformed/minified; readers should not debug a
+  // compiler's rewritten function names and expressions.
+  const code = banner + (minify ? compiler.transformSync(source, {
     loader: "js",
     target: "es2020",
     charset: "utf8",
     legalComments: "none",
     minify
-  }).code;
+  }).code : source);
   const destination = path.join(directory, filename);
   if (process.argv.includes("--check")) {
     if (fs.readFileSync(destination, "utf8") !== code) {

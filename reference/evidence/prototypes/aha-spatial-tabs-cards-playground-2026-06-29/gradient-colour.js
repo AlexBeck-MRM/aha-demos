@@ -1,263 +1,601 @@
-/* Image-gradient calculation v2. No component styles, layout changes or observers. */
+/**
+ * Adaptive gradient colour, version 2.
+ *
+ * prepare() reads the visible image crop and the pixels behind the text.
+ * The returned solve() method finds a passing colour without reading pixels again.
+ *
+ * Supported paint: opaque sRGB image, opaque white text, normal compositing,
+ * object-fit: cover and the same focal position/gradient as the rendered image.
+ * The calling component owns text measurement, loading and readable fallbacks.
+ */
 (function (root) {
   "use strict";
-  const MARGIN = 0.02;
+
+  const CONTRAST_MARGIN = 0.02;
   const SAMPLE_WIDTH = 80;
-  const MAX_PIXELS = 4000000;
-  const samples = new WeakMap();
-  const linear = Array.from({ length: 256 }, (_, channel) => {
+  const AUTOMATIC_SATURATION = 1.12;
+  const MAX_ANALYSIS_PIXELS = 4000000;
+  const sampleCache = new WeakMap();
+
+  // Convert encoded 8-bit sRGB to linear-light values for relative luminance.
+  const linearChannels = Array.from({ length: 256 }, (_, channel) => {
     const value = channel / 255;
-    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+    if (value <= 0.04045) {
+      return value / 12.92;
+    }
+    return ((value + 0.055) / 1.055) ** 2.4;
   });
-  const now = () => typeof performance === "undefined" ? Date.now() : performance.now();
-  const finite = (value) => Number.isFinite(value);
-  const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
+
+  /**
+   * Public entry point: validate -> read image/text pixels -> return a reusable solver.
+   * Bad arguments throw. Unavailable image data returns { ok: false, reason }.
+   * Rectangles use CSS pixels relative to the displayed image's top-left.
+   */
+  function prepare(input) {
+    const mode = validatePreparationInput(input);
+    const metrics = {
+      sampleReads: 0,
+      pixelReads: 0,
+      checkedPixels: 0,
+      fieldBytes: 0,
+      readbackBytes: 0,
+    };
+    const started = now();
+    let data;
+    try {
+      data = readPreparationData(input, mode, metrics);
+    } catch (error) {
+      if (error instanceof TypeError || error instanceof RangeError) {
+        throw error;
+      }
+      const pixelFailure = error.name === "SecurityError"
+        ? "pixel-access-denied"
+        : "pixel-access-unavailable";
+      return unavailable(error.reason || pixelFailure, input.revision);
+    }
+    if (data.ok === false) {
+      return data;
+    }
+
+    const sample = Object.freeze([...data.startingColour]);
+    const defaultColour = input.image ? increaseSaturation(sample) : sample;
+    metrics.prepareMs = now() - started;
+    return Object.freeze({
+      ok: true,
+      version: 2,
+      mode,
+      revision: input.revision,
+      sample,
+      gradientCss: data.gradient?.css ?? null,
+      metrics: Object.freeze(metrics),
+      solve: createSolver(defaultColour, data.field, mode, input.revision),
+    });
+  }
+
+  // Add a little colour before contrast solving. This increases HSV saturation
+  // at the same maximum channel value, preserving hue and avoiding channel clipping.
+  // Neutral greys stay neutral; already fully saturated colours stay unchanged.
+  function increaseSaturation(rgb) {
+    const maximum = Math.max(...rgb);
+    const spread = maximum - Math.min(...rgb);
+    if (spread === 0) {
+      return [...rgb];
+    }
+    const factor = Math.min(AUTOMATIC_SATURATION, maximum / spread);
+    return rgb.map((channel) => Math.round(maximum - (maximum - channel) * factor));
+  }
+
+  function createSolver(defaultColour, field, mode, revision) {
+    let cachedShades;
+    let cachedStartingColour = "";
+    const measure = field
+      ? (rgb, required) => checkContrastField(field, rgb, required)
+      : whiteContrast;
+
+    return function solve({ targetContrast = 4.5, startingColour } = {}) {
+      if (!Number.isFinite(targetContrast) || targetContrast < 4.5 || targetContrast > 7.1) {
+        throw new RangeError("Contrast must be between 4.5 and 7.1.");
+      }
+      const original = startingColour ?? defaultColour;
+      validateRGB(original);
+      const requiredContrast = targetContrast + CONTRAST_MARGIN;
+
+      function finish(rgb, contrast = measure(rgb)) {
+        const ok = contrast >= requiredContrast;
+        let reason = "";
+        if (!ok) {
+          reason = contrast >= targetContrast ? "insufficient-safety-margin" : "insufficient-contrast";
+        }
+        const result = {
+          version: 2,
+          mode,
+          revision,
+          targetContrast,
+          requiredContrast,
+          margin: CONTRAST_MARGIN,
+          ok,
+          contrast,
+          reason,
+        };
+        if (ok) {
+          result.rgb = Object.freeze([...rgb]);
+        }
+        return Object.freeze(result);
+      }
+
+      // A passing threshold scan visited every pixel, so its measurement is complete.
+      const originalContrast = measure(original, requiredContrast);
+      if (originalContrast >= requiredContrast) {
+        return finish(original, originalContrast);
+      }
+      const blackContrast = measure([0, 0, 0], requiredContrast);
+      if (blackContrast < requiredContrast) {
+        // Even black cannot protect this text area. Report the full scan and no RGB.
+        return finish([0, 0, 0]);
+      }
+
+      const startingKey = original.join(",");
+      if (startingKey !== cachedStartingColour) {
+        cachedShades = enumerateShades(original);
+        cachedStartingColour = startingKey;
+      }
+      const passing = findLightestPassingShade(cachedShades, measure, requiredContrast, blackContrast);
+      return finish(passing.rgb, passing.contrast);
+    };
+  }
+
+
+  // The first shade (black) passes; the last (the original colour) fails.
+  function findLightestPassingShade(shades, measure, requiredContrast, blackContrast) {
+    let passingIndex = 0;
+    let failingIndex = shades.length - 1;
+    let passingContrast = blackContrast;
+    while (failingIndex - passingIndex > 1) {
+      const middle = Math.floor((passingIndex + failingIndex) / 2);
+      const contrast = measure(shades[middle], requiredContrast);
+      if (contrast >= requiredContrast) {
+        passingIndex = middle;
+        passingContrast = contrast;
+      } else {
+        failingIndex = middle;
+      }
+    }
+    return { rgb: shades[passingIndex], contrast: passingContrast };
+  }
+
+  function now() {
+    return typeof performance === "undefined" ? Date.now() : performance.now();
+  }
+
+  function clamp(value, minimum, maximum) {
+    return Math.min(maximum, Math.max(minimum, value));
+  }
+
+  function validatePreparationInput(input) {
+    if (!input || typeof input !== "object") {
+      throw new TypeError("Supply calculation inputs.");
+    }
+    const mode = input.mode ?? "overlay";
+    if (!["overlay", "solid"].includes(mode)) {
+      throw new TypeError("Mode must be overlay or explicitly solid.");
+    }
+    const { revision } = input;
+    const validRevisionType = ["string", "number"].includes(typeof revision);
+    if (!validRevisionType || (typeof revision === "number" && !Number.isFinite(revision))) {
+      throw new TypeError("Supply a finite input revision.");
+    }
+    if (input.colour !== undefined) {
+      validateRGB(input.colour);
+      if (mode === "overlay") {
+        throw new TypeError("Pass an editor colour to solve, not overlay preparation.");
+      }
+    }
+    return mode;
+  }
+
+  function readPreparationData(input, mode, metrics) {
+    const { image, imageRect: bounds, revision, imageRevision = revision } = input;
+    if (!image) {
+      if (mode === "overlay") {
+        throw new TypeError("Overlay calculation requires the loaded image and every text region.");
+      }
+      if (!input.colour) {
+        throw new TypeError("An explicit solid calculation needs a starting colour.");
+      }
+      return { startingColour: input.colour };
+    }
+    if (!image.complete) {
+      return unavailable("image-not-ready", revision);
+    }
+    if (!image.naturalWidth || !image.naturalHeight) {
+      return unavailable("image-load-failed", revision);
+    }
+
+    const validBounds = bounds
+      && [bounds.left, bounds.top, bounds.width, bounds.height].every(Number.isFinite)
+      && bounds.width > 0 && bounds.height > 0;
+    if (!validBounds) {
+      throw new TypeError("Supply the displayed image rectangle.");
+    }
+    const position = input.objectPosition ?? [0.5, 0.5];
+    const validPosition = Array.isArray(position) && position.length === 2
+      && position.every((value) => Number.isFinite(value) && value >= 0 && value <= 1);
+    if (!validPosition) {
+      throw new TypeError("Use two focal-position fractions between 0 and 1.");
+    }
+    const edge = input.sampleEdge ?? "bottom";
+    if (!["bottom", "left", "right"].includes(edge)) {
+      throw new TypeError("Sample edge must be bottom, left or right.");
+    }
+
+    const startingColour = sampleStartingColour(image, bounds, position, edge, imageRevision, metrics);
+    const gradient = buildGradientModel(bounds.width, bounds.height, input.gradient);
+    let field;
+    if (mode === "overlay") {
+      const deviceDensity = typeof window === "undefined" ? 1 : window.devicePixelRatio || 1;
+      const density = input.density ?? Math.max(2, deviceDensity);
+      if (!Number.isFinite(density) || density < 1) {
+        throw new RangeError("Analysis density must be at least one pixel per CSS pixel.");
+      }
+      field = prepareContrastField(image, bounds, position, input.textRects, density, gradient, metrics);
+    }
+    return { startingColour, gradient, field };
+  }
 
   function validateRGB(rgb) {
-    if (!Array.isArray(rgb) || rgb.length !== 3 || !rgb.every((value) => Number.isInteger(value) && value >= 0 && value <= 255)) {
+    const validChannel = (value) => Number.isInteger(value) && value >= 0 && value <= 255;
+    if (!Array.isArray(rgb) || rgb.length !== 3 || !rgb.every(validChannel)) {
       throw new TypeError("Use three integer RGB channels between 0 and 255.");
     }
   }
+
   function unavailable(reason, revision) {
     return Object.freeze({ ok: false, reason, revision, version: 2 });
   }
+
   function fail(reason) {
     const error = new Error(reason);
     error.reason = reason;
     throw error;
   }
-  function context(canvas) {
-    const result = canvas.getContext("2d", { willReadFrequently: true, colorSpace: "srgb" });
-    if (!result) fail("pixel-access-unavailable");
-    return result;
+
+  function getCanvasContext(canvas) {
+    const context = canvas.getContext("2d", {
+      willReadFrequently: true,
+      colorSpace: "srgb",
+    });
+    if (!context) {
+      fail("pixel-access-unavailable");
+    }
+    return context;
   }
-  function draw(context2d, image, width, height, position) {
+
+  // Reproduce object-fit: cover, including the component's focal position.
+  function drawCoverCrop(context, image, width, height, position) {
     const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
-    const w = image.naturalWidth * scale, h = image.naturalHeight * scale;
-    context2d.drawImage(image, (width - w) * position[0], (height - h) * position[1], w, h);
+    const drawnWidth = image.naturalWidth * scale;
+    const drawnHeight = image.naturalHeight * scale;
+    const left = (width - drawnWidth) * position[0];
+    const top = (height - drawnHeight) * position[1];
+    context.drawImage(image, left, top, drawnWidth, drawnHeight);
   }
-  function sample(image, bounds, position, edge, imageRevision, metrics) {
+
+  // This small average suggests a colour. It does not establish text contrast.
+  function sampleStartingColour(image, bounds, position, edge, imageRevision, metrics) {
     const width = SAMPLE_WIDTH;
     const height = Math.max(1, Math.round(width * bounds.height / bounds.width));
-    if (width * height > MAX_PIXELS) fail("unsupported-image-area");
-    const key = JSON.stringify([imageRevision, image.currentSrc || image.src, bounds.width / bounds.height, width, height, position, edge]);
-    const cached = samples.get(image);
-    if (cached?.key === key) return [...cached.rgb];
+    if (width * height > MAX_ANALYSIS_PIXELS) {
+      fail("unsupported-image-area");
+    }
+
+    const cacheKey = JSON.stringify([
+      imageRevision,
+      image.currentSrc || image.src,
+      bounds.width / bounds.height,
+      width,
+      height,
+      position,
+      edge,
+    ]);
+    const cached = sampleCache.get(image);
+    if (cached?.key === cacheKey) {
+      return [...cached.rgb];
+    }
+
     const canvas = document.createElement("canvas");
-    canvas.width = width; canvas.height = height;
+    canvas.width = width;
+    canvas.height = height;
     try {
-      const ctx = context(canvas);
-      draw(ctx, image, width, height, position);
-      const x = edge === "right" ? Math.floor(width / 2) : 0;
-      const y = edge === "bottom" ? Math.floor(height / 2) : 0;
-      const w = edge === "left" ? Math.ceil(width / 2) : width - x;
-      const pixels = ctx.getImageData(x, y, w, height - y).data;
-      const rgb = [0, 0, 0];
-      for (let i = 0; i < pixels.length; i += 4) {
-        if (pixels[i + 3] !== 255) fail("unsupported-transparency");
-        for (let c = 0; c < 3; c++) rgb[c] += pixels[i + c];
+      const context = getCanvasContext(canvas);
+      drawCoverCrop(context, image, width, height, position);
+
+      // Read the bottom, left or right half nearest the text.
+      const left = edge === "right" ? Math.floor(width / 2) : 0;
+      const top = edge === "bottom" ? Math.floor(height / 2) : 0;
+      const sampleWidth = edge === "left" ? Math.ceil(width / 2) : width - left;
+      const pixels = context.getImageData(left, top, sampleWidth, height - top).data;
+      const totals = [0, 0, 0];
+
+      for (let index = 0; index < pixels.length; index += 4) {
+        if (pixels[index + 3] !== 255) {
+          fail("unsupported-transparency");
+        }
+        for (let channel = 0; channel < 3; channel++) {
+          totals[channel] += pixels[index + channel];
+        }
       }
-      const result = rgb.map((value) => Math.round(value / (pixels.length / 4)));
-      samples.set(image, { key, rgb: result });
+
+      const pixelCount = pixels.length / 4;
+      const rgb = totals.map((total) => Math.round(total / pixelCount));
+      sampleCache.set(image, { key: cacheKey, rgb });
       metrics.sampleReads++;
-      return [...result];
-    } finally { canvas.width = 0; canvas.height = 0; }
+      return [...rgb];
+    } finally {
+      canvas.width = 0;
+      canvas.height = 0;
+    }
   }
-  function gradientModel(width, height, settings) {
-    if (!settings || !finite(settings.coverage) || settings.coverage <= 0 || settings.coverage > 1
-      || !finite(settings.opacity) || settings.opacity < 0 || settings.opacity > 1
-      || ![null, "left", "right"].includes(settings.direction ?? null)) {
+
+  // The CSS paint and contrast calculation must use these same stops.
+  function buildGradientModel(width, height, settings) {
+    const validCoverage = settings && Number.isFinite(settings.coverage)
+      && settings.coverage > 0 && settings.coverage <= 1;
+    const validOpacity = settings && Number.isFinite(settings.opacity)
+      && settings.opacity >= 0 && settings.opacity <= 1;
+    const direction = settings?.direction ?? null;
+    if (!validCoverage || !validOpacity || ![null, "left", "right"].includes(direction)) {
       throw new RangeError("Use a supported gradient direction, coverage and opacity.");
     }
-    const direction = settings.direction ?? null;
-    const angle = direction ? (direction === "right" ? 120 : 240) : 180;
-    const dx = Math.sin(angle * Math.PI / 180), dy = -Math.cos(angle * Math.PI / 180);
-    const length = Math.abs(width * dx) + Math.abs(height * dy);
-    const start = direction ? (1 - settings.coverage) * width * Math.abs(dx) + height * Math.abs(dy) / 2 : (1 - settings.coverage) * height;
-    const span = direction ? settings.coverage * width * Math.abs(dx) : settings.coverage * height;
-    let stops = [[0, 0], [0.2, 0.15], [0.4, 0.8], [0.8, 1], [1, 1]]
-      .map(([position, alpha]) => [start + position * span, alpha * settings.opacity]);
-    if (settings.stacked) stops = [...stops.slice(0, -1), [height - 8, settings.opacity], [height, 1]];
-    let previous = -Infinity;
-    stops = stops.map(([position, opacity]) => { previous = Math.max(previous, position); return [previous, opacity]; });
-    const css = `linear-gradient(${angle}deg in srgb, ${stops.map(([position, alpha]) => `rgb(var(--image-tone-rgb) / ${alpha}) ${position}px`).join(", ")})`;
-    return { width, height, dx, dy, length, stops, css };
-  }
-  function alpha(model, x, y) {
-    const distance = (x - model.width / 2) * model.dx + (y - model.height / 2) * model.dy + model.length / 2;
-    if (distance <= model.stops[0][0]) return model.stops[0][1];
-    for (let i = 1; i < model.stops.length; i++) {
-      const [end, endAlpha] = model.stops[i], [start, startAlpha] = model.stops[i - 1];
-      if (distance <= end) return startAlpha + (endAlpha - startAlpha) * (distance - start) / (end - start);
+
+    let angle = 180;
+    if (direction === "right") {
+      angle = 120;
+    } else if (direction === "left") {
+      angle = 240;
     }
-    return model.stops.at(-1)[1];
+    const radians = angle * Math.PI / 180;
+    const directionX = Math.sin(radians);
+    const directionY = -Math.cos(radians);
+    const length = Math.abs(width * directionX) + Math.abs(height * directionY);
+
+    let start = (1 - settings.coverage) * height;
+    let span = settings.coverage * height;
+    if (direction) {
+      start = (1 - settings.coverage) * width * Math.abs(directionX)
+        + height * Math.abs(directionY) / 2;
+      span = settings.coverage * width * Math.abs(directionX);
+    }
+
+    const fadeStops = [[0, 0], [0.2, 0.15], [0.4, 0.8], [0.8, 1], [1, 1]];
+    let stops = fadeStops.map(([position, opacity]) => [
+      start + position * span,
+      opacity * settings.opacity,
+    ]);
+    if (settings.stacked) {
+      stops = [...stops.slice(0, -1), [height - 8, settings.opacity], [height, 1]];
+    }
+
+    // CSS clamps a stop that precedes its neighbour. Match that rule here.
+    let previousPosition = -Infinity;
+    stops = stops.map(([position, opacity]) => {
+      previousPosition = Math.max(previousPosition, position);
+      return [previousPosition, opacity];
+    });
+    const cssStops = stops.map(([position, opacity]) => {
+      return `rgb(var(--image-tone-rgb) / ${opacity}) ${position}px`;
+    });
+    const css = `linear-gradient(${angle}deg in srgb, ${cssStops.join(", ")})`;
+    return { width, height, directionX, directionY, length, stops, css };
   }
-  function prepareField(image, bounds, position, regions, density, model, metrics) {
-    if (!Array.isArray(regions) || !regions.length) throw new TypeError("Supply every text-line rectangle.");
+
+  function gradientOpacityAt(model, x, y) {
+    const distance = (x - model.width / 2) * model.directionX
+      + (y - model.height / 2) * model.directionY
+      + model.length / 2;
+    if (distance <= model.stops[0][0]) {
+      return model.stops[0][1];
+    }
+
+    for (let index = 1; index < model.stops.length; index++) {
+      const [end, endOpacity] = model.stops[index];
+      const [start, startOpacity] = model.stops[index - 1];
+      if (distance <= end) {
+        return startOpacity + (endOpacity - startOpacity) * (distance - start) / (end - start);
+      }
+    }
+    return model.stops[model.stops.length - 1][1];
+  }
+
+  function validateTextRegions(regions, bounds) {
+    if (!Array.isArray(regions) || !regions.length) {
+      throw new TypeError("Supply every text-line rectangle.");
+    }
     for (const region of regions) {
-      if (!region || ![region.left, region.top, region.right, region.bottom].every(finite)
-        || region.right <= region.left || region.bottom <= region.top) throw new TypeError("Text rectangles must be finite and non-empty.");
-      if (region.left < 0 || region.top < 0 || region.right > bounds.width || region.bottom > bounds.height) fail("unsupported-text-area");
+      const finiteEdges = region
+        && [region.left, region.top, region.right, region.bottom].every(Number.isFinite);
+      if (!finiteEdges || region.right <= region.left || region.bottom <= region.top) {
+        throw new TypeError("Text rectangles must be finite and non-empty.");
+      }
+      if (region.left < 0 || region.top < 0
+        || region.right > bounds.width || region.bottom > bounds.height) {
+        fail("unsupported-text-area");
+      }
     }
+  }
+
+  function getReadbackArea(bounds, regions, density) {
+    // Retain the image's fractional device-pixel alignment when reading a smaller area.
     const offsetX = bounds.left - Math.floor(bounds.left * density) / density;
     const offsetY = bounds.top - Math.floor(bounds.top * density) / density;
-    const originX = Math.floor((Math.min(...regions.map((r) => r.left)) + offsetX) * density);
-    const originY = Math.floor((Math.min(...regions.map((r) => r.top)) + offsetY) * density);
-    const width = Math.ceil((Math.max(...regions.map((r) => r.right)) + offsetX) * density) - originX;
-    const height = Math.ceil((Math.max(...regions.map((r) => r.bottom)) + offsetY) * density) - originY;
-    if (width * height > MAX_PIXELS) fail("unsupported-image-area");
+    const originX = Math.floor((Math.min(...regions.map((region) => region.left)) + offsetX) * density);
+    const originY = Math.floor((Math.min(...regions.map((region) => region.top)) + offsetY) * density);
+    const width = Math.ceil((Math.max(...regions.map((region) => region.right)) + offsetX) * density) - originX;
+    const height = Math.ceil((Math.max(...regions.map((region) => region.bottom)) + offsetY) * density) - originY;
+    if (width * height > MAX_ANALYSIS_PIXELS) {
+      fail("unsupported-image-area");
+    }
+    return { offsetX, offsetY, originX, originY, width, height };
+  }
+
+  // Merge overlapping intervals on each row, so overlapping text is checked once.
+  function mergeTextRows(regions, area, density) {
+    const { offsetX, offsetY, originX, originY, width, height } = area;
     const rows = Array.from({ length: height }, () => []);
     for (const region of regions) {
       const left = clamp(Math.floor((region.left + offsetX) * density) - originX, 0, width);
       const right = clamp(Math.ceil((region.right + offsetX) * density) - originX, 0, width);
       const top = clamp(Math.floor((region.top + offsetY) * density) - originY, 0, height);
       const bottom = clamp(Math.ceil((region.bottom + offsetY) * density) - originY, 0, height);
-      for (let y = top; y < bottom; y++) rows[y].push([left, right]);
-    }
-    let count = 0;
-    const merged = rows.map((spans) => {
-      spans.sort((a, b) => a[0] - b[0]);
-      const union = [];
-      for (const span of spans) {
-        const last = union.at(-1);
-        if (last && span[0] <= last[1]) last[1] = Math.max(last[1], span[1]);
-        else union.push([...span]);
+      for (let y = top; y < bottom; y++) {
+        rows[y].push([left, right]);
       }
-      for (const [left, right] of union) count += right - left;
-      return union;
+    }
+
+    let pixelCount = 0;
+    const mergedRows = rows.map((spans) => {
+      spans.sort((first, second) => first[0] - second[0]);
+      const merged = [];
+      for (const span of spans) {
+        const previous = merged[merged.length - 1];
+        if (previous && span[0] <= previous[1]) {
+          previous[1] = Math.max(previous[1], span[1]);
+        } else {
+          merged.push([...span]);
+        }
+      }
+      for (const [left, right] of merged) {
+        pixelCount += right - left;
+      }
+      return merged;
     });
-    if (!count) fail("unsupported-text-area");
+    if (!pixelCount) {
+      fail("unsupported-text-area");
+    }
+    return { rows: mergedRows, pixelCount };
+  }
+
+  // Each packed pixel stores: red/green/blue image contributions, then gradient opacity.
+  // Only the image part is fixed; solve() supplies the gradient colour later.
+  function prepareContrastField(image, bounds, position, regions, density, model, metrics) {
+    validateTextRegions(regions, bounds);
+    const area = getReadbackArea(bounds, regions, density);
+    const { rows, pixelCount } = mergeTextRows(regions, area, density);
+    const { offsetX, offsetY, originX, originY, width, height } = area;
     const canvas = document.createElement("canvas");
-    canvas.width = width; canvas.height = height;
+    canvas.width = width;
+    canvas.height = height;
+
     try {
-      const ctx = context(canvas);
-      ctx.setTransform(density, 0, 0, density, offsetX * density - originX, offsetY * density - originY);
-      draw(ctx, image, bounds.width, bounds.height, position);
-      const pixels = ctx.getImageData(0, 0, width, height).data;
-      const field = new Float32Array(count * 4);
-      let output = 0;
-      for (let y = 0; y < height; y++) for (const [left, right] of merged[y]) for (let x = left; x < right; x++) {
-        const index = (y * width + x) * 4;
-        if (pixels[index + 3] !== 255) fail("unsupported-transparency");
-        const a = alpha(model, (x + originX + 0.5) / density - offsetX, (y + originY + 0.5) / density - offsetY);
-        field[output++] = pixels[index] * (1 - a);
-        field[output++] = pixels[index + 1] * (1 - a);
-        field[output++] = pixels[index + 2] * (1 - a);
-        field[output++] = a;
+      const context = getCanvasContext(canvas);
+      context.setTransform(
+        density, 0, 0, density,
+        offsetX * density - originX,
+        offsetY * density - originY,
+      );
+      drawCoverCrop(context, image, bounds.width, bounds.height, position);
+      const pixels = context.getImageData(0, 0, width, height).data;
+      const field = new Float32Array(pixelCount * 4);
+      let outputIndex = 0;
+
+      for (let y = 0; y < height; y++) {
+        for (const [left, right] of rows[y]) {
+          for (let x = left; x < right; x++) {
+            const pixelIndex = (y * width + x) * 4;
+            if (pixels[pixelIndex + 3] !== 255) {
+              fail("unsupported-transparency");
+            }
+            const imageX = (x + originX + 0.5) / density - offsetX;
+            const imageY = (y + originY + 0.5) / density - offsetY;
+            const opacity = gradientOpacityAt(model, imageX, imageY);
+            field[outputIndex++] = pixels[pixelIndex] * (1 - opacity);
+            field[outputIndex++] = pixels[pixelIndex + 1] * (1 - opacity);
+            field[outputIndex++] = pixels[pixelIndex + 2] * (1 - opacity);
+            field[outputIndex++] = opacity;
+          }
+        }
       }
       metrics.pixelReads++;
-      metrics.checkedPixels = count;
+      metrics.checkedPixels = pixelCount;
       metrics.fieldBytes = field.byteLength;
       metrics.readbackBytes = pixels.byteLength;
       return field;
-    } finally { canvas.width = 0; canvas.height = 0; }
+    } finally {
+      canvas.width = 0;
+      canvas.height = 0;
+    }
   }
+
+  // This simpler check applies only to an explicitly opaque solid text panel.
   function whiteContrast(rgb) {
-    return 1.05 / (linear[rgb[0]] * 0.2126 + linear[rgb[1]] * 0.7152 + linear[rgb[2]] * 0.0722 + 0.05);
+    const luminance = linearChannels[rgb[0]] * 0.2126
+      + linearChannels[rgb[1]] * 0.7152
+      + linearChannels[rgb[2]] * 0.0722;
+    return 1.05 / (luminance + 0.05);
   }
-  function checkField(field, rgb, required = 0) {
-    const limit = required ? 1.05 / required - 0.05 : Infinity;
-    const r = rgb[0], g = rgb[1], b = rgb[2];
-    let brightest = 0;
-    for (let i = 0; i < field.length; i += 4) {
-      const a = field[i + 3];
-      // Round upward plus one 8-bit step for tested browser paint differences.
-      // This is a small pixel allowance, not a larger arbitrary contrast target.
-      const red = Math.ceil(field[i] + r * a) + 1;
-      const green = Math.ceil(field[i + 1] + g * a) + 1;
-      const blue = Math.ceil(field[i + 2] + b * a) + 1;
-      const luminance = linear[red > 255 ? 255 : red] * 0.2126 + linear[green > 255 ? 255 : green] * 0.7152 + linear[blue > 255 ? 255 : blue] * 0.0722;
-      if (luminance > brightest) brightest = luminance;
-      // Confirm using the same ratio comparison as solve; inversion can differ by one ULP.
-      if (brightest > limit && 1.05 / (brightest + 0.05) < required) break;
-    }
-    return 1.05 / (brightest + 0.05);
-  }
-  // Exact 8-bit states on round(startRGB * scale), using rational transition ordering.
-  function shades(rgb) {
-    const events = [];
-    rgb.forEach((channel, index) => {
-      for (let step = 0; step < channel; step++) events.push({ n: 2 * step + 1, d: 2 * channel, index });
-    });
-    events.sort((a, b) => a.n * b.d - b.n * a.d);
-    const colour = [0, 0, 0], result = [[...colour]];
-    for (let i = 0; i < events.length;) {
-      const first = events[i];
-      do { colour[events[i].index]++; i++; }
-      while (i < events.length && first.n * events[i].d === events[i].n * first.d);
-      result.push([...colour]);
-    }
-    return result;
-  }
-  function prepare(input) {
-    if (!input || typeof input !== "object") throw new TypeError("Supply calculation inputs.");
-    const { image, imageRect: bounds, revision, imageRevision = revision } = input;
-    const mode = input.mode ?? "overlay";
-    if (!["overlay", "solid"].includes(mode)) throw new TypeError("Mode must be overlay or explicitly solid.");
-    if (!["string", "number"].includes(typeof revision) || (typeof revision === "number" && !finite(revision))) throw new TypeError("Supply a finite input revision.");
-    let starting = input.colour;
-    if (starting !== undefined) validateRGB(starting);
-    if (mode === "overlay" && starting !== undefined) throw new TypeError("Pass an editor colour to solve, not overlay preparation.");
-    const metrics = { sampleReads: 0, pixelReads: 0, checkedPixels: 0, fieldBytes: 0, readbackBytes: 0 };
-    const started = now();
-    let field, model;
-    try {
-      if (image) {
-        if (!image.complete) return unavailable("image-not-ready", revision);
-        if (!image.naturalWidth || !image.naturalHeight) return unavailable("image-load-failed", revision);
-        if (!bounds || ![bounds.left, bounds.top, bounds.width, bounds.height].every(finite)
-          || bounds.width <= 0 || bounds.height <= 0) throw new TypeError("Supply the displayed image rectangle.");
-        const position = input.objectPosition ?? [0.5, 0.5];
-        if (!Array.isArray(position) || position.length !== 2 || !position.every((value) => finite(value) && value >= 0 && value <= 1)) throw new TypeError("Use two focal-position fractions between 0 and 1.");
-        const edge = input.sampleEdge ?? "bottom";
-        if (!["bottom", "left", "right"].includes(edge)) throw new TypeError("Sample edge must be bottom, left or right.");
-        starting = sample(image, bounds, position, edge, imageRevision, metrics);
-        model = gradientModel(bounds.width, bounds.height, input.gradient);
-        if (mode === "overlay") {
-          const density = input.density ?? Math.max(2, typeof window === "undefined" ? 1 : window.devicePixelRatio || 1);
-          if (!finite(density) || density < 1) throw new RangeError("Analysis density must be at least one pixel per CSS pixel.");
-          field = prepareField(image, bounds, position, input.textRects, density, model, metrics);
+
+  function checkContrastField(field, rgb, requiredContrast = 0) {
+    const luminanceLimit = requiredContrast ? 1.05 / requiredContrast - 0.05 : Infinity;
+    const [redTone, greenTone, blueTone] = rgb;
+    let brightestLuminance = 0;
+
+    for (let index = 0; index < field.length; index += 4) {
+      const opacity = field[index + 3];
+      // Round upward, then allow one extra 8-bit step for tested paint differences.
+      const red = Math.ceil(field[index] + redTone * opacity) + 1;
+      const green = Math.ceil(field[index + 1] + greenTone * opacity) + 1;
+      const blue = Math.ceil(field[index + 2] + blueTone * opacity) + 1;
+      const luminance = linearChannels[red > 255 ? 255 : red] * 0.2126
+        + linearChannels[green > 255 ? 255 : green] * 0.7152
+        + linearChannels[blue > 255 ? 255 : blue] * 0.0722;
+      if (luminance > brightestLuminance) {
+        brightestLuminance = luminance;
+      }
+      // Confirm with the final ratio formula: inversion alone can differ by one ULP.
+      if (brightestLuminance > luminanceLimit) {
+        const contrast = 1.05 / (brightestLuminance + 0.05);
+        if (contrast < requiredContrast) {
+          break;
         }
-      } else if (mode === "overlay") {
-        throw new TypeError("Overlay calculation requires the loaded image and every text region.");
-      } else if (!starting) throw new TypeError("An explicit solid calculation needs a starting colour.");
-    } catch (error) {
-      if (error instanceof TypeError || error instanceof RangeError) throw error;
-      return unavailable(error.reason || (error.name === "SecurityError" ? "pixel-access-denied" : "pixel-access-unavailable"), revision);
-    }
-    const sampleRGB = Object.freeze([...starting]);
-    let ramp, rampKey;
-    metrics.prepareMs = now() - started;
-    const measure = field ? (rgb, required) => checkField(field, rgb, required) : whiteContrast;
-    function solve({ targetContrast = 4.5, startingColour } = {}) {
-      if (!finite(targetContrast) || targetContrast < 4.5 || targetContrast > 7.1) throw new RangeError("Contrast must be between 4.5 and 7.1.");
-      const original = startingColour === undefined || startingColour === null ? sampleRGB : startingColour;
-      validateRGB(original);
-      const requiredContrast = targetContrast + MARGIN;
-      const details = { version: 2, mode, revision, targetContrast, requiredContrast, margin: MARGIN };
-      function finish(rgb, contrast = measure(rgb)) {
-        const ok = contrast >= requiredContrast;
-        return Object.freeze({ ...details, ok, contrast, reason: ok ? "" : contrast >= targetContrast ? "insufficient-safety-margin" : "insufficient-contrast", ...(ok ? { rgb: Object.freeze([...rgb]) } : {}) });
       }
-      const originalContrast = measure(original, requiredContrast);
-      // Passing threshold scans already visited every pixel; reuse that complete measurement.
-      if (originalContrast >= requiredContrast) return finish(original, originalContrast);
-      const blackContrast = measure([0, 0, 0], requiredContrast);
-      if (blackContrast < requiredContrast) return finish([0, 0, 0]);
-      const key = original.join(",");
-      if (key !== rampKey) { ramp = shades(original); rampKey = key; }
-      let low = 0, high = ramp.length - 1, lowContrast = blackContrast;
-      while (high - low > 1) {
-        const middle = Math.floor((low + high) / 2);
-        const contrast = measure(ramp[middle], requiredContrast);
-        if (contrast >= requiredContrast) { low = middle; lowContrast = contrast; }
-        else high = middle;
-      }
-      return finish(ramp[low], lowContrast);
     }
-    return Object.freeze({ ok: true, version: 2, mode, revision, sample: sampleRGB, gradientCss: model?.css ?? null, metrics: Object.freeze(metrics), solve });
+    return 1.05 / (brightestLuminance + 0.05);
   }
+
+  function compareShadeTransitions(first, second) {
+    return first.numerator * second.denominator - second.numerator * first.denominator;
+  }
+
+  // Enumerate the exact 8-bit shades on round(startRGB * scale), from black to source.
+  // RGB channels change at different half-step fractions. Cross products order those
+  // fractions without introducing floating-point drift or skipping a possible shade.
+  function enumerateShades(rgb) {
+    const events = [];
+    rgb.forEach((channel, channelIndex) => {
+      for (let step = 0; step < channel; step++) {
+        events.push({ numerator: 2 * step + 1, denominator: 2 * channel, channelIndex });
+      }
+    });
+    events.sort(compareShadeTransitions);
+
+    const colour = [0, 0, 0];
+    const shades = [[...colour]];
+    let eventIndex = 0;
+    while (eventIndex < events.length) {
+      const first = events[eventIndex];
+      while (eventIndex < events.length && compareShadeTransitions(first, events[eventIndex]) === 0) {
+        colour[events[eventIndex].channelIndex]++;
+        eventIndex++;
+      }
+      shades.push([...colour]);
+    }
+    return shades;
+  }
+
+
   const api = Object.freeze({ version: 2, prepare });
-  if (typeof module !== "undefined" && module.exports) module.exports = api;
-  else root.GradientColour = api;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = api;
+  } else {
+    root.GradientColour = api;
+  }
 })(typeof window === "undefined" ? this : window);

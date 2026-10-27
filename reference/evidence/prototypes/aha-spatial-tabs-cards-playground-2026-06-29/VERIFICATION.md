@@ -1,40 +1,57 @@
-# Release verification — 23 October 2026
+# Adaptive colour verification — 27 October 2026
 
-Version 2 calculation: `prepare()` then `solve()`. All 24 existing examples retained. Card designs are fixtures, not the integration contract.
+## Current behaviour
 
-## Contrast and behaviour
+Automatic image-derived colours receive a modest 12% increase in HSV saturation
+before the existing contrast solve. The maximum RGB channel value is retained,
+the increase is capped to avoid clipping, and neutral greys stay neutral. Raw
+samples remain available separately. Explicit editor overrides and authored solid
+fallback colours are not boosted; all chosen colours still pass through the
+contrast check.
 
-- **432 rendered checks passed:** all 24 examples × targets 4.5, 7 and 7.1 × DPR 1 and 2 × Chromium, Firefox and WebKit.
-- Minimum measured margin above the selected target: Chromium 0.0588; WebKit 0.0592; Firefox 0.0428.
-- Screenshots hide text and inspect every background pixel in padded text-line rectangles. Reported model ratios are not used as screenshot pass evidence.
-- **199 browser behaviour checks passed:** coverage extremes, all four contrast targets, override, sample edge, long copy, broken-image recovery, nested unsupported text effects and the calculation-only example. No script errors.
-- Responsive checks passed at 320, 390, 768, 1121 and 1440 CSS pixels. Fractional DPR 2.5 checks passed, including a shifted component. No horizontal page overflow.
-- A stalled replacement image still reaches the readable fixture fallback after its eight-second deadline, even when fonts finish meanwhile.
-- **16 Node suites passed:** seven v2 public-API suites, including 400 independent exhaustive shade comparisons; nine retained legacy/config/bundle checks. The legacy tests are not counted as v2 algorithm evidence.
-- Generated deliveries match maintained source; JavaScript syntax and scoped diff whitespace checks pass.
+The two-call `prepare()` / `solve()` interface, approved gradient geometry,
+responsive layouts and fallback rules remain in place. The readable delivery
+keeps the maintained source and comments. Production files use the existing build.
 
-The browser matrix caught a CSS-image/Canvas resampling difference in one detailed photograph at 7.1. A tested one-step upward allowance per composited 8-bit channel fixed it. The core also keeps its explicit 0.02 numerical allowance. This is a bounded tested paint model, not a proof for every image, rendering effect or browser.
+## Verification
 
-## Performance
+- 13 source tests, including 400 independent exhaustive shade comparisons and the new saturation/override regression check.
+- 205 Chromium behaviour checks across all 24 examples, with zero script errors.
+- 432 rendered contrast cases across Chromium, WebKit and Firefox: 24 examples × three contrast targets × two display densities × three engines.
+- Responsive checks at widths 320, 390, 768, 1121 and 1440 with DPR 1/2.
+- Standalone component checks, including rendered contrast at DPR 2.5.
+- Before/after desktop and mobile visual inspection, source/build checksum checks, JavaScript syntax and scoped whitespace checks.
 
-Same desktop Chromium harness, 1440×1000, DPR 2, 24 examples; six target changes per run. These are measured calculation/controller durations, not network time or a physical-phone benchmark.
+The retained 24 examples include twelve original treatments, six Healthy Living
+photographs and six labelled synthetic stress tests. The previous local refactor
+also passed 1,200 differential calculations and 288 same-image comparisons before
+this intentional colour change. The obsolete engine, outdated ZIP and unused assets have been removed. The PNG
+shared with the parallax demo is retained. Current tests exercise the public
+calculation directly.
 
-| Measure | Previous published version | Version 2 |
-| --- | ---: | ---: |
-| Median combined duration for a target update across 24 examples | 50.65 ms | 35.65 ms |
-| Median per-example update | 2.00 ms | 1.40 ms |
-| Recorded cold combined render duration | 142.20 ms | 246.10 ms |
+## Reproduce
 
-Version 2 target updates made **zero new sample or photo-pixel reads**. No long tasks were observed during the final six warm updates. Cold load still produced long tasks and its measured render cost increased; image decoding, preparation and JIT warm-up remain real work. Do not describe the whole 24-image load as instant. Prepare components when needed and test target phones during integration.
+Run from this folder with the existing esbuild, Playwright and pngjs development
+dependencies available:
 
-The calculation-only minified file is 7,906 bytes (3,585 bytes gzip). Gzip is a size measurement, not a claim about server compression. The gallery controller is a separate delivery and is not required by the calculation-only integration.
+```sh
+node --test verify-gradient.cjs verify.cjs
+node build.cjs --check
+node verify-browser.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
+node verify-render.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
+node verify-standalone.cjs http://127.0.0.1:4179/reference/evidence/prototypes/aha-spatial-tabs-cards-playground-2026-06-29/
+```
 
-## Review and limits
+Set `BROWSER_ENGINE=webkit` or `BROWSER_ENGINE=firefox` for the other render engines.
+The default is Chromium. Module-path environment variables can point to an existing
+installation; there are no new production runtime dependencies.
 
-Three senior reviewers covered maths, runtime and integration. Their findings led to exact RGB-state search, explicit failures, full final measurements, overlap union, revision-aware caches, shared normalised gradient stops and nested-style rejection. A floating-point inverse-threshold edge case has a regression test.
+## Limits
 
-Supported inputs: opaque sRGB static images, opaque white text, normal compositing, matching cover crop and returned sRGB gradient. Missing geometry, CORS-denied pixels and unsupported inputs never become an automatic passing result. A manual starting-colour override remains checked.
+These are text-contrast and browser checks, not whole-component WCAG certification
+or physical-phone benchmarks. Product integration still needs its real fonts,
+content, supported browsers and image CDN/CORS configuration. The rendering
+contract is opaque sRGB images, opaque white text and matching normal compositing.
 
-Physical iOS/Android devices and unrestricted P3/animated/transparent assets were not verified. Correct text measurement, input invalidation, pending/error design and whole-component accessibility remain integration responsibilities.
-
-Root design-brain lint/test was checked separately. It is blocked by four existing unrelated `.DS_Store` files; these were preserved. Feature-specific checks above and public export verification run independently.
+The private authoring repository's root lint/test remains blocked by unrelated
+Finder metadata files; feature verification is recorded separately above.

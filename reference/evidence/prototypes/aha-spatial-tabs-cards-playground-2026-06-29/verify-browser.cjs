@@ -49,6 +49,13 @@ require("node:fs").mkdirSync(qaOutput, { recursive: true });
     await page.waitForFunction(() => document.querySelector('[data-image-id="bright"]').dataset.fallbackReason === "image");
     checks++;
     assert.ok(await page.locator('[data-image-id="bright"]').evaluate((e) => e.dataset.toneSource === "fallback" && e.dataset.contentPlacement === "below" && +e.dataset.contrast >= 4.5));
+    await page.locator('[data-image-id="bright"] .image-body').evaluate(node => { node.style.color = 'black'; });
+    await page.waitForFunction(() => document.querySelector('[data-image-id="bright"]').dataset.verification === 'unverified');
+    assert.equal(await page.locator('[data-image-id="bright"]').getAttribute('data-contrast'), '');
+    checks++;
+    await page.locator('[data-image-id="bright"] .image-body').evaluate(node => { node.style.removeProperty('color'); });
+    await page.waitForFunction(() => document.querySelector('[data-image-id="bright"]').dataset.verification === 'verified');
+    checks++;
     await page.evaluate(() => document.querySelector('[data-image-id="bright"] img').src = "assets/figma/card-women-1.webp");
     await page.waitForFunction(() => document.querySelector('[data-image-id="bright"]').dataset.toneSource === "automatic");
     checks++;
@@ -56,6 +63,18 @@ require("node:fs").mkdirSync(qaOutput, { recursive: true });
     await page.waitForFunction(() => document.querySelector('[data-image-id="habits"]').dataset.error === 'unsupported-text-style');
     assert.ok(await page.locator('[data-image-id="habits"]').evaluate(e => e.dataset.verification === "unverified" && e.dataset.contrast === ""));
     checks++;
+    // A solid fallback must not label unsupported foreground paint as verified.
+    const stacked = page.locator('[data-image-id="horizontal-mobile"]');
+    assert.equal(await stacked.getAttribute('data-content-placement'), 'below');
+    for (const markup of ['<span style="color:rgb(0,0,0)">Dark text</span>', '<span style="opacity:.5">Translucent text</span>']) {
+      await stacked.locator('.image-body').evaluate((node, html) => { node.innerHTML = html; }, markup);
+      await page.waitForFunction(() => document.querySelector('[data-image-id="horizontal-mobile"]').dataset.error === 'unsupported-text-style');
+      assert.ok(await stacked.evaluate(node => node.dataset.verification === 'unverified' && node.dataset.contrast === ''));
+      checks++;
+      await stacked.locator('.image-body').evaluate(node => { node.textContent = 'Text on the approved solid panel.'; });
+      await page.waitForFunction(() => document.querySelector('[data-image-id="horizontal-mobile"]').dataset.verification === 'verified');
+      checks++;
+    }
     assert.deepEqual(errors, []);
     await page.goto(url + "integration.html");
     await page.waitForFunction(() => document.querySelector("#result").textContent.startsWith("automatic"));
